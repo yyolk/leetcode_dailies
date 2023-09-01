@@ -116,6 +116,11 @@ content_before_example = "".join(
 
 
 initial_python_code = next(
+    # this is a JSONString returned from the gql endpoint, we can't filter it there
+    # so filter it here, grabbing only the python3 starter code provided in the editor
+    # this is what we use to add our description docstring to, it's also concrete in that we shouldn't
+    # change what leetcode calls to test your solution - which is annoying because for python they always
+    # use camelCase instead of snake_case
     filter(
         lambda x: x["value"] == "python3",
         json.loads(
