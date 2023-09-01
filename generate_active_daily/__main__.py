@@ -3,6 +3,9 @@ import asyncio
 import textwrap
 import json
 
+from datetime import datetime
+from pathlib import Path
+
 import black
 
 from bs4 import BeautifulSoup
@@ -85,6 +88,20 @@ def modify_class_docstring(code, new_docstring, first_line):
     modified_code = ast.unparse(parsed_tree)
     return modified_code
 
+def write_file(directory_path, filename, content):
+    # Create a Path object for the directory
+    directory = Path(directory_path)
+    
+    # Create the directory if it doesn't exist
+    directory.mkdir(parents=True, exist_ok=True)
+    
+    # Create a Path object for the file within the directory
+    file_path = directory / filename
+    
+    # Write content to the file
+    with open(file_path, 'w') as file:
+        file.write(content)
+
 
 results = asyncio.run(main())
 
@@ -135,4 +152,12 @@ modified_code = modify_class_docstring(
 )
 # print(modified_code)
 # for sanity, send it through black's formatter
-print(black.format_str(modified_code, mode=black.FileMode(line_length=TEXT_WIDTH)))
+final_boilerplate = black.format_str(modified_code, mode=black.FileMode(line_length=TEXT_WIDTH))
+
+current_month_answer_folder = f"{datetime.utcnow():%Y%m}"
+current_active_daily_problem_file = f"{datetime.utcnow():%Y%m%d}.py"
+
+write_file(current_month_answer_folder, current_active_daily_problem_file, final_boilerplate)
+print(f"Wrote {current_month_answer_folder}/{current_active_daily_problem_file}.")
+print("With content:")
+print(final_boilerplate)
