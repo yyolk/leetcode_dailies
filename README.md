@@ -11,3 +11,11 @@ It includes everything we want to generate our answer boilerplate.
 ```
 python -m generate_active_daily
 ```
+
+## Generate the Solution Directories TOC
+
+Each solution dir has a README.md with a table of contents that is a calendar with the days completed, hyperlinked to that solution file.
+
+```
+python -m generate_calendar_toc
+```
