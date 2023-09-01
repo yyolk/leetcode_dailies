@@ -1,0 +1,37 @@
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
+
+name: Generate Active Daily Every Day at 00:00 UTC
+
+on:
+  schedule:
+  - cron: "1 0 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.10"
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Generate Active Daily
+      run: |
+        python -m generate_active_daily
+    - name: Commit new file
+      run: |
+        git config user.name 'github-actions[bot]'
+        git config user.email 'github-actions[bot]@users.noreply.github.com'
+        git add .
+        git commit -m "Boilerplate for $(date +'%Y%m%d')" --author "Joseph Chiocchi <joe@yolk.cc>"
+        git push
