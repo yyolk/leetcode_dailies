@@ -1,0 +1,4 @@
+markdownify
+black
+BeautifulSoup4
+gql[aiohttp]
