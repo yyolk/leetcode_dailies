@@ -39,12 +39,12 @@
   <td class="noday">
   </td>
   <td class="fri">
-   <a href="202309/20230901.py">
+   <a href="20230901.py">
     1
    </a>
   </td>
   <td class="sat">
-   <a href="202309/20230902.py">
+   <a href="20230902.py">
     2
    </a>
   </td>

@@ -105,12 +105,12 @@
    22
   </td>
   <td class="wed">
-   <a href="202308/20230823.py">
+   <a href="20230823.py">
     23
    </a>
   </td>
   <td class="thu">
-   <a href="202308/20230824.py">
+   <a href="20230824.py">
     24
    </a>
   </td>
@@ -118,34 +118,34 @@
    25
   </td>
   <td class="sat">
-   <a href="202308/20230826.py">
+   <a href="20230826.py">
     26
    </a>
   </td>
  </tr>
  <tr>
   <td class="sun">
-   <a href="202308/20230827.py">
+   <a href="20230827.py">
     27
    </a>
   </td>
   <td class="mon">
-   <a href="202308/20230828.py">
+   <a href="20230828.py">
     28
    </a>
   </td>
   <td class="tue">
-   <a href="202308/20230829.py">
+   <a href="20230829.py">
     29
    </a>
   </td>
   <td class="wed">
-   <a href="202308/20230830.py">
+   <a href="20230830.py">
     30
    </a>
   </td>
   <td class="thu">
-   <a href="202308/20230831.py">
+   <a href="20230831.py">
     31
    </a>
   </td>
