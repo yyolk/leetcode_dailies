@@ -50,7 +50,7 @@ for dir_ in matching_directories:
     # Extract the date as a datetime
     dir_date = datetime.strptime(str(dir_), "%Y%m")
     # Create a soup for modifying the calendar easily
-    soup = BeautifulSoup(cal.formatmonth(dir_date.year, dir_date.month))
+    soup = BeautifulSoup(cal.formatmonth(dir_date.year, dir_date.month), "html.parser")
     # HTMLCalendar has every day as a <td />
     for el in soup.find_all("td", string=DAYS_PATTERN):
         # Extract the day from the <td>
