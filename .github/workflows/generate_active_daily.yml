@@ -4,6 +4,7 @@
 name: Generate Active Daily Every Day at 00:00 UTC
 
 on:
+  workflow_dispatch: ~
   schedule:
   # we'll actually run this 1 minute past 00:00 ;)
   # the 60s will provide ample buffer for subtle clock differences even if gh-actions may run ~5 minutes late
