@@ -4,7 +4,8 @@
 name: Generate Active Daily Every Day at 00:00 UTC
 
 on:
-  workflow_dispatch: ~
+  # for testing re-enable
+  # workflow_dispatch: ~
   schedule:
   # due to the high volume of requests github has for 00:00 (or every hour)
   # it's very unlikely that this will ever run before leetcode recognizes its a new day
