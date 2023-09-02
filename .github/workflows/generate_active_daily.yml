@@ -5,7 +5,7 @@ name: Generate Active Daily Every Day at 00:00 UTC
 
 on:
   # for testing re-enable
-  workflow_dispatch: ~
+  # workflow_dispatch: ~
   schedule:
   # due to the high volume of requests github has for 00:00 (or every hour)
   # it's very unlikely that this will ever run before leetcode recognizes its a new day
@@ -31,7 +31,7 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Generate Active Daily
       run: |
-        echo temporary change python -m generate_active_daily
+        python -m generate_active_daily
     - name: Generate Solution TOCs
       run: |
         python -m generate_calendar_toc
