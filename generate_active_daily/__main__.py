@@ -1,7 +1,22 @@
+"""
+Generates the current daily active challenge boilerplate file.
+
+This will use the 'undocumented' graphQL endpoint for leetcode. 
+We could also authenticate but we don't need the extra context it would provide.
+
+TODO:
+    - handle other boilerplate scaffolds that don't look like:
+        
+        class Solution:
+            def myProblemSolution(self, in_: List[str]) -> int:
+
+"""
+import argparse
 import ast
 import asyncio
 import textwrap
 import json
+import sys
 
 from datetime import datetime
 from pathlib import Path
@@ -13,11 +28,20 @@ from gql import Client, gql
 from gql.transport.aiohttp import AIOHTTPTransport
 from markdownify import markdownify
 
-TEXT_WIDTH = 82
+TEXT_WIDTH = 88  # The default that psf/black ships with is 88
+LEETCODE_BASE_URL = "https://leetcode.com"
+
+parser = argparse.ArgumentParser(
+    description="Generates the current daily active challenge boilerplate file."
+)
+parser.add_argument("--url", action="store_true")
+parser.add_argument("-O", "--overwrite", action="store_true", default=False)
+
+args = parser.parse_args()
 
 
-async def main():
-    transport = AIOHTTPTransport(url="https://leetcode.com/graphql/")
+async def query_question_of_today():
+    transport = AIOHTTPTransport(url=f"{LEETCODE_BASE_URL}/graphql/")
 
     async with Client(
         transport=transport, fetch_schema_from_transport=False
@@ -59,6 +83,7 @@ async def main():
 
 
 def modify_class_docstring(code, new_docstring, first_line):
+    """This is a rough ast parse and modify"""
     # Parse the code into an abstract syntax tree (AST)
     parsed_tree = ast.parse(code)
 
@@ -72,6 +97,7 @@ def modify_class_docstring(code, new_docstring, first_line):
                     found_docstring = True
 
             # If no existing docstring is found, add a new docstring
+            # There should always be no docstring found for the most used case
             if not found_docstring:
                 docstring = ast.Expr(value=ast.Str(s=""))
                 indentation = node.body[0].col_offset
@@ -85,27 +111,51 @@ def modify_class_docstring(code, new_docstring, first_line):
                 node.body.insert(0, docstring)
 
     # Convert the modified AST back to code
-    modified_code = ast.unparse(parsed_tree)
-    return modified_code
+    return ast.unparse(parsed_tree)
 
 
-def write_file(directory_path, filename, content):
+def write_file(directory_path, filename, content, overwrite=False):
+    """Holds the file creation logic"""
     # Create a Path object for the directory
-    directory = Path(directory_path)
+    directory: Path = Path(directory_path)
 
     # Create the directory if it doesn't exist
     directory.mkdir(parents=True, exist_ok=True)
 
     # Create a Path object for the file within the directory
-    file_path = directory / filename
+    file_path: Path = directory / filename
+
+    # Check if file exists
+    if file_path.exists() and not overwrite:
+        raise FileExistsError
 
     # Write content to the file
     with open(file_path, "w") as file:
         file.write(content)
 
 
-results = asyncio.run(main())
+results = asyncio.run(query_question_of_today())
 
+
+challenge_url = (
+    f'{LEETCODE_BASE_URL}{results["activeDailyCodingChallengeQuestion"]["link"]}'
+)
+if args.url:
+    # Not the cleanest way to do it, but will refactor
+    # TODO: reflow
+    print(challenge_url)
+    sys.exit(0)
+
+challenge_question_id = results["activeDailyCodingChallengeQuestion"]["question"][
+    "frontendQuestionId"
+]
+challenge_slug = results["activeDailyCodingChallengeQuestion"]["question"]["titleSlug"]
+challenge_title = results["activeDailyCodingChallengeQuestion"]["question"]["title"]
+challenge_datetime = datetime.strptime(
+    results["activeDailyCodingChallengeQuestion"]["date"], "%Y-%m-%d"
+)
+
+# Extract our problem summary from html
 html_summary = results["activeDailyCodingChallengeQuestion"]["question"]["content"]
 soup = BeautifulSoup(html_summary, "html.parser")
 example_starts = soup.find("strong", class_="example").parent
@@ -118,9 +168,10 @@ content_before_example = "".join(
 initial_python_code = next(
     # this is a JSONString returned from the gql endpoint, we can't filter it there
     # so filter it here, grabbing only the python3 starter code provided in the editor
-    # this is what we use to add our description docstring to, it's also concrete in that we shouldn't
-    # change what leetcode calls to test your solution - which is annoying because for python they always
-    # use camelCase instead of snake_case
+    # this is what we use to add our description docstring to
+    # it's also concrete in that we shouldn't change what leetcode calls to test your
+    # solution - which is annoying because for python
+    # since they always use camelCase instead of snake_case, blegh
     filter(
         lambda x: x["value"] == "python3",
         json.loads(
@@ -128,13 +179,12 @@ initial_python_code = next(
         ),
     )
 )["defaultCode"] + (
-    " " * 8 + "..."
-)  # add an elipsis into the default solution method so AST can parse, the 8th column is a guess!
-challenge_question_id = results["activeDailyCodingChallengeQuestion"]["question"][
-    "frontendQuestionId"
-]
-challenge_slug = results["activeDailyCodingChallengeQuestion"]["question"]["titleSlug"]
-challenge_title = results["activeDailyCodingChallengeQuestion"]["question"]["title"]
+    # add an elipsis into the default solution method so AST can parse, the 8th column is a guess!
+    # TODO: upon encountering a challenge like 20208/20230828.py, this will have to be refactored
+    " " * 8
+    + "..."
+)
+
 # our docstring is pretty simple, everything before the examples, the number and the title
 docstring_ = markdownify(content_before_example)
 
@@ -156,18 +206,33 @@ first_line_ = f"{challenge_question_id}. {challenge_title}\n"
 modified_code = modify_class_docstring(
     initial_python_code, wrapped_docstring, first_line_
 )
+boilerplate = f"# {challenge_url}" + "\n" * 3 + modified_code
 # print(modified_code)
 # for sanity, send it through black's formatter
 final_boilerplate = black.format_str(
-    modified_code, mode=black.FileMode(line_length=TEXT_WIDTH)
+    boilerplate, mode=black.FileMode(line_length=TEXT_WIDTH)
 )
 
-current_month_answer_folder = f"{datetime.utcnow():%Y%m}"
-current_active_daily_problem_file = f"{datetime.utcnow():%Y%m%d}.py"
+now = datetime.utcnow()
+current_month_answer_folder = f"{now:%Y%m}"
+current_active_daily_problem_file = f"{now:%Y%m%d}.py"
 
-write_file(
-    current_month_answer_folder, current_active_daily_problem_file, final_boilerplate
-)
-print(f"Wrote {current_month_answer_folder}/{current_active_daily_problem_file}.")
-print("With content:")
-print(final_boilerplate)
+# Sanity check, see if our date matches
+if datetime(year=now.year, month=now.month, day=now.day) != challenge_datetime:
+    raise ValueError("The daily problem doesn't match our clock's UTC time.")
+
+try:
+    write_file(
+        current_month_answer_folder,
+        current_active_daily_problem_file,
+        final_boilerplate,
+        args.overwrite,
+    )
+    print(f"Wrote {current_month_answer_folder}/{current_active_daily_problem_file}.")
+    print("With content:")
+except FileExistsError:
+    print("File already exists! Skipping.")
+    print("Content would have been:")
+finally:
+    print()
+    print(final_boilerplate)
