@@ -29,11 +29,11 @@ jobs:
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
         if [ -f pyproject.toml ]; then
-          pip install $(python -c '
-          try: import tomllib
-          except ModuleNotFoundError: import tomli as tomllib
-          print(" ".join(tomllib.load(open("pyproject.toml", "rb"))["project"]["dependencies"]))
-          ')
+        pip install $(python -c '
+        try: import tomllib
+        except ModuleNotFoundError: import tomli as tomllib
+        print(" ".join(tomllib.load(open("pyproject.toml", "rb"))["project"]["dependencies"]))
+        ')
         fi
     - name: Generate Active Daily
       run: |
@@ -49,5 +49,8 @@ jobs:
         git config user.name 'github-actions[bot]'
         git config user.email 'github-actions[bot]@users.noreply.github.com'
         git add .
-        git commit -m "Boilerplate for $(date +'%Y%m%d')" --author "Joseph Chiocchi <joe@yolk.cc>"
+        git commit --author "Joseph Chiocchi <joe@yolk.cc>" -m "Boilerplate for $(date +'%Y%m%d')
+        
+        $(python -m generate_active_daily --url)
+        "
         git push
