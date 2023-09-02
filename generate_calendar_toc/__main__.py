@@ -24,7 +24,7 @@ matching_directories = []
 matching_files = {}
 
 # Loop at the base of the repository for matching solution directories
-for root, dirs, files in os.walk(root_dir):
+for root, dirs, files in os.walk("."):
     for dir_name in dirs:
         if SOLUTIONS_DIR_PATTERN.match(dir_name):
             matching_directories.append(Path(os.path.join(root, dir_name)))
