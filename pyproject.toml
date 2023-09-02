@@ -1,0 +1,18 @@
+[project]
+name = "leetcode-dailies"
+version = "0.0.1"
+description = "yyolk's daily leetcode.com solutions"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "markdownify",
+    "black",
+    "BeautifulSoup4",
+    "gql[aiohttp]",
+]
+
+[tool.pylint."messages control"]
+disable = ["unspecified-encoding"]
+
+[tool.black]
+line-length = 88
