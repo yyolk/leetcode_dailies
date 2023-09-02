@@ -60,7 +60,7 @@ for dir in matching_directories:
         # Does this day have a file to match?
         if idx in matching_files:
             path_ = matching_files[idx]
-            el.string.wrap(soup.new_tag("a", href = str(path_)))
+            el.string.wrap(soup.new_tag("a", href = str(path_.name)))
     # Set the center attribute, which works on markdown rendering for the <table />
     soup.table["align"] = "center"
     # The only content in the file will be the output of the HTMLCalendar
