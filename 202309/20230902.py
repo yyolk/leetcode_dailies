@@ -1,5 +1,3 @@
-# from collections import Counter
-
 class Solution:
     """2707. Extra Characters in a String
 
