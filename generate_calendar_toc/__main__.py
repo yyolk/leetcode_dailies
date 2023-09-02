@@ -30,25 +30,25 @@ for root, dirs, files in os.walk("."):
             matching_directories.append(Path(os.path.join(root, dir_name)))
 
 # Loop over our directories to get the files within
-for dir in matching_directories:
-    for root, dirs, files in os.walk(dir):
+for dir_ in matching_directories:
+    for root, dirs, files in os.walk(dir_):
         for file_name in files:
             # Does this file_name match our FILE_PATTERN
             if FILE_PATTERN.match(file_name):
                 # Our file is at dir/file_name
-                file_ = dir / file_name
+                file_ = dir_ / file_name
                 # Extract the date from the filename
                 extracted_date = datetime.strptime(file_.stem, "%Y%m%d")
                 # Set the Path(file) to it's datetime index, for easy lookup
                 matching_files[extracted_date] = file_
 
 # Loop again, just to keep it straight forward
-for dir in matching_directories:
-    readme = Path(dir / "README.md")
+for dir_ in matching_directories:
+    readme = Path(dir_ / "README.md")
     # Create a calendar with a Sunday starting day
     cal = calendar.HTMLCalendar(calendar.SUNDAY)
     # Extract the date as a datetime
-    dir_date = datetime.strptime(str(dir), "%Y%m")
+    dir_date = datetime.strptime(str(dir_), "%Y%m")
     # Create a soup for modifying the calendar easily
     soup = BeautifulSoup(cal.formatmonth(dir_date.year, dir_date.month))
     # HTMLCalendar has every day as a <td />
