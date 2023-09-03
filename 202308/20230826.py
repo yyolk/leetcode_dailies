@@ -12,9 +12,10 @@ class Solution:
     You do not need to use up all the given intervals.
     You can select pairs in any order.
     """
+
     def findLongestChain(self, pairs: List[List[int]]) -> int:
         """A chain of pairs in sequnetial order from a pairs list
-        
+
         A pair group where pairs[i] = [left_i, right_i] and left_i < right_i
 
         Pairs can be selected in any order. You do not need to use all pairs
@@ -28,7 +29,7 @@ class Solution:
             int: length of the longest chain that can be produced
         """
         # Sort the whole thing by the second item in each group
-        pairs.sort(key = lambda x: x[1])
+        pairs.sort(key=lambda x: x[1])
 
         n = len(pairs)
         dp = [1] * n  # initialize a dp array with 1 as the minimum length

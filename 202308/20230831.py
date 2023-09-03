@@ -2,23 +2,23 @@ class Solution:
     def minTaps(self, n: int, ranges: List[int]) -> int:
         """1326. Minimum Number of Taps to Open to Water a Garden
 
-        There is a one-dimensional garden on the x-axis. 
-        The garden starts at the point `0` and ends at the point `n`. 
+        There is a one-dimensional garden on the x-axis.
+        The garden starts at the point `0` and ends at the point `n`.
         (i.e The length of the garden is `n`).
 
         There are `n + 1` taps located at points `[0, 1, ..., n]` in the garden.
 
-        Given an integer `n` and an integer array ranges of length `n + 1` 
-        where `ranges[i]` (0-indexed) means the `i-th` tap can water the 
+        Given an integer `n` and an integer array ranges of length `n + 1`
+        where `ranges[i]` (0-indexed) means the `i-th` tap can water the
         area `[i - ranges[i], i + ranges[i]]` if it was open.
 
-        Return the minimum number of taps that should be open to water the whole garden, 
+        Return the minimum number of taps that should be open to water the whole garden,
         If the garden cannot be watered return -1.
 
         Args:
             n (int): How many taps there are in the garden
             ranges (List of int): A range to cover in the garden
-        
+
         Returns:
             int: _The minimum number of taps that should be open to water the whole garden._
                 If the garden cannot be watered return **-1**

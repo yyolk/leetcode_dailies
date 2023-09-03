@@ -15,6 +15,7 @@ class Solution:
     `k - 1`, `k`, or `k + 1` units.
     The frog can only jump in the forward direction.
     """
+
     def canCross(self, stones: List[int]) -> bool:
         """Can the frug jump?
 
@@ -28,7 +29,7 @@ class Solution:
         # A dictionary to store valid jump sizes for each stone
         dp = {stone: set() for stone in stones}
         dp[0].add(0)  # Init the first stone with a jump of 0
-        
+
         for stone in stones:
             for jump in dp[stone]:
                 # Check the next possible positions that can be reached from the current stone

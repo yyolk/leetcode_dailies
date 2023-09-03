@@ -1,6 +1,7 @@
 import heapq
 from collections import Counter
 
+
 class Solution:
     """767. Reorganize String
 

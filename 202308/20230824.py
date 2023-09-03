@@ -1,6 +1,6 @@
 class Solution:
     """68. Text Justification
-    Given an array of strings words and a width maxWidth, 
+    Given an array of strings words and a width maxWidth,
     format the text such that each line has exactly maxWidth
     characters and is fully (left and right) justified.
 
@@ -19,12 +19,13 @@ class Solution:
         - Each word's length is guaranteed to be greater than 0 and not exceed maxWidth.
         - The input array words contains at least one word.
     """
+
     def fullJustify(self, words: List[str], max_width: int) -> List[str]:
         """Full justify text like a book in ascii sorta
 
         Args:
             words (List of str): A list of words that should be used to form the justified text
-            max_width (int): The maximum width the text can take up, this also needs to be 
+            max_width (int): The maximum width the text can take up, this also needs to be
                 the total size of the text that is taken up on most lines
 
         Returns:
@@ -33,7 +34,10 @@ class Solution:
         lines = []
         current_line = []
         for word in words:
-            if sum(len(w) for w in current_line) + len(current_line) + len(word) <= max_width:
+            if (
+                sum(len(w) for w in current_line) + len(current_line) + len(word)
+                <= max_width
+            ):
                 current_line.append(word)
             else:
                 lines.append(current_line)
@@ -58,7 +62,7 @@ class Solution:
                     if i <= extra_spaces:
                         spaces += 1
                     justified_line += " " * spaces + line[i]
-                
+
             justified_lines.append(justified_line)
 
         return justified_lines

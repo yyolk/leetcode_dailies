@@ -14,7 +14,7 @@ class Solution:
 
         Args:
             n (int): The given input of integer `n`
-        
+
         Returns:
             List of int: Answers of length `n + 1` where i is `0 <= i <= n`
                 and `Answers[i]` is the number of `1`'s in the binary

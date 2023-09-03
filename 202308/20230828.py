@@ -16,9 +16,9 @@ Notes:
 
 # from collections import deque
 
+
 # 33ms,30ms,37ms
 class MyStack:
-
     def __init__(self):
         self._stack = []
 
@@ -34,6 +34,7 @@ class MyStack:
     def empty(self) -> bool:
         return not self._stack
 
+
 # 44ms, 45ms
 # class MyStack:
 #     def __init__(self):
@@ -44,7 +45,7 @@ class MyStack:
 #         # Move all elements from queue1 to queue2
 #         while self.queue1:
 #             self.queue2.append(self.queue1.popleft())
-        
+
 #         # Add the new element to the front of the queue1
 #         self.queue1.append(x)
 

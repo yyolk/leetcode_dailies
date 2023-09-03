@@ -19,7 +19,7 @@ class Solution:
             s (str): The input string which must be broken up
             dictionary (List of str): A literal dictionary of substrings to match input
                 `s` to
-        
+
         Returns:
             int: The minimum number of extra characters left over if you break up `s` optimally
         """
@@ -35,7 +35,7 @@ class Solution:
         for i in range(1, n + 1):
             # Check each word in the dictionary to see if it matches the substring ending at position i
             for word in dictionary:
-                if i >= len(word) and s[i - len(word):i] == word:
+                if i >= len(word) and s[i - len(word) : i] == word:
                     # If the word matches, update dp[i] with the minimum extra characters needed
                     dp[i] = min(dp[i], dp[i - len(word)])
 

@@ -1,7 +1,7 @@
 class Solution:
     def minimumReplacement(self, nums: List[int]) -> int:
         """2366. Minimum Replacements to Sort the Array
-        
+
         You are given a **0-indexed** integer array `nums`.
         In one operation you can replace any element of the array with **any two**
         elements that **sum** to it.
@@ -14,7 +14,7 @@ class Solution:
 
         Args:
             nums (List of int): The input array with numbers to be reduced
-        
+
         Returns:
             int: The minimum number of operations to make the input that is sorted in non-decreasing order
         """
@@ -23,7 +23,7 @@ class Solution:
 
         # Initialize prev_value with the last element of the array
         prev_value = nums[n - 1]
-        
+
         # Iterate through the array in reverse order (from second-to-last element to the first)
         for i in range(n - 2, -1, -1):
             if nums[i] > prev_value:
@@ -38,5 +38,5 @@ class Solution:
             else:
                 # If nums[i] is not greater than prev_value, update prev_value to nums[i]
                 prev_value = nums[i]
-                
+
         return operations
