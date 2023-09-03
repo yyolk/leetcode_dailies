@@ -11,6 +11,11 @@ dependencies = [
     "gql[aiohttp]",
 ]
 
+# not the best way to declare, it's also not a 'proper' entrypoint
+[project.scripts]
+generate-active-daily = "generate_active_daily:__main__"
+generate-calendar-toc = "genearte_calendar_toc:__main__"
+
 [tool.pylint."messages control"]
 disable = ["unspecified-encoding"]
 
