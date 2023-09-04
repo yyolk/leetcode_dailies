@@ -78,11 +78,14 @@ async def main():
                                     + "".join(content_lines)
                                 )
                                 fp.seek(0)  # Rewind the tape
-                                # fp.write(new_content)
-                                print("would've written")
-                                print(
-                                    "\n".join(new_content.splitlines()[:4]) + "....",
-                                )
+                                # Really write the file
+                                fp.write(new_content)
+                                
+                                # For testing
+                                # print("would've written")
+                                # print(
+                                #     "\n".join(new_content.splitlines()[:4]) + "....",
+                                # )
 
 
 if __name__ == "__main__":
