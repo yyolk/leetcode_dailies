@@ -17,6 +17,7 @@ import asyncio
 import textwrap
 import json
 import sys
+import unicodedata
 
 from datetime import datetime
 from pathlib import Path
@@ -186,7 +187,9 @@ initial_python_code = next(
 )
 
 # our docstring is pretty simple, everything before the examples, the number and the title
-docstring_ = markdownify(content_before_example)
+# see #4, potentially an edge case, normalize \xa0 (&nbsp;) to ' ' using NFKC
+# NFKC = normal form compatibility decomposition followed by canonical composition
+docstring_ = unicodedata.normalize("NFKC", markdownify(content_before_example))
 
 lines_ = filter(lambda x: x, docstring_.splitlines())
 wrapped_docstring = (
