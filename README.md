@@ -26,7 +26,3 @@ python -m generate_calendar_toc
 Each problem has at least the date. Most if not all have the problem number.
 For a query'able `question` to the leetcode graphQL endpoint, you want to have the `titleSlug`.
 This is extractable from the link, and is a requested field in the `generate_active_daily` process.
-
-
-## TODO
-- [ ] Add backlinks to any that are missing, for the few that don't have a link a manual search through the frontend is possible; but an attempt to guess the slug could be a useful utility
