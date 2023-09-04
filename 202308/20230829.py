@@ -1,3 +1,4 @@
+# https://leetcode.com/problems/minimum-penalty-for-a-shop/
 import heapq
 
 

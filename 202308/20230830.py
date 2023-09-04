@@ -1,3 +1,6 @@
+# https://leetcode.com/problems/minimum-replacements-to-sort-the-array/
+
+
 class Solution:
     def minimumReplacement(self, nums: List[int]) -> int:
         """2366. Minimum Replacements to Sort the Array

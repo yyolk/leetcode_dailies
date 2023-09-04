@@ -1,3 +1,6 @@
+# https://leetcode.com/problems/minimum-number-of-taps-to-open-to-water-a-garden/
+
+
 class Solution:
     def minTaps(self, n: int, ranges: List[int]) -> int:
         """1326. Minimum Number of Taps to Open to Water a Garden
