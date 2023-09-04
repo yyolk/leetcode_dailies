@@ -21,16 +21,17 @@ import unicodedata
 
 from datetime import datetime
 from pathlib import Path
+from urllib.parse import urljoin
 
 import black
 
 from bs4 import BeautifulSoup
-from gql import Client, gql
-from gql.transport.aiohttp import AIOHTTPTransport
 from markdownify import markdownify
 
+from .constants import LEETCODE_BASE_URL
+from .client import query_question_of_today
+
 TEXT_WIDTH = 88  # The default that psf/black ships with is 88
-LEETCODE_BASE_URL = "https://leetcode.com"
 
 parser = argparse.ArgumentParser(
     description="Generates the current daily active challenge boilerplate file."
@@ -39,48 +40,6 @@ parser.add_argument("--url", action="store_true")
 parser.add_argument("-O", "--overwrite", action="store_true", default=False)
 
 args = parser.parse_args()
-
-
-async def query_question_of_today():
-    transport = AIOHTTPTransport(url=f"{LEETCODE_BASE_URL}/graphql/")
-
-    async with Client(
-        transport=transport, fetch_schema_from_transport=False
-    ) as session:
-        query = gql(
-            """
-            query questionOfToday {
-                activeDailyCodingChallengeQuestion {
-                    date
-                    # userStatus
-                    link
-                    question {
-                    #   acRate
-                    difficulty
-                    #   freqBar
-                    frontendQuestionId: questionFrontendId
-                    #   isFavor
-                    paidOnly: isPaidOnly
-                    #   status
-                    title
-                    titleSlug
-                    #   hasVideoSolution
-                    #   hasSolution
-                    codeDefinition
-                    content
-                    # topicTags {
-                    #   name
-                    #   id
-                    #   slug
-                    # }
-                    }
-                }
-            }
-            """
-        )
-
-        result = await session.execute(query)
-        return result
 
 
 def modify_class_docstring(code, new_docstring, first_line):
@@ -138,8 +97,8 @@ def write_file(directory_path, filename, content, overwrite=False):
 results = asyncio.run(query_question_of_today())
 
 
-challenge_url = (
-    f'{LEETCODE_BASE_URL}{results["activeDailyCodingChallengeQuestion"]["link"]}'
+challenge_url = urljoin(
+    LEETCODE_BASE_URL, results["activeDailyCodingChallengeQuestion"]["link"]
 )
 if args.url:
     # Not the cleanest way to do it, but will refactor
@@ -203,14 +162,12 @@ wrapped_docstring = (
     )
 )
 
-# print(wrapped_docstring)
-
 first_line_ = f"{challenge_question_id}. {challenge_title}\n"
 modified_code = modify_class_docstring(
     initial_python_code, wrapped_docstring, first_line_
 )
 boilerplate = f"# {challenge_url}" + "\n" * 3 + modified_code
-# print(modified_code)
+
 # for sanity, send it through black's formatter
 final_boilerplate = black.format_str(
     boilerplate, mode=black.FileMode(line_length=TEXT_WIDTH)
