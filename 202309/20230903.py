@@ -23,9 +23,9 @@ class Solution:
         Args:
             m (int): input height of grid `m x n`
             n (int): input width of grid `m x n`
-        
+
         Returns:
-            int: the number of possible unique paths that the robot can take to reach the 
+            int: the number of possible unique paths that the robot can take to reach the
                 bottom-right corner
         """
         # Create a 2D DP array to store the number of unique paths
@@ -36,11 +36,11 @@ class Solution:
             dp[i][0] = 1
         for j in range(n):
             dp[0][j] = 1
-        
+
         # Fill in the DP array using a bottom-up approach
         for i in range(1, m):
             for j in range(1, n):
-                # The number of unique paths to a cell (i, j) 
+                # The number of unique paths to a cell (i, j)
                 # is the sum of the paths from the cell above (i - 1, j)
                 dp[i][j] = dp[i - 1][j] + dp[i][j - 1]
 
