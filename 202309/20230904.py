@@ -13,14 +13,14 @@ class Solution:
 
     Return `true` *if there is a cycle in the linked list*. Otherwise, return `false`.
 
-    
+
     Definition for singly-linked list.
-    
+
         class ListNode:
             def __init__(self, x):
                 self.val = x
                 self.next = None
-    
+
     """
 
     def hasCycle(self, head: Optional[ListNode]) -> bool:
@@ -34,7 +34,7 @@ class Solution:
 
         Returns:
             bool: whether the input linked list has a cycle in it
-        
+
         """
         # Check if the input linked list is empty or has only one node (no cycle possible)
         if not head or not head.next:

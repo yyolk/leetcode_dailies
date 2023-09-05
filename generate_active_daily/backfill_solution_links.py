@@ -80,7 +80,7 @@ async def main():
                                 fp.seek(0)  # Rewind the tape
                                 # Really write the file
                                 fp.write(new_content)
-                                
+
                                 # For testing
                                 # print("would've written")
                                 # print(
