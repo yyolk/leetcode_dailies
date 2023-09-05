@@ -1,14 +1,5 @@
 # https://leetcode.com/problems/copy-list-with-random-pointer/
-
-
-"""
-# Definition for a Node.
-class Node:
-    def __init__(self, x: int, next: 'Node' = None, random: 'Node' = None):
-        self.val = int(x)
-        self.next = next
-        self.random = random
-"""
+# import copy  # Possible to solve just using copy.deepcopy
 
 
 class Solution:
@@ -40,7 +31,57 @@ class Solution:
     pointer points to, or `null` if it does not point to any node.
 
     Your code will **only** be given the `head` of the original linked list.
+
+    Definition for a Node:
+
+        class Node:
+            def __init__(self, x: int, next: 'Node' = None, random: 'Node' = None):
+                self.val = int(x)
+                self.next = next
+                self.random = random
+
     """
 
     def copyRandomList(self, head: "Optional[Node]") -> "Optional[Node]":
-        ...
+        """Performs a deepcopy of the list
+
+        Args:
+            Optional Node: The input head of the linked list to copy
+
+        Returns:
+            Optional Node: The head of the copied linked list
+        """
+        # # Using copy.deepcopy 51-54ms, +8 to +16ms difference
+        # return copy.deepcopy(head)
+
+        # Not using standard-library to assist, 34-46ms
+        if not head:
+            return None
+
+        # Create new nodes and insert them right after the original nodes
+        current = head
+        while current:
+            new_node = Node(current.val)
+            new_node.next = current.next
+            current.next = new_node
+            current = new_node.next
+
+        # Set random pointers for the new nodes
+        current = head
+        while current:
+            if current.random:
+                current.next.random = current.random.next
+            current = current.next.next
+
+        # Separate the original and copied lists
+        current = head
+        new_head = head.next
+        new_current = new_head
+        while current:
+            current.next = current.next.next
+            current = current.next
+            if new_current.next:
+                new_current.next = new_current.next.next
+                new_current = new_current.next
+
+        return new_head
