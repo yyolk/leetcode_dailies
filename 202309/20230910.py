@@ -13,4 +13,31 @@ class Solution:
     """
 
     def countOrders(self, n: int) -> int:
-        ...
+        """Count the valid pickup/delivery sequences
+
+        Proposed solution using dynamic programming
+
+        Each pickup requires a corresponding delivery, there will be one less
+        order remaining for the pickup/delivery sequence.
+
+        If it is the first delivery, then we cannot have any pickup before it.
+
+        Args:
+            n (int): the input number of orders
+
+        Returns:
+            int: the count of valid pickup/delivery sequences
+        """
+        # The requested ceiling to normalize our answer to
+        MOD = 10**9 + 7
+
+        # Initialize with the base case of zero orders,
+        # of which, 1 is the only solution
+        count = 1
+
+        # Calculate the number of valid sequences, the number of valid pickup
+        # and delivery sequences for the remaining n-1 orders will be the same
+        for i in range(1, n + 1):
+            count = (count * (2 * i - 1) * i) % MOD
+
+        return count
