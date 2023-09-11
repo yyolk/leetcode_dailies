@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/group-the-people-given-the-group-size-they-belong-to/
+from collections import defaultdict
 
 
 class Solution:
@@ -20,4 +21,33 @@ class Solution:
     """
 
     def groupThePeople(self, groupSizes: List[int]) -> List[List[int]]:
-        ...
+        """Responds with a mapping of groups that are valid in the input
+
+        Proposed solution.
+
+        Args:
+            groupSizes (List of int): the input list of people implicitly id'd by their index
+
+        Returns:
+            List of List of int: the resulting valid groups that align with the constraint of the
+                value at index i is the same size of group
+        """
+        # DefaultDict to store people grouped by their group sizes
+        groups = defaultdict(list)
+
+        # Iterate through groupSizes and append them to the appropriate size in the groups Dict
+        for i, size in enumerate(groupSizes):
+            groups[size].append(i)
+
+        # Init an empty list for our result
+        results = []
+
+        # Iterate through our newly-created groups Dict
+        for size, members in groups.items():
+            # Ensure that each group contains exactly the required size of people
+            for i in range(0, len(members), size):
+                # Append subgroup to the results
+                results.append(members[i : i + size])
+
+        # Return our results
+        return results
