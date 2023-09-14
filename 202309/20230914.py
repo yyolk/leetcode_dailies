@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/reconstruct-itinerary/
+from collections import defaultdict
 
 
 class Solution:
@@ -20,4 +21,39 @@ class Solution:
     """
 
     def findItinerary(self, tickets: List[List[str]]) -> List[str]:
-        ...
+        """Return the tickets provided in the correct order.
+
+        Proposed solution using depth-first-search.
+
+        Args:
+            tickets (List of List of str): input tickets that are unsorted
+
+        Returns:
+            List of str: the reconstructed itinerary of the man who always
+                departs from "JFK"
+        """
+        # Create a dictionary to represent the graph where keys are airports
+        # and values are lists of airports reachable from the key airport.
+        graph = defaultdict(list)
+        for from_airport, to_airport in tickets:
+            graph[from_airport].append(to_airport)
+
+        # Sort the lists of reachable airports in lexical order.
+        for key in graph:
+            graph[key].sort()
+
+        # Initialize a list to store the result itinerary.
+        result = []
+
+        def dfs(node):
+            """Depth-First Search"""
+            while graph[node]:
+                next_node = graph[node].pop(0)
+                dfs(next_node)
+            result.append(node)
+
+        # Start the DFS from "JFK".
+        dfs("JFK")
+
+        # Reverse the result list to obtain the itinerary in the correct order.
+        return result[::-1]
