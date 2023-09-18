@@ -18,7 +18,7 @@ This is an abnormal operation, it could be run during the daily upkeep, but all 
 See [#3](https://github.com/yyolk/leetcode_dailies/pull/3) and [#6](https://github.com/yyolk/leetcode_dailies/issues/6) for context and last run.
 
 ```
-python -m generate_active_daily.backfill_solution_links
+python -m generate_active_daily.backfill_solution_links --no-debug --overwrite
 ```
 
 ## Generate the Solution Directories TOC
