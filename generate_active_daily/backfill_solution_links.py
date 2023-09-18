@@ -29,7 +29,7 @@ TARGET_DATE = datetime(year=2023, month=8, day=23)
 parser = argparse.ArgumentParser(
     description="Backfills the leetcode links when they don't exist"
 )
-parser.add_argument("--debug", action="store_true", default=True)
+parser.add_argument("--debug", action=argparse.BooleanOptionalAction, default=True)
 parser.add_argument("-O", "--overwrite", action="store_true", default=False)
 
 args = parser.parse_args()
