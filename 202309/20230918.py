@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/the-k-weakest-rows-in-a-matrix/
+import heapq
 
 
 class Solution:
@@ -19,4 +20,37 @@ class Solution:
     """
 
     def kWeakestRows(self, mat: List[List[int]], k: int) -> List[int]:
-        ...
+        """K Weakest rows in matrix
+
+        Proposed solution
+
+        Args:
+            mat (List of List of int): matrix representing soldiers (1)
+                and civilians (0)
+
+        Returns:
+            List of int: the k weakest rows in the matrix, ordered from weakest
+                to strongest
+        """
+        # A min-heap to store the weakest rows
+        heap = []
+
+        for i, row in enumerate(mat):
+            # Calculate the number of soldiers in the row, conveniently repr'd by 1
+            num_soldiers = sum(row)
+
+            # Push the negative count and row index onto the heap
+            # The negative count ensures that rows with fewer soldiers are at the top
+            # When rows have the same count, the smaller row index will be considered
+            # weaker
+            heapq.heappush(heap, (-num_soldiers, -i))
+
+            # If the heap size exceeds k, pop the strongest row
+            if len(heap) > k:
+                heapq.heappop(heap)
+
+        # Extract the row indices from the heap and reverse the order for weakest first
+        weakest_rows = [-heapq.heappop(heap)[1] for _ in range(k)][::-1]
+
+        # Return our k weakest rows
+        return weakest_rows
