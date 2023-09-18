@@ -5,6 +5,7 @@ top of the file as a single line comment.
 This is the only file currently using most of the extra functions in 
 `generate_active_daily.client(...)`
 """
+import argparse
 import asyncio
 import os
 import re
@@ -23,6 +24,15 @@ from generate_active_daily.client import (
 DIR_PATTERN = re.compile(r"\d{6}")
 FILE_PATTERN = re.compile(r"\d{8}")
 TARGET_DATE = datetime(year=2023, month=8, day=23)
+
+
+parser = argparse.ArgumentParser(
+    description="Backfills the leetcode links when they don't exist"
+)
+parser.add_argument("--debug", action="store_true", default=True)
+parser.add_argument("-O", "--overwrite", action="store_true", default=False)
+
+args = parser.parse_args()
 
 
 async def main():
@@ -68,24 +78,36 @@ async def main():
                             content_lines = fp.readlines()
                             file_meta_challenge_link = f"# {challenge_link}"
                             first_line = content_lines[0].strip()
+                            # What to always expect the first line to be, if it exists
+                            # and not our file_meta_challenge_link
                             starts_with_class = first_line.startswith("class")
+                            # Other cases vv
                             # starts_with_comment = first_line.startswith("#")
                             # starts_with_docstring = first_line.startswith('"""')
+
+                            # Check first line of file
                             if not first_line == file_meta_challenge_link:
+                                # Setup the new_content of the file
                                 new_content = (
                                     file_meta_challenge_link
+                                    # We handle every case by inserting a new line
+                                    # after our insert, except when it's a class
                                     + (("\n" * 3) if starts_with_class else "\n")
                                     + "".join(content_lines)
                                 )
-                                fp.seek(0)  # Rewind the tape
-                                # Really write the file
-                                fp.write(new_content)
-
-                                # For testing
-                                # print("would've written")
-                                # print(
-                                #     "\n".join(new_content.splitlines()[:4]) + "....",
-                                # )
+                                if not args.debug and args.overwrite:
+                                    # Rewind the tape
+                                    fp.seek(0)
+                                    # Really write the file
+                                    fp.write(new_content)
+                                else:
+                                    # For testing
+                                    print()
+                                    print("--debug is on or --overwrite is False, would've written:")
+                                    print()
+                                    print(
+                                        "\n".join(new_content.splitlines()[:4]) + "....",
+                                    )
 
 
 if __name__ == "__main__":
