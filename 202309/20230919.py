@@ -14,4 +14,33 @@ class Solution:
     """
 
     def findDuplicate(self, nums: List[int]) -> int:
-        ...
+        """Finds the duplicate number
+
+        Proposed solution using Floyd's Tortoise and Hare algorithm.
+        It can be adapted to find the repeated number in an array.
+
+        Args:
+            nums (List of int): the input number array with one duplicate number
+
+        Returns:
+            int: the duplicate number in the input array
+        """
+        # Initialize the tortoise and hare pointers as slow and fast
+        slow = nums[0]
+        fast = nums[0]
+
+        # Move the slow pointer one step and the fast pointer two steps until they meet
+        while True:
+            slow = nums[slow]
+            fast = nums[nums[fast]]
+            if slow == fast:
+                break
+
+        # Find the entrance point of the cycle
+        slow = nums[0]
+        while slow != fast:
+            slow = nums[slow]
+            fast = nums[fast]
+
+        # Return the repeated number
+        return slow
