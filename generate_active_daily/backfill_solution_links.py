@@ -103,10 +103,13 @@ async def main():
                                 else:
                                     # For testing
                                     print()
-                                    print("--debug is on or --overwrite is False, would've written:")
+                                    print(
+                                        "--debug is on or --overwrite is False, would've written:"
+                                    )
                                     print()
                                     print(
-                                        "\n".join(new_content.splitlines()[:4]) + "....",
+                                        "\n".join(new_content.splitlines()[:4])
+                                        + "....",
                                     )
 
 
