@@ -25,16 +25,6 @@ class Solution:
         Returns:
             int: the minimum number of operations to reduce x to 0, -1 if not possible
         """
-        # min_ops = float("inf")
-
-        # for i in range(len(nums)):
-        #     if nums[i] >= x:
-        #         min_ops = min(min_ops, nums[i] - x)
-
-        # if min_ops == float("inf"):
-        #     return -1
-        # else:
-        #     return min_ops
         total_sum = sum(nums)
         target = total_sum - x
         n = len(nums)
