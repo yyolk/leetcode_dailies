@@ -14,8 +14,7 @@ python -m generate_active_daily
 
 ### Backfill missing permalinks in the solutions
 
-This is an abnormal operation, it could be run during the daily upkeep, but all new boilerplate solutions include it already.
-See [#3](https://github.com/yyolk/leetcode_dailies/pull/3) and [#6](https://github.com/yyolk/leetcode_dailies/issues/6) for context and last run.
+This is an abnormal operation, it could be run during the daily upkeep, but all new boilerplate solutions include it already[^1].
 
 ```
 python -m generate_active_daily.backfill_solution_links --no-debug --overwrite
@@ -28,3 +27,8 @@ Each solution dir has a README.md with a table of contents that is a calendar wi
 ```
 python -m generate_calendar_toc
 ```
+
+
+[^1]: See [#3](https://github.com/yyolk/leetcode_dailies/pull/3) 
+  and [#6](https://github.com/yyolk/leetcode_dailies/issues/6)
+  for context and last run.
