@@ -147,6 +147,7 @@ async def previous_questions(limit: int) -> AsyncIterator[List[Dict[str, str]]]:
             prev_slug, todays_env_id, todays_env_type
         )
         if not previous_question["paidOnly"] is False:
+            # Continue the loop again, until paidOnly is False
             continue
         count += 1
         yield previous_question
