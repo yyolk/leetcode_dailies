@@ -27,4 +27,34 @@ class Solution:
     """
 
     def champagneTower(self, poured: int, query_row: int, query_glass: int) -> float:
-        ...
+        """Calculates pouring champagne on glass tower
+
+        Proposed solution using a 2D array and simulating the pour
+
+        Args:
+            poured (int): the amount we poured into the top of the pyramid
+            query_row (int): the row of glasses we're interested in knowing, i
+            query_glass (int) the glass we're interested in knowing, j
+
+        Returns:
+            float: how full the jth glass in the ith row is
+        """
+        # Create our 2D list to represent our pyramid of glasses
+        glasses = [[0] * (query_row + 1) for _ in range(query_row + 1)]
+        # The amount at the top of the pyramid is equal to poured input
+        glasses[0][0] = poured
+
+        # Iterate up until and including our query_row, simulating the pour
+        for row in range(1, query_row + 1):
+            # Iterate through each glass in the row
+            for glass in range(row):
+                # Calculate excess champagne from glass above and distribute equally
+                excess = glasses[row - 1][glass] - 1
+
+                # Ensure that the excess champagne is distributed equally by using /2
+                if excess > 0:
+                    glasses[row][glass] += excess / 2
+                    glasses[row][glass + 1] += excess / 2
+
+        # A glass can only be full or partially-full, never more than 1
+        return min(1, glasses[query_row][query_glass])
