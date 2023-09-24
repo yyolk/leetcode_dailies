@@ -49,12 +49,12 @@ class Solution:
             # Iterate through each glass in the row
             for glass in range(row):
                 # Calculate excess champagne from glass above and distribute equally
-                excess = glasses[row - 1][glass] - 1
+                excess = (glasses[row - 1][glass] - 1) / 2
 
-                # Ensure that the excess champagne is distributed equally by using /2
                 if excess > 0:
-                    glasses[row][glass] += excess / 2
-                    glasses[row][glass + 1] += excess / 2
+                    glasses[row][glass] += excess
+                    glasses[row][glass + 1] += excess
 
         # A glass can only be full or partially-full, never more than 1
+        # If it's more than 1, it's excess we're not computing (further down the tower)
         return min(1, glasses[query_row][query_glass])
