@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/find-the-difference/
+from collections import Counter
 
 
 class Solution:
@@ -13,4 +14,20 @@ class Solution:
     """
 
     def findTheDifference(self, s: str, t: str) -> str:
-        ...
+        """Finds the one character difference between two input strings
+
+        Proposed solution using Counter subtraction.
+
+        Args:
+            s (str): input s
+            t (str): input t, one character off, with shuffled letters from s
+
+        Returns:
+            str: the one character that is different
+        """
+        # Create counters, counting all letters in each string
+        count_s = Counter(s)
+        count_t = Counter(t)
+
+        # Subtract count_s from count_t, the letter left is the letter that's different
+        return list((count_t - count_s).keys())[0]
