@@ -14,4 +14,35 @@ class Solution:
     """
 
     def isMonotonic(self, nums: List[int]) -> bool:
-        ...
+        """Checks if an input array of nums is monotonic.
+
+        Proposed solution that checks each item until the direction changes.
+
+        Args:
+            nums (List of int): input nums to check for monotonic quality
+
+        Returns:
+            bool: input is monotonic increasing or monotonic decreasing
+        """
+        # This will always be True
+        if len(nums) == 1:
+            return True
+
+        # Direction starts off undetermined
+        direction = 0
+
+        # Iterate over all numbers in input nums
+        for i in range(1, len(nums)):
+            if nums[i] > nums[i - 1]:
+                if direction == 0:
+                    direction = 1
+                elif direction == -1:
+                    return False
+            elif nums[i] < nums[i - 1]:
+                if direction == 0:
+                    direction = -1
+                elif direction == 1:
+                    return False
+
+        # We passed the monotomic test, it's True
+        return True
