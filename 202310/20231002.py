@@ -1,4 +1,6 @@
 # https://leetcode.com/problems/remove-colored-pieces-if-both-neighbors-are-the-same-color/
+from collections import Counter
+from itertools import groupby
 
 
 class Solution:
@@ -27,4 +29,29 @@ class Solution:
     """
 
     def winnerOfGame(self, colors: str) -> bool:
-        ...
+        """Finds the winner of the game between Alice and Bob
+
+        Proposed solution, using collections.Counter and itertools.groupby to pull
+        out consecutive pieces and then increment the counter if there's two neighbors.
+
+        Args:
+            colors (str): The input colors string which map to the intials of
+            Alice, 'A' or Bob, 'B'.
+
+        Returns:
+            bool: True if Alice wins, False if Bob wins.
+        """
+        # Initialize a Counter for storing moves for Alice and Bob
+        moves_counter = Counter()
+
+        # Group consecuritve identical characters using groupby
+        for x, t in groupby(colors):
+            # Increment the moves counter if there are two consecutive neighbors of
+            # the same color
+            moves_counter[x] += max(len(list(t)) - 2, 0)
+
+        # If Alice has more moves than Bob, Alice wins.
+        if moves_counter["A"] > moves_counter["B"]:
+            return True
+        # Bob wins by default
+        return False
