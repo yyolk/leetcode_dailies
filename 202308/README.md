@@ -91,12 +91,16 @@
    18
   </td>
   <td class="sat">
-   19
+   <a href="20230819.py">
+    19
+   </a>
   </td>
  </tr>
  <tr>
   <td class="sun">
-   20
+   <a href="20230820.py">
+    20
+   </a>
   </td>
   <td class="mon">
    <a href="20230821.py">
