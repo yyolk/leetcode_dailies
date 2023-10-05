@@ -44,10 +44,14 @@
    </a>
   </td>
   <td class="wed">
-   4
+   <a href="20231004.py">
+    4
+   </a>
   </td>
   <td class="thu">
-   5
+   <a href="20231005.py">
+    5
+   </a>
   </td>
   <td class="fri">
    6
