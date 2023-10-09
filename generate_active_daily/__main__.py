@@ -52,14 +52,14 @@ def modify_class_docstring(code, new_docstring, first_line):
         if isinstance(node, ast.ClassDef) and node.name == "Solution":
             found_docstring = False
             for item in node.body:
-                if isinstance(item, ast.Expr) and isinstance(item.value, ast.Str):
+                if isinstance(item, ast.Expr) and isinstance(item.value, ast.Constant):
                     item.value.s = new_docstring  # Modify the docstring
                     found_docstring = True
 
             # If no existing docstring is found, add a new docstring
             # There should always be no docstring found for the most used case
             if not found_docstring:
-                docstring = ast.Expr(value=ast.Str(s=""))
+                docstring = ast.Expr(value=ast.Constant(s=""))
                 indentation = node.body[0].col_offset
                 indented_docstring = (
                     first_line
