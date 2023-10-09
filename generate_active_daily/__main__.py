@@ -46,6 +46,17 @@ def modify_class_docstring(code, new_docstring, first_line):
     """This is a rough ast parse and modify"""
     # Parse the code into an abstract syntax tree (AST)
     parsed_tree = ast.parse(code)
+    wrapped_docstring = (
+        # include a blank line in-between every lines
+        "\n\n".join(
+            [
+                # join the wrapped lines with a new line
+                "\n".join(textwrap.wrap(line, TEXT_WIDTH))
+                for line in lines_
+            ]
+        )
+    )
+
 
     # Iterate through the nodes in the parsed AST
     for node in ast.walk(parsed_tree):
@@ -151,20 +162,21 @@ initial_python_code = next(
 docstring_ = unicodedata.normalize("NFKC", markdownify(content_before_example))
 
 lines_ = filter(lambda x: x, docstring_.splitlines())
-wrapped_docstring = (
-    # include a blank line in-between every lines
-    "\n\n".join(
-        [
-            # join the wrapped lines with a new line
-            "\n".join(textwrap.wrap(line, TEXT_WIDTH))
-            for line in lines_
-        ]
-    )
-)
+# wrapped_docstring = (
+#     # include a blank line in-between every lines
+#     "\n\n".join(
+#         [
+#             # join the wrapped lines with a new line
+#             "\n".join(textwrap.wrap(line, TEXT_WIDTH))
+#             for line in lines_
+#         ]
+#     )
+# )
+unwrapped_docstring = lines_
 
 first_line_ = f"{challenge_question_id}. {challenge_title}\n"
 modified_code = modify_class_docstring(
-    initial_python_code, wrapped_docstring, first_line_
+    initial_python_code, unwrapped_docstring, first_line_
 )
 boilerplate = f"# {challenge_url}" + "\n" * 3 + modified_code
 
