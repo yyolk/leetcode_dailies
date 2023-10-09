@@ -42,6 +42,21 @@ parser.add_argument("-O", "--overwrite", action="store_true", default=False)
 args = parser.parse_args()
 
 
+def wrap_docstring(lines, indentation=0):
+    """Makes a docstring like we like it from leetcode"""
+    new_docstring = (
+        # include a blank line in-between every lines
+        "\n\n".join(
+            [
+                # join the wrapped lines with a new line
+                "\n".join(textwrap.wrap(line, TEXT_WIDTH - indentation))
+                for line in lines
+            ]
+        )
+    )
+    return new_docstring
+
+
 def modify_class_docstring(code, new_docstring, first_line):
     """This is a rough ast parse and modify"""
     # Parse the code into an abstract syntax tree (AST)
@@ -53,7 +68,9 @@ def modify_class_docstring(code, new_docstring, first_line):
             found_docstring = False
             for item in node.body:
                 if isinstance(item, ast.Expr) and isinstance(item.value, ast.Constant):
-                    item.value.s = new_docstring  # Modify the docstring
+                    # Modify the docstring...
+                    # we're using just the raw lines in place here if its already found
+                    item.value.s = new_docstring
                     found_docstring = True
 
             # If no existing docstring is found, add a new docstring
@@ -61,6 +78,9 @@ def modify_class_docstring(code, new_docstring, first_line):
             if not found_docstring:
                 docstring = ast.Expr(value=ast.Constant(s=""))
                 indentation = node.body[0].col_offset
+                # Rewrite new_docstring, wrapping it.
+                # We know our indentation for keeping TEXT_WIDTH aligned.
+                new_docstring = wrap_docstring(new_docstring, indentation)
                 indented_docstring = (
                     first_line
                     + "\n"
@@ -120,7 +140,7 @@ html_summary = results["activeDailyCodingChallengeQuestion"]["question"]["conten
 soup = BeautifulSoup(html_summary, "html.parser")
 example_starts = soup.find("strong", class_="example").parent
 
-content_before_example = "".join(
+CONTENT_BEFORE_EXAMPLE = "".join(
     str(content) for content in soup.contents[: soup.contents.index(example_starts)]
 )
 
@@ -148,27 +168,26 @@ initial_python_code = next(
 # our docstring is pretty simple, everything before the examples, the number and the title
 # see #4, potentially an edge case, normalize \xa0 (&nbsp;) to ' ' using NFKC
 # NFKC = normal form compatibility decomposition followed by canonical composition
-docstring_ = unicodedata.normalize("NFKC", markdownify(content_before_example))
+docstring_ = unicodedata.normalize("NFKC", markdownify(CONTENT_BEFORE_EXAMPLE))
 
 lines_ = filter(lambda x: x, docstring_.splitlines())
-wrapped_docstring = (
-    # include a blank line in-between every lines
-    "\n\n".join(
-        [
-            # join the wrapped lines with a new line
-            "\n".join(textwrap.wrap(line, TEXT_WIDTH))
-            for line in lines_
-        ]
-    )
-)
+# We're being explicit in our definition and setting it twice...
+# Our `lines_` come from the `unicode.normalize(...)`,
+# which is also our `unwrapped_docstring`
+unwrapped_docstring = lines_
 
+# The first line in the docstring is always: '#No. Title of Challenge'
 first_line_ = f"{challenge_question_id}. {challenge_title}\n"
-modified_code = modify_class_docstring(
-    initial_python_code, wrapped_docstring, first_line_
+# The complete modified code includes the modified docstring
+MODIFIED_CODE = modify_class_docstring(
+    initial_python_code, unwrapped_docstring, first_line_
 )
-boilerplate = f"# {challenge_url}" + "\n" * 3 + modified_code
+# We insert '# https://leetcode.com/....' at the top of the file
+boilerplate = f"# {challenge_url}" + "\n" * 3 + MODIFIED_CODE
 
-# for sanity, send it through black's formatter
+# For extra sanity, send it through black's formatter,
+# this ends up catching a lot of small things,
+# like the last-line triple-quotes being indented from ast.unparse(...)
 final_boilerplate = black.format_str(
     boilerplate, mode=black.FileMode(line_length=TEXT_WIDTH)
 )
