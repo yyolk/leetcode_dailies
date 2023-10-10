@@ -1,4 +1,7 @@
 # https://leetcode.com/problems/minimum-number-of-operations-to-make-array-continuous/
+import sys
+
+from bisect import bisect_right
 
 
 class Solution:
@@ -22,4 +25,34 @@ class Solution:
     """
 
     def minOperations(self, nums: List[int]) -> int:
-        ...
+        """The minimum operations to make input nums continuous.
+
+        Proposed solution using bisect module, set, and sorted.
+
+        Args:
+            nums (List of int): The input nums to make continuous.
+
+        Returns:
+            int: The minimum number of operations to make nums continous.
+        """
+        # Length of input array
+        n = len(nums)
+
+        # Remove duplicates and sort the input
+        nums = sorted(set(nums))
+
+        # Initialize with a large value
+        min_operations = sys.maxsize
+
+        for i, s in enumerate(nums):
+            # Calculate the end of the subarray
+            end = s + n - 1
+
+            # Use bisect_right to find the index where end would be inserted
+            idx = bisect_right(nums, end)
+
+            # Calculate the minimum number of operations for the subarray
+            min_operations = min(min_operations, n - (idx - i))
+
+        # Return the minimum operations
+        return min_operations
