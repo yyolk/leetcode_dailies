@@ -29,7 +29,66 @@ class Solution:
     Submissions making more than `100` calls to `MountainArray.get` will be judged
     *Wrong Answer*. Also, any solutions that attempt to circumvent the judge will result
     in disqualification.
+
+
+    This is MountainArray's API interface.
+    You should not implement it, or speculate about its implementation
+
+        class MountainArray:
+            def get(self, index: int) -> int:
+            def length(self) -> int:
+
     """
 
     def findInMountainArray(self, target: int, mountain_arr: "MountainArray") -> int:
-        ...
+        """Find the target in the MountainArray using its interface.
+
+        Proposed solution
+
+        Args:
+            target (int): The element to look for in thhe MountainArray.
+            mountain_arr (MountainArray): The input MountainArray to search.
+
+        Returns:
+            int: The minimum index of MountainArray which is the target value.
+        """
+        n = mountain_arr.length()
+
+        # Find the peak index (the highest value in the mountain)
+        left, right = 0, n - 1
+        while left < right:
+            mid = (left + right) // 2
+            if mountain_arr.get(mid) < mountain_arr.get(mid + 1):
+                left = mid + 1
+            else:
+                right = mid
+
+        # Index of the peak
+        peak = left
+
+        # Search the left side of the peak
+        left, right = 0, peak
+        while left <= right:
+            mid = (left + right) // 2
+            mid_val = mountain_arr.get(mid)
+            if mid_val == target:
+                return mid
+            elif mid_val < target:
+                left = mid + 1
+            else:
+                right = mid - 1
+
+        # Search the right side of the peak
+        left, right = peak, n - 1
+        while left <= right:
+            mid = (left + right) // 2
+            mid_val = mountain_arr.get(mid)
+            if mid_val == target:
+                return mid
+            elif mid_val < target:
+                right = mid - 1
+            else:
+                left = mid + 1
+
+        # Target not found
+        return -1
