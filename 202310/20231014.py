@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/painting-the-walls/
+from sys import maxsize
 
 
 class Solution:
@@ -18,4 +19,34 @@ class Solution:
     """
 
     def paintWalls(self, cost: List[int], time: List[int]) -> int:
-        ...
+        """Minimum amount of money to paint the walls by simulating the scenario.
+
+        Proposed solution using dynamic programming.
+
+        Args:
+            cost (List of int): Cost to paint n different walls.
+            time (List of int): Time to paint n different walls.
+
+        Returns:
+            int: The minimum amount of money required to paint n walls.
+        """
+        n = len(cost)
+
+        # Create a 2D DP array with dimensions (n + 1) x (n + 1).
+        dp = [[maxsize for i in range(n + 1)] for j in range(n + 1)]
+
+        # Initialize the DP array.
+        dp[0][0] = 0  # No cost for painting 0 walls.
+
+        for i in range(n):
+            for j in range(n + 1):
+                t = min(n, j + time[i] + 1)
+
+                # Calculate the minimum cost when not using the paid painter.
+                dp[i + 1][t] = min(dp[i + 1][t], dp[i][j] + cost[i])
+
+                # Calculate the minimum cost when using the paid painter.
+                dp[i + 1][j] = min(dp[i + 1][j], dp[i][j])
+
+        # Return the minimum cost for painting all walls.
+        return dp[n][n]
