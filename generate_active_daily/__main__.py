@@ -16,6 +16,7 @@ import ast
 import asyncio
 import textwrap
 import json
+import re
 import sys
 import unicodedata
 
@@ -42,6 +43,18 @@ parser.add_argument("-O", "--overwrite", action="store_true", default=False)
 args = parser.parse_args()
 
 
+def camel_to_snake(camel_string):
+    """Converts a camelCase name into a snake_case name."""
+    # Use regular expressions to find all uppercase letters
+    # and add an underscore before them
+    snake_string = re.sub(r"([A-Z])", r"_\1", camel_string)
+
+    # Remove any leading underscore and convert to lowercase
+    snake_string = snake_string.lstrip("_").lower()
+
+    return snake_string
+
+
 def wrap_docstring(lines, indentation=0):
     """Makes a docstring like we like it from leetcode"""
     new_docstring = (
@@ -61,6 +74,10 @@ def modify_class_docstring(code, new_docstring, first_line):
     """This is a rough ast parse and modify"""
     # Parse the code into an abstract syntax tree (AST)
     parsed_tree = ast.parse(code)
+
+    # We'll need to know these for renaming the method name and redirecting the caller.
+    camel_case_function_name = None
+    snake_case_function_name = None
 
     # Iterate through the nodes in the parsed AST
     for node in ast.walk(parsed_tree):
@@ -89,6 +106,39 @@ def modify_class_docstring(code, new_docstring, first_line):
 
                 docstring.value.s = indented_docstring
                 node.body.insert(0, docstring)
+        # Work on the boilerplate method that's tied to the Solution(...)
+        if isinstance(node, ast.FunctionDef):
+            # Leetcode follows snake_case conventions elsewhere,
+            # but doesn't for python for some reason.
+            # Save for later
+            camel_case_function_name = node.name
+            snake_case_function_name = camel_to_snake(node.name)
+            # Make the method name snake_case.
+            node.name = snake_case_function_name
+            # Work on the boilerplate Solution.method(...)'s args
+            for arg in node.args.args:
+                # We don't need to do anything with self.
+                # In the future we might switch it out to cls and add a @classmethod decorator.
+                if arg.arg == "self":
+                    continue
+                # Make the args, leetcode makes camelCase, snake_case.
+                # Leetcode invokes methods positionally so this this superficial change is trivial.
+                arg.arg = camel_to_snake(arg.arg)
+
+    for node in ast.walk(parsed_tree):
+        if isinstance(node, ast.ClassDef) and node.name == "Solution":
+            # Create a new function assignment statement
+            new_attribute = ast.Assign(
+                # Set a valid lineno, 0 seems to work fine
+                lineno=0,
+                # Set a valid col_offset, 0 seems to work fine
+                col_offset=0,
+                targets=[ast.Name(id=camel_case_function_name, ctx=ast.Store())],
+                value=ast.Name(id=snake_case_function_name, ctx=ast.Load()),
+            )
+            # Append the new attribute, which is our function redirection to the class
+            # Solution(...) body
+            node.body.append(new_attribute)
 
     # Convert the modified AST back to code
     return ast.unparse(parsed_tree)
