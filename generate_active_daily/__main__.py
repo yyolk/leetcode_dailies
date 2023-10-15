@@ -106,6 +106,10 @@ def modify_class_docstring(code, new_docstring, first_line):
 
                 docstring.value.s = indented_docstring
                 node.body.insert(0, docstring)
+        #
+        # From here on, our code for modifying the AST is much better
+        # The above could be refactored and the second loop below is for keeping it clean.
+        #
         # Work on the boilerplate method that's tied to the Solution(...)
         if isinstance(node, ast.FunctionDef):
             # Leetcode follows snake_case conventions elsewhere,
@@ -125,6 +129,8 @@ def modify_class_docstring(code, new_docstring, first_line):
                 # Leetcode invokes methods positionally so this superficial change is trivial.
                 arg.arg = camel_to_snake(arg.arg)
 
+    # We go back in after walking the entire thing so we can append into the class
+    # Probably could make this one loop but can revisit since the above needs refactoring too
     for node in ast.walk(parsed_tree):
         if isinstance(node, ast.ClassDef) and node.name == "Solution":
             # Create a new function assignment statement
