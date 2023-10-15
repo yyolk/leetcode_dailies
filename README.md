@@ -4,7 +4,7 @@ My daily leetcode problem submissions
 
 ## Generate today's boilerplate
 
-Calls the 'undocumented' leetcode graphQL endpoint to grab the activeDailyChallengeQuestion.
+Calls the 'undocumented' leetcode graphQL API to query for `activeDailyChallengeQuestion`.
 
 It includes everything we want to generate our answer boilerplate.
 
