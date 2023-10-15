@@ -29,10 +29,9 @@ import black
 from bs4 import BeautifulSoup
 from markdownify import markdownify
 
-from .constants import LEETCODE_BASE_URL
+from .constants import LEETCODE_BASE_URL, TEXT_WIDTH
 from .client import query_question_of_today
 
-TEXT_WIDTH = 88  # The default that psf/black ships with is 88
 
 parser = argparse.ArgumentParser(
     description="Generates the current daily active challenge boilerplate file."
