@@ -122,7 +122,7 @@ def modify_class_docstring(code, new_docstring, first_line):
                 if arg.arg == "self":
                     continue
                 # Make the args, leetcode makes camelCase, snake_case.
-                # Leetcode invokes methods positionally so this this superficial change is trivial.
+                # Leetcode invokes methods positionally so this superficial change is trivial.
                 arg.arg = camel_to_snake(arg.arg)
 
     for node in ast.walk(parsed_tree):
