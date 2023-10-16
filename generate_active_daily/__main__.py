@@ -121,7 +121,7 @@ def modify_class_docstring(code, new_docstring, first_line):
             # Work on the boilerplate Solution.method(...)'s args
             for arg in node.args.args:
                 # We don't need to do anything with self.
-                # In the future we might have detectable scenarios where we necessarily need to 
+                # In the future we might have detectable scenarios where we necessarily need to
                 # switch it out to cls and add a @classmethod decorator.
                 if arg.arg == "self":
                     continue
