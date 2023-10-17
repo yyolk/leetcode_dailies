@@ -75,40 +75,17 @@ def modify_class_docstring(code, new_docstring, first_line):
     parsed_tree = ast.parse(code)
 
     # We'll need to know these for renaming the method name and redirecting the caller.
+    # The majority of the time, leetcode expects to call a Solution.method(...).
+    # This is the only case it satisfies, other cases, i.e., where it wants an interface
+    # will need better detection and handled differently.
     camel_case_function_name = None
     snake_case_function_name = None
+    # We'll want to keep track of the old arg names for renaming those references in
+    # the problem description.
+    args_list = []
 
     # Iterate through the nodes in the parsed AST
     for node in ast.walk(parsed_tree):
-        if isinstance(node, ast.ClassDef) and node.name == "Solution":
-            found_docstring = False
-            for item in node.body:
-                if isinstance(item, ast.Expr) and isinstance(item.value, ast.Constant):
-                    # Modify the docstring...
-                    # we're using just the raw lines in place here if its already found
-                    item.value.s = new_docstring
-                    found_docstring = True
-
-            # If no existing docstring is found, add a new docstring
-            # There should always be no docstring found for the most used case
-            if not found_docstring:
-                docstring = ast.Expr(value=ast.Constant(s=""))
-                indentation = node.body[0].col_offset
-                # Rewrite new_docstring, wrapping it.
-                # We know our indentation for keeping TEXT_WIDTH aligned.
-                new_docstring = wrap_docstring(new_docstring, indentation)
-                indented_docstring = (
-                    first_line
-                    + "\n"
-                    + textwrap.indent(new_docstring, " " * indentation)
-                )
-
-                docstring.value.s = indented_docstring
-                node.body.insert(0, docstring)
-        #
-        # From here on, our code for modifying the AST is much better
-        # The above could be refactored and the second loop below is for keeping it clean.
-        #
         # Work on the boilerplate method that's tied to the Solution(...)
         if isinstance(node, ast.FunctionDef):
             # Leetcode follows snake_case conventions elsewhere,
@@ -125,6 +102,9 @@ def modify_class_docstring(code, new_docstring, first_line):
                 # switch it out to cls and add a @classmethod decorator.
                 if arg.arg == "self":
                     continue
+                # Save the old arg name for identifying references in our problem
+                # description.
+                args_list.append(arg.arg)
                 # Make the args, leetcode makes camelCase, snake_case.
                 # Leetcode invokes methods positionally so this superficial change is trivial.
                 arg.arg = camel_to_snake(arg.arg)
@@ -133,7 +113,47 @@ def modify_class_docstring(code, new_docstring, first_line):
     # Probably could make this one loop but can revisit since the above needs refactoring too
     for node in ast.walk(parsed_tree):
         if isinstance(node, ast.ClassDef) and node.name == "Solution":
-            # Create a new function assignment statement
+            found_docstring = False
+            for item in node.body:
+                if isinstance(item, ast.Expr) and isinstance(item.value, ast.Constant):
+                    # Modify the docstring...
+                    # we're using just the raw lines in place here if its already found
+                    item.value.s = new_docstring
+                    found_docstring = True
+
+            # If no existing docstring is found, add a new docstring
+            # There should always be no docstring found for the most used case
+            if not found_docstring:
+                # Find all the references to our new args which were camelCase,
+                # make them snake_case.
+                for arg in args_list:
+                    # This is a naive approach, it is the full text.
+                    # A better approach may be required in the future.
+                    # A low-effort addition could be using regex to detect
+                    # those references as markdown code-spans.
+                    # e.g., "`namedVar[x + y]`"
+                    new_docstring = [
+                        line.replace(arg, camel_to_snake(arg)) for line in new_docstring
+                    ]
+
+                # Set up a docstring, and reference our indentation for the class
+                # Solution(...).
+                docstring = ast.Expr(value=ast.Constant(s=""))
+                indentation = node.body[0].col_offset
+                # Rewrite new_docstring, wrapping it.
+                # We know our indentation for keeping TEXT_WIDTH aligned.
+                new_docstring = wrap_docstring(new_docstring, indentation)
+                indented_docstring = (
+                    first_line
+                    + "\n"
+                    + textwrap.indent(new_docstring, " " * indentation)
+                )
+
+                docstring.value.s = indented_docstring
+                node.body.insert(0, docstring)
+
+            # Create a new function assignment to assign the camelCase function to our
+            # snake_case, we want leetcode to call our snake_case function.
             new_attribute = ast.Assign(
                 # Set a valid lineno, 0 seems to work fine
                 lineno=0,
@@ -230,7 +250,8 @@ lines_ = filter(lambda x: x, docstring_.splitlines())
 # We're being explicit in our definition and setting it twice...
 # Our `lines_` come from the `unicode.normalize(...)`,
 # which is also our `unwrapped_docstring`
-unwrapped_docstring = lines_
+# We also end up using this more than once over all items so list(...) here.
+unwrapped_docstring = list(lines_)
 
 # The first line in the docstring is always: '#No. Title of Challenge'
 first_line_ = f"{challenge_question_id}. {challenge_title}\n"
