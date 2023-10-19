@@ -24,7 +24,7 @@ class Solution:
             bool: True if the strings, after backspaces are accounted for, are the same.
         """
 
-        def process_string(string: str) -> List[s]:
+        def process_string(string: str) -> List[str]:
             """Process a String by applying backspaces.
 
             Args:
