@@ -128,10 +128,14 @@
    </a>
   </td>
   <td class="fri">
-   20
+   <a href="20231020.py">
+    20
+   </a>
   </td>
   <td class="sat">
-   21
+   <a href="20231021.py">
+    21
+   </a>
   </td>
  </tr>
  <tr>
