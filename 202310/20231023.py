@@ -12,6 +12,26 @@ class Solution:
     """
 
     def is_power_of_four(self, n: int) -> bool:
-        ...
+        """Is number a power of four?
+
+        Proposed solution, uses binary representation of the input and bit counting
+        the bits to determine.
+
+        Args:
+            n (int): Input integer to determine if it's a power of four.
+
+        Returns:
+            bool: True if n is power of four.
+        """
+        # Check if n is a positive integer
+        if n <= 0:
+            return False
+
+        # Check if there is only one '1' bit in the binary representation
+        binary_representation = bin(n)
+        return (
+            binary_representation.count("1") == 1
+            and binary_representation.count("0") % 2 == 1
+        )
 
     isPowerOfFour = is_power_of_four
