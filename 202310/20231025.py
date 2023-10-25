@@ -16,6 +16,29 @@ class Solution:
     """
 
     def kth_grammar(self, n: int, k: int) -> int:
-        ...
+        """Returns the kth symbol in the nth row of a table of n rows.
+
+        Proposed solution using recursion.
+
+        Args:
+            n (int): Input n for rows in table.
+            k (int): Query k for kth symbol in the nth row of a table of n rows.
+
+        Returns:
+            int: The kth symbol in the nth row of a table of n rows.
+        """
+        # Base case
+        if n == 1:
+            return 0
+
+        # Calculate the length of the (n-1)th row
+        length_of_prev_row = 2 ** (n - 1 - 1)
+
+        # If k is the first half of the row, it's the same as in the (n-1)th row
+        if k <= length_of_prev_row:
+            return self.kth_grammar(n - 1, k)
+        # If k is in the second half, it's the opposite of the (n-1)th row
+        else:
+            return 1 - self.kth_grammar(n - 1, k - length_of_prev_row)
 
     kthGrammar = kth_grammar
