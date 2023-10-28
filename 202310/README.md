@@ -170,7 +170,9 @@
    </a>
   </td>
   <td class="sat">
-   28
+   <a href="20231028.py">
+    28
+   </a>
   </td>
  </tr>
  <tr>
