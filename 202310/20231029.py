@@ -45,13 +45,8 @@ class Solution:
             int: The minimum number of pigs necesssary to figure out which bucket is
                 poisonous.
         """
-        floating_pigs = math.log(buckets) / math.log(
-            minutes_to_test / minutes_to_die + 1
+        return math.ceil(
+            round(math.log(buckets) / math.log(minutes_to_test / minutes_to_die + 1), 2)
         )
-
-        if floating_pigs % 1 < 1e-3:
-            return math.floor(floating_pigs)
-        else:
-            return math.ceil(floating_pigs)
 
     poorPigs = poor_pigs
