@@ -19,9 +19,80 @@ class Solution:
     to** the node's key.
 
     * Both the left and right subtrees must also be binary search trees.
+
+    Definition for a binary tree node:
+
+            class TreeNode:
+                def __init__(self, val=0, left=None, right=None):
+                    self.val = val
+                    self.left = left
+                    self.right = right
     """
 
-    def find_mode(self, root: Optional[TreeNode]) -> List[int]:
-        ...
+    def find_mode(self, root: TreeNode | None) -> list[int]:
+        """
+        Find the mode(s) in a binary search tree (BST) with duplicates.
+
+        Args:
+            root: The root node of the BST.
+
+        Returns:
+            A list of mode(s) in the BST.
+        """
+
+        def inorder_traversal(node: TreeNode | None):
+            """
+            Perform an in-order traversal of the BST and populate the 'elements' list
+            with node values.
+
+            Args:
+                node: The current node in the traversal.
+            """
+            if node:
+                # Traverse the left subtree
+                inorder_traversal(node.left)
+                # Append the current node's value to the elements list
+                elements.append(node.val)
+                # Traverse the right subtree
+                inorder_traversal(node.right)
+
+        def find_modes(elements: list[int]) -> list[int]:
+            """
+            Find the mode(s) from the list of elements.
+
+            Args:
+                elements: List of elements from the BST.
+
+            Returns:
+                A list of mode(s).
+            """
+            modes = []
+            max_freq = 0
+            curr_val = None
+            curr_freq = 0
+
+            for val in elements:
+                if val == curr_val:
+                    curr_freq += 1
+                else:
+                    curr_val = val
+                    curr_freq = 1
+
+                if curr_freq > max_freq:
+                    # Found a new mode, update modes
+                    modes = [val]
+                    max_freq = curr_freq
+                elif curr_freq == max_freq:
+                    # Current value has the same frequency as the modes, add it to the modes
+                    modes.append(val)
+
+            return modes
+
+        # Initialize elements as an empty list
+        elements: list[int] = []
+        # Perform in-order traversal to populate elements
+        inorder_traversal(root)
+        # Find and return the modes
+        return find_modes(elements)
 
     findMode = find_mode
