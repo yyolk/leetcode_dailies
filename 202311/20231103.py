@@ -30,7 +30,29 @@ class Solution:
     rules. If there are multiple valid answers, return **any of them**.
     """
 
-    def build_array(self, target: List[int], n: int) -> List[str]:
-        ...
+    def build_array(self, target: list[int], n: int) -> list[str]:
+        """
+        Build the target array using stack operations.
+
+        Args:
+            target: The target array to be built using stack operations.
+            n: The maximum integer value for the stream of integers.
+
+        Returns:
+            The stack operations needed to build the target array.
+        """
+        target_set = set(target)
+        result = []
+
+        for i in range(1, target[-1] + 1):
+            # Push i onto the stack if it's part of the target_set.
+            if i in target_set:
+                result.append("Push")
+            else:
+                # If the current integer isn't in set, simulate a Push and Pop.
+                result.append("Push")
+                result.append("Pop")
+
+        return result
 
     buildArray = build_array
