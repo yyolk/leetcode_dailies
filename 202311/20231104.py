@@ -20,7 +20,29 @@ class Solution:
     out of the plank*.
     """
 
-    def get_last_moment(self, n: int, left: List[int], right: List[int]) -> int:
-        ...
+    def get_last_moment(self, n: int, left: list[int], right: list[int]) -> int:
+        """Calculate the moment when the last ant(s) fall out of the plank.
+
+        Args:
+            n: The length of the plank in units.
+            left: Positions of ants moving to the left.
+            right: Positions of ants moving to the right.
+
+        Returns:
+            The moment when the last ant(s) fall out of the plank.
+        """
+        # Calculate the time for ants moving left to fall out of the plank
+        left_time = 0
+        for position in left:
+            left_time = max(left_time, position)
+
+        # Calculate the time for ants moving right to fall out of the plank
+        right_time = 0
+        for position in right:
+            right_time = max(right_time, n - position)
+
+        # The moment when the last ant(s) fall out of the plank is the maximum of
+        # either side.
+        return max(left_time, right_time)
 
     getLastMoment = get_last_moment
