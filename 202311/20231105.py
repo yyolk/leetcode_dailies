@@ -16,7 +16,38 @@ class Solution:
     It is **guaranteed** that there will be a winner of the game.
     """
 
-    def get_winner(self, arr: List[int], k: int) -> int:
-        ...
+    def get_winner(self, arr: list[int], k: int) -> int:
+        """Find the winner of the array game after k consecutive wins.
+
+        Proposed solution by simulating the game.
+
+        Args:
+            arr: A list of distinct integers.
+            k: An integer representing the number of consecutive rounds to win.
+
+        Returns:
+            The integer that will win the game after k consecutive wins.
+        """
+        # Handle edge cases and be efficient.
+        if k == 1:
+            return max(arr[0], arr[1])
+        if k >= len(arr):
+            return max(arr)
+
+        # Initialize the consecutive wins counter and the winner.
+        consecutive_wins = 0
+        winner = arr[0]
+
+        for i in range(1, len(arr)):
+            if arr[i] > winner:
+                winner = arr[i]
+                consecutive_wins = 1
+            else:
+                consecutive_wins += 1
+
+            if consecutive_wins == k:
+                return winner
+
+        return winner
 
     getWinner = get_winner
