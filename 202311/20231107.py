@@ -25,7 +25,28 @@ class Solution:
     or* `n` *if you can eliminate all the monsters before they reach the city.*
     """
 
-    def eliminate_maximum(self, dist: List[int], speed: List[int]) -> int:
-        ...
+    def eliminate_maximum(self, dist: list[int], speed: list[int]) -> int:
+        """The maximum number of monsters you can eliminate before you lose.
+
+        Args:
+            dist: A list of initial distances of monsters from the city.
+            speed: A list of speeds of monsters in kilometers per minute.
+
+        Returns:
+            The **maximum** number of monsters that you can eliminate before you lose,
+            or `n` if you can eliminate all the monsters before they reach the city.
+        """
+        time_to_city = [dist[i] / speed[i] for i in range(len(dist))]
+
+        # Sort the monsters by their time it takes for them to reach the city.
+        time_to_city.sort()
+
+        for i in range(len(time_to_city)):
+            # If weapon is charged before the monster reaches the city, the monster is
+            # eliminated.
+            if time_to_city[i] <= i:
+                return i
+
+        return len(dist)
 
     eliminateMaximum = eliminate_maximum
