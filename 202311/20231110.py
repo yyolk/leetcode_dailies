@@ -21,7 +21,7 @@ class Solution:
     of them***.
     """
 
-    def restore_array(self, adjacent_pairs: List[List[int]]) -> List[int]:
+    def restore_array(self, adjacent_pairs: list[list[int]]) -> list[int]:
         # Build the adjacency list
         adj_list = defaultdict(list)
         for pair in adjacent_pairs:
