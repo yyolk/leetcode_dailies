@@ -6,7 +6,7 @@ class Graph:
     """2642. Design Graph With Shortest Path Calculator
 
     There is a directed weighted graph that consists of n nodes numbered from 0 to n - 1.
-    The edges of the graph are initially represented by the given array edges where 
+    The edges of the graph are initially represented by the given array edges where
     edges[i] = [fromi, toi, edgeCosti] meaning that there is an edge from fromi to toi
     with the cost edgeCosti.
 
@@ -26,6 +26,7 @@ class Graph:
         obj.addEdge(edge)
         param_2 = obj.shortestPath(node1,node2)
     """
+
     def __init__(self, n: int, edges: list[list[int]]):
         self.n = n
         self.adjacency_list = {}

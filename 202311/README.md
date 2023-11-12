@@ -87,12 +87,16 @@
    </a>
   </td>
   <td class="sat">
-   11
+   <a href="20231111.py">
+    11
+   </a>
   </td>
  </tr>
  <tr>
   <td class="sun">
-   12
+   <a href="20231112.py">
+    12
+   </a>
   </td>
   <td class="mon">
    13
