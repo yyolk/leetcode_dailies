@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/bus-routes/
+from collections import defaultdict, deque
 
 
 class Solution:
@@ -18,8 +19,50 @@ class Solution:
     """
 
     def num_buses_to_destination(
-        self, routes: List[List[int]], source: int, target: int
+        self, routes: list[list[int]], source: int, target: int
     ) -> int:
-        ...
+        """
+        Returns the least number of buses you must take to travel from the source bus
+        stop to the target bus stop.
+
+        Args:
+            routes: A list of bus routes where routes[i] is a list representing the
+                stops of the i_th bus.
+            source: The bus stop where the journey starts.
+            target: The bus stop where the journey ends.
+
+        Returns:
+            The minimum number of buses needed to travel from the source to the target
+            bus stop. Returns -1 if not possible.
+        """
+
+        if source == target:
+            return 0
+
+        stop_to_routes = defaultdict(list)
+        for i, route in enumerate(routes):
+            for stop in route:
+                stop_to_routes[stop].append(i)
+
+        visited_routes = set()
+        visited_stops = set()
+
+        queue = deque([(source, 0)])
+
+        while queue:
+            current_stop, num_buses = queue.popleft()
+
+            if current_stop == target:
+                return num_buses
+
+            for route_index in stop_to_routes[current_stop]:
+                if route_index not in visited_routes:
+                    visited_routes.add(route_index)
+                    for next_stop in routes[route_index]:
+                        if next_stop not in visited_stops:
+                            visited_stops.add(next_stop)
+                            queue.append((next_stop, num_buses + 1))
+
+        return -1
 
     numBusesToDestination = num_buses_to_destination
