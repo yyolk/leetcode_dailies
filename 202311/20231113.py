@@ -22,6 +22,28 @@ class Solution:
     """
 
     def sort_vowels(self, s: str) -> str:
-        ...
+        """
+        Sort the string in accordance to the sort by vowel rules.
+
+        Args:
+            s: The input string to sort characters.
+
+        Returns:
+            The resulting, sorted string.
+        """
+        vowels = set("aeiouAEIOU")
+        consonants = [c for c in s if c not in vowels]
+
+        sorted_vowels = sorted([v for v in s if v in vowels], reverse=True)
+        result = ""
+
+        for char in s:
+            if char in vowels:
+                # Pick one from sorted_vowels
+                result += sorted_vowels.pop()
+            else:
+                result += char
+
+        return result
 
     sortVowels = sort_vowels
