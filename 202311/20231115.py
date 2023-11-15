@@ -23,8 +23,26 @@ class Solution:
     operations to satisfy the conditions*.
     """
 
-    def maximum_element_after_decrementing_and_rearranging(self, arr: List[int]) -> int:
-        ...
+    def maximum_element_after_decrementing_and_rearranging(self, arr: list[int]) -> int:
+        """Maximum possible value of an element in arr after performing the operations.
+
+        Args:
+            arr: The input array of integers to perform operations on.
+
+        Returns:
+            The maximum possible value after performing the operations.
+        """
+        # Initialize the condition with 1.
+        max_possible = 1
+
+        # Adjust each element after sorting to satisfy the conditions while maximizing
+        # its value.
+        for i in sorted(arr)[1:]:
+            # Update the maximum possible value based on the conditions.
+            if i > max_possible:
+                max_possible += 1
+
+        return max_possible
 
     maximumElementAfterDecrementingAndRearranging = (
         maximum_element_after_decrementing_and_rearranging
