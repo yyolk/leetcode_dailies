@@ -18,9 +18,35 @@ class Solution:
     * The **maximum pair sum** is **minimized**.
 
     Return *the minimized **maximum pair sum** after optimally pairing up the elements*.
+
+    Constraints:
+        * `n == nums.length`
+        * `2 <= n <= 105`
+        * `n` is even.
+        * `1 <= nums[i] <= 105`
     """
 
-    def min_pair_sum(self, nums: List[int]) -> int:
-        ...
+    def min_pair_sum(self, nums: list[int]) -> int:
+        """The minimized maximum pair sum after optimally pairing up the elements.
+
+        Accomplished by sorting the input and then pairing the elements from both ends.
+
+        Args:
+            nums: The input integer list.
+
+        Returns:
+            The maximum pair sum of the input.
+        """
+        # Sort the array in ascending order.
+        nums.sort()
+        n = len(nums)
+        result = 0
+
+        # Pair the smallest and largest elements, the second smallest and second
+        # largest elements, and so on.
+        for i in range(n // 2):
+            result = max(result, nums[i] + nums[n - 1 - i])
+
+        return result
 
     minPairSum = min_pair_sum
