@@ -71,6 +71,16 @@ def wrap_docstring(lines, indentation=0):
 
 def modify_class_docstring(code, new_docstring, first_line):
     """This is a rough ast parse and modify"""
+    # The types we'll want to enforce to lowercase while walking the AST
+    # (no requirement for attr(typing, "GenericT"))
+    generic_types_pep_585 = [
+        "Tuple",
+        "List",
+        "Dict",
+        "Set",
+        "FrozenSet",
+        "Type",
+    ]
     # Parse the code into an abstract syntax tree (AST)
     parsed_tree = ast.parse(code)
 
@@ -108,6 +118,32 @@ def modify_class_docstring(code, new_docstring, first_line):
                 # Make the args, leetcode makes camelCase, snake_case.
                 # Leetcode invokes methods positionally so this superficial change is trivial.
                 arg.arg = camel_to_snake(arg.arg)
+                # Dumb way to enforce PEP-585 with the boilerplate code leetcode generates,
+                # but since we are already here, might as well do it.
+                # This section works on the function args.
+                if isinstance(arg.annotation, ast.Subscript):
+                    for arg_node in ast.walk(arg.annotation):
+                        # Reassign the arg_node.id with a Call on lower() on the use
+                        # of the types in the predicate (matched by string).
+                        if (
+                            isinstance(arg_node, ast.Name)
+                            and isinstance(arg_node.id, str)
+                            and arg_node.id in generic_types_pep_585
+                        ):
+                            arg_node.id = arg_node.id.lower()
+            # Dumb way to enforce PEP-585 with the boilerplate code leetcode generates,
+            # but since we are already here we might as well do it.
+            # This section works on the function return type annotation.
+            for r_arg in ast.walk(item.returns):
+                if isinstance(r_arg, ast.Subscript):
+                    for r_arg_node in ast.walk(r_arg):
+                        if (
+                            isinstance(r_arg_node, ast.Name)
+                            and isinstance(r_arg_node.id, str)
+                            and r_arg_node.id in generic_types_pep_585
+                        ):
+                            r_arg_node.id = r_arg_node.id.lower()
+
 
     # We go back in after walking the entire thing so we can append into the class
     # Probably could make this one loop but can revisit since the above needs refactoring too
