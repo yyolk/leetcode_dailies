@@ -1,4 +1,8 @@
 # https://leetcode.com/problems/count-nice-pairs-in-an-array/
+from collections import Counter
+
+
+MOD = 10**9 + 7
 
 
 class Solution:
@@ -17,7 +21,25 @@ class Solution:
     return it **modulo** `109 + 7`.
     """
 
-    def count_nice_pairs(self, nums: List[int]) -> int:
-        ...
+    def count_nice_pairs(self, nums: list[int]) -> int:
+        """Count and Return the number of nice pairs.
+
+        Args:
+            nums: Input list of non-negative integers to count nice pairs of from
+                opposite sides to determine if their sum matches the reverse of either.
+
+        Returns:
+            The number of nice pairs of indices MOD 10^9 + 7.
+        """
+        # Calculate the complement of each number.
+        complement_nums = [i - int(str(i)[::-1]) for i in nums]
+
+        nice_pairs_count = 0
+
+        # Count occurrences of each complement using Counter.
+        for num in Counter(complement_nums).values():
+            # Calculate the number of pairs that can be formed with 'num' occurrences.
+            nice_pairs_count += num * (num - 1) // 2
+        return nice_pairs_count % MOD
 
     countNicePairs = count_nice_pairs
