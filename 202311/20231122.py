@@ -1,5 +1,5 @@
 # https://leetcode.com/problems/diagonal-traverse-ii/
-import heapq
+from collections import deque
 
 
 class Solution:
@@ -19,21 +19,22 @@ class Solution:
             Integer array of elements starting from top left to bottom right of
             elements in diagonal order.
         """
-        # Create a min heap.
-        heap = []
         # Create the result list.
         result = []
+        # Create the double-ended queue
+        dq = deque([[0, 0]])
+        n = len(nums)
 
-        # Push elements into the heap with the tuple:
-        #   (sum of indices, -row index, element).
-        for i in range(len(nums)):
-            for j in range(len(nums[i])):
-                heapq.heappush(heap, (i + j, -i, nums[i][j]))
-
-        # Pop elements from the heap and append them to the result list.
-        while heap:
-            _, _, element = heapq.heappop(heap)
-            result.append(element)
+        while dq:
+            i, j = dq.popleft()
+            result.append(nums[i][j])
+            # If we are at the beginning of a row and there is a row below,
+            # add the element below.
+            if j == 0 and i + 1 < n:
+                dq.append([i + 1, j])
+            # If there is a column to the right, add the element to the right.
+            if j + 1 < len(nums[i]):
+                dq.append([i, j + 1])
 
         return result
 
