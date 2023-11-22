@@ -13,7 +13,7 @@ for dir_ in ["202308", "202309", "202310", "202311"]:
                         content = re.sub(
                             f"""
                             (?:             # set our negative look behind choices to non-capture
-                                (?<!#\\ )   # negative look behid for line comments like '# Type'
+                                (?<!\\# )   # negative look behid for line comments like '# Type'
                                 |
                                 (?<!\)\:)   # negative look behind for '):' in the case of redundant google-style docstrings
                             )               # end our negative look behind choices
@@ -21,7 +21,7 @@ for dir_ in ["202308", "202309", "202310", "202311"]:
                             (?:             # set our positive lookahead choices
                                 (?=\\[)     # include when it's like 'Type[...].
                                 |
-                                (?= ?of ?)  # include when it's like 'List of List ...'
+                                (?=\\ ?of\\ ?)  # include when it's like 'List of List ...'
                             )
                             """,
                             word.lower(),
