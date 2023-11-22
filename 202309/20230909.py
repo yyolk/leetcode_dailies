@@ -10,13 +10,13 @@ class Solution:
     The test cases are generated so that the answer can fit in a **32-bit** integer.
     """
 
-    def combinationSum4(self, nums: List[int], target: int) -> int:
+    def combinationSum4(self, nums: list[int], target: int) -> int:
         """How many combinations of nums add up to target
 
         Proposed solution, using dynamic programming. Does an exhaustive search.
 
         Args:
-            nums (List of int): the input numbers to be used to find the combinations that
+            nums (list of int): the input numbers to be used to find the combinations that
                 add up to target
             target (int): the input target to find
 

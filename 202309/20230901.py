@@ -9,7 +9,7 @@ class Solution:
     binary representation of* `i`.
     """
 
-    def countBits(self, n: int) -> List[int]:
+    def countBits(self, n: int) -> list[int]:
         """Count the bits
 
         Proposed solution uses dynamic programming in a way.
@@ -19,7 +19,7 @@ class Solution:
             n (int): The given input of integer `n`
 
         Returns:
-            List of int: Answers of length `n + 1` where i is `0 <= i <= n`
+            list of int: Answers of length `n + 1` where i is `0 <= i <= n`
                 and `Answers[i]` is the number of `1`'s in the binary
                 representation of `i`
         """

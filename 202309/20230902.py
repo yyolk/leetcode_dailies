@@ -13,14 +13,14 @@ class Solution:
     *optimally.*
     """
 
-    def minExtraChar(self, s: str, dictionary: List[str]) -> int:
+    def minExtraChar(self, s: str, dictionary: list[str]) -> int:
         """Extract the minimum number of extra characters
 
         Proposed solution
 
         Args:
             s (str): The input string which must be broken up
-            dictionary (List of str): A literal dictionary of substrings to match input
+            dictionary (list of str): A literal dictionary of substrings to match input
                 `s` to
 
         Returns:

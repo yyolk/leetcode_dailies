@@ -15,13 +15,13 @@ class Solution:
     there is **exactly one** simple path between any two points.
     """
 
-    def minCostConnectPoints(self, points: List[List[int]]) -> int:
+    def minCostConnectPoints(self, points: list[list[int]]) -> int:
         """Minimum cost to connect all points
 
         Proposed solution using spanning trees, edges, and disjoint-set data structure.
 
         Args:
-            points (List of List of int): the input points to connect, in x,y pairs
+            points (list of list of int): the input points to connect, in x,y pairs
 
         Returns:
             int: the minimum cost to connect all points utilizing manhattan distance

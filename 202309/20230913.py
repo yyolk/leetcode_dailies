@@ -17,13 +17,13 @@ class Solution:
     children*.
     """
 
-    def candy(self, ratings: List[int]) -> int:
+    def candy(self, ratings: list[int]) -> int:
         """Calculates the minimum number of candies needed to distribute to the children.
 
         Proposed solution.
 
         Args:
-            ratings (List of int): a list of integer ratings that map to a single child
+            ratings (list of int): a list of integer ratings that map to a single child
 
         Returns:
             int: the number of candies needed to distribute to the children

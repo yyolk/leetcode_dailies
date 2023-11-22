@@ -16,7 +16,7 @@ class Solution:
     You can select pairs in any order.
     """
 
-    def findLongestChain(self, pairs: List[List[int]]) -> int:
+    def findLongestChain(self, pairs: list[list[int]]) -> int:
         """A chain of pairs in sequnetial order from a pairs list
 
         A pair group where pairs[i] = [left_i, right_i] and left_i < right_i
@@ -26,7 +26,7 @@ class Solution:
         The proposed solution uses dynamic programming.
 
         Args:
-            pairs (List of List of int): A List of pairs that are the input
+            pairs (list of list of int): A list of pairs that are the input
 
         Returns:
             int: length of the longest chain that can be produced

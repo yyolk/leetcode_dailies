@@ -11,13 +11,13 @@ class Solution:
     Return `true` *if there is a **132 pattern** in* `nums`*, otherwise, return* `false`*.*
     """
 
-    def find132pattern(self, nums: List[int]) -> bool:
+    def find132pattern(self, nums: list[int]) -> bool:
         """Finds if theres a pattern of 132 in the provided input
 
         Proposed solution
 
         Args:
-            nums (List of int): the input nums to search for 132 pattern
+            nums (list of int): the input nums to search for 132 pattern
 
         Returns:
             bool: whether the input nums contains a 132 pattern in the sequence

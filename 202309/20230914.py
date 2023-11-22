@@ -20,16 +20,16 @@ class Solution:
     tickets once and only once.
     """
 
-    def findItinerary(self, tickets: List[List[str]]) -> List[str]:
+    def findItinerary(self, tickets: list[list[str]]) -> list[str]:
         """Return the tickets provided in the correct order.
 
         Proposed solution using depth-first-search.
 
         Args:
-            tickets (List of List of str): input tickets that are unsorted
+            tickets (list of list of str): input tickets that are unsorted
 
         Returns:
-            List of str: the reconstructed itinerary of the man who always
+            list of str: the reconstructed itinerary of the man who always
                 departs from "JFK"
         """
         # Create a dictionary to represent the graph where keys are airports

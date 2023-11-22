@@ -12,7 +12,7 @@ class Solution:
     ![](https://upload.wikimedia.org/wikipedia/commons/0/0d/PascalTriangleAnimated2.gif)
     """
 
-    def generate(self, numRows: int) -> List[List[int]]:
+    def generate(self, numRows: int) -> list[list[int]]:
         """Generate a Pascal Triangle, producing the rows requested.
 
         Proposed solution using nested for loops.
@@ -22,7 +22,7 @@ class Solution:
             numRows (int): the requested number of rows
 
         Returns:
-            List of List of int: A 2D List consisting of every row in Pascal's triangle,
+            list of list of int: A 2D List consisting of every row in Pascal's triangle,
                 index 0 is the top row
         """
         # Base list to hold the triangle's rows

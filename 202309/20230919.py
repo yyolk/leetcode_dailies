@@ -13,14 +13,14 @@ class Solution:
     extra space.
     """
 
-    def findDuplicate(self, nums: List[int]) -> int:
+    def findDuplicate(self, nums: list[int]) -> int:
         """Finds the duplicate number
 
         Proposed solution using Floyd's Tortoise and Hare algorithm.
         It can be adapted to find the repeated number in an array.
 
         Args:
-            nums (List of int): the input number array with one duplicate number
+            nums (list of int): the input number array with one duplicate number
 
         Returns:
             int: the duplicate number in the input array

@@ -18,13 +18,13 @@ class Solution:
     right cell.*
     """
 
-    def minimumEffortPath(self, heights: List[List[int]]) -> int:
+    def minimumEffortPath(self, heights: list[list[int]]) -> int:
         """Minimum effort required to travel from top-left to bottom-right
 
         Proposed solution using depth-first search.
 
         Args:
-            heights (List of List of int): 2D array of a landscape of columns and rows, each
+            heights (list of list of int): 2D array of a landscape of columns and rows, each
                 cell is the terrain's height
 
         Returns:

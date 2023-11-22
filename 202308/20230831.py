@@ -2,7 +2,7 @@
 
 
 class Solution:
-    def minTaps(self, n: int, ranges: List[int]) -> int:
+    def minTaps(self, n: int, ranges: list[int]) -> int:
         """1326. Minimum Number of Taps to Open to Water a Garden
 
         There is a one-dimensional garden on the x-axis.
@@ -20,7 +20,7 @@ class Solution:
 
         Args:
             n (int): How many taps there are in the garden
-            ranges (List of int): A range to cover in the garden
+            ranges (list of int): A range to cover in the garden
 
         Returns:
             int: _The minimum number of taps that should be open to water the whole garden._

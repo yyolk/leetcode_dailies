@@ -15,14 +15,14 @@ class Solution:
     `[1,5,3]` is not).
     """
 
-    def maxDotProduct(self, nums1: List[int], nums2: List[int]) -> int:
+    def maxDotProduct(self, nums1: list[int], nums2: list[int]) -> int:
         """Maximum dot product between inputs subsequences.
 
         Proposed solution using dynamic programming.
 
         Args:
-            nums1 (List of int): Input subsequence 1.
-            nums2 (List of int): Input subsequence 2.
+            nums1 (list of int): Input subsequence 1.
+            nums2 (list of int): Input subsequence 2.
 
         Returns:
             int: Maximum dot product between the input subsequences.

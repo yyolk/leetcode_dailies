@@ -12,13 +12,13 @@ class Solution:
     is possible**, otherwise, return* `-1`.
     """
 
-    def minOperations(self, nums: List[int], x: int) -> int:
+    def minOperations(self, nums: list[int], x: int) -> int:
         """The minimum number of operations to reduce x to exactly 0
 
         Proposed solution
 
         Args:
-            nums (List of int): an integer array that leftmost or rightmost items can be
+            nums (list of int): an integer array that leftmost or rightmost items can be
                 subtracted from x to reduce it to 0
             x (int): work on number to determine the minimum operations to reduce to 0
 

@@ -23,16 +23,16 @@ class Solution:
         - The input array words contains at least one word.
     """
 
-    def fullJustify(self, words: List[str], max_width: int) -> List[str]:
+    def fullJustify(self, words: list[str], max_width: int) -> list[str]:
         """Full justify text like a book in ascii sorta
 
         Args:
-            words (List of str): A list of words that should be used to form the justified text
+            words (list of str): A list of words that should be used to form the justified text
             max_width (int): The maximum width the text can take up, this also needs to be
                 the total size of the text that is taken up on most lines
 
         Returns:
-            List of str: the completed, justified text. Returned as separate lines in a list.
+            list of str: the completed, justified text. Returned as separate lines in a list.
         """
         lines = []
         current_line = []

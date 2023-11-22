@@ -2,7 +2,7 @@
 
 
 class Solution:
-    def minimumReplacement(self, nums: List[int]) -> int:
+    def minimumReplacement(self, nums: list[int]) -> int:
         """2366. Minimum Replacements to Sort the Array
 
         You are given a **0-indexed** integer array `nums`.
@@ -16,7 +16,7 @@ class Solution:
         in **non-decreasing** order_.
 
         Args:
-            nums (List of int): The input array with numbers to be reduced
+            nums (list of int): The input array with numbers to be reduced
 
         Returns:
             int: The minimum number of operations to make the input that is sorted in non-decreasing order

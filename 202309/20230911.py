@@ -20,16 +20,16 @@ class Solution:
     will be **at least one** valid solution for the given input.
     """
 
-    def groupThePeople(self, groupSizes: List[int]) -> List[List[int]]:
+    def groupThePeople(self, groupSizes: list[int]) -> list[list[int]]:
         """Responds with a mapping of groups that are valid in the input
 
         Proposed solution.
 
         Args:
-            groupSizes (List of int): the input list of people implicitly id'd by their index
+            groupSizes (list of int): the input list of people implicitly id'd by their index
 
         Returns:
-            List of List of int: the resulting valid groups that align with the constraint of the
+            list of list of int: the resulting valid groups that align with the constraint of the
                 value at index i is the same size of group
         """
         # DefaultDict to store people grouped by their group sizes

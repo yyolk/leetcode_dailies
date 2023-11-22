@@ -17,7 +17,7 @@ class Solution:
     """
 
     def validate_binary_tree_nodes(
-        self, n: int, left_child: List[int], right_child: List[int]
+        self, n: int, left_child: list[int], right_child: list[int]
     ) -> bool:
         """Validate if the input nodes form exactly one valid binary tree.
 
@@ -25,8 +25,8 @@ class Solution:
 
         Args:
             n (int): The number of binary tree nodes, numbered from 0 to n -1.
-            left_child (List of int): The left child for each node.
-            right_child (List of int): The right child for each node.
+            left_child (list of int): The left child for each node.
+            right_child (list of int): The right child for each node.
 
         Returns:
             bool: If the nodes form exactly one valid binary tree.
