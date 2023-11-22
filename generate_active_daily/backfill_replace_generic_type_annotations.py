@@ -2,13 +2,22 @@ import os
 import re
 
 
+generic_types_pep_585 = [
+    "Tuple",
+    "List",
+    "Dict",
+    "Set",
+    "FrozenSet",
+    "Type",
+]
+
 for dir_ in ["202308", "202309", "202310", "202311"]:
     for root, _, files in os.walk(dir_):
         for file_ in files:
             if file_.endswith(".py"):
                 with open(f"{root}/{file_}", "r") as fp:
                     content = fp.read()
-                    for word in ["List", "Dict", "Tuple", "Set"]:
+                    for word in generic_types_pep_585:
                         # new_content = content.replace(word, word.lower())
                         content = re.sub(
                             f"""
