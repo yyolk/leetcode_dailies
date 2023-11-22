@@ -134,7 +134,7 @@ def modify_class_docstring(code, new_docstring, first_line):
             # Dumb way to enforce PEP-585 with the boilerplate code leetcode generates,
             # but since we are already here we might as well do it.
             # This section works on the function return type annotation.
-            for r_arg in ast.walk(item.returns):
+            for r_arg in ast.walk(node.returns):
                 if isinstance(r_arg, ast.Subscript):
                     for r_arg_node in ast.walk(r_arg):
                         if (
