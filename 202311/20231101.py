@@ -61,7 +61,7 @@ class Solution:
             Find the mode(s) from the list of elements.
 
             Args:
-                elements: list of elements from the BST.
+                elements: List of elements from the BST.
 
             Returns:
                 A list of mode(s).
