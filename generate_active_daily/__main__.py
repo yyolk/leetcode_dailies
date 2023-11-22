@@ -144,7 +144,6 @@ def modify_class_docstring(code, new_docstring, first_line):
                         ):
                             r_arg_node.id = r_arg_node.id.lower()
 
-
     # We go back in after walking the entire thing so we can append into the class
     # Probably could make this one loop but can revisit since the above needs refactoring too
     for node in ast.walk(parsed_tree):
