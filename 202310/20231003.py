@@ -10,13 +10,13 @@ class Solution:
     A pair `(i, j)` is called *good* if `nums[i] == nums[j]` and `i` < `j`.
     """
 
-    def numIdenticalPairs(self, nums: List[int]) -> int:
+    def numIdenticalPairs(self, nums: list[int]) -> int:
         """How many identical pairs, which are good are in the input
 
         Proposed solution using one loop and a collections.Counter for the occurences.
 
         Args:
-            nums (List of int): The input list of numbers to scan for good pairs.
+            nums (list of int): The input list of numbers to scan for good pairs.
 
         Returns:
             int: The number of good pairs found in the input.

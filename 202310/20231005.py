@@ -9,17 +9,17 @@ class Solution:
     times.
     """
 
-    def majorityElement(self, nums: List[int]) -> List[int]:
+    def majorityElement(self, nums: list[int]) -> list[int]:
         """Finds the elements that appear more than 1/3 of the times
 
         Proposed solution, using a collections.Counter and a filter(...) to create the
         results from a generator expression.
 
         Args:
-            nums (List of int): The input numbers list of elements to find majority.
+            nums (list of int): The input numbers list of elements to find majority.
 
         Returns:
-            List of int: All elements that appear more than 1/3 of the time.
+            list of int: All elements that appear more than 1/3 of the time.
         """
         n = len(nums)
         counter = Counter(nums)

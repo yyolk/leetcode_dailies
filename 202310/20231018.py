@@ -25,16 +25,16 @@ class Solution:
     course (i.e., the graph is a directed acyclic graph).
     """
 
-    def minimum_time(self, n: int, relations: List[List[int]], time: List[int]) -> int:
+    def minimum_time(self, n: int, relations: list[list[int]], time: list[int]) -> int:
         """Finds the minimum number of months needed to complete all the courses.
 
         Proposed solution using topological sorting and dynamic programing.
 
         Args:
             n (int): The number of courses, each labeled from 1 to n.
-            relations (List of List of int): A 2D integer array where each element is
+            relations (list of list of int): A 2D integer array where each element is
                 a direct dependency (prevCourse has to be completed before nextCourse).
-            time (List of int): 0-indexed integer array where time[i] denotes how many
+            time (list of int): 0-indexed integer array where time[i] denotes how many
                 months it takes to complete the (i+1)_th course.
 
         Returns:

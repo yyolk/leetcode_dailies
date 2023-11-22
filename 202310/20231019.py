@@ -24,13 +24,13 @@ class Solution:
             bool: True if the strings, after backspaces are accounted for, are the same.
         """
 
-        def process_string(string: str) -> List[str]:
+        def process_string(string: str) -> list[str]:
             """Process a String by applying backspaces.
 
             Args:
                 string (str): The input string to process.
             Returns:
-                List of str: A list of characters representing the final string after
+                list of str: A list of characters representing the final string after
                     backspace processing.
             """
 

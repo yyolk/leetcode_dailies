@@ -12,21 +12,21 @@ class Solution:
     You must write an algorithm with `O(log n)` runtime complexity.
     """
 
-    def searchRange(self, nums: List[int], target: int) -> List[int]:
-        """Search the input nums List of int for the target element.
+    def searchRange(self, nums: list[int], target: int) -> list[int]:
+        """Search the input nums list of int for the target element.
 
         Proposed solution using a modified binary search approach.
 
         Args:
-            nums (List of int): Input nums to search for target.
+            nums (list of int): Input nums to search for target.
             target (int): Input target int to search for in nums.
 
         Returns:
-            List of int: The starting and ending index of the found target int
+            list of int: The starting and ending index of the found target int
             found within the input nums.
         """
 
-        def find_left(nums: List[int], target: int) -> int:
+        def find_left(nums: list[int], target: int) -> int:
             """Helper function to find the leftmost occurence of the target"""
             left, right = 0, len(nums) - 1
             while left <= right:
@@ -43,7 +43,7 @@ class Solution:
                     right = mid - 1
             return left
 
-        def find_right(nums: List[int], target: int) -> int:
+        def find_right(nums: list[int], target: int) -> int:
             """Helper funciton to find the rightmost occurence of the target"""
             left, right = 0, len(nums) - 1
             while left <= right:

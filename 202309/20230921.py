@@ -10,15 +10,15 @@ class Solution:
     The overall run time complexity should be `O(log (m+n))`.
     """
 
-    def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:
+    def findMedianSortedArrays(self, nums1: list[int], nums2: list[int]) -> float:
         """Find median of sorted arrays
 
         Proposed solution, with constraint the overall time complexity is O(log (m+n)).
         Uses binary search.
 
         Args:
-            nums1 (List of int): the 1st sorted input array of numbers
-            nums2 (List of int): the 2nd sorted input array of numbers
+            nums1 (list of int): the 1st sorted input array of numbers
+            nums2 (list of int): the 2nd sorted input array of numbers
 
         Returns:
             float: the median of the input arrays

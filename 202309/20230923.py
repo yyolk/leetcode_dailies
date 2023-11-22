@@ -21,13 +21,13 @@ class Solution:
     given list of* `words`.
     """
 
-    def longestStrChain(self, words: List[str]) -> int:
+    def longestStrChain(self, words: list[str]) -> int:
         """Calculate the longest chain of words that appear in the input
 
         Proposed solution using dynamic programming
 
         Args:
-            words (List of str): the input sequence of letter sequences to compute
+            words (list of str): the input sequence of letter sequences to compute
                 sequential chains from
 
         Returns:

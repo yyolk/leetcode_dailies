@@ -12,13 +12,13 @@ class Solution:
     Return *the minimum cost to reach the top of the floor*.
     """
 
-    def minCostClimbingStairs(self, cost: List[int]) -> int:
+    def minCostClimbingStairs(self, cost: list[int]) -> int:
         """Finds the minimum cost to reach the top of the floor.
 
         Proposed solution using dynamic programming.
 
         Args:
-            cost (List of int): The cost where the index is mapped to the i_th step
+            cost (list of int): The cost where the index is mapped to the i_th step
                 on the staircase.
 
         Returns:

@@ -18,14 +18,14 @@ class Solution:
     Return *the minimum amount of money required to paint the* `n`*walls.*
     """
 
-    def paintWalls(self, cost: List[int], time: List[int]) -> int:
+    def paintWalls(self, cost: list[int], time: list[int]) -> int:
         """Minimum amount of money to paint the walls by simulating the scenario.
 
         Proposed solution using dynamic programming.
 
         Args:
-            cost (List of int): Cost to paint n different walls.
-            time (List of int): Time to paint n different walls.
+            cost (list of int): Cost to paint n different walls.
+            time (list of int): Time to paint n different walls.
 
         Returns:
             int: The minimum amount of money required to paint n walls.

@@ -9,7 +9,7 @@ class UnionFind:
     with path compression and union by rank for optimized performance.
 
     Attributes:
-        parent (List of int): An array where each element represents the parent
+        parent (list of int): An array where each element represents the parent
         of the corresponding element, initialized as the element itself.
 
     Methods:
@@ -72,19 +72,19 @@ class Solution:
     """
 
     def findCriticalAndPseudoCriticalEdges(
-        self, n: int, edges: List[List[int]]
-    ) -> List[List[int]]:
+        self, n: int, edges: list[list[int]]
+    ) -> list[list[int]]:
         """Finds critical and pseudo critical edges weight
 
         Proposed solution using Kruskal's Algorithm
 
         Args:
             n: (int): The number of verticies in the graph.
-            edges (List of List of int): The input edges of the minimum spanning tree
+            edges (list of list of int): The input edges of the minimum spanning tree
 
         Returns:
-            List of List of int: The critical and pseudo critical edges in a
-            two item List of List of int.
+            list of list of int: The critical and pseudo critical edges in a
+            two item list of list of int.
         """
 
         def kruskal(n, edges, included_edges, e):

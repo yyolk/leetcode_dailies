@@ -13,7 +13,7 @@ class Solution:
     most*** `k` *operations*.
     """
 
-    def max_frequency(self, nums: List[int], k: int) -> int:
+    def max_frequency(self, nums: list[int], k: int) -> int:
         """The maximum possible frequency of an element post, at most, k operations.
 
         Using a sliding window.

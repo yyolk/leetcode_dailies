@@ -16,22 +16,22 @@ class Solution:
     """
 
     def fullBloomFlowers(
-        self, flowers: List[List[int]], people: List[int]
-    ) -> List[int]:
+        self, flowers: list[list[int]], people: list[int]
+    ) -> list[int]:
         """The number of flowers in full bloom when the ith person arrives.
 
         Proposed solution via MrAke:
         https://leetcode.com/problems/number-of-flowers-in-full-bloom/solutions/4155347/97-44-easy-3-line-solution-with-explanation/
 
         Args:
-            flowers (List of List of int): A 0-indexed 2D integer array where
+            flowers (list of list of int): A 0-indexed 2D integer array where
                 `flowers_i = [start_i, end_i]` means the ith flower will be in full
                 bloom from `start_i` to `end_i`.
-            people (List of int): A 0-indexed integer array where people[i] is the time
+            people (list of int): A 0-indexed integer array where people[i] is the time
                 that the ith person will arrive to see the flowers.
 
         Returns:
-            List of int: An integer array where i is the number of flowers that are in
+            list of int: An integer array where i is the number of flowers that are in
             full bloom when the ith person arrives.
         """
         # Extract the start and end times of flower intervals

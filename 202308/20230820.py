@@ -24,8 +24,8 @@ class Solution:
     """
 
     def sortItems(
-        self, n: int, m: int, group: List[int], beforeItems: List[List[int]]
-    ) -> List[int]:
+        self, n: int, m: int, group: list[int], beforeItems: list[list[int]]
+    ) -> list[int]:
         """Sort input items by groups respecting dependencies
 
         Proposed solution using a topological sort
@@ -33,11 +33,11 @@ class Solution:
         Args:
             n (int): number of items
             m (int): number of groups
-            group (List of int): group mapping by index
-            beforeItems (List of List of int): items to be inserted into the sort
+            group (list of int): group mapping by index
+            beforeItems (list of list of int): items to be inserted into the sort
 
         Returns:
-            List of int: a solution where the input is sorted
+            list of int: a solution where the input is sorted
         """
 
         # Helper function to perform topological sorting

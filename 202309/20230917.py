@@ -13,14 +13,14 @@ class Solution:
     at any node, you may revisit nodes multiple times, and you may reuse edges.
     """
 
-    def shortestPathLength(self, graph: List[List[int]]) -> int:
+    def shortestPathLength(self, graph: list[list[int]]) -> int:
         """The shortest path that visits every node in graph
 
         Proposed solution uses breadth-first search and bitmasking.
         via https://leetcode.com/problems/shortest-path-visiting-all-nodes/solutions/4053514/94-74-bfs-bitmask/?envType=daily-question&envId=2023-09-17
 
         Args:
-            graph (List of List of int): input where graph[i] is a list of all nodes
+            graph (list of list of int): input where graph[i] is a list of all nodes
                 connected with node i by an edge
 
         Returns:

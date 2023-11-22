@@ -13,13 +13,13 @@ class Solution:
     `false` *otherwise*.
     """
 
-    def isMonotonic(self, nums: List[int]) -> bool:
+    def isMonotonic(self, nums: list[int]) -> bool:
         """Checks if an input array of nums is monotonic.
 
         Proposed solution that checks each item until the direction changes.
 
         Args:
-            nums (List of int): input nums to check for monotonic quality
+            nums (list of int): input nums to check for monotonic quality
 
         Returns:
             bool: input is monotonic increasing or monotonic decreasing

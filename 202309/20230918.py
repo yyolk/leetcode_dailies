@@ -19,17 +19,17 @@ class Solution:
     strongest*.
     """
 
-    def kWeakestRows(self, mat: List[List[int]], k: int) -> List[int]:
+    def kWeakestRows(self, mat: list[list[int]], k: int) -> list[int]:
         """K Weakest rows in matrix
 
         Proposed solution
 
         Args:
-            mat (List of List of int): matrix representing soldiers (1)
+            mat (list of list of int): matrix representing soldiers (1)
                 and civilians (0)
 
         Returns:
-            List of int: the k weakest rows in the matrix, ordered from weakest
+            list of int: the k weakest rows in the matrix, ordered from weakest
                 to strongest
         """
         # A min-heap to store the weakest rows

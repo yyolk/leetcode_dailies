@@ -24,13 +24,13 @@ class Solution:
     Return *the **minimum** number of operations to make* `nums`***continuous***.
     """
 
-    def minOperations(self, nums: List[int]) -> int:
+    def minOperations(self, nums: list[int]) -> int:
         """The minimum operations to make input nums continuous.
 
         Proposed solution using bisect module, set, and sorted.
 
         Args:
-            nums (List of int): The input nums to make continuous.
+            nums (list of int): The input nums to make continuous.
 
         Returns:
             int: The minimum number of operations to make nums continous.

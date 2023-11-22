@@ -10,17 +10,17 @@ class Solution:
     Return ***any array** that satisfies this condition*.
     """
 
-    def sortArrayByParity(self, nums: List[int]) -> List[int]:
+    def sortArrayByParity(self, nums: list[int]) -> list[int]:
         """Sorts an array with even integers before odd integers
 
         Proposed solution using two list and concatenation.
         One list for odds, one for evens.
 
         Args:
-            nums (List of int): input nums to sort
+            nums (list of int): input nums to sort
 
         Returns:
-            List of int: sorted input with even numbers followed by odd
+            list of int: sorted input with even numbers followed by odd
         """
         evens = []
         odds = []

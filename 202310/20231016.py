@@ -13,7 +13,7 @@ class Solution:
     ![](https://upload.wikimedia.org/wikipedia/commons/0/0d/PascalTriangleAnimated2.gif)
     """
 
-    def get_row(self, row_index: int) -> List[int]:
+    def get_row(self, row_index: int) -> list[int]:
         """Gets the row from the computed Pascal's Triangle.
 
         Proposed solution.
@@ -22,7 +22,7 @@ class Solution:
             row_index (int): Which row to get, 0-indexed, starting from the top.
 
         Returns:
-            List of int: The requested row of numbers in Pascal's Triangle.
+            list of int: The requested row of numbers in Pascal's Triangle.
         """
         # Initialize the first row
         row = [1]

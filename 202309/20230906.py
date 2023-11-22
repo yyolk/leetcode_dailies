@@ -26,7 +26,7 @@ class Solution:
 
     def splitListToParts(
         self, head: Optional[ListNode], k: int
-    ) -> List[Optional[ListNode]]:
+    ) -> list[Optional[ListNode]]:
         """Split input linked list into parts
 
         Proposed solution using nested iteration and divmod(...)
@@ -36,7 +36,7 @@ class Solution:
             k (int): the requested number of parts to split the linked list into
 
         Returns:
-            List of Optional ListNode: the resulting list containing the parts the
+            list of Optional ListNode: the resulting list containing the parts the
                 input was split into
         """
         # Calculate the length of the linked list

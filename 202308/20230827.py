@@ -19,11 +19,11 @@ class Solution:
     The frog can only jump in the forward direction.
     """
 
-    def canCross(self, stones: List[int]) -> bool:
+    def canCross(self, stones: list[int]) -> bool:
         """Can the frug jump?
 
         Args:
-            stones (List of int): A list of `stones`' positions in sorted,
+            stones (list of int): A list of `stones`' positions in sorted,
                 ascending order.
 
         Returns:
