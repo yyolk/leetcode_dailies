@@ -25,6 +25,23 @@ class Solution:
     """
 
     def max_coins(self, piles: list[int]) -> int:
-        ...
+        """Finds maximum coins you can have.
+
+        Args:
+            piles: The piles of coins. Each element is a pile with a number of coins.
+
+        Returns:
+            The maximum number of coins you can have.
+        """
+        # Sort the piles
+        piles.sort()
+
+        result = 0
+
+        # Iterate over every third pile starting from the second largest pile.
+        for i in range(len(piles) // 3):
+            result += piles[-2 - 2 * i]
+
+        return result
 
     maxCoins = max_coins
