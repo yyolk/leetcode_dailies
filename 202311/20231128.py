@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/number-of-ways-to-divide-a-long-corridor/
+MOD = 10**9 + 7
 
 
 class Solution:
@@ -24,6 +25,39 @@ class Solution:
     """
 
     def number_of_ways(self, corridor: str) -> int:
-        ...
+        """Number of ways to divide to corridor.
+
+        Args:
+            corridor: 0-indexed string where 'S' and 'P' denote seat and plant
+                respectively.
+
+        Returns:
+            The number of ways to divide the corridor, modulo 10^9 + 7.
+
+        State variable explanation:
+            x: Represents the number of ways to place dividers when the last seat
+               encountered is part of a pair.
+               (i.e., the number of ways when there are 0 seats counted so far)
+            y: Represents the number of ways to place dividers when the last seat
+               encountered is the first of a pair.
+               (i.e., the number of ways when there is 1 seat counted so far).
+            z: Represents the number of ways to place dividers when the last seat
+               encountered is the second of a pair.
+               (i.e., the number of ways when there are 2 seats counted so far).
+        """
+        # Initialize state variables
+        x, y, z = 1, 0, 0
+
+        # Iterate through the corridor
+        for char in corridor:
+            if char == "S":
+                # When encountering a seat, update state variables.
+                x, y, z = 0, x + z, y
+            else:
+                # When encountering a plant, update state variables.
+                x, y, z = x + z, y, z
+
+        # Return the result modulo MOD
+        return z % MOD
 
     numberOfWays = number_of_ways
