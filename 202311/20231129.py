@@ -44,4 +44,15 @@ class Solution:
         # Return the total count of '1' bits in the binary representation
         return count
 
+    def alt_hamming_weight(self, n: int) -> int:
+        """Alternative solution to finding hamming weight for the unsigned integer.
+
+        Args:
+            n: The unsigned integer.
+
+        Returns:
+            The number of '1' bits, aka the Hamming weight.
+        """
+        return bin(n).count("1")
+
     hammingWeight = hamming_weight
