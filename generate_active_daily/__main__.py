@@ -249,7 +249,7 @@ challenge_datetime = datetime.strptime(
 # Extract our problem summary from html
 html_summary = results["activeDailyCodingChallengeQuestion"]["question"]["content"]
 soup = BeautifulSoup(html_summary, "html.parser")
-example_starts = soup.find("strong", class_="example").parent
+example_starts = soup.find("p", string="\xa0")
 
 CONTENT_BEFORE_EXAMPLE = "".join(
     str(content) for content in soup.contents[: soup.contents.index(example_starts)]
