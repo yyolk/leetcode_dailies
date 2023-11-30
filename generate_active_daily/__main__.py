@@ -251,8 +251,13 @@ html_summary = results["activeDailyCodingChallengeQuestion"]["question"]["conten
 soup = BeautifulSoup(html_summary, "html.parser")
 example_starts = soup.find("p", string="\xa0")
 
-CONTENT_BEFORE_EXAMPLE = "".join(
-    str(content) for content in soup.contents[: soup.contents.index(example_starts)]
+CONTENT_BEFORE_EXAMPLE = (
+    "".join(
+        str(content) for content in soup.contents[: soup.contents.index(example_starts)]
+    )
+    # See #31, since we're splitting at `\xa0` (`&nbsp;`) we'll add it here to ensure
+    # docstrings end the way we want them to be stylized.
+    + "<p>&nbsp;</p>"
 )
 
 
