@@ -1,7 +1,7 @@
 <table align="center" border="0" cellpadding="0" cellspacing="0" class="month">
  <tr>
   <th class="month" colspan="7">
-   August 2023
+   December 2023
   </th>
  </tr>
  <tr>
@@ -32,140 +32,124 @@
   </td>
   <td class="noday">
   </td>
-  <td class="tue">
-   1
+  <td class="noday">
   </td>
-  <td class="wed">
+  <td class="noday">
+  </td>
+  <td class="noday">
+  </td>
+  <td class="fri">
+   <a href="20231201.py">
+    1
+   </a>
+  </td>
+  <td class="sat">
    2
   </td>
-  <td class="thu">
+ </tr>
+ <tr>
+  <td class="sun">
    3
   </td>
-  <td class="fri">
+  <td class="mon">
    4
   </td>
-  <td class="sat">
+  <td class="tue">
    5
   </td>
- </tr>
- <tr>
-  <td class="sun">
+  <td class="wed">
    6
   </td>
-  <td class="mon">
+  <td class="thu">
    7
   </td>
-  <td class="tue">
+  <td class="fri">
    8
   </td>
-  <td class="wed">
+  <td class="sat">
    9
   </td>
-  <td class="thu">
+ </tr>
+ <tr>
+  <td class="sun">
    10
   </td>
-  <td class="fri">
+  <td class="mon">
    11
   </td>
-  <td class="sat">
+  <td class="tue">
    12
   </td>
- </tr>
- <tr>
-  <td class="sun">
+  <td class="wed">
    13
   </td>
-  <td class="mon">
+  <td class="thu">
    14
   </td>
-  <td class="tue">
-   <a href="20230815.py">
-    15
-   </a>
-  </td>
-  <td class="wed">
-   <a href="20230816.py">
-    16
-   </a>
-  </td>
-  <td class="thu">
-   <a href="20230817.py">
-    17
-   </a>
-  </td>
   <td class="fri">
-   <a href="20230818.py">
-    18
-   </a>
+   15
   </td>
   <td class="sat">
-   <a href="20230819.py">
-    19
-   </a>
+   16
   </td>
  </tr>
  <tr>
   <td class="sun">
-   <a href="20230820.py">
-    20
-   </a>
+   17
   </td>
   <td class="mon">
-   <a href="20230821.py">
-    21
-   </a>
+   18
   </td>
   <td class="tue">
-   <a href="20230822.py">
-    22
-   </a>
+   19
   </td>
   <td class="wed">
-   <a href="20230823.py">
-    23
-   </a>
+   20
   </td>
   <td class="thu">
-   <a href="20230824.py">
-    24
-   </a>
+   21
   </td>
   <td class="fri">
-   <a href="20230825.py">
-    25
-   </a>
+   22
   </td>
   <td class="sat">
-   <a href="20230826.py">
-    26
-   </a>
+   23
   </td>
  </tr>
  <tr>
   <td class="sun">
-   <a href="20230827.py">
-    27
-   </a>
+   24
   </td>
   <td class="mon">
-   <a href="20230828.py">
-    28
-   </a>
+   25
   </td>
   <td class="tue">
-   <a href="20230829.py">
-    29
-   </a>
+   26
   </td>
   <td class="wed">
-   <a href="20230830.py">
-    30
-   </a>
+   27
   </td>
   <td class="thu">
-   <a href="20230831.py">
-    31
-   </a>
+   28
+  </td>
+  <td class="fri">
+   29
+  </td>
+  <td class="sat">
+   30
+  </td>
+ </tr>
+ <tr>
+  <td class="sun">
+   31
+  </td>
+  <td class="noday">
+  </td>
+  <td class="noday">
+  </td>
+  <td class="noday">
+  </td>
+  <td class="noday">
   </td>
   <td class="noday">
   </td>
