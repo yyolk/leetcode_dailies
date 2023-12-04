@@ -1,4 +1,8 @@
 # https://leetcode.com/problems/largest-3-same-digit-number-in-string/
+import re
+
+
+CONTIGUOUS_DIGIT_PATTERN = re.compile(r"(\d)\1{2}")
 
 
 class Solution:
@@ -22,6 +26,20 @@ class Solution:
     """
 
     def largest_good_integer(self, num: str) -> str:
-        ...
+        """Finds the largest good integer.
+
+        Args:
+            num: Input string to scan for a good integer.
+
+        Returns:
+            The largest, good integer as a string if it exists,
+                "" if no good integer exists.
+        """
+        all_digits_found = CONTIGUOUS_DIGIT_PATTERN.findall(num)
+        if all_digits_found:
+            largest_good_integer = max(all_digits_found, key=int)
+            return largest_good_integer * 3
+        else:
+            return ""
 
     largestGoodInteger = largest_good_integer
