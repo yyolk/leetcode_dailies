@@ -16,6 +16,24 @@ class Solution:
     """
 
     def total_money(self, n: int) -> int:
-        ...
+        """Calculate the money in the bank on the nth day.
+
+        Args:
+            n: The day to calculate what the total amount of money will be.
+
+        Returns:
+            The total amount of money in the Leetcode bank at the end of the nth day.
+        """
+        ans = 0
+        monday = 1
+
+        while n > 0:
+            for day in range(min(n, 7)):
+                ans += monday + day
+
+            n -= 7
+            monday += 1
+
+        return ans
 
     totalMoney = total_money
