@@ -24,13 +24,13 @@ class Solution:
         This simple calculation works because it will determine the number of matches
         played based on the number of teams, until a winner is decided based on the
         given rules.
-        
+
         A winner will always be `number of teams - 1`, to have full participation and
         a winning match to decide amongst the final two teams.
 
         Args:
             n: The input number of teams in the tournament.
-        
+
         Returns:
             The number of matches played in the tournament until the winner is decided.
         """
