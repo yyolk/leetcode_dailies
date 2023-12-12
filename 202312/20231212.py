@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/maximum-product-of-two-elements-in-an-array/
+import heapq
 
 
 class Solution:
@@ -9,6 +10,18 @@ class Solution:
     """
 
     def max_product(self, nums: list[int]) -> int:
-        ...
+        """Find the max product of any coupling of integers.
+
+        Uses heapq.nlargest(...) to pick out the two largest integers.
+        The indexes of i, j are not relevant for finding the solution.
+
+        Args:
+            nums: Input list of integers.
+
+        Returns:
+            The max product of the two largest integers.
+        """
+        num_i, num_j = heapq.nlargest(2, nums)
+        return (num_i - 1) * (num_j - 1)
 
     maxProduct = max_product
