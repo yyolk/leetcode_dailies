@@ -13,6 +13,26 @@ class Solution:
     """
 
     def dest_city(self, paths: list[list[str]]) -> str:
-        ...
+        """Destination city.
+
+        Args:
+            paths: A list of paths.
+
+        Returns:
+            The destination city.
+        """
+        outgoing = set()
+        incoming = set()
+
+        # Iterate through the paths and record outgoing and incoming cities
+        for path in paths:
+            outgoing.add(path[0])
+            incoming.add(path[1])
+
+        # Find the destination city
+        destination = incoming - outgoing
+
+        # Convert the set to a list and return the destination city
+        return list(destination)[0]
 
     destCity = dest_city
