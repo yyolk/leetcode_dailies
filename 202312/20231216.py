@@ -13,6 +13,15 @@ class Solution:
     """
 
     def is_anagram(self, s: str, t: str) -> bool:
+        """Determine if the input strings are anagrams of each other.
+
+        Args:
+            s: First input string.
+            t: Second input string.
+        
+        Returns:
+            True if the input strings are anagrams of each other, False if not.
+        """
         # Use Counter to count occurrences of each character in both strings
         counter_s = Counter(s)
         counter_t = Counter(t)
