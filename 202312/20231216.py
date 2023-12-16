@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/valid-anagram/
+from collections import Counter
 
 
 class Solution:
@@ -12,6 +13,11 @@ class Solution:
     """
 
     def is_anagram(self, s: str, t: str) -> bool:
-        ...
+        # Use Counter to count occurrences of each character in both strings
+        counter_s = Counter(s)
+        counter_t = Counter(t)
+
+        # Compare the Counters
+        return counter_s == counter_t
 
     isAnagram = is_anagram
