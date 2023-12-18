@@ -18,7 +18,7 @@ class Solution:
         Args:
             s: First input string.
             t: Second input string.
-        
+
         Returns:
             True if the input strings are anagrams of each other, False if not.
         """

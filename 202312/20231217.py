@@ -4,6 +4,7 @@ from sortedcontainers import SortedSet
 
 class FoodRatings:
     """2353. Design a Food Rating System."""
+
     def __init__(self, foods: list[str], cuisines: list[str], ratings: list[int]):
         # Map food with its rating.
         self.food_rating_map = {}
