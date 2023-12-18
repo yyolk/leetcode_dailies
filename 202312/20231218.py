@@ -18,6 +18,13 @@ class Solution:
     """
 
     def max_product_difference(self, nums: list[int]) -> int:
-        ...
+        # Sort the array in ascending order.
+        nums.sort()
+
+        # Calculate the product differences for the two pairs with the largest and
+        # smallest values.
+        max_product_difference = (nums[-1] * nums[-2]) - (nums[0] * nums[1])
+
+        return max_product_difference
 
     maxProductDifference = max_product_difference
