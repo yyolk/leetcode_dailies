@@ -17,6 +17,30 @@ class Solution:
     """
 
     def image_smoother(self, img: list[list[int]]) -> list[list[int]]:
-        ...
+        # Get the number of rows and columns in the input matrix
+        rows, cols = len(img), len(img[0])
+
+        # Initialize an empty matrix with the same dimensions as the input image
+        result = [[0] * cols for _ in range(rows)]
+
+        # Iterate through each cell in the input image
+        for i in range(rows):
+            for j in range(cols):
+                sum_val, count = 0, 0
+
+                # Iterate through the 3x3 neighborhood of the current cell
+                for ni in range(i - 1, i + 2):
+                    for nj in range(j - 1, j + 2):
+                        # Check if the neighboring cell is within the bounds of the image
+                        if 0 <= ni < rows and 0 <= nj < cols:
+                            # Accumulate the sum and count for the valid neighboring cells
+                            sum_val += img[ni][nj]
+                            count += 1
+
+                # Calculate the rounded-down average and update the result matrix
+                result[i][j] = sum_val // count
+
+        # Return the smoothed image matrix
+        return result
 
     imageSmoother = image_smoother
