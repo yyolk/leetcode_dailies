@@ -18,6 +18,38 @@ class Solution:
     """
 
     def buy_choco(self, prices: list[int], money: int) -> int:
-        ...
+        """Buy Chocolates.
+
+        Args:
+            prices: The input prices of chocolates available to buy.
+            money: The starting money to buy chocolate.
+
+        Returns:
+            The leftover money subtracted by any that was spent.
+        """
+        # Initialize length of prices.
+        n = len(prices)
+
+        # Initialize the minimum leftover money to the maximum possible value.
+        min_leftover = float("inf")
+
+        # Iterate over every pair of chocolates.
+        for first in range(n):
+            for second in range(first + 1, n):
+                # Sum the two chocolate prices.
+                cost = prices[first] + prices[second]
+
+                # If the sum of prices is less than the min leftover.
+                if cost < min_leftover:
+                    # Update min leftover.
+                    min_leftover = cost
+
+        # We can buy chocolates if we have enough money.
+        if min_leftover <= money:
+            # The amount we have left.
+            return money - min_leftover
+
+        # We cannot buy chocolates.
+        return money
 
     buyChoco = buy_choco
