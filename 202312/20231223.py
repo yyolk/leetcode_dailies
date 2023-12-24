@@ -34,7 +34,7 @@ class Solution:
             # Check if the current position is already visited.
             if (x, y) in visited:
                 return True
-            
+
             # Add the current position, (x, y) coords, to visited.
             visited.add((x, y))
 
