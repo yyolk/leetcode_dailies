@@ -33,8 +33,8 @@ class Solution:
                 # If a different color is encountered, calculate the total time for
                 # consecutive balloons with the same color.
                 if consecutive_count > 1:
-                    total += (current_sum - max_time)
-                
+                    total += current_sum - max_time
+
                 # Reset variables for the new color.
                 consecutive_count = 1
                 start = i
@@ -43,7 +43,7 @@ class Solution:
 
         # Calculate the total time for the last set of consecutive balloons, if any.
         if consecutive_count > 1:
-            total += (current_sum - max_time)
+            total += current_sum - max_time
 
         return total
 
