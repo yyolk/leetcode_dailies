@@ -1,4 +1,6 @@
 # https://leetcode.com/problems/minimum-difficulty-of-a-job-schedule/
+from functools import lru_cache
+from sys import maxsize
 
 
 class Solution:
@@ -19,6 +21,36 @@ class Solution:
     """
 
     def min_difficulty(self, job_difficulty: list[int], d: int) -> int:
-        ...
+        n = len(job_difficulty)
+
+        # If it's impossible to schedule the jobs in d days
+        if n < d:
+            return -1
+
+        @lru_cache(maxsize=None)
+        def dp(i: int, k: int) -> int:
+            # Base case: if we have only one day left, the difficulty is the maximum
+            # difficulty of the remaining jobs.
+            if k == 1:
+                return max(job_difficulty[i:])
+
+            # Initialize the maximum difficulty for this subproblem
+            max_difficulty = -1
+            min_schedule_difficulty = maxsize
+
+            # Iterate over possible partitions of the remaining jobs
+            for j in range(i, n - k + 1):
+                max_difficulty = max(max_difficulty, job_difficulty[j])
+                rest_difficulty = dp(j + 1, k - 1)
+                if rest_difficulty > -1:
+                    min_schedule_difficulty = min(
+                        min_schedule_difficulty, max_difficulty + rest_difficulty
+                    )
+
+            # If there is a valid partition, it won't be -1
+            return min_schedule_difficulty
+
+        # Return the result
+        return dp(0, d)
 
     minDifficulty = min_difficulty
