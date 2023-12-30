@@ -15,6 +15,14 @@ class Solution:
     """
 
     def make_equal(self, words: list[str]) -> bool:
-        ...
+        n = len(words)
+        concatenated = "".join(words)
+        unique_chars = set(concatenated)
+
+        # Check if the frequencies of all characters are equally distributable
+        for c in unique_chars:
+            if concatenated.count(c) % n != 0:
+                return False
+        return True
 
     makeEqual = make_equal
