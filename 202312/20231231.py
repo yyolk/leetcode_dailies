@@ -12,6 +12,20 @@ class Solution:
     """
 
     def max_length_between_equal_characters(self, s: str) -> int:
-        ...
+        max_length = -1
+
+        # Iterate over all unique instances of characters.
+        for char in set(s):
+            # Pull the left-most position of char from s.
+            start = s.find(char)
+            # Pull the right-most position of char from s.
+            end = s.rfind(char)
+
+            # If they're not in the same position, update the max_length.
+            if start != end:
+                max_length = max(max_length, end - start - 1)
+
+        # Return the computed max_length
+        return max_length
 
     maxLengthBetweenEqualCharacters = max_length_between_equal_characters
