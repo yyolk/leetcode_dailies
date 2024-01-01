@@ -15,6 +15,22 @@ class Solution:
     """
 
     def find_content_children(self, g: list[int], s: list[int]) -> int:
-        ...
+        # Step 1: Sort the greed factors and cookie sizes
+        g.sort()
+        s.sort()
+
+        # Step 2: Initialize pointers and count variable
+        i, j, count = 0, 0, 0
+
+        # Step 3-6: Iterate through both arrays and assign cookies to children
+        while i < len(g) and j < len(s):
+            # Step 4: If a suitable cookie is found, assign it to the child
+            if s[j] >= g[i]:
+                count += 1
+                i += 1  # Move to the next child
+            j += 1  # Move to the next cookie
+
+        # Step 7: Return the maximum number of content children
+        return count
 
     findContentChildren = find_content_children
