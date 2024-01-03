@@ -21,7 +21,7 @@ class Solution:
     def find_matrix(self, nums: list[int]) -> list[list[int]]:
         # Create a frequency array to keep track of the count of each element
         freq = [0] * (len(nums) + 1)
-        
+
         # Initialize the result matrix
         ans = []
 
@@ -32,10 +32,10 @@ class Solution:
             if freq[c] >= len(ans):
                 # If so, add a new row to the result matrix
                 ans.append([])
-            
+
             # Add the current element to the appropriate row in the result matrix
             ans[freq[c]].append(c)
-            
+
             # Update the frequency count of the current element
             freq[c] += 1
 
