@@ -26,6 +26,29 @@ class Solution:
     """
 
     def number_of_beams(self, bank: list[str]) -> int:
-        ...
+        # Initialize variables to keep track of the total number of laser beams (ans)
+        # and the number of security devices in the previous row (temp).
+        ans, temp = 0, 0
+        
+        # Iterate through each row in the bank.
+        for s in bank:
+            # Count the number of security devices in the current row.
+            n = s.count("1")
+            
+            # If there are no security devices in the current row, continue to the next row.
+            if n == 0:
+                continue
+            
+            # Add the product of the number of security devices in the current row and
+            # the number of security devices in the previous row to the total number
+            # of laser beams.
+            ans += temp * n
+            
+            # Update the variable 'temp' to store the number of security devices in the
+            # current row for the next iteration.
+            temp = n
+        
+        # Return the final count of laser beams.
+        return ans
 
     numberOfBeams = number_of_beams
