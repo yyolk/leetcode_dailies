@@ -22,13 +22,13 @@ class Solution:
     def min_operations(self, nums: list[int]) -> int:
         # Count the occurrences of each element in the array
         mp = Counter(nums)
-        
+
         # Initialize a variable to count the operations
         count = 0
 
         # Iterate through the occurrences of each element in the Counter
         for t in mp.values():
-            # If there is only one occurrence of an element, it's not possible to 
+            # If there is only one occurrence of an element, it's not possible to
             # perform operations.
             if t == 1:
                 return -1
