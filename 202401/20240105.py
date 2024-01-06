@@ -24,7 +24,7 @@ class Solution:
             else:
                 # If not, update the element at the insert index with the current element
                 dp[insert_index] = n
-        
+
         # The length of dp is the length of the longest increasing subsequence
         return len(dp)
 
