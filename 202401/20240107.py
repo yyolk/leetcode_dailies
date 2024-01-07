@@ -24,6 +24,21 @@ class Solution:
     """
 
     def number_of_arithmetic_slices(self, nums: list[int]) -> int:
-        ...
+        n = len(nums)
+        result = 0  # Total number of arithmetic subsequences
+        
+        # dp[i][diff] represents the number of arithmetic subsequences ending at index
+        # i with difference diff.
+        dp = [{} for _ in range(n)]
+
+        for i in range(1, n):
+            for j in range(i):
+                diff = nums[i] - nums[j]
+                # Number of subsequences ending at index j with difference diff
+                count = dp[j].get(diff, 0)
+                result += count
+                dp[i][diff] = dp[i].get(diff, 0) + count + 1
+
+        return result
 
     numberOfArithmeticSlices = number_of_arithmetic_slices
