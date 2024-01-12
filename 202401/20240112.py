@@ -15,6 +15,16 @@ class Solution:
     """
 
     def halves_are_alike(self, s: str) -> bool:
-        ...
+        def count_vowels(string: str) -> int:
+            """Helper function to count vowels in a given string."""
+            vowels = set("aeiouAEIOU")
+            return sum(1 for char in string if char in vowels)
+
+        # Split the input into two halves.
+        length = len(s) // 2
+        a, b = s[:length], s[length:]
+
+        # Count vowels on both sides and compare.
+        return count_vowels(a) == count_vowels(b)
 
     halvesAreAlike = halves_are_alike
