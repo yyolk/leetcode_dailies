@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/determine-if-two-strings-are-close/
+from collections import Counter
 
 
 class Solution:
@@ -24,6 +25,22 @@ class Solution:
     """
 
     def close_strings(self, word1: str, word2: str) -> bool:
-        ...
+        # Check if the lengths of the two words are equal
+        if len(word1) != len(word2):
+            return False
+
+        # Count the occurrences of each character in both words
+        count1 = Counter(word1)
+        count2 = Counter(word2)
+
+        # Check if the sets of characters are the same
+        if set(count1.keys()) != set(count2.keys()):
+            return False
+
+        # Check if the frequency counts of characters are the same
+        if sorted(count1.values()) != sorted(count2.values()):
+            return False
+
+        return True
 
     closeStrings = close_strings
