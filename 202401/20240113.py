@@ -20,10 +20,10 @@ class Solution:
         count_t = [0] * 26
 
         for char in s:
-            count_s[ord(char) - ord('a')] += 1
+            count_s[ord(char) - ord("a")] += 1
 
         for char in t:
-            count_t[ord(char) - ord('a')] += 1
+            count_t[ord(char) - ord("a")] += 1
 
         # Step 2: Calculate absolute differences for each character
         steps = 0
