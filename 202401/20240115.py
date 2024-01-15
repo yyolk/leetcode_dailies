@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/find-players-with-zero-or-one-losses/
+from collections import Counter
 
 
 class Solution:
@@ -24,6 +25,20 @@ class Solution:
     """
 
     def find_winners(self, matches: list[list[int]]) -> list[list[int]]:
-        ...
+        # Count all the losing matches, by their loser
+        loss_count = Counter(loser for _, loser in matches)
+
+        # Collect all players who have played at least one match
+        all_players = set(player for match in matches for player in match)
+
+        # Create lists of players
+        zero_loss = [player for player in all_players if loss_count.get(player, 0) == 0]
+        lost_one_match = [player for player, count in loss_count.items() if count == 1]
+
+        # Sort the lists
+        zero_loss.sort()
+        lost_one_match.sort()
+
+        return [zero_loss, lost_one_match]
 
     findWinners = find_winners
