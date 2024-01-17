@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/unique-number-of-occurrences/
+from collections import Counter
 
 
 class Solution:
@@ -9,6 +10,10 @@ class Solution:
     """
 
     def unique_occurrences(self, arr: list[int]) -> bool:
-        ...
+        # Create a Counter(...) from the input arr.
+        counter = Counter(arr)
+
+        # Determine if the occurences are unique.
+        return len(set(counter.values())) == len(counter.values())
 
     uniqueOccurrences = unique_occurrences
