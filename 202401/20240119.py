@@ -30,7 +30,7 @@ class Solution:
                 dp[i][j] = matrix[i][j] + min(
                     dp[i - 1][j],  # directly above
                     dp[i - 1][max(0, j - 1)],  # diagonally left
-                    dp[i - 1][min(cols - 1, j + 1)]  # diagonally right
+                    dp[i - 1][min(cols - 1, j + 1)],  # diagonally right
                 )
 
         # Return the minimum sum from the last row of the dp table
