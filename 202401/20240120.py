@@ -36,7 +36,10 @@ class Solution:
         # Calculate the sum of min(b)
         result = 0
         for i in range(n):
-            result = (result + arr[i] * (i - left_boundaries[i]) * (right_boundaries[i] - i)) % MOD
+            result = (
+                result + arr[i] * (i - left_boundaries[i]) * (right_boundaries[i] - i)
+            ) % MOD
 
         return result
+
     sumSubarrayMins = sum_subarray_mins
