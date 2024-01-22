@@ -22,7 +22,7 @@ class Solution:
 
         # Initialize an array to store the maximum amount robbed at each house
         dp = [0] * len(nums)
-        
+
         # Base cases
         dp[0] = nums[0]
         dp[1] = max(nums[0], nums[1])
