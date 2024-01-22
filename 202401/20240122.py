@@ -17,6 +17,20 @@ class Solution:
     """
 
     def find_error_nums(self, nums: list[int]) -> list[int]:
-        ...
+        n = len(nums)
+        seen = set()
+        duplicate = -1
+        missing = -1
+
+        for num in nums:
+            if num in seen:
+                duplicate = num
+            seen.add(num)
+
+        for i in range(1, n + 1):
+            if i not in seen:
+                missing = i
+
+        return [duplicate, missing]
 
     findErrorNums = find_error_nums
