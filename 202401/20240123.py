@@ -14,6 +14,21 @@ class Solution:
     """
 
     def max_length(self, arr: list[str]) -> int:
-        ...
+        max_length = 0
+
+        def is_unique(subseq):
+            return len(subseq) == len(set(subseq))
+
+        def backtrack(start, current):
+            nonlocal max_length
+
+            max_length = max(max_length, len(current))
+
+            for i in range(start, len(arr)):
+                if is_unique(current + arr[i]):
+                    backtrack(i + 1, current + arr[i])
+
+        backtrack(0, "")
+        return max_length
 
     maxLength = max_length
