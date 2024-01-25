@@ -46,7 +46,9 @@ class Solution:
                     return 0
 
             # Recursively explore left and right subtrees
-            total_paths = dfs(node.left, path_count.copy()) + dfs(node.right, path_count.copy())
+            total_paths = dfs(node.left, path_count.copy()) + dfs(
+                node.right, path_count.copy()
+            )
 
             return total_paths
 
