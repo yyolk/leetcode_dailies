@@ -6,6 +6,7 @@ The TOC in this case is a calendar with hyperlinked days.
 This also serves as a way to track which days weren't completed,
 as it will not link to a file that doesn't exist for the given day.
 """
+
 import calendar
 import os
 import re
