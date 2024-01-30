@@ -179,10 +179,14 @@
    </a>
   </td>
   <td class="mon">
-   29
+   <a href="20240129.py">
+    29
+   </a>
   </td>
   <td class="tue">
-   30
+   <a href="20240130.py">
+    30
+   </a>
   </td>
   <td class="wed">
    31
