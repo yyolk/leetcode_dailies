@@ -28,6 +28,32 @@ class Solution:
 
     """
 
-    def eval_r_p_n(self, tokens: list[str]) -> int: ...
+    def eval_r_p_n(self, tokens: list[str]) -> int:
+        stack = []
+
+        for token in tokens:
+            if token.isdigit() or (token[0] == '-' and token[1:].isdigit()):
+                # If the token is a number, push it onto the stack
+                stack.append(int(token))
+            else:
+                # If the token is an operator, pop the required number of operands from the stack,
+                # perform the operation, and push the result back onto the stack.
+                operand2 = stack.pop()
+                operand1 = stack.pop()
+                
+                if token == '+':
+                    stack.append(operand1 + operand2)
+                elif token == '-':
+                    stack.append(operand1 - operand2)
+                elif token == '*':
+                    stack.append(operand1 * operand2)
+                elif token == '/':
+                    # Handle division by zero case
+                    if operand2 == 0:
+                        return "Error: Division by zero"
+                    stack.append(int(operand1 / operand2))
+
+        # The final result should be on the top of the stack
+        return stack[0]
 
     evalRPN = eval_r_p_n
