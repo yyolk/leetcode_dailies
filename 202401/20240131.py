@@ -11,6 +11,23 @@ class Solution:
 
     """
 
-    def daily_temperatures(self, temperatures: list[int]) -> list[int]: ...
+    def daily_temperatures(self, temperatures: list[int]) -> list[int]:
+        n = len(temperatures)
+        # Initialize the answer array with zeros
+        answer = [0] * n
+        # Stack to keep track of indices
+        stack = []
+
+        for i in range(n):
+            # Check if the current temperature is greater than the temperature at the index at the top of the stack
+            while stack and temperatures[i] > temperatures[stack[-1]]:
+                # Update the answer for the index at the top of the stack
+                prev_index = stack.pop()
+                answer[prev_index] = i - prev_index
+
+            # Push the current index onto the stack
+            stack.append(i)
+
+        return answer
 
     dailyTemperatures = daily_temperatures
