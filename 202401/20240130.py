@@ -32,7 +32,7 @@ class Solution:
         stack = []
 
         for token in tokens:
-            if token.isdigit() or (token[0] == '-' and token[1:].isdigit()):
+            if token.isdigit() or (token[0] == "-" and token[1:].isdigit()):
                 # If the token is a number, push it onto the stack
                 stack.append(int(token))
             else:
@@ -40,14 +40,14 @@ class Solution:
                 # perform the operation, and push the result back onto the stack.
                 operand2 = stack.pop()
                 operand1 = stack.pop()
-                
-                if token == '+':
+
+                if token == "+":
                     stack.append(operand1 + operand2)
-                elif token == '-':
+                elif token == "-":
                     stack.append(operand1 - operand2)
-                elif token == '*':
+                elif token == "*":
                     stack.append(operand1 * operand2)
-                elif token == '/':
+                elif token == "/":
                     # Handle division by zero case
                     if operand2 == 0:
                         return "Error: Division by zero"

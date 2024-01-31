@@ -189,7 +189,9 @@
    </a>
   </td>
   <td class="wed">
-   31
+   <a href="20240131.py">
+    31
+   </a>
   </td>
   <td class="noday">
   </td>
