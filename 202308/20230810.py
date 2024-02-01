@@ -28,16 +28,16 @@ class Solution:
         while low <= high:
             # Calculate the middle index
             mid = (low + high) // 2
-            
+
             # Check if the middle element is the target
             if nums[mid] == target:
                 return True
-            
+
             # Handle the case where nums[low] is equal to nums[mid]
             if nums[low] == nums[mid]:
                 low += 1
                 continue
-            
+
             # If the left half is sorted
             if nums[low] <= nums[mid]:
                 # Check if the target is in the left half
@@ -52,7 +52,7 @@ class Solution:
                     low = mid + 1
                 else:
                     high = mid - 1
-        
+
         # If the target is not found
         return False
 

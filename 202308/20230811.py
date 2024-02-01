@@ -19,15 +19,15 @@ class Solution:
     def change(self, amount: int, coins: List[int]) -> int:
         # Initialize a list to store the number of combinations for each amount from 0 to the target amount
         dp = [0] * (amount + 1)
-        
+
         # There is one way to make change for amount 0, i.e., not using any coin
         dp[0] = 1
-        
+
         # Iterate through each coin and update the dp array
         for coin in coins:
             for i in range(coin, amount + 1):
                 dp[i] += dp[i - coin]
-        
+
         # The final result is stored in the last element of the dp array
         return dp[amount]
 
