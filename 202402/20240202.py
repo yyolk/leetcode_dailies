@@ -12,6 +12,27 @@ class Solution:
 
     """
 
-    def sequential_digits(self, low: int, high: int) -> list[int]: ...
+    def sequential_digits(self, low: int, high: int) -> list[int]:
+        result = []
+        
+        # Helper function to generate sequential digits recursively
+        def generate_sequential(number, current_digit):
+            # Check if the generated number is within the given range
+            if low <= number <= high:
+                result.append(number)
+            
+            # If the current digit is less than 9, generate the next sequential digit
+            if current_digit < 9:
+                new_digit = current_digit + 1
+                next_number = number * 10 + new_digit
+                # Recursive call with the next digit and number
+                generate_sequential(next_number, new_digit)
+        
+        # Start generating sequential digits for each starting digit from 1 to 9
+        for i in range(1, 10):
+            generate_sequential(i, i)
+        
+        # Return the sorted list of sequential digits
+        return sorted(result)
 
     sequentialDigits = sequential_digits
