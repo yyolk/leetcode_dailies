@@ -21,7 +21,7 @@ class Solution:
 
         # Initialize pointers and variables
         left, right = 0, 0
-        min_len = float('inf')
+        min_len = float("inf")
         min_window = ""
 
         # Counter for characters in t
@@ -39,7 +39,10 @@ class Solution:
         while right < len(s):
             # Expand the window
             current_window_count[s[right]] += 1
-            if s[right] in t_count and current_window_count[s[right]] == t_count[s[right]]:
+            if (
+                s[right] in t_count
+                and current_window_count[s[right]] == t_count[s[right]]
+            ):
                 formed_chars += 1
 
             # Contract the window
@@ -47,11 +50,14 @@ class Solution:
                 # Update the minimum window substring
                 if right - left + 1 < min_len:
                     min_len = right - left + 1
-                    min_window = s[left:right + 1]
+                    min_window = s[left : right + 1]
 
                 # Contract the window from the left
                 current_window_count[s[left]] -= 1
-                if s[left] in t_count and current_window_count[s[left]] < t_count[s[left]]:
+                if (
+                    s[left] in t_count
+                    and current_window_count[s[left]] < t_count[s[left]]
+                ):
                     formed_chars -= 1
 
                 left += 1
