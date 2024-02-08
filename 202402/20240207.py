@@ -21,7 +21,7 @@ class Solution:
         sorted_chars = sorted(char_freq, key=lambda x: char_freq[x], reverse=True)
 
         # Build the sorted string by repeating each character according to its frequency
-        result = ''.join(char * char_freq[char] for char in sorted_chars)
+        result = "".join(char * char_freq[char] for char in sorted_chars)
 
         return result
 
