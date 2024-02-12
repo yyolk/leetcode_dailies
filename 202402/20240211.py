@@ -60,7 +60,9 @@ class Solution:
                     # Check if the new positions are within the grid
                     if 0 <= new_col1 < cols and 0 <= new_col2 < cols:
                         # Recursively calculate the maximum cherries
-                        max_cherries = max(max_cherries, dp(row + 1, new_col1, new_col2))
+                        max_cherries = max(
+                            max_cherries, dp(row + 1, new_col1, new_col2)
+                        )
 
             # Update memoization and return the result
             memo[row][col1][col2] = max_cherries + cherries
