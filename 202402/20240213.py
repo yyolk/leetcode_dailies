@@ -11,6 +11,12 @@ class Solution:
 
     """
 
-    def first_palindrome(self, words: list[str]) -> str: ...
+    def first_palindrome(self, words: list[str]) -> str:
+        for word in words:
+            # Check if the word is a palindrome, the same forward as backwards.
+            if word == word[::-1]:
+                return word
+        # No Palindrome is found, return an empty string.
+        return ""
 
     firstPalindrome = first_palindrome
