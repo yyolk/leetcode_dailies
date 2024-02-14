@@ -22,6 +22,16 @@ class Solution:
 
     """
 
-    def rearrange_array(self, nums: list[int]) -> list[int]: ...
+    def rearrange_array(self, nums: list[int]) -> list[int]:
+        # Separate positive and negative numbers
+        positives = [num for num in nums if num > 0]
+        negatives = [num for num in nums if num < 0]
+
+        # Interleave positive and negative numbers
+        result = []
+        for pos, neg in zip(positives, negatives):
+            result.extend([pos, neg])
+
+        return result
 
     rearrangeArray = rearrange_array
