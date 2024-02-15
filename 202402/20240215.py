@@ -21,6 +21,23 @@ class Solution:
 
     """
 
-    def largest_perimeter(self, nums: list[int]) -> int: ...
+    def largest_perimeter(self, nums: list[int]) -> int:
+        # Sort the array in ascending order
+        nums.sort()
+        
+        # Initialize variables for tracking sum and answer
+        sum_val = 0
+        ans = -1
+
+        # Iterate through the sorted array
+        for num in nums:
+            # Check if the current number can form a valid triangle
+            if num < sum_val:
+                # Update the answer if a valid triangle is found
+                ans = num + sum_val
+            # Update the sum of previous elements
+            sum_val += num
+            
+        return ans
 
     largestPerimeter = largest_perimeter
