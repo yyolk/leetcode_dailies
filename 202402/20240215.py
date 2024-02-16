@@ -24,7 +24,7 @@ class Solution:
     def largest_perimeter(self, nums: list[int]) -> int:
         # Sort the array in ascending order
         nums.sort()
-        
+
         # Initialize variables for tracking sum and answer
         sum_val = 0
         ans = -1
@@ -37,7 +37,7 @@ class Solution:
                 ans = num + sum_val
             # Update the sum of previous elements
             sum_val += num
-            
+
         return ans
 
     largestPerimeter = largest_perimeter
