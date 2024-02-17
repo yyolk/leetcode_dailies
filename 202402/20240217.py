@@ -25,6 +25,26 @@ class Solution:
 
     def furthest_building(
         self, heights: list[int], bricks: int, ladders: int
-    ) -> int: ...
+    ) -> int:
+        min_heap = []  # A min heap to store the heights difference
+        bricks_used = 0
+
+        for i in range(len(heights) - 1):
+            diff = heights[i + 1] - heights[i]
+
+            if diff > 0:
+                heapq.heappush(min_heap, diff)
+
+                # If the number of elements in the heap exceeds the available ladders,
+                # use bricks instead of ladders.
+                if len(min_heap) > ladders:
+                    bricks_used += heapq.heappop(min_heap)
+
+                # If the total bricks used exceeds the available bricks, return the current index.
+                if bricks_used > bricks:
+                    return i
+
+        # If we reach the end of the buildings, we can reach the furthest building.
+        return len(heights) - 1
 
     furthestBuilding = furthest_building
