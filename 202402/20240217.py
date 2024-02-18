@@ -23,9 +23,7 @@ class Solution:
 
     """
 
-    def furthest_building(
-        self, heights: list[int], bricks: int, ladders: int
-    ) -> int:
+    def furthest_building(self, heights: list[int], bricks: int, ladders: int) -> int:
         min_heap = []  # A min heap to store the heights difference
         bricks_used = 0
 
