@@ -41,7 +41,7 @@ class Solution:
         for start, end in meetings:
             flag = False
             minind = -1
-            val = float('inf')
+            val = float("inf")
 
             # Check each room to find the earliest available room
             for j in range(n):
@@ -58,7 +58,7 @@ class Solution:
             if not flag:
                 # No available room, schedule the meeting in the room with the earliest end time
                 ans[minind] += 1
-                times[minind] += (end - start)
+                times[minind] += end - start
 
         # Find the room with the most meetings
         maxi = -1
