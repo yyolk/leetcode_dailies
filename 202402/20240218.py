@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/meeting-rooms-iii/
+import heapq
 
 
 class Solution:
@@ -28,6 +29,46 @@ class Solution:
 
     """
 
-    def most_booked(self, n: int, meetings: list[list[int]]) -> int: ...
+    def most_booked(self, n: int, meetings: list[list[int]]) -> int:
+        # Initialize arrays to keep track of the number of meetings and end times for each room
+        ans = [0] * n
+        times = [0] * n
+
+        # Sort meetings based on their start times
+        meetings.sort()
+
+        # Iterate through the sorted meetings
+        for start, end in meetings:
+            flag = False
+            minind = -1
+            val = float('inf')
+
+            # Check each room to find the earliest available room
+            for j in range(n):
+                if times[j] < val:
+                    val = times[j]
+                    minind = j
+                if times[j] <= start:
+                    # Room is available, update its information
+                    flag = True
+                    ans[j] += 1
+                    times[j] = end
+                    break
+
+            if not flag:
+                # No available room, schedule the meeting in the room with the earliest end time
+                ans[minind] += 1
+                times[minind] += (end - start)
+
+        # Find the room with the most meetings
+        maxi = -1
+        id_ = -1
+        for i in range(n):
+            if ans[i] > maxi:
+                maxi = ans[i]
+                id_ = i
+
+        # Return the room number that held the most meetings
+        return id_
 
     mostBooked = most_booked
