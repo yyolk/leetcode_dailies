@@ -14,7 +14,7 @@ class Solution:
 
     def is_power_of_two(self, n: int) -> bool:
         """Uses bitwise operations.
-        
+
         As binary representation with powers of 2 have a unique pattern.
         """
         if n <= 0:
