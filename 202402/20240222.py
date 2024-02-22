@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/find-the-town-judge/
+from collections import defaultdict
 
 
 class Solution:
@@ -24,6 +25,26 @@ class Solution:
 
     """
 
-    def find_judge(self, n: int, trust: list[list[int]]) -> int: ...
+    def find_judge(self, n: int, trust: list[list[int]]) -> int:
+        # There is only one person, so that person is the town judge.
+        if n == 1:
+            return 1
+
+        # To store the count of trusts received by each person
+        trust_counts = defaultdict(int)
+        # To store the set of people who trust someone
+        trust_given = set()
+
+        for a, b in trust:
+            trust_counts[b] += 1
+            trust_given.add(a)
+
+        for person in range(1, n + 1):
+            if trust_counts[person] == n - 1 and person not in trust_given:
+                # Found the town judge
+                return person
+
+        # No town judge found
+        return -1
 
     findJudge = find_judge
