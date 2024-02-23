@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/cheapest-flights-within-k-stops/
-import heapq
+from collections import defaultdict
+from queue import Queue
 
 
 class Solution:
@@ -19,32 +20,38 @@ class Solution:
         self, n: int, flights: list[list[int]], src: int, dst: int, k: int
     ) -> int:
         # Create an adjacency list to represent the graph
-        graph = {i: [] for i in range(n)}
+        adj = defaultdict(list)
         for flight in flights:
-            graph[flight[0]].append((flight[1], flight[2]))
+            adj[flight[0]].append((flight[1], flight[2]))
 
-        # Priority queue to store (cost, current_city, stops_left)
-        heap = [(0, src, k + 1)]
-        
-        # Dictionary to memoize the minimum cost for each (city, stops_left) pair
-        memo = {}
+        # Initialize distances with infinity, except for source node which is set to 0
+        dist = [float('inf')] * n
+        dist[src] = 0
 
-        while heap:
-            cost, current_city, stops_left = heapq.heappop(heap)
+        # Use a queue for BFS traversal
+        q = Queue()
+        q.put((src, 0))
+        stops = 0
 
-            # If the destination is reached, return the cost
-            if current_city == dst:
-                return cost
+        # Perform BFS with a maximum of k stops
+        while not q.empty() and stops <= k:
+            sz = q.qsize()
+            for _ in range(sz):
+                node, distance = q.get()
 
-            # If stops are left, explore neighbors
-            if stops_left > 0:
-                for neighbor, price in graph[current_city]:
-                    # Use memoization to avoid redundant computations
-                    if (neighbor, stops_left - 1) not in memo or cost + price < memo[(neighbor, stops_left - 1)]:
-                        heapq.heappush(heap, (cost + price, neighbor, stops_left - 1))
-                        memo[(neighbor, stops_left - 1)] = cost + price
+                # Skip if node has no outgoing flights
+                if node not in adj: continue
 
-        # If destination is not reached within the given stops
-        return -1
+                # Explore neighbors
+                for neighbour, price in adj[node]:
+                    # Update distance if a shorter path is found
+                    if price + distance >= dist[neighbour]: continue
+                    dist[neighbour] = price + distance
+                    q.put((neighbour, dist[neighbour]))
+
+            stops += 1
+
+        # Return the minimum cost to reach the destination, or -1 if unreachable
+        return dist[dst] if dist[dst] != float('inf') else -1
 
     findCheapestPrice = find_cheapest_price
