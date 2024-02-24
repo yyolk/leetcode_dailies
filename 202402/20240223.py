@@ -25,7 +25,7 @@ class Solution:
             adj[flight[0]].append((flight[1], flight[2]))
 
         # Initialize distances with infinity, except for source node which is set to 0
-        dist = [float('inf')] * n
+        dist = [float("inf")] * n
         dist[src] = 0
 
         # Use a queue for BFS traversal
@@ -40,18 +40,20 @@ class Solution:
                 node, distance = q.get()
 
                 # Skip if node has no outgoing flights
-                if node not in adj: continue
+                if node not in adj:
+                    continue
 
                 # Explore neighbors
                 for neighbour, price in adj[node]:
                     # Update distance if a shorter path is found
-                    if price + distance >= dist[neighbour]: continue
+                    if price + distance >= dist[neighbour]:
+                        continue
                     dist[neighbour] = price + distance
                     q.put((neighbour, dist[neighbour]))
 
             stops += 1
 
         # Return the minimum cost to reach the destination, or -1 if unreachable
-        return dist[dst] if dist[dst] != float('inf') else -1
+        return dist[dst] if dist[dst] != float("inf") else -1
 
     findCheapestPrice = find_cheapest_price
