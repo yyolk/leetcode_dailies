@@ -30,7 +30,7 @@ class Solution:
     ) -> list[int]:
         # Initialize the set with people who initially know the secret
         known_set = set([0, first_person])
-        
+
         # Sort meetings by time
         sorted_meetings = []
         meetings.sort(key=lambda x: x[2])
