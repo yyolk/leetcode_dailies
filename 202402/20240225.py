@@ -23,7 +23,7 @@ class Solution:
         # Check for the edge case with only one element
         if len(nums) == 1:
             return True
-        
+
         # Check for the presence of '1' in nums
         if 1 in nums:
             return False
