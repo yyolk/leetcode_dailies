@@ -11,7 +11,7 @@ class Solution:
     nodes have the same value.
 
     Definition for a binary tree node:
-    
+
         class TreeNode:
             def __init__(self, val=0, left=None, right=None):
                 self.val = val
@@ -30,10 +30,9 @@ class Solution:
         # Check if current nodes have the same value and recursively check their left and right subtrees
         else:
             return (
-                p.val == q.val and
-                self.is_same_tree(p.left, q.left) and
-                self.is_same_tree(p.right, q.right)
+                p.val == q.val
+                and self.is_same_tree(p.left, q.left)
+                and self.is_same_tree(p.right, q.right)
             )
 
     isSameTree = is_same_tree
-        
