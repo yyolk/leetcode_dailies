@@ -39,14 +39,27 @@ class Solution:
 
         while queue:
             level_size = len(queue)
-            prev_value = None  # To track the previous node's value within the current level
+            prev_value = (
+                None  # To track the previous node's value within the current level
+            )
 
             for _ in range(level_size):
                 node = queue.popleft()
 
                 # Check the validity of the current node's value based on the level
-                if (level % 2 == 0 and (node.val % 2 == 0 or (prev_value is not None and node.val <= prev_value))) or \
-                        (level % 2 == 1 and (node.val % 2 == 1 or (prev_value is not None and node.val >= prev_value))):
+                if (
+                    level % 2 == 0
+                    and (
+                        node.val % 2 == 0
+                        or (prev_value is not None and node.val <= prev_value)
+                    )
+                ) or (
+                    level % 2 == 1
+                    and (
+                        node.val % 2 == 1
+                        or (prev_value is not None and node.val >= prev_value)
+                    )
+                ):
                     return False
 
                 # Update the previous value for the next iteration
