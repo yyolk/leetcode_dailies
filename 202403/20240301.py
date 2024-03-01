@@ -16,6 +16,30 @@ class Solution:
 
     """
 
-    def maximum_odd_binary_number(self, s: str) -> str: ...
+    def maximum_odd_binary_number(self, s: str) -> str:
+        # List to store '1's encountered in the string
+        ones = []
+        
+        # String to store the remaining '0's and '1's
+        remaining = ""
+
+        # Iterate through each character in the input string
+        for c in s:
+            if c == "1":
+                # If the character is '1', add it to the 'ones' list
+                ones.append(c)
+            else:
+                # If the character is '0', add it to the 'remaining' string
+                remaining += c
+        
+        # Move the rightmost '1' to the beginning of the string
+        remaining += ones.pop()
+
+        # Reconstruct the remaining string by adding '1's back in their original order
+        for one in ones:
+            remaining = one + remaining
+        
+        # Return the resulting maximum odd binary number
+        return remaining
 
     maximumOddBinaryNumber = maximum_odd_binary_number
