@@ -56,7 +56,9 @@
    7
   </td>
   <td class="tue">
-   8
+   <a href="20230808.py">
+    8
+   </a>
   </td>
   <td class="wed">
    <a href="20230809.py">
