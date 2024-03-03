@@ -11,7 +11,7 @@ class Solution:
 
     def sorted_squares(self, nums: list[int]) -> list[int]:
         # Square each element in the array
-        squares = [num ** 2 for num in nums]
+        squares = [num**2 for num in nums]
 
         # Sort the squared values in non-decreasing order
         sorted_squares = sorted(squares)
