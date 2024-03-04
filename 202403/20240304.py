@@ -23,6 +23,34 @@ class Solution:
 
     """
 
-    def bag_of_tokens_score(self, tokens: list[int], power: int) -> int: ...
+    def bag_of_tokens_score(self, tokens: list[int], power: int) -> int:
+        # Sorting the tokens array to optimize the strategy
+        tokens.sort()
+
+        max_score = 0
+        current_score = 0
+        left = 0
+        right = len(tokens) - 1
+
+        # Two-pointer approach to iterate through the tokens array
+        while left <= right:
+            # If current power is enough to play token face-up
+            if power >= tokens[left]:
+                power -= tokens[left]
+                current_score += 1
+                left += 1
+                # Update the maximum score achieved so far
+                max_score = max(max_score, current_score)
+            # If current score is greater than 0, play token face-down
+            elif current_score > 0:
+                power += tokens[right]
+                current_score -= 1
+                right -= 1
+            else:
+                # If neither face-up nor face-down is possible, break the loop
+                break
+
+        # Return the maximum score achievable
+        return max_score
 
     bagOfTokensScore = bag_of_tokens_score
