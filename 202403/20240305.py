@@ -24,6 +24,24 @@ class Solution:
 
     """
 
-    def minimum_length(self, s: str) -> int: ...
+    def minimum_length(self, s: str) -> int:
+        # Initialize pointers for the start and end of the string
+        start, end = 0, len(s) - 1
+
+        # Continue while there are characters in the string and they are equal
+        while start < end and s[start] == s[end]:
+            # Move the start pointer to the right
+            while start < end and s[start] == s[start + 1]:
+                start += 1
+            # Move the end pointer to the left
+            while start < end and s[end] == s[end - 1]:
+                end -= 1
+
+            # Move both pointers inward to find the next potential prefix and suffix
+            start += 1
+            end -= 1
+
+        # Return the remaining length after applying the algorithm
+        return max(0, end - start + 1)
 
     minimumLength = minimum_length
