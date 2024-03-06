@@ -16,6 +16,27 @@ class Solution:
 
     """
 
-    def has_cycle(self, head: Optional[ListNode]) -> bool: ...
+    def has_cycle(self, head: Optional[ListNode]) -> bool:
+        # Check if the linked list is empty or has only one node
+        if not head or not head.next:
+            return False
+
+        # Initialize two pointers, slow and fast
+        slow = head
+        fast = head.next
+
+        # Traverse the linked list using Floyd's Tortoise and Hare algorithm
+        while fast and fast.next:
+            # If there is a cycle, the fast pointer will eventually catch up with the slow pointer
+            if slow == fast:
+                return True
+
+            # Move slow pointer one step at a time
+            slow = slow.next
+            # Move fast pointer two steps at a time
+            fast = fast.next.next
+
+        # If no cycle is found, return False
+        return False
 
     hasCycle = has_cycle
