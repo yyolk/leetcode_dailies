@@ -14,6 +14,7 @@ class Solution:
 
     Return *any permutation of* `s` *that satisfies this property*.
     """
+
     def custom_sort_string(self, order: str, s: str) -> str:
         # Create a dictionary to store the count of each character in s
         char_count = {}

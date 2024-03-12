@@ -71,24 +71,36 @@
    </a>
   </td>
   <td class="thu">
-   7
+   <a href="20240307.py">
+    7
+   </a>
   </td>
   <td class="fri">
-   8
+   <a href="20240308.py">
+    8
+   </a>
   </td>
   <td class="sat">
-   9
+   <a href="20240309.py">
+    9
+   </a>
   </td>
  </tr>
  <tr>
   <td class="sun">
-   10
+   <a href="20240310.py">
+    10
+   </a>
   </td>
   <td class="mon">
-   11
+   <a href="20240311.py">
+    11
+   </a>
   </td>
   <td class="tue">
-   12
+   <a href="20240312.py">
+    12
+   </a>
   </td>
   <td class="wed">
    13

@@ -12,6 +12,7 @@ class Solution:
 
     The frequency of an element is the number of occurrences of that element in the array.
     """
+
     def max_frequency_elements(self, nums: list[int]) -> int:
         # Check for empty input
         if not nums:
@@ -24,8 +25,10 @@ class Solution:
         max_frequency = max(frequency_counter.values())
 
         # Calculate the total frequencies of elements with the maximum frequency
-        total_frequency = sum(count for count in frequency_counter.values() if count == max_frequency)
+        total_frequency = sum(
+            count for count in frequency_counter.values() if count == max_frequency
+        )
 
         return total_frequency
-        
+
     maxFrequencyElements = max_frequency_element

@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/minimum-common-value/
 
+
 class Solution:
     """2540. Minimum Common Value
     Given two integer arrays nums1 and nums2, sorted in non-decreasing order, return the
@@ -29,4 +30,3 @@ class Solution:
         return -1  # No common element found
 
     getCommon = get_common
- 
