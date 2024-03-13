@@ -19,9 +19,7 @@ class Solution:
 
     """
 
-    def remove_zero_sum_sublists(
-        self, head: Optional[ListNode]
-    ) -> Optional[ListNode]:
+    def remove_zero_sum_sublists(self, head: Optional[ListNode]) -> Optional[ListNode]:
         # Create a dummy node to handle cases where the entire list is removed
         dummy = ListNode(0)
         dummy.next = head
