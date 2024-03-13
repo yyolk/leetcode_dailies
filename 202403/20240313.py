@@ -14,6 +14,15 @@ class Solution:
 
     """
 
-    def pivot_integer(self, n: int) -> int: ...
+    def pivot_integer(self, n: int) -> int:
+        # Using the formula for sum of first n integers to calculate the expected x
+        x = (n * (n + 1) / 2) ** 0.5
+
+        # If x is not a whole number, return -1 indicating no pivot integer exists
+        if x % 1 != 0:
+            return -1
+        else:
+            # Otherwise, return x as an integer
+            return int(x)
 
     pivotInteger = pivot_integer
