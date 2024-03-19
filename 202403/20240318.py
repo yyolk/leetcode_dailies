@@ -23,29 +23,29 @@ class Solution:
     def find_min_arrow_shots(self, points: list[list[int]]) -> int:
         if not points:
             return 0
-        
+
         # Sort the points by their x-coordinates
         points.sort(key=lambda x: x[0])
-        
+
         # Initialize the minimum number of arrows
         min_arrows = 1
-        
+
         # Keep track of the current end point
         current_end = points[0][1]
-        
+
         # Iterate over the remaining points
         for i in range(1, len(points)):
             start, end = points[i]
-            
+
             # If the current balloon's start point is greater than the previous end point, we need an additional arrow
             if start > current_end:
                 min_arrows += 1
                 current_end = end
-            
+
             # Update the current end point if necessary
             elif end > current_end:
                 current_end = end
-        
+
         return min_arrows
 
     findMinArrowShots = find_min_arrow_shots
