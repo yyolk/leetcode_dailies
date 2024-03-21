@@ -31,4 +31,3 @@ class Solution:
         return max(len(tasks), intervals_needed)
 
     leastInterval = least_interval
-
