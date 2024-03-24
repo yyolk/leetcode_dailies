@@ -49,4 +49,3 @@ class Solution:
         return True
 
     isPalindrome = is_palindrome
-        
