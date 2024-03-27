@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/find-all-duplicates-in-an-array/
+from collections import Counter
 
 
 class Solution:
@@ -13,6 +14,8 @@ class Solution:
 
     """
 
-    def find_duplicates(self, nums: list[int]) -> list[int]: ...
+    def find_duplicates(self, nums: list[int]) -> list[int]:
+        counter = Counter(nums)
+        return [num for num, count in counter.items() if count == 2]
 
     findDuplicates = find_duplicates
