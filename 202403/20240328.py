@@ -17,6 +17,36 @@ class Solution:
 
     """
 
-    def max_subarray_length(self, nums: list[int], k: int) -> int: ...
+    def max_subarray_length(self, nums: list[int], k: int) -> int:
+        # Dictionary to keep track of the frequency of each number in nums
+        frequency_map = {}
+        # Pointer to the starting index of the current subarray
+        left = 0
+        # The maximum length of a good subarray found so far
+        max_length = 0
+
+        # Iterate through the nums array
+        for right, num in enumerate(nums):
+            # If the current number is not in the frequency map, add it
+            if num not in frequency_map:
+                frequency_map[num] = 0
+            # Increment the frequency of the current number
+            frequency_map[num] += 1
+
+            # If the frequency of the current number is greater than k
+            while frequency_map[num] > k:
+                # Decrement the frequency of the element at the left pointer
+                frequency_map[nums[left]] -= 1
+                # If the frequency becomes 0, remove it from the frequency map
+                if frequency_map[nums[left]] == 0:
+                    del frequency_map[nums[left]]
+                # Move the left pointer to the right
+                left += 1
+
+            # Update the maximum length of a good subarray
+            max_length = max(max_length, right - left + 1)
+
+        return max_length
 
     maxSubarrayLength = max_subarray_length
+
