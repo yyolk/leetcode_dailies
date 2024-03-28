@@ -14,27 +14,27 @@ class Solution:
         # If k is less than or equal to 1, there are no valid subarrays
         if k <= 1:
             return 0
-        
+
         # Initialize product and left pointer
         product = 1
         left = 0
         result = 0
-        
+
         # Iterate through the array
         for right, num in enumerate(nums):
             # Update the product with the current number
             product *= num
-            
+
             # If the product exceeds k, shrink the window
             while product >= k:
                 # Update the product by removing the leftmost element
                 product /= nums[left]
                 # Move the left pointer to the right
                 left += 1
-                
+
             # Increment the result by the size of the current subarray
             result += right - left + 1
-            
+
         # Return the total number of subarrays
         return result
 
