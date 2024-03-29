@@ -49,4 +49,3 @@ class Solution:
         return max_length
 
     maxSubarrayLength = max_subarray_length
-
