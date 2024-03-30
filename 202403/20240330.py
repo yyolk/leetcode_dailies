@@ -15,7 +15,28 @@ class Solution:
     A **subarray** is a **contiguous** part of an array.
 
     """
+    def at_most_k_distinct(self, nums: list[int], k: int) -> int:
+        count = defaultdict(int)
+        left = 0
+        distinct = 0
+        result = 0
 
-    def subarrays_with_k_distinct(self, nums: list[int], k: int) -> int: ...
+        for right in range(len(nums)):
+            if count[nums[right]] == 0:
+                distinct += 1
+            count[nums[right]] += 1
+
+            while distinct > k:
+                count[nums[left]] -= 1
+                if count[nums[left]] == 0:
+                    distinct -= 1
+                left += 1
+
+            result += right - left + 1
+
+        return result
+
+    def subarrays_with_k_distinct(self, nums: list[int], k: int) -> int:
+        return self.at_most_k_distinct(nums, k) - self.at_most_k_distinct(nums, k - 1)
 
     subarraysWithKDistinct = subarrays_with_k_distinct
