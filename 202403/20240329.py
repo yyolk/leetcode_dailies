@@ -12,6 +12,7 @@ class Solution:
     A **subarray** is a contiguous sequence of elements within an array.
 
     """
+
     def count_subarrays(self, nums: list[int], k: int) -> int:
         # Find the maximum element in the list
         m = max(nums)
