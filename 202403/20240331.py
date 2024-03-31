@@ -19,6 +19,35 @@ class Solution:
 
     """
 
-    def count_subarrays(self, nums: list[int], min_k: int, max_k: int) -> int: ...
+    def count_subarrays(self, nums: list[int], min_k: int, max_k: int) -> int:
+        # Initialize the result counter
+        res = 0
+
+        # Initialize indices for tracking invalid numbers and bounds
+        bad_idx = left_idx = right_idx = -1
+
+        # Iterate through the input array
+        for i, num in enumerate(nums):
+            # If the current number is outside the bounds
+            if not min_k <= num <= max_k:
+                # Set the index of the invalid number
+                bad_idx = i
+
+            # If the current number is the minimum bound
+            if num == min_k:
+                # Set the index of the minimum bound
+                left_idx = i
+
+            # If the current number is the maximum bound
+            if num == max_k:
+                # Set the index of the maximum bound
+                right_idx = i
+
+            # Add the count of valid subarrays to the result
+            res += max(0, min(left_idx, right_idx) - bad_idx)
+
+        # Return the final result
+        return res
+
 
     countSubarrays = count_subarrays
