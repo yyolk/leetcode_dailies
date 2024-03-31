@@ -15,6 +15,7 @@ class Solution:
     A **subarray** is a **contiguous** part of an array.
 
     """
+
     def at_most_k_distinct(self, nums: list[int], k: int) -> int:
         count = defaultdict(int)
         left = 0

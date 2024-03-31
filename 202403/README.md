@@ -199,7 +199,9 @@
  </tr>
  <tr>
   <td class="sun">
-   31
+   <a href="20240331.py">
+    31
+   </a>
   </td>
   <td class="noday">
   </td>
