@@ -11,6 +11,7 @@ class Solution:
 
     """
 
-    def length_of_last_word(self, s: str) -> int: ...
+    def length_of_last_word(self, s: str) -> int:
+        return len(s.split()[-1])
 
     lengthOfLastWord = length_of_last_word
