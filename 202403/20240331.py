@@ -49,5 +49,4 @@ class Solution:
         # Return the final result
         return res
 
-
     countSubarrays = count_subarrays
