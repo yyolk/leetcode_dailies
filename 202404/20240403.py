@@ -13,6 +13,7 @@ class Solution:
     not be used more than once.
 
     """
+
     def find_words(self, board, words):
         res = []
         for word in words:
