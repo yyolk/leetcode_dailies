@@ -21,6 +21,28 @@ class Solution:
 
     """
 
-    def min_remove_to_make_valid(self, s: str) -> str: ...
+    def min_remove_to_make_valid(self, s: str) -> str:
+        # Convert the string to a list for easy modification
+        s_list = list(s)
+        stack = []
+
+        # Iterate through the string to find invalid parentheses
+        for i, char in enumerate(s_list):
+            if char == "(":
+                stack.append(i)
+            elif char == ")":
+                # If there's a matching '(' on the stack, remove it from the stack
+                if stack:
+                    stack.pop()
+                else:
+                    # If no matching '(' on the stack, mark this ')' for removal
+                    s_list[i] = ""
+
+        # Remove any unmatched '(' from the stack
+        while stack:
+            s_list[stack.pop()] = ""
+
+        # Join the modified list back into a string and return it
+        return "".join(s_list)
 
     minRemoveToMakeValid = min_remove_to_make_valid
