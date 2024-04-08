@@ -26,9 +26,9 @@ class Solution:
         star_stack = []
 
         for i, char in enumerate(s):
-            if char == '(':
+            if char == "(":
                 left_stack.append(i)
-            elif char == '*':
+            elif char == "*":
                 star_stack.append(i)
             else:  # char == ')'
                 # Pop from left_stack if a matching left parenthesis is found
