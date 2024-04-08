@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/number-of-students-unable-to-eat-lunch/
+from collections import deque
 
 
 class Solution:
@@ -28,6 +29,40 @@ class Solution:
     """
 
     def count_students(self, students: list[int], sandwiches: list[int]) -> int:
+        """Alternative solution."""
+        students_deque = deque(students)
+        sandwiches_deque = deque(sandwiches)
+        count, limit = 0, len(students_deque)
+
+        # Loop through students and sandwiches
+        while students_deque:
+            n = len(students_deque)
+
+            # If the count reaches the initial length of the queue, there are no more
+            # possible matches
+            if count == n:
+                break
+
+            # Get the current student and sandwich
+            current_student = students_deque.popleft()
+            current_sandwich = sandwiches_deque[0]
+
+            # If the current student prefers the current sandwich, remove the sandwich
+            if current_student == current_sandwich:
+                sandwiches_deque.popleft()
+                count, limit = 0, n
+            # If the student does not prefer the sandwich, move them to the end of the queue
+            else:
+                students_deque.append(current_student)
+                count += 1
+
+        # Return the number of students left in the queue (unable to eat)
+        return len(students_deque)
+
+    countStudents = count_students
+
+    def count_students_no_deque(self, students: list[int], sandwiches: list[int]) -> int:
+        """First solution."""
         count = 0
         # Loop through students and sandwiches
         while len(students) > count:
@@ -43,5 +78,3 @@ class Solution:
             students.pop(0)
         # Return the number of students left in the queue
         return len(students)
-
-    countStudents = count_students
