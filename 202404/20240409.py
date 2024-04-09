@@ -20,6 +20,16 @@ class Solution:
 
     """
 
-    def time_required_to_buy(self, tickets: list[int], k: int) -> int: ...
+    def time_required_to_buy(self, tickets: list[int], k: int) -> int:
+        total = 0
+
+        for i, x in enumerate(tickets):
+            # Calculate time for each person in the line
+            if i <= k:
+                total += min(tickets[i], tickets[k])
+            else:
+                total += min(tickets[i], tickets[k] - 1)
+
+        return total
 
     timeRequiredToBuy = time_required_to_buy
