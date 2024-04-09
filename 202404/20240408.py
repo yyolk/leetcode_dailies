@@ -61,7 +61,9 @@ class Solution:
 
     countStudents = count_students
 
-    def count_students_no_deque(self, students: list[int], sandwiches: list[int]) -> int:
+    def count_students_no_deque(
+        self, students: list[int], sandwiches: list[int]
+    ) -> int:
         """First solution."""
         count = 0
         # Loop through students and sandwiches
@@ -73,7 +75,7 @@ class Solution:
             # If the student does not prefer the sandwich, move them to the end of the queue
             else:
                 students.append(students[0])
-                count+=1
+                count += 1
             # Remove the student from the front of the queue
             students.pop(0)
         # Return the number of students left in the queue
