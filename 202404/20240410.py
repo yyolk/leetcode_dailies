@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/reveal-cards-in-increasing-order/
+from collections import deque
 
 
 class Solution:
@@ -25,6 +26,27 @@ class Solution:
 
     """
 
-    def deck_revealed_increasing(self, deck: list[int]) -> list[int]: ...
+    def deck_revealed_increasing(self, deck: list[int]) -> list[int]:
+        # Sort the deck in increasing order (ascending)
+        deck.sort(reverse=True)  # Descending order to simulate the reversed revealing process
+
+        # Initialize a deque to simulate the card revealing process
+        dq = deque()
+        n = len(deck)
+        # Start with the largest card at the bottom of the deck
+        dq.appendleft(deck[0])
+
+        # Simulate the card revealing process
+        for i in range(1, n):
+            # Move the top card to the bottom and then reveal the next card
+            x = dq.pop()
+            dq.appendleft(x)
+            dq.appendleft(deck[i])
+
+        # Collect the revealed cards in the correct order
+        ans = []
+        while dq:
+            ans.append(dq.popleft())
+        return ans
 
     deckRevealedIncreasing = deck_revealed_increasing
