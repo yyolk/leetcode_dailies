@@ -28,7 +28,9 @@ class Solution:
 
     def deck_revealed_increasing(self, deck: list[int]) -> list[int]:
         # Sort the deck in increasing order (ascending)
-        deck.sort(reverse=True)  # Descending order to simulate the reversed revealing process
+        deck.sort(
+            reverse=True
+        )  # Descending order to simulate the reversed revealing process
 
         # Initialize a deque to simulate the card revealing process
         dq = deque()
