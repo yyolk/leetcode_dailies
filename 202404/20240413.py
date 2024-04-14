@@ -21,7 +21,7 @@ class Solution:
 
         for row in matrix:
             for i in range(cols):
-                heights[i] = heights[i] + 1 if row[i] == '1' else 0
+                heights[i] = heights[i] + 1 if row[i] == "1" else 0
 
             max_area = max(max_area, self.largest_rectangle_area(heights))
 
