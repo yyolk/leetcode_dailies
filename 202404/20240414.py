@@ -23,22 +23,22 @@ class Solution:
     def sum_of_left_leaves(self, root: Optional[TreeNode]) -> int:
         if not root:
             return 0
-        
+
         def is_leaf(node):
             return node and not node.left and not node.right
-        
+
         def dfs(node):
             if not node:
                 return 0
-            
+
             left_sum = dfs(node.left) if node.left else 0
             right_sum = dfs(node.right) if node.right else 0
-            
+
             if is_leaf(node.left):
                 return node.left.val + right_sum
             else:
                 return left_sum + right_sum
-        
+
         return dfs(root)
 
     sumOfLeftLeaves = sum_of_left_leaves
