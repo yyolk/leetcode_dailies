@@ -43,11 +43,11 @@ class Solution:
             new_root = TreeNode(val)
             new_root.left = root
             return new_root
-        
+
         # Call the helper function to recursively add the row at the specified depth
         self._add_row(root, val, depth)
         return root
-    
+
     def _add_row(self, node, val, depth):
         # Base case: if the current node is None or the depth is 1, return
         if not node:

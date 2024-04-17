@@ -29,23 +29,23 @@ class Solution:
     def sum_numbers(self, root: Optional[TreeNode]) -> int:
         if not root:
             return 0
-        
+
         total_sum = 0
-        
+
         def dfs(node, current_sum):
             nonlocal total_sum
             if not node:
                 return
-            
+
             current_sum = current_sum * 10 + node.val
-            
+
             if not node.left and not node.right:  # Leaf node
                 total_sum += current_sum
                 return
-            
+
             dfs(node.left, current_sum)
             dfs(node.right, current_sum)
-        
+
         dfs(root, 0)
         return total_sum
 
