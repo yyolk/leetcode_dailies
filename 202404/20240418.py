@@ -18,6 +18,23 @@ class Solution:
 
     """
 
-    def island_perimeter(self, grid: list[list[int]]) -> int: ...
+    def island_perimeter(self, grid: list[list[int]]) -> int:
+        perimeter = 0
+        rows, cols = len(grid), len(grid[0]) if grid else 0
+
+        for i in range(rows):
+            for j in range(cols):
+                if grid[i][j] == 1:
+                    perimeter += 4  # Each land cell contributes 4 to the perimeter
+
+                    # Check if adjacent cells are also land cells
+                    if i > 0 and grid[i - 1][j] == 1:
+                        # Subtract 2 for each adjacent land cell horizontally
+                        perimeter -= 2
+                    if j > 0 and grid[i][j - 1] == 1:
+                        # Subtract 2 for each adjacent land cell vertically
+                        perimeter -= 2
+
+        return perimeter
 
     islandPerimeter = island_perimeter
