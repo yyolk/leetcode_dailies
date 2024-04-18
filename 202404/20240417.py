@@ -27,6 +27,7 @@ class Solution:
                 self.right = right
 
     """
+
     def num_to_char(self, number):
         # Converts a number to its corresponding character (in the range 'a' to 'z')
         return chr(ord("a") + number)
