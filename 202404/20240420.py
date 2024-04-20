@@ -24,6 +24,29 @@ class Solution:
 
     """
 
-    def find_farmland(self, land: list[list[int]]) -> list[list[int]]: ...
+    def find_farmland(self, land: list[list[int]]) -> list[list[int]]:
+        # Get the number of rows and columns
+        num_rows, num_cols = len(land), len(land[0])
+        # Initialize list to store farmland rectangles
+        farmlands = []
+
+        for i in range(num_rows):  # Iterate over rows
+            for j in range(num_cols):  # Iterate over columns
+                # Check if (i, j) is the start of a new farmland rectangle
+                if land[i][j] == 1 and (i == 0 or land[i - 1][j] == 0) and (j == 0 or land[i][j - 1] == 0):
+                    bottom_row = i
+                    right_col = j
+
+                    # Expand down to find the bottom boundary
+                    while bottom_row + 1 < num_rows and land[bottom_row + 1][j] == 1:
+                        bottom_row += 1
+                    # Expand right to find the right boundary
+                    while right_col + 1 < num_cols and land[i][right_col + 1] == 1:
+                        right_col += 1
+
+                    # Add farmland rectangle coordinates to the result
+                    farmlands.append([i, j, bottom_row, right_col])
+
+        return farmlands
 
     findFarmland = find_farmland
