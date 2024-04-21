@@ -33,7 +33,11 @@ class Solution:
         for i in range(num_rows):  # Iterate over rows
             for j in range(num_cols):  # Iterate over columns
                 # Check if (i, j) is the start of a new farmland rectangle
-                if land[i][j] == 1 and (i == 0 or land[i - 1][j] == 0) and (j == 0 or land[i][j - 1] == 0):
+                if (
+                    land[i][j] == 1
+                    and (i == 0 or land[i - 1][j] == 0)
+                    and (j == 0 or land[i][j - 1] == 0)
+                ):
                     bottom_row = i
                     right_col = j
 
