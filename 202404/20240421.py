@@ -21,6 +21,25 @@ class Solution:
 
     def valid_path(
         self, n: int, edges: list[list[int]], source: int, destination: int
-    ) -> bool: ...
+    ) -> bool:
+        # Create an adjacency list representation of the graph
+        adjacency_list = [[] for _ in range(n)]
+        for edge in edges:
+            u, v = edge
+            adjacency_list[u].append(v)
+            adjacency_list[v].append(u)
+
+        # Perform DFS to check if there is a valid path from source to destination
+        visited = [False] * n
+        stack = [source]
+        while stack:
+            node = stack.pop()
+            if node == destination:
+                return True
+            if not visited[node]:
+                visited[node] = True
+                stack.extend(adjacency_list[node])
+
+        return False
 
     validPath = valid_path
