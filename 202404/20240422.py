@@ -22,6 +22,25 @@ class Solution:
 
     """
 
-    def open_lock(self, deadends: list[str], target: str) -> int: ...
+    def open_lock(self, deadends: list[str], target: str) -> int:
+        def neighbors(node):
+            for i in range(4):
+                for d in (-1, 1):
+                    yield node[:i] + str((int(node[i]) + d) % 10) + node[i+1:]
+
+        dead = set(deadends)
+        visited = set()
+        queue = [('0000', 0)]
+
+        while queue:
+            node, depth = queue.pop(0)
+            if node == target:
+                return depth
+            if node in visited or node in dead:
+                continue
+            visited.add(node)
+            queue.extend((n, depth + 1) for n in neighbors(node))
+
+        return -1
 
     openLock = open_lock
