@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/minimum-height-trees/
+from collections import deque
 
 
 class Solution:
@@ -22,6 +23,44 @@ class Solution:
 
     """
 
-    def find_min_height_trees(self, n: int, edges: list[list[int]]) -> list[int]: ...
+    def find_min_height_trees(self, n: int, edges: list[list[int]]) -> list[int]:
+        # Count of edges for each node
+        counts = [0] * n
+        # Link to the adjacent node 
+        links = [0] * n
+        # Distance from the root
+        dists = [0] * n
+        # Queue for BFS
+        queue = deque()
+
+        # Calculate counts, links, and initialize queue with leaf nodes
+        for edge in edges:
+            links[edge[0]] ^= edge[1]  # XOR to toggle links
+            counts[edge[0]] += 1
+            links[edge[1]] ^= edge[0]
+            counts[edge[1]] += 1
+
+        for i in range(n):
+            if counts[i] == 1:  # Leaf nodes have only one edge
+                queue.append(i)
+
+        # Perform BFS to find the minimum height trees
+        step = 1
+        while queue:
+            size = len(queue)
+            for _ in range(size):
+                temp = queue.popleft()
+                links[links[temp]] ^= temp  # Toggle link to parent
+                counts[links[temp]] -= 1
+                if counts[links[temp]] == 1:
+                    dists[links[temp]] = max(step, dists[links[temp]])
+                    queue.append(links[temp])
+            step += 1
+
+        # Find nodes with maximum distance (minimum height)
+        max_dist = max(dists)
+        res = [i for i in range(n) if dists[i] == max_dist]
+
+        return res
 
     findMinHeightTrees = find_min_height_trees
