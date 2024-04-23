@@ -26,11 +26,11 @@ class Solution:
         def neighbors(node):
             for i in range(4):
                 for d in (-1, 1):
-                    yield node[:i] + str((int(node[i]) + d) % 10) + node[i+1:]
+                    yield node[:i] + str((int(node[i]) + d) % 10) + node[i + 1 :]
 
         dead = set(deadends)
         visited = set()
-        queue = [('0000', 0)]
+        queue = [("0000", 0)]
 
         while queue:
             node, depth = queue.pop(0)
