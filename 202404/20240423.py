@@ -26,7 +26,7 @@ class Solution:
     def find_min_height_trees(self, n: int, edges: list[list[int]]) -> list[int]:
         # Count of edges for each node
         counts = [0] * n
-        # Link to the adjacent node 
+        # Link to the adjacent node
         links = [0] * n
         # Distance from the root
         dists = [0] * n
