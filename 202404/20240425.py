@@ -30,7 +30,7 @@ class Solution:
         for c in s:
             # Calculate the ASCII value of the current character
             ascii_val = ord(c)
-            
+
             # Update the length of the longest ideal subsequence ending at the current character
             lengths[ascii_val] = max(lengths[ascii_val - k : ascii_val + k + 1]) + 1
 
