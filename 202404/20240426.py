@@ -26,7 +26,7 @@ class Solution:
             for j in range(n):
                 # Calculate the minimum path sum to reach (i, j) by choosing the minimum path sum
                 # from the previous row's adjacent positions and adding the current grid value
-                dp[i][j] = min(dp[i - 1][:j] + dp[i - 1][j + 1:]) + grid[i][j]
+                dp[i][j] = min(dp[i - 1][:j] + dp[i - 1][j + 1 :]) + grid[i][j]
 
         # Return the minimum sum from the last row of the DP table
         return min(dp[-1])
