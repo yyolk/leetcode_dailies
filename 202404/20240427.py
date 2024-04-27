@@ -1,4 +1,6 @@
 # https://leetcode.com/problems/freedom-trail/
+from collections import defaultdict
+from functools import lru_cache
 
 
 class Solution:
@@ -30,6 +32,27 @@ class Solution:
 
     """
 
-    def find_rotate_steps(self, ring: str, key: str) -> int: ...
+    def find_rotate_steps(self, ring: str, key: str) -> int:
+        # Length of ring and key, and defaultdict for positions
+        r_length, k_length, d = len(ring), len(key), defaultdict(list)
+        # Function to calculate distance with circular wrapping
+        dist = lambda x, y: min((x - y) % r_length, (y - x) % r_length)
+
+        # Store positions of characters in the ring
+        for i, ch in enumerate(ring):
+            d[ch].append(i)
+
+        # Memoize results to avoid redundant computations
+        @lru_cache(None)
+        def dfs(curr=0, next=0):
+            # Base case: all characters in key have been spelled
+            if next >= k_length:
+                return 0
+
+            # Recursive call to explore all possible paths
+            return min(dist(curr, k) + dfs(k, next + 1) for k in d[key[next]])
+
+        # Add length of key to account for pressing center button after spelling
+        return dfs() + k_length
 
     findRotateSteps = find_rotate_steps
