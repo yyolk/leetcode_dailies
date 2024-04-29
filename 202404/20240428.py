@@ -44,7 +44,9 @@ class Solution:
         def dfs2(node, parent):
             for child in graph[node]:
                 if child != parent:
-                    total_dist[child] = total_dist[node] - count[child] + (n - count[child])
+                    total_dist[child] = (
+                        total_dist[node] - count[child] + (n - count[child])
+                    )
                     dfs2(child, node)
 
         # Perform the first DFS starting from node 0
