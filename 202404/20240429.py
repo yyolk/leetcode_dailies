@@ -20,6 +20,20 @@ class Solution:
 
     """
 
-    def min_operations(self, nums: list[int], k: int) -> int: ...
+    def min_operations(self, nums: list[int], k: int) -> int:
+        xor_sum = 0
+        for num in nums:
+            xor_sum ^= num
+
+        # XOR of all elements in nums is xor_sum
+        # To make the XOR equal to k, we need to find the minimum number of bit flips
+        # required in xor_sum to obtain k
+        # This is equivalent to finding the XOR of xor_sum and k
+        target_xor = xor_sum ^ k
+
+        # Count the number of set bits in target_xor
+        count_set_bits = bin(target_xor).count("1")
+
+        return count_set_bits
 
     minOperations = min_operations
