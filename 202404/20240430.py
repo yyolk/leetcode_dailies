@@ -31,7 +31,7 @@ class Solution:
         # Iterate through each character in the word
         for char in word:
             # Update the bitmask with the parity information of the current character
-            mask ^= 1 << (ord(char) - ord('a'))
+            mask ^= 1 << (ord(char) - ord("a"))
             # Increment the count by the number of substrings with the same parity as the current mask
             count += prefix_count[mask]
 
