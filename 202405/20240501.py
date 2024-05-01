@@ -16,6 +16,11 @@ class Solution:
 
     """
 
-    def reverse_prefix(self, word: str, ch: str) -> str: ...
+    def reverse_prefix(self, word: str, ch: str) -> str:
+        index = word.find(ch)
+        if index < 0:
+            # character ch does not exist in word
+            return word
+        return word[index::-1] + word[index+1:]
 
     reversePrefix = reverse_prefix
