@@ -11,6 +11,16 @@ class Solution:
 
     """
 
-    def find_max_k(self, nums: list[int]) -> int: ...
+    def find_max_k(self, nums: list[int]) -> int:
+        # Make a set for faster lookup
+        nums_set = set(nums)
+        # Sort the list in reverse order
+        nums.sort(reverse=True)
+        for num in nums:
+            # The first num we that also has its negative in the list is the largest k
+            if -num in nums_set:
+                return num
+        # We didn't find any
+        return -1
 
     findMaxK = find_max_k
