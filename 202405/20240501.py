@@ -21,6 +21,6 @@ class Solution:
         if index < 0:
             # character ch does not exist in word
             return word
-        return word[index::-1] + word[index+1:]
+        return word[index::-1] + word[index + 1 :]
 
     reversePrefix = reverse_prefix
