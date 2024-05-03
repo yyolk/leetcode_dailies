@@ -29,6 +29,24 @@ class Solution:
 
     """
 
-    def compare_version(self, version1: str, version2: str) -> int: ...
+    def compare_version(self, version1: str, version2: str) -> int:
+        v1 = list(map(int, version1.split('.')))
+        v2 = list(map(int, version2.split('.')))
+
+        # Pad the shorter version number with zeros
+        len_diff = len(v1) - len(v2)
+        if len_diff < 0:
+            v1 += [0] * abs(len_diff)
+        elif len_diff > 0:
+            v2 += [0] * len_diff
+
+        # Compare revisions
+        for num1, num2 in zip(v1, v2):
+            if num1 < num2:
+                return -1
+            elif num1 > num2:
+                return 1
+
+        return 0
 
     compareVersion = compare_version
