@@ -30,8 +30,8 @@ class Solution:
     """
 
     def compare_version(self, version1: str, version2: str) -> int:
-        v1 = list(map(int, version1.split('.')))
-        v2 = list(map(int, version2.split('.')))
+        v1 = list(map(int, version1.split(".")))
+        v2 = list(map(int, version2.split(".")))
 
         # Pad the shorter version number with zeros
         len_diff = len(v1) - len(v2)
