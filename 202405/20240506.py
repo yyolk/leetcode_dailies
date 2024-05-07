@@ -30,7 +30,7 @@ class Solution:
             current.next = prev
             prev = current
             current = next_node
-        
+
         # Traverse the reversed list and remove nodeswithsmaller values
         max_val = float("-inf")
         # Dummy node to handle the case of deleting hte head
