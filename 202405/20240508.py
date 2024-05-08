@@ -25,6 +25,17 @@ class Solution:
 
     """
 
-    def find_relative_ranks(self, score: list[int]) -> list[str]: ...
+    def find_relative_ranks(self, score: list[int]) -> list[str]:
+        # Sort scores in descending order to determine ranks
+        sorted_scores = sorted(score, reverse=True)
+        
+        # Define ranks including special cases for top 3 ranks
+        ranks = ["Gold Medal", "Silver Medal", "Bronze Medal"] + [str(i + 1) for i in range(3, len(score))]
+        
+        # Map each score to its corresponding rank
+        rank_map = {score: rank for score, rank in zip(sorted_scores, ranks)}
+        
+        # Generate array of ranks for each athlete based on their scores
+        return [rank_map[score] for score in score]
 
     findRelativeRanks = find_relative_ranks
