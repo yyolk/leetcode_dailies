@@ -22,7 +22,7 @@ class Solution:
             # Base case: node is None, return 0
             if node is None:
                 return 0
-            
+
             # Recursively get carry from the next node
             val = node.val * 2 + get_carry(node.next)
             node.val = val % 10  # Update current node value
@@ -32,7 +32,7 @@ class Solution:
         if get_carry(head) == 1:
             # If there is a carry, create a new node for the carry
             return ListNode(1, head)
-        
+
         # Return the modified head of the list
         return head
 
