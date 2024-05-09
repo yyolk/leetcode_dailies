@@ -19,6 +19,23 @@ class Solution:
 
     """
 
-    def maximum_happiness_sum(self, happiness: list[int], k: int) -> int: ...
+    def maximum_happiness_sum(self, happiness: list[int], k: int) -> int:
+        selected = 0
+        max_sum = 0
+
+        # Sort the children by their happiness values in descending order
+        happiness.sort(reverse=True)
+
+        # Iterate through the first k children
+        for score in happiness:
+            # Check if the required number of children is selected
+            if selected == k:
+                return max_sum
+            # Add their happiness value to the maximum sum
+            max_sum += max(0, score - selected)
+            # Increment the count of selected children
+            selected += 1
+
+        return max_sum
 
     maximumHappinessSum = maximum_happiness_sum
