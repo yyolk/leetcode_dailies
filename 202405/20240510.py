@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/k-th-smallest-prime-fraction/
+from heapq import heappop, heappush
 
 
 class Solution:
@@ -15,6 +16,18 @@ class Solution:
 
     """
 
-    def kth_smallest_prime_fraction(self, arr: list[int], k: int) -> list[int]: ...
+    def kth_smallest_prime_fraction(self, arr: list[int], k: int) -> list[int]:
+        # Create a min heap to store fractions and their corresponding pairs
+        min_heap = []
+        n = len(arr)
+        # Generate all possible fractions and add them to the min heap
+        for i in range(n):
+            for j in range(i + 1, n):
+                heappush(min_heap, (arr[i] / arr[j], (arr[i], arr[j])))
+        # Pop k elements from the min heap to get the kth smallest fraction
+        for _ in range(k):
+            a, b = heappop(min_heap)[1]
+        # Return the kth smallest fraction
+        return [a, b]
 
     kthSmallestPrimeFraction = kth_smallest_prime_fraction
