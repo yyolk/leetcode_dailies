@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/minimum-cost-to-hire-k-workers/
+import heapq
 
 
 class Solution:
@@ -26,6 +27,27 @@ class Solution:
 
     def mincost_to_hire_workers(
         self, quality: list[int], wage: list[int], k: int
-    ) -> float: ...
+    ) -> float:
+        # Calculate the wage-to-quality ratio for each worker
+        n = len(quality)
+        workers = sorted([(wage[i] / quality[i], quality[i]) for i in range(n)])
+
+        min_cost = float('inf')
+        total_quality = 0
+        heap = []
+
+        for ratio, q in workers:
+            total_quality += q
+            # Max heap for quality
+            heapq.heappush(heap, -q)
+
+            if len(heap) > k:
+                # Remove the worker with max quality
+                total_quality += heapq.heappop(heap)
+
+            if len(heap) == k:
+                min_cost = min(min_cost, total_quality * ratio)
+
+        return min_cost
 
     mincostToHireWorkers = mincost_to_hire_workers
