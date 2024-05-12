@@ -32,7 +32,7 @@ class Solution:
         n = len(quality)
         workers = sorted([(wage[i] / quality[i], quality[i]) for i in range(n)])
 
-        min_cost = float('inf')
+        min_cost = float("inf")
         total_quality = 0
         heap = []
 
