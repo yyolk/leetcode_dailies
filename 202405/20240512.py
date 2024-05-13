@@ -33,9 +33,15 @@ class Solution:
             for j in range(1, cols - 1):
                 # Calculate local maximum within the 3x3 matrix
                 local_max = max(
-                    grid[i - 1][j - 1], grid[i - 1][j], grid[i - 1][j + 1],
-                    grid[i][j - 1], grid[i][j], grid[i][j + 1],
-                    grid[i + 1][j - 1], grid[i + 1][j], grid[i + 1][j + 1]
+                    grid[i - 1][j - 1],
+                    grid[i - 1][j],
+                    grid[i - 1][j + 1],
+                    grid[i][j - 1],
+                    grid[i][j],
+                    grid[i][j + 1],
+                    grid[i + 1][j - 1],
+                    grid[i + 1][j],
+                    grid[i + 1][j + 1],
                 )
                 # Assign the local maximum to the corresponding position in maxLocal
                 max_local[i - 1][j - 1] = local_max
