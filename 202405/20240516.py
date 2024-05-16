@@ -27,8 +27,34 @@ class Solution:
 
     A **leaf node** is a node that has zero children.
 
+    Definition for a binary tree node::
+        class TreeNode:
+            def __init__(self, val=0, left=None, right=None):
+                self.val = val
+                self.left = left
+                self.right = right
+
     """
 
-    def evaluate_tree(self, root: Optional[TreeNode]) -> bool: ...
+    def evaluate_tree(self, root: Optional[TreeNode]) -> bool:
+        if not root:
+            return False
+
+        # Leaf node
+        if not root.left and not root.right:
+            return bool(root.val)
+
+        left_val = self.evaluate_tree(root.left)
+        right_val = self.evaluate_tree(root.right)
+
+        # OR operation
+        if root.val == 2:
+            return left_val or right_val
+        # AND operation
+        elif root.val == 3:
+            return left_val and right_val
+
+        # Default to False if node value is neither 2 nor 3
+        return False
 
     evaluateTree = evaluate_tree
