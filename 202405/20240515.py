@@ -29,6 +29,7 @@ class Solution:
     x| + |b - y|`, where `|val|` denotes the absolute value of val.
 
     """
+
     def __init__(self):
         # Define row direction offsets
         self.roww = [0, 0, -1, 1]
@@ -68,7 +69,7 @@ class Solution:
             return 0
 
         # Initialize scores matrix
-        score = [[float('inf')] * n for _ in range(n)]
+        score = [[float("inf")] * n for _ in range(n)]
 
         # Calculate safeness scores
         self.bfs(grid, score, n)
