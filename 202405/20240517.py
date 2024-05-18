@@ -37,5 +37,4 @@ class Solution:
         # Return the current node
         return root
 
-
     removeLeafNodes = remove_leaf_nodes
