@@ -23,22 +23,22 @@ class Solution:
 
     def distribute_coins(self, root: Optional[TreeNode]) -> int:
         self.moves = 0
-        
+
         def dfs(node):
             if not node:
                 return 0
-            
+
             # Process left and right subtrees
             left_excess = dfs(node.left)
             right_excess = dfs(node.right)
-            
+
             # Total moves is the absolute value of excess coins moved in both subtrees
             self.moves += abs(left_excess) + abs(right_excess)
-            
+
             # Return the number of excess coins in this subtree
             # node.val - 1 is the excess/deficit of coins at the current node
             return node.val + left_excess + right_excess - 1
-        
+
         dfs(root)
         return self.moves
 
