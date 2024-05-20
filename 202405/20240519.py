@@ -27,22 +27,20 @@ class Solution:
 
     """
 
-    def maximum_value_sum(
-        self, nums: list[int], k: int, edges: list[list[int]]
-    ) -> int:
+    def maximum_value_sum(self, nums: list[int], k: int, edges: list[list[int]]) -> int:
         # Calculate the maximum possible sum by taking the max of num and num ^ k for each node
         max_sum = sum(max(num, num ^ k) for num in nums)
-        
+
         # Count how many nodes have their value increased by XORing with k
         changed_count = sum((num ^ k) > num for num in nums)
-        
+
         # If the number of changes is even, we can keep all changes and return the max sum
         if changed_count % 2 == 0:
             return max_sum
-        
+
         # If the number of changes is odd, we need to revert the smallest change to make the count even
         min_change_diff = min(abs(num - (num ^ k)) for num in nums)
-        
+
         # Return the adjusted max sum by subtracting the smallest change
         return max_sum - min_change_diff
 
