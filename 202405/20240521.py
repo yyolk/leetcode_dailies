@@ -12,6 +12,18 @@ class Solution:
 
     """
 
-    def subsets(self, nums: list[int]) -> list[list[int]]: ...
-
-    subsets = subsets
+    def subsets(self, nums: list[int]) -> list[list[int]]:
+        def backtrack(start: int, current_subset: list[int]):
+            # Append a copy of the current subset to the result
+            result.append(current_subset[:])
+            # Iterate through the remaining elements
+            for i in range(start, len(nums)):
+                # Include the current element and move to the next
+                current_subset.append(nums[i])
+                backtrack(i + 1, current_subset)
+                # Exclude the current element and backtrack
+                current_subset.pop()
+        
+        result = []
+        backtrack(0, [])
+        return result
