@@ -24,16 +24,16 @@ class Solution:
             # Base case: If we've considered all elements
             if index == len(nums):
                 return current_xor
-            
+
             # Calculate the sum of XOR totals by including the current element
             include = dfs(index + 1, current_xor ^ nums[index])
-            
+
             # Calculate the sum of XOR totals by excluding the current element
             exclude = dfs(index + 1, current_xor)
-            
+
             # Return the sum of both including and excluding the current element
             return include + exclude
-        
+
         # Start the recursion from index 0 with an initial XOR of 0
         return dfs(0, 0)
 
