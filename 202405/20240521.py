@@ -23,7 +23,7 @@ class Solution:
                 backtrack(i + 1, current_subset)
                 # Exclude the current element and backtrack
                 current_subset.pop()
-        
+
         result = []
         backtrack(0, [])
         return result
