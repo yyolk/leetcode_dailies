@@ -40,7 +40,7 @@ class Solution:
                             sentences.append(word + " " + sub_sentence)
                         else:
                             sentences.append(word)
-            
+
             # Memoize the result for the current start index
             memo[start] = sentences
             return sentences
