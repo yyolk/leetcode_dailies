@@ -15,6 +15,23 @@ class Solution:
 
     """
 
-    def special_array(self, nums: list[int]) -> int: ...
+    def special_array(self, nums: list[int]) -> int:
+        # Sort the array in non-decreasing order
+        nums.sort()
+        
+        # Get the length of the array
+        n = len(nums)
+        
+        # Iterate through possible values of x from 0 to n
+        for x in range(n + 1):
+            # Calculate the number of elements greater than or equal to x
+            count = sum(1 for num in nums if num >= x)
+            
+            # If the count equals x, then x is our answer
+            if count == x:
+                return x
+        
+        # If no such x is found, return -1
+        return -1
 
     specialArray = special_array
