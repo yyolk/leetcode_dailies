@@ -22,21 +22,21 @@ class Solution:
         start = 0
         max_len = 0
         current_cost = 0
-        
+
         # Iterate over the string `s`
         for end in range(len(s)):
             # Calculate the cost of changing s[end] to t[end]
             current_cost += abs(ord(s[end]) - ord(t[end]))
-            
+
             # If the current cost exceeds the maximum allowed cost
             while current_cost > max_cost:
                 # Move the start of the window to the right
                 current_cost -= abs(ord(s[start]) - ord(t[start]))
                 start += 1
-            
+
             # Update the maximum length of the valid window
             max_len = max(max_len, end - start + 1)
-        
+
         return max_len
 
     equalSubstring = equal_substring
