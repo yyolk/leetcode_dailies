@@ -21,6 +21,23 @@ class Solution:
 
     """
 
-    def count_triplets(self, arr: list[int]) -> int: ...
+    def count_triplets(self, arr: list[int]) -> int:
+        n = len(arr)
+        prefix_xor = [0] * (n + 1)
+        
+        # Compute the prefix XOR array
+        for i in range(n):
+            prefix_xor[i + 1] = prefix_xor[i] ^ arr[i]
+        
+        count = 0
+        
+        # Iterate over each pair (i, k) to check the condition
+        for i in range(n):
+            for k in range(i + 1, n):
+                if prefix_xor[i] == prefix_xor[k + 1]:
+                    # For each valid (i, k), j can be any value between i+1 and k
+                    count += k - i
+        
+        return count
 
     countTriplets = count_triplets
