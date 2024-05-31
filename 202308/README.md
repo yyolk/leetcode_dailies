@@ -33,24 +33,36 @@
   <td class="noday">
   </td>
   <td class="tue">
-   1
+   <a href="20230801.py">
+    1
+   </a>
   </td>
   <td class="wed">
-   2
+   <a href="20230802.py">
+    2
+   </a>
   </td>
   <td class="thu">
-   3
+   <a href="20230803.py">
+    3
+   </a>
   </td>
   <td class="fri">
-   4
+   <a href="20230804.py">
+    4
+   </a>
   </td>
   <td class="sat">
-   5
+   <a href="20230805.py">
+    5
+   </a>
   </td>
  </tr>
  <tr>
   <td class="sun">
-   6
+   <a href="20230806.py">
+    6
+   </a>
   </td>
   <td class="mon">
    <a href="20230807.py">

@@ -26,7 +26,9 @@ class Solution:
         for i in range(1, goal + 1):
             for j in range(1, n + 1):
                 dp[i][j] += dp[i - 1][j - 1] * (n - j + 1)  # Pick a new song
-                dp[i][j] += dp[i - 1][j] * max(0, j - k)     # Pick a song that was already played
+                dp[i][j] += dp[i - 1][j] * max(
+                    0, j - k
+                )  # Pick a song that was already played
 
                 # Apply modulo to avoid overflow
                 dp[i][j] %= MOD

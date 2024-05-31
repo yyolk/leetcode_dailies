@@ -1,5 +1,5 @@
 # https://leetcode.com/problems/letter-combinations-of-a-phone-number/
-# TODO: Time travel submission 
+# TODO: Time travel submission
 
 
 class Solution:
@@ -18,11 +18,17 @@ class Solution:
     def letter_combinations(self, digits: str) -> list[str]:
         if not digits:
             return []
-        
+
         # Define the mapping of digits to letters
         mapping = {
-            '2': 'abc', '3': 'def', '4': 'ghi', '5': 'jkl',
-            '6': 'mno', '7': 'pqrs', '8': 'tuv', '9': 'wxyz'
+            "2": "abc",
+            "3": "def",
+            "4": "ghi",
+            "5": "jkl",
+            "6": "mno",
+            "7": "pqrs",
+            "8": "tuv",
+            "9": "wxyz",
         }
 
         # Recursive function to generate combinations
@@ -30,12 +36,12 @@ class Solution:
             if index == len(digits):
                 combinations.append(path)
                 return
-            
+
             for letter in mapping[digits[index]]:
                 generate_combinations(index + 1, path + letter)
 
         combinations = []
-        generate_combinations(0, '')
+        generate_combinations(0, "")
         return combinations
 
     letterCombinations = letter_combinations
