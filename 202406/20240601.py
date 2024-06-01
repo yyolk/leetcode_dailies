@@ -11,6 +11,13 @@ class Solution:
 
     """
 
-    def score_of_string(self, s: str) -> int: ...
-
+    def score_of_string(self, s: str) -> int:
+        # Use sum with a generator expression to calculate the total score
+        return sum(
+            # Calculate the absolute difference between the ASCII values of adjacent characters
+            abs(ord(s[i]) - ord(s[i + 1]))
+            # Iterate over the string from the first character to the second last character
+            for i in range(len(s) - 1)
+        )
+        
     scoreOfString = score_of_string
