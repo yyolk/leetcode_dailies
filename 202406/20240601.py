@@ -19,5 +19,5 @@ class Solution:
             # Iterate over the string from the first character to the second last character
             for i in range(len(s) - 1)
         )
-        
+
     scoreOfString = score_of_string

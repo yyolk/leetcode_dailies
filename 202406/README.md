@@ -48,10 +48,14 @@
  </tr>
  <tr>
   <td class="sun">
-   2
+   <a href="20240602.py">
+    2
+   </a>
   </td>
   <td class="mon">
-   3
+   <a href="20240603.py">
+    3
+   </a>
   </td>
   <td class="tue">
    4
