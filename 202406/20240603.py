@@ -14,6 +14,16 @@ class Solution:
 
     """
 
-    def append_characters(self, s: str, t: str) -> int: ...
+    def append_characters(self, s: str, t: str) -> int:
+        # Initialize a pointer for t
+        t_pointer = 0
+        # Iterate through each character in s
+        for char in s:
+            # If the current character in s matches the current character in t,
+            # move the pointer in t to the next character
+            if t_pointer < len(t) and char == t[t_pointer]:
+                t_pointer += 1
+        # The number of characters to be appended to s is the remaining characters in t
+        return len(t) - t_pointer
 
     appendCharacters = append_characters
