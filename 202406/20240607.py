@@ -7,6 +7,7 @@ class TrieNode:
         self.children = {}
         self.is_end = False
 
+
 class Trie:
     def __init__(self):
         # Initialize the root of the trie
@@ -39,6 +40,7 @@ class Trie:
         # If no prefix is found, return the original word
         return word
 
+
 class Solution:
     """648. Replace Words
 
@@ -61,13 +63,13 @@ class Solution:
         trie = Trie()
         for root in dictionary:
             trie.insert(root)
-        
+
         # Split the sentence into words
         words = sentence.split()
         # Replace each word with its shortest root prefix if available
         for i in range(len(words)):
             words[i] = trie.search_shortest_prefix(words[i])
-        
+
         # Join the words back into a sentence
         return " ".join(words)
 
