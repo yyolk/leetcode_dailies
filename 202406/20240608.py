@@ -27,18 +27,18 @@ class Solution:
         # Initialized with {0: -1} to handle the case where the sum of a subarray from the beginning is a multiple of k
         remainder_dict = {0: -1}
         current_sum = 0
-        
+
         # Iterate through the array
         for i, num in enumerate(nums):
             # Add the current number to the running sum
             current_sum += num
-            
+
             # Compute the remainder of the running sum divided by k
             if k != 0:
                 remainder = current_sum % k
             else:
                 remainder = current_sum
-            
+
             # If this remainder has been seen before
             if remainder in remainder_dict:
                 # Check the length of the subarray
@@ -47,7 +47,7 @@ class Solution:
             else:
                 # Otherwise, store the index of this remainder
                 remainder_dict[remainder] = i
-        
+
         # If no valid subarray is found, return False
         return False
 
