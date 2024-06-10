@@ -17,6 +17,10 @@ class Solution:
 
     """
 
-    def height_checker(self, heights: list[int]) -> int: ...
+    def height_checker(self, heights: list[int]) -> int:
+        # Sort the heights to get the expected order
+        sorted_heights = sorted(heights)
+        # Count the mismatches between the current order and the expected order
+        return sum(1 for expected, actual in zip(sorted_heights, heights) if expected != actual)
 
     heightChecker = height_checker
