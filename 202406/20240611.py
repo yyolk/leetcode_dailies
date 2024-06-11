@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/relative-sort-array/
+from collections import Counter
 
 
 class Solution:
@@ -13,6 +14,20 @@ class Solution:
 
     """
 
-    def relative_sort_array(self, arr1: list[int], arr2: list[int]) -> list[int]: ...
+    def relative_sort_array(self, arr1: list[int], arr2: list[int]) -> list[int]:
+        # Count frequencies of each element in arr1
+        arr1_counts = Counter(arr1)
+        result = []
+
+        # Add elements from arr2 to the result in the specified order
+        for num in arr2:
+            result += [num] * arr1_counts[num]
+            del arr1_counts[num]
+
+        # Add remaining elements not in arr2, sorted in ascending order
+        remaining = sorted(arr1_counts.elements())
+        result.extend(remaining)
+
+        return result
 
     relativeSortArray = relative_sort_array
