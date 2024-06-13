@@ -22,6 +22,18 @@ class Solution:
 
     """
 
-    def min_moves_to_seat(self, seats: list[int], students: list[int]) -> int: ...
+    def min_moves_to_seat(self, seats: list[int], students: list[int]) -> int:
+        # Sort the seats and students arrays
+        seats.sort()
+        students.sort()
+        
+        # Initialize the total moves counter
+        total_moves = 0
+        
+        # Calculate the total number of moves needed
+        for seat, student in zip(seats, students):
+            total_moves += abs(seat - student)
+        
+        return total_moves
 
     minMovesToSeat = min_moves_to_seat
