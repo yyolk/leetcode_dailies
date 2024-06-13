@@ -33,5 +33,5 @@ class Solution:
                 # If the current element is 2, swap it with the element at high pointer
                 nums[high], nums[mid] = nums[mid], nums[high]
                 high -= 1
-    
+
     sortColors = sort_colors

@@ -100,10 +100,14 @@
    </a>
   </td>
   <td class="wed">
-   12
+   <a href="20240612.py">
+    12
+   </a>
   </td>
   <td class="thu">
-   13
+   <a href="20240613.py">
+    13
+   </a>
   </td>
   <td class="fri">
    14
