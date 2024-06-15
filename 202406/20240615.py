@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/ipo/
+import heapq
 
 
 class Solution:
@@ -25,6 +26,28 @@ class Solution:
 
     def find_maximized_capital(
         self, k: int, w: int, profits: list[int], capital: list[int]
-    ) -> int: ...
+    ) -> int:
+        # Pair up profits and capital and sort them by the capital required
+        projects = sorted(zip(capital, profits))
+        
+        max_profit_heap = []
+        current_capital = w
+        project_index = 0
+        
+        for _ in range(k):
+            # Add all projects that can be started with the current capital to the max heap
+            while project_index < len(projects) and projects[project_index][0] <= current_capital:
+                # Use a negative profit to simulate max-heap in Python's min-heap
+                heapq.heappush(max_profit_heap, -projects[project_index][1])
+                project_index += 1
+            
+            # If there are no projects that can be started, break early
+            if not max_profit_heap:
+                break
+            
+            # Select the project with the maximum profit
+            current_capital += -heapq.heappop(max_profit_heap)
+        
+        return current_capital
 
     findMaximizedCapital = find_maximized_capital
