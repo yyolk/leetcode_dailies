@@ -16,10 +16,10 @@ class Solution:
     def min_increment_for_unique(self, nums: list[int]) -> int:
         # Sort the array to handle duplicates easily
         nums.sort()
-        
+
         # Initialize the move count to 0
         moves = 0
-        
+
         # Iterate through the array starting from the second element
         for i in range(1, len(nums)):
             # If the current number is less than or equal to the previous number
@@ -30,7 +30,7 @@ class Solution:
                 nums[i] += increment
                 # Add the increment to the total move count
                 moves += increment
-        
+
         return moves
 
     minIncrementForUnique = min_increment_for_unique
