@@ -55,3 +55,9 @@ jobs:
         $(python -m generate_active_daily --url)
         "
         git push
+    - name: Notify of boilerplate ready
+      env:
+        PUSHOVER_TOKEN: ${{ secrets.PUSHOVER_API_KEY }}
+        PUSHOVER_USER: ${{ secrets.PUSHOVER_USER_KEY }}
+      run: |
+        python -m notify_pushover

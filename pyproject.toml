@@ -9,6 +9,7 @@ dependencies = [
     "black",
     "BeautifulSoup4",
     "gql[aiohttp]",
+    "requests",
 ]
 
 [tool.pylint."messages control"]
