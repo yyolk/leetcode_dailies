@@ -16,7 +16,7 @@ class Solution:
         patches = 0
         i = 0
         current_sum = 1
-        
+
         # Loop until we can form all numbers in the range [1, n]
         while current_sum <= n:
             if i < len(nums) and nums[i] <= current_sum:
@@ -28,7 +28,7 @@ class Solution:
                 # Patch the array by adding current_sum
                 current_sum += current_sum
                 patches += 1
-        
+
         return patches
 
     minPatches = min_patches
