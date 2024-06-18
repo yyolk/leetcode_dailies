@@ -56,8 +56,10 @@ jobs:
         "
         git push
     - name: Notify of boilerplate ready
+      if: always()
       env:
         PUSHOVER_TOKEN: ${{ secrets.PUSHOVER_API_KEY }}
         PUSHOVER_USER: ${{ secrets.PUSHOVER_USER_KEY }}
+        JOB_STATUS: ${{ job.status }}
       run: |
         python -m notify_pushover

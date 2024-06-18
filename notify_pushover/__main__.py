@@ -5,11 +5,12 @@ import requests
 
 PUSHOVER_TOKEN = os.environ["PUSHOVER_TOKEN"]
 PUSHOVER_USER = os.environ["PUSHOVER_USER"]
+JOB_STATUS = os.environ["JOB_STATUS"]
 
 payload = dict(
     token=PUSHOVER_TOKEN,
     user=PUSHOVER_USER,
-    message="Workflow finished.",
+    message=f"Workflow finished. {JOB_STATUS=}",
     ttl=3600,
 )
 headers = {"Content-Type": "application/x-www-form-urlencoded"}
