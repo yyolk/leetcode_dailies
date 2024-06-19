@@ -28,14 +28,14 @@ class Solution:
     ) -> int:
         # Step 1: Combine difficulty and profit into a list of tuples and sort by difficulty
         jobs = sorted(zip(difficulty, profit))
-        
+
         # Step 2: Sort the workers by their ability
         worker.sort()
-        
+
         max_profit = 0  # To track the maximum profit for a worker
         total_profit = 0  # To accumulate the total profit
         job_index = 0  # To iterate through the jobs
-        
+
         # Step 3: Iterate through each worker
         for w in worker:
             # While there are jobs within the current worker's ability, update max_profit
@@ -44,7 +44,7 @@ class Solution:
                 job_index += 1
             # Add the maximum profit for this worker to the total profit
             total_profit += max_profit
-        
+
         return total_profit
 
     maxProfitAssignment = max_profit_assignment
