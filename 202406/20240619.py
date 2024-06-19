@@ -17,6 +17,34 @@ class Solution:
 
     """
 
-    def min_days(self, bloom_day: list[int], m: int, k: int) -> int: ...
+    def min_days(self, bloom_day: list[int], m: int, k: int) -> int:
+        # Helper function to check if we can make m bouquets in 'days'
+        def can_make_bouquets(days: int) -> bool:
+            bouquets = 0
+            flowers = 0
+            for bloom in bloom_day:
+                if bloom <= days:
+                    flowers += 1
+                    if flowers == k:
+                        bouquets += 1
+                        flowers = 0
+                else:
+                    flowers = 0
+                if bouquets >= m:
+                    return True
+            return False
+
+        # If it's not possible to make m bouquets
+        if m * k > len(bloom_day):
+            return -1
+
+        left, right = min(bloom_day), max(bloom_day)
+        while left < right:
+            mid = (left + right) // 2
+            if can_make_bouquets(mid):
+                right = mid
+            else:
+                left = mid + 1
+        return left
 
     minDays = min_days
