@@ -26,6 +26,32 @@ class Solution:
 
     def max_satisfied(
         self, customers: list[int], grumpy: list[int], minutes: int
-    ) -> int: ...
+    ) -> int:
+        # Calculate the number of initially satisfied customers (when the owner is not grumpy)
+        total_satisfied = 0
+        for i in range(len(customers)):
+            if grumpy[i] == 0:
+                total_satisfied += customers[i]
+
+        # Calculate the additional customers that can be satisfied using the secret technique
+        # Initialize the additional satisfied customers for the first window
+        max_additional_satisfied = 0
+        additional_satisfied = 0
+        for i in range(minutes):
+            if grumpy[i] == 1:
+                additional_satisfied += customers[i]
+        max_additional_satisfied = additional_satisfied
+
+        # Use a sliding window to find the maximum additional satisfied customers
+        for i in range(minutes, len(customers)):
+            if grumpy[i] == 1:
+                additional_satisfied += customers[i]
+            if grumpy[i - minutes] == 1:
+                additional_satisfied -= customers[i - minutes]
+            max_additional_satisfied = max(max_additional_satisfied, additional_satisfied)
+
+        # The maximum number of satisfied customers is the initial satisfied customers
+        # plus the maximum additional satisfied customers
+        return total_satisfied + max_additional_satisfied
 
     maxSatisfied = max_satisfied
