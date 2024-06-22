@@ -48,7 +48,9 @@ class Solution:
                 additional_satisfied += customers[i]
             if grumpy[i - minutes] == 1:
                 additional_satisfied -= customers[i - minutes]
-            max_additional_satisfied = max(max_additional_satisfied, additional_satisfied)
+            max_additional_satisfied = max(
+                max_additional_satisfied, additional_satisfied
+            )
 
         # The maximum number of satisfied customers is the initial satisfied customers
         # plus the maximum additional satisfied customers
