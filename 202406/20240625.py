@@ -18,8 +18,34 @@ class Solution:
 
     * Both the left and right subtrees must also be binary search trees.
 
+    Definition for a binary tree node:
+
+        class TreeNode:
+            def __init__(self, val=0, left=None, right=None):
+                self.val = val
+                self.left = left
+                self.right = right
     """
 
-    def bst_to_gst(self, root: TreeNode) -> TreeNode: ...
+    def bst_to_gst(self, root: TreeNode) -> TreeNode:
+        # Initialize the running sum to 0
+        self.sum = 0
+        
+        def reverse_inorder(node):
+            # Base case: if the node is None, return
+            if not node:
+                return
+            # Recursively call on the right subtree
+            reverse_inorder(node.right)
+            # Update the running sum with the current node's value
+            self.sum += node.val
+            # Update the current node's value to the running sum
+            node.val = self.sum
+            # Recursively call on the left subtree
+            reverse_inorder(node.left)
+        
+        # Start the reverse in-order traversal from the root
+        reverse_inorder(root)
+        return root
 
     bstToGst = bst_to_gst
