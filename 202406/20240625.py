@@ -30,7 +30,7 @@ class Solution:
     def bst_to_gst(self, root: TreeNode) -> TreeNode:
         # Initialize the running sum to 0
         self.sum = 0
-        
+
         def reverse_inorder(node):
             # Base case: if the node is None, return
             if not node:
@@ -43,7 +43,7 @@ class Solution:
             node.val = self.sum
             # Recursively call on the left subtree
             reverse_inorder(node.left)
-        
+
         # Start the reverse in-order traversal from the root
         reverse_inorder(root)
         return root
