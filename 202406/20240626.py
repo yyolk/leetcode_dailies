@@ -26,10 +26,14 @@ class Solution:
         def inorder_traversal(node):
             if not node:
                 return []
-            return inorder_traversal(node.left) + [node.val] + inorder_traversal(node.right)
-        
+            return (
+                inorder_traversal(node.left)
+                + [node.val]
+                + inorder_traversal(node.right)
+            )
+
         sorted_list = inorder_traversal(root)
-        
+
         # Step 2: Convert sorted list to balanced BST
         def sorted_list_to_bst(left, right):
             if left > right:
@@ -39,7 +43,7 @@ class Solution:
             node.left = sorted_list_to_bst(left, mid - 1)
             node.right = sorted_list_to_bst(mid + 1, right)
             return node
-        
+
         return sorted_list_to_bst(0, len(sorted_list) - 1)
 
     balanceBST = balance_bst
