@@ -14,6 +14,13 @@ class Solution:
 
     """
 
-    def find_center(self, edges: list[list[int]]) -> int: ...
+    def find_center(self, edges: list[list[int]]) -> int:
+        # The center node must appear in the first edge
+        # Check if the first node of the first edge is the center
+        if edges[0][0] == edges[1][0] or edges[0][0] == edges[1][1]:
+            return edges[0][0]
+        # Otherwise, the second node of the first edge is the center
+        else:
+            return edges[0][1]
 
     findCenter = find_center
