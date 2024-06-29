@@ -25,20 +25,20 @@ class Solution:
         for a, b in roads:
             degree[a] += 1
             degree[b] += 1
-        
+
         # Step 2: Sort cities by degree in descending order
         sorted_cities = sorted(range(n), key=lambda x: degree[x], reverse=True)
-        
+
         # Step 3: Assign values to cities
         values = [0] * n
         for i in range(n):
             values[sorted_cities[i]] = n - i
-        
+
         # Step 4: Calculate the total importance
         total_importance = 0
         for a, b in roads:
             total_importance += values[a] + values[b]
-        
+
         return total_importance
 
     maximumImportance = maximum_importance
