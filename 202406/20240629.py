@@ -19,6 +19,29 @@ class Solution:
 
     """
 
-    def get_ancestors(self, n: int, edges: list[list[int]]) -> list[list[int]]: ...
+
+    def dfs(self, x: int, curr: int, ans: list[list[int]], directChild: list[list[int]]) -> None:
+        # Traverse all direct children of the current node
+        for ch in directChild[curr]:
+            # If the ancestor list of the child node is empty or doesn't end with the current ancestor
+            if not ans[ch] or ans[ch][-1] != x:
+                # Append the current ancestor to the child's ancestor list
+                ans[ch].append(x)
+                # Recursively perform DFS on the child node
+                self.dfs(x, ch, ans, directChild)
+
+    def get_ancestors(self, n: int, edges: list[list[int]]) -> list[list[int]]:
+        # Initialize the ancestor lists for all nodes
+        ans = [[] for _ in range(n)]
+        # Initialize the adjacency list for all nodes
+        directChild = [[] for _ in range(n)]
+        # Build the adjacency list from the given edges
+        for e in edges:
+            directChild[e[0]].append(e[1])
+        # Perform DFS for each node to find all ancestors
+        for i in range(n):
+            self.dfs(i, i, ans, directChild)
+        # Return the list of ancestors for each node
+        return ans
 
     getAncestors = get_ancestors
