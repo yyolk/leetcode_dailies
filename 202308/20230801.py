@@ -1,5 +1,4 @@
 # https://leetcode.com/problems/combinations/
-# TODO: Submit with time travel ticket
 
 
 class Solution:
