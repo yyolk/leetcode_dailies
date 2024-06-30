@@ -19,8 +19,9 @@ class Solution:
 
     """
 
-
-    def dfs(self, x: int, curr: int, ans: list[list[int]], directChild: list[list[int]]) -> None:
+    def dfs(
+        self, x: int, curr: int, ans: list[list[int]], directChild: list[list[int]]
+    ) -> None:
         # Traverse all direct children of the current node
         for ch in directChild[curr]:
             # If the ancestor list of the child node is empty or doesn't end with the current ancestor
