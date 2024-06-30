@@ -1,6 +1,32 @@
 # https://leetcode.com/problems/remove-max-number-of-edges-to-keep-graph-fully-traversable/
 
 
+class UnionFind:
+    def __init__(self, n):
+        self.parent = list(range(n))
+        self.rank = [0] * n
+        self.count = n  # Number of connected components
+
+    def find(self, u):
+        if self.parent[u] != u:
+            self.parent[u] = self.find(self.parent[u])
+        return self.parent[u]
+
+    def union(self, u, v):
+        root_u = self.find(u)
+        root_v = self.find(v)
+        if root_u != root_v:
+            if self.rank[root_u] > self.rank[root_v]:
+                self.parent[root_v] = root_u
+            elif self.rank[root_u] < self.rank[root_v]:
+                self.parent[root_u] = root_v
+            else:
+                self.parent[root_v] = root_u
+                self.rank[root_u] += 1
+            self.count -= 1
+            return True
+        return False
+
 class Solution:
     """1579. Remove Max Number of Edges to Keep Graph Fully Traversable
 
@@ -23,6 +49,38 @@ class Solution:
 
     """
 
-    def max_num_edges_to_remove(self, n: int, edges: list[list[int]]) -> int: ...
+    def max_num_edges_to_remove(self, n: int, edges: list[list[int]]) -> int:
+        uf_alice = UnionFind(n)
+        uf_bob = UnionFind(n)
+        uf_combined = UnionFind(n)
+
+        edges_removed = 0
+
+        # Process type 3 edges first
+        for edge_type, u, v in edges:
+            if edge_type == 3:
+                if not uf_combined.union(u - 1, v - 1):
+                    edges_removed += 1
+                else:
+                    uf_alice.union(u - 1, v - 1)
+                    uf_bob.union(u - 1, v - 1)
+
+        # Process type 1 edges for Alice
+        for edge_type, u, v in edges:
+            if edge_type == 1:
+                if not uf_alice.union(u - 1, v - 1):
+                    edges_removed += 1
+
+        # Process type 2 edges for Bob
+        for edge_type, u, v in edges:
+            if edge_type == 2:
+                if not uf_bob.union(u - 1, v - 1):
+                    edges_removed += 1
+
+        # Check if both Alice and Bob can fully traverse the graph
+        if uf_alice.count > 1 or uf_bob.count > 1:
+            return -1
+
+        return edges_removed
 
     maxNumEdgesToRemove = max_num_edges_to_remove
