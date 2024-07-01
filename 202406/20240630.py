@@ -27,6 +27,7 @@ class UnionFind:
             return True
         return False
 
+
 class Solution:
     """1579. Remove Max Number of Edges to Keep Graph Fully Traversable
 
