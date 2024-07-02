@@ -36,7 +36,9 @@
    </a>
   </td>
   <td class="tue">
-   2
+   <a href="20240702.py">
+    2
+   </a>
   </td>
   <td class="wed">
    3
