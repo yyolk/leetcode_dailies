@@ -14,16 +14,16 @@ class Solution:
     def intersect(self, nums1: list[int], nums2: list[int]) -> list[int]:
         # Count the occurrences of each element in nums1
         counts = Counter(nums1)
-        
+
         # Result array to store the intersection
         result = []
-        
+
         # Iterate through nums2 and add common elements to the result
         for num in nums2:
             if counts[num] > 0:
                 result.append(num)
                 counts[num] -= 1
-        
+
         return result
 
     intersect = intersect
