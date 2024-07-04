@@ -16,9 +16,9 @@ class Solution:
     def min_difference(self, nums: list[int]) -> int:
         if len(nums) <= 4:
             return 0
-        
+
         nums.sort()
-        
+
         # Consider the minimum difference after making at most 3 moves
         # Possible scenarios:
         # 1. Change the 3 largest elements
@@ -29,7 +29,7 @@ class Solution:
         diff3 = nums[-2] - nums[2]
         # 4. Change the 1 smallest and 2 largest elements
         diff4 = nums[-3] - nums[1]
-        
+
         return min(diff1, diff2, diff3, diff4)
 
     minDifference = min_difference
