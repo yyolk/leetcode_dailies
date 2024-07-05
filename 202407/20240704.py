@@ -31,7 +31,7 @@ class Solution:
         new_list_tail = dummy
         # Sum of values between zeros
         current_sum = 0
-        
+
         while current:
             if current.val != 0:
                 # Add value to the current sum
@@ -48,7 +48,7 @@ class Solution:
                     current_sum = 0
             # Move to the next node in the original list
             current = current.next
-        
+
         # Return the next of dummy since the first node is dummy
         return dummy.next
 
