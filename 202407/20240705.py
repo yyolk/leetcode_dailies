@@ -42,9 +42,11 @@ class Solution:
 
         while next:
             # Check if the current node is a local minima or maxima
-            if (curr.val > prev.val and curr.val > next.val) or (curr.val < prev.val and curr.val < next.val):
+            if (curr.val > prev.val and curr.val > next.val) or (
+                curr.val < prev.val and curr.val < next.val
+            ):
                 critical_points.append(index)
-            
+
             # Move to the next set of nodes
             prev, curr, next = curr, next, next.next
             index += 1
@@ -54,11 +56,13 @@ class Solution:
             return [-1, -1]
 
         # Calculate minimum and maximum distances between critical points
-        min_distance = float('inf')
+        min_distance = float("inf")
         max_distance = critical_points[-1] - critical_points[0]
 
         for i in range(1, len(critical_points)):
-            min_distance = min(min_distance, critical_points[i] - critical_points[i - 1])
+            min_distance = min(
+                min_distance, critical_points[i] - critical_points[i - 1]
+            )
 
         return [min_distance, max_distance]
 
