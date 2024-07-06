@@ -18,6 +18,16 @@ class Solution:
 
     """
 
-    def pass_the_pillow(self, n: int, time: int) -> int: ...
+    def pass_the_pillow(self, n: int, time: int) -> int:
+        # The effective time within the current back-and-forth cycle
+        cycle_time = time % (2 * (n - 1))
+        
+        # Determine the current position based on the cycle time
+        if cycle_time < n:
+            # Moving forward
+            return cycle_time + 1
+        else:
+            # Moving backward
+            return n - (cycle_time - (n - 1))
 
     passThePillow = pass_the_pillow
