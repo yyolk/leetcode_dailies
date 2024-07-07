@@ -15,6 +15,15 @@ class Solution:
 
     """
 
-    def num_water_bottles(self, num_bottles: int, num_exchange: int) -> int: ...
+    def num_water_bottles(self, num_bottles: int, num_exchange: int) -> int:
+        # Base case: if the number of bottles is less than the exchange rate,
+        # return the number of bottles because no more exchanges can be made
+        if num_bottles < num_exchange:
+            return num_bottles
+        
+        # Calculate the new full bottles obtained from exchange
+        # Recursive call: Total drunk bottles are the exchange rate (num_exchange) plus
+        # the result of the recursive call with the new number of bottles obtained after exchange        
+        return num_exchange + self.num_water_bottles(num_bottles - num_exchange + 1, num_exchange)
 
     numWaterBottles = num_water_bottles
