@@ -30,6 +30,12 @@ class Solution:
 
     """
 
-    def find_the_winner(self, n: int, k: int) -> int: ...
+    def find_the_winner(self, n: int, k: int) -> int:
+        # When there is only one person, the winner is at position 0 (index 0)
+        winner = 0
+        for i in range(2, n + 1):
+            winner = (winner + k) % i
+        # Convert from 0-based index to 1-based position
+        return winner + 1
 
     findTheWinner = find_the_winner
