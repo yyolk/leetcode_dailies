@@ -25,21 +25,21 @@ class Solution:
     def average_waiting_time(self, customers: list[list[int]]) -> float:
         current_time = 0
         total_waiting_time = 0
-        
+
         for arrival, time in customers:
             # If the chef is idle, start the order when the customer arrives
             if current_time < arrival:
                 current_time = arrival
-            
+
             # Calculate the waiting time for the current customer
             waiting_time = current_time - arrival + time
-            
+
             # Update the current time by adding the time needed to prepare the order
             current_time += time
-            
+
             # Accumulate the total waiting time
             total_waiting_time += waiting_time
-        
+
         # Calculate and return the average waiting time
         return total_waiting_time / len(customers)
 
