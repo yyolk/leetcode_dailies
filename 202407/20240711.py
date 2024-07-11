@@ -13,6 +13,23 @@ class Solution:
 
     """
 
-    def reverse_parentheses(self, s: str) -> str: ...
+    def reverse_parentheses(self, s: str) -> str:
+        stack = []
+        
+        for char in s:
+            if char == ")":
+                # When encountering a closing parenthesis, start reversing
+                substr = []
+                while stack and stack[-1] != "(":
+                    substr.append(stack.pop())
+                # Pop the opening parenthesis "("
+                stack.pop()
+                # Add the reversed substring back to the stack
+                stack.extend(substr)
+            else:
+                stack.append(char)
+        
+        # Join the characters in the stack to form the result
+        return "".join(stack)
 
     reverseParentheses = reverse_parentheses
