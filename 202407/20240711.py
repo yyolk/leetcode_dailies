@@ -15,7 +15,7 @@ class Solution:
 
     def reverse_parentheses(self, s: str) -> str:
         stack = []
-        
+
         for char in s:
             if char == ")":
                 # When encountering a closing parenthesis, start reversing
@@ -28,7 +28,7 @@ class Solution:
                 stack.extend(substr)
             else:
                 stack.append(char)
-        
+
         # Join the characters in the stack to form the result
         return "".join(stack)
 
