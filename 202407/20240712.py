@@ -32,12 +32,12 @@ class Solution:
             return "".join(stack), total_score
 
         if x > y:
-            s, score1 = remove_substring(s, 'a', 'b', x)
-            _, score2 = remove_substring(s, 'b', 'a', y)
+            s, score1 = remove_substring(s, "a", "b", x)
+            _, score2 = remove_substring(s, "b", "a", y)
         else:
-            s, score1 = remove_substring(s, 'b', 'a', y)
-            _, score2 = remove_substring(s, 'a', 'b', x)
-        
+            s, score1 = remove_substring(s, "b", "a", y)
+            _, score2 = remove_substring(s, "a", "b", x)
+
         return score1 + score2
 
     maximumGain = maximum_gain
