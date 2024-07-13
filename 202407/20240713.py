@@ -36,6 +36,39 @@ class Solution:
 
     def survived_robots_healths(
         self, positions: list[int], healths: list[int], directions: str
-    ) -> list[int]: ...
+    ) -> list[int]:
+        # Create a list of tuples (position, health, direction, index)
+        robots = [(positions[i], healths[i], directions[i], i) for i in range(len(positions))]
+        
+        # Sort robots by their positions
+        robots.sort()
+
+        stack = []  # To keep track of robots moving to the right
+        survivors = []  # To store final healths of surviving robots in the order of their original indices
+        
+        for pos, health, direction, index in robots:
+            if direction == 'R':
+                stack.append((health, index))
+            else:
+                while stack and stack[-1][0] < health:
+                    health -= 1
+                    stack.pop()
+                if stack:
+                    if stack[-1][0] == health:
+                        stack.pop()
+                    else:
+                        stack[-1] = (stack[-1][0] - 1, stack[-1][1])
+                else:
+                    survivors.append((health, index))
+        
+        # Add any remaining robots from the stack (those moving to the right that never collided)
+        for health, index in stack:
+            survivors.append((health, index))
+        
+        # Sort survivors by their original indices to match the order given in input
+        survivors.sort(key=lambda x: x[1])
+        
+        # Extract the healths in the correct order
+        return [health for health, index in survivors]
 
     survivedRobotsHealths = survived_robots_healths
