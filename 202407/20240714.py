@@ -38,7 +38,7 @@ class Solution:
         stack = [collections.defaultdict(int)]
         i = 0
         n = len(formula)
-        
+
         while i < n:
             if formula[i] == "(":
                 # Push a new dict to the stack when encountering "("
@@ -51,7 +51,7 @@ class Solution:
                 while i < n and formula[i].isdigit():
                     i += 1
                 multiplier = int(formula[start:i] or 1)
-                
+
                 # Pop the top dict and merge it into the previous one with the multiplier
                 top = stack.pop()
                 for elem, count in top.items():
@@ -63,19 +63,22 @@ class Solution:
                 while i < n and formula[i].islower():
                     i += 1
                 elem = formula[start:i]
-                
+
                 # Read the count
                 start = i
                 while i < n and formula[i].isdigit():
                     i += 1
                 count = int(formula[start:i] or 1)
-                
+
                 # Add the element count to the top dict
                 stack[-1][elem] += count
-        
+
         # The result is in the first dictionary
         result = stack.pop()
         # Sort the elements by name and format the result string
-        return "".join(f"{elem}{(count if count > 1 else '')}" for elem, count in sorted(result.items()))
+        return "".join(
+            f"{elem}{(count if count > 1 else '')}"
+            for elem, count in sorted(result.items())
+        )
 
     countOfAtoms = count_of_atoms
