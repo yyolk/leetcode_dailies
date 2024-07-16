@@ -27,31 +27,29 @@ class Solution:
 
     """
 
-    def create_binary_tree(
-        self, descriptions: list[list[int]]
-    ) -> Optional[TreeNode]:
+    def create_binary_tree(self, descriptions: list[list[int]]) -> Optional[TreeNode]:
         nodes = {}  # Dictionary to hold all TreeNode instances
         children = set()  # Set to keep track of all child nodes
-        
+
         # Create nodes and establish parent-child relationships
         for parent, child, is_left in descriptions:
             if parent not in nodes:
                 nodes[parent] = TreeNode(parent)
             if child not in nodes:
                 nodes[child] = TreeNode(child)
-                
+
             if is_left:
                 nodes[parent].left = nodes[child]
             else:
                 nodes[parent].right = nodes[child]
-            
+
             children.add(child)
-        
+
         # Find the root node (which is not any child node)
         for parent, child, is_left in descriptions:
             if parent not in children:
                 return nodes[parent]
-        
+
         return None
 
     createBinaryTree = create_binary_tree
