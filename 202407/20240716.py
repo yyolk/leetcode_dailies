@@ -42,7 +42,7 @@ class Solution:
             if left and right:
                 return node
             return left if left else right
-        
+
         def find_path(node: TreeNode, target: int, path: List[str]) -> bool:
             if not node:
                 return False
@@ -57,21 +57,21 @@ class Solution:
                 return True
             path.pop()
             return False
-        
+
         # Find the LCA of start_value and dest_value
         lca = find_lca(root, start_value, dest_value)
-        
+
         # Find the path from LCA to start_value
         path_to_start = []
         find_path(lca, start_value, path_to_start)
-        
+
         # Find the path from LCA to dest_value
         path_to_dest = []
         find_path(lca, dest_value, path_to_dest)
-        
+
         # Convert path_to_start to "U"s
         path_to_start = ["U"] * len(path_to_start)
-        
+
         # Combine the paths
         return "".join(path_to_start) + "".join(path_to_dest)
 
