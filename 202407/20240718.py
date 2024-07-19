@@ -25,17 +25,17 @@ class Solution:
                 return {}
             if not node.left and not node.right:
                 return {0: 1}
-            
+
             left_distances = dfs(node.left)
             right_distances = dfs(node.right)
-            
+
             # Count pairs where the sum of distances is <= distance
             count = 0
             for ld, lc in left_distances.items():
                 for rd, rc in right_distances.items():
                     if ld + rd + 2 <= distance:
                         count += lc * rc
-            
+
             # Update distances for the current node
             distances = {}
             for d, c in left_distances.items():
@@ -44,7 +44,7 @@ class Solution:
             for d, c in right_distances.items():
                 if d + 1 <= distance:
                     distances[d + 1] = distances.get(d + 1, 0) + c
-            
+
             self.pair_count += count
             return distances
 
