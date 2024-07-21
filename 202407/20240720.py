@@ -17,32 +17,30 @@ class Solution:
 
     """
 
-    def restore_matrix(
-        self, row_sum: list[int], col_sum: list[int]
-    ) -> list[list[int]]:
+    def restore_matrix(self, row_sum: list[int], col_sum: list[int]) -> list[list[int]]:
         # Initialize the result matrix with zeroes
         m, n = len(row_sum), len(col_sum)
         result = [[0] * n for _ in range(m)]
-        
+
         # Iterate through each cell and fill it with the minimum of the current row_sum and col_sum
         for i in range(m):
             for j in range(n):
                 # Find the minimum of the current row_sum and col_sum
                 min_val = min(row_sum[i], col_sum[j])
-                
+
                 # Fill the cell with min_val
                 result[i][j] = min_val
-                
+
                 # Subtract the filled value from the corresponding row_sum and col_sum
                 row_sum[i] -= min_val
                 col_sum[j] -= min_val
-                
+
                 # If either the row_sum or col_sum is zero, move to the next row or column
                 if row_sum[i] == 0:
                     break
             if row_sum[i] == 0:
                 continue
-        
+
         return result
 
     restoreMatrix = restore_matrix
