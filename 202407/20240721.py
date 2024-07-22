@@ -38,16 +38,16 @@ class Solution:
             # Create a graph and in-degree array
             graph = defaultdict(list)
             in_degree = [0] * (k + 1)
-            
+
             # Build the graph and in-degree array based on conditions
             for u, v in conditions:
                 graph[u].append(v)
                 in_degree[v] += 1
-            
+
             # Initialize the queue with nodes having zero in-degree
             queue = deque([i for i in range(1, k + 1) if in_degree[i] == 0])
             topo_order = []
-            
+
             # Perform topological sort using Kahn's algorithm
             while queue:
                 node = queue.popleft()
@@ -56,34 +56,34 @@ class Solution:
                     in_degree[neighbor] -= 1
                     if in_degree[neighbor] == 0:
                         queue.append(neighbor)
-            
+
             # Check if topological sort is valid (covers all nodes)
             if len(topo_order) == k:
                 return topo_order
             else:
                 return []
-        
+
         # Get the row order using topological sort
         row_order = topological_sort(k, row_conditions)
         # Get the column order using topological sort
         col_order = topological_sort(k, col_conditions)
-        
+
         # If either row or column order is invalid, return an empty matrix
         if not row_order or not col_order:
             return []
-        
+
         # Map each number to its position in the row order
         row_position = {num: i for i, num in enumerate(row_order)}
         # Map each number to its position in the column order
         col_position = {num: i for i, num in enumerate(col_order)}
-        
+
         # Initialize the k x k matrix with zeros
         matrix = [[0] * k for _ in range(k)]
-        
+
         # Place each number in the matrix according to its row and column positions
         for num in range(1, k + 1):
             matrix[row_position[num]][col_position[num]] = num
-        
+
         return matrix
 
     buildMatrix = build_matrix
