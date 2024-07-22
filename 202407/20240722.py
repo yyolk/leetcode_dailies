@@ -14,6 +14,16 @@ class Solution:
 
     """
 
-    def sort_people(self, names: list[str], heights: list[int]) -> list[str]: ...
+    def sort_people(self, names: list[str], heights: list[int]) -> list[str]:
+        # Combine names and heights into a list of tuples
+        combined = list(zip(heights, names))
+        
+        # Sort the combined list by height in descending order
+        combined.sort(reverse=True, key=lambda x: x[0])
+        
+        # Extract the names from the sorted combined list
+        sorted_names = [name for _, name in combined]
+        
+        return sorted_names
 
     sortPeople = sort_people
