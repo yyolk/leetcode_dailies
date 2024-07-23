@@ -12,6 +12,13 @@ class Solution:
 
     """
 
-    def frequency_sort(self, nums: list[int]) -> list[int]: ...
+    def frequency_sort(self, nums: list[int]) -> list[int]:
+        # Count the frequency of each value in the array
+        freq = Counter(nums)
+        
+        # Sort the values based on frequency (ascending) and value (descending)
+        sorted_nums = sorted(nums, key=lambda x: (freq[x], -x))
+        
+        return sorted_nums
 
     frequencySort = frequency_sort
