@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/sort-array-by-increasing-frequency/
+from collections import Counter
 
 
 class Solution:
