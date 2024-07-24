@@ -24,6 +24,13 @@ class Solution:
 
     """
 
-    def sort_jumbled(self, mapping: list[int], nums: list[int]) -> list[int]: ...
+    def sort_jumbled(self, mapping: list[int], nums: list[int]) -> list[int]:
+        def mapped_value(num):
+            # Convert the number to its mapped value
+            mapped_str = "".join(str(mapping[int(digit)]) for digit in str(num))
+            return int(mapped_str)
+
+        # Sort the numbers based on their mapped values
+        return sorted(nums, key=mapped_value)
 
     sortJumbled = sort_jumbled
