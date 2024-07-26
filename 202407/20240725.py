@@ -14,7 +14,7 @@ class Solution:
     def sort_array(self, nums: list[int]) -> list[int]:
         if len(nums) <= 1:
             return nums
-        
+
         def merge_sort(arr):
             if len(arr) > 1:
                 mid = len(arr) // 2  # Finding the mid of the array
