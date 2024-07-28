@@ -36,6 +36,39 @@ class Solution:
 
     def second_minimum(
         self, n: int, edges: list[list[int]], time: int, change: int
-    ) -> int: ...
+    ) -> int:
+        # Build the graph as an adjacency list
+        graph = defaultdict(list)
+        for u, v in edges:
+            graph[u].append(v)
+            graph[v].append(u)
+        
+        # Initialize distances to store the minimum and second minimum times
+        dist = [[float('inf'), float('inf')] for _ in range(n + 1)]
+        dist[1][0] = 0  # Starting point (node 1) with 0 time
+
+        # BFS queue (node, current time)
+        queue = deque([(1, 0)])
+        
+        while queue:
+            node, current_time = queue.popleft()
+            
+            # Determine current cycle time (whether red or green)
+            cycle = current_time // change
+            if cycle % 2 == 1:  # If it's a red signal
+                current_time = (cycle + 1) * change  # Wait for green signal
+            
+            # Explore neighbors
+            for neighbor in graph[node]:
+                new_time = current_time + time
+                if new_time < dist[neighbor][0]:
+                    dist[neighbor][1] = dist[neighbor][0]
+                    dist[neighbor][0] = new_time
+                    queue.append((neighbor, new_time))
+                elif dist[neighbor][0] < new_time < dist[neighbor][1]:
+                    dist[neighbor][1] = new_time
+                    queue.append((neighbor, new_time))
+
+        return dist[n][1]
 
     secondMinimum = second_minimum
