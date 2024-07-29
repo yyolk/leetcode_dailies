@@ -20,6 +20,36 @@ class Solution:
 
     """
 
-    def num_teams(self, rating: list[int]) -> int: ...
+    def num_teams(self, rating: list[int]) -> int:
+        # Initialize the count of valid teams to 0
+        count = 0
+        
+        # Loop through each soldier, treating them as the middle soldier of the team
+        for j in range(1, len(rating) - 1):
+            # Initialize counters for soldiers less and greater than rating[j] on the left and right
+            left_less = left_greater = right_less = right_greater = 0
+            
+            # Count soldiers on the left of j with ratings less than and greater than rating[j]
+            for i in range(j):
+                if rating[i] < rating[j]:
+                    left_less += 1
+                elif rating[i] > rating[j]:
+                    left_greater += 1
+            
+            # Count soldiers on the right of j with ratings less than and greater than rating[j]
+            for k in range(j + 1, len(rating)):
+                if rating[k] < rating[j]:
+                    right_less += 1
+                elif rating[k] > rating[j]:
+                    right_greater += 1
+            
+            # Calculate the number of valid increasing teams with j as the middle soldier
+            count += left_less * right_greater
+            
+            # Calculate the number of valid decreasing teams with j as the middle soldier
+            count += left_greater * right_less
+        
+        # Return the total number of valid teams
+        return count
 
     numTeams = num_teams
