@@ -29,6 +29,31 @@ class Solution:
 
     """
 
-    def min_height_shelves(self, books: list[list[int]], shelf_width: int) -> int: ...
+    def min_height_shelves(self, books: list[list[int]], shelf_width: int) -> int:
+        n = len(books)
+        # dp[i] will store the minimum height of the bookshelf for the first i books
+        dp = [float("inf")] * (n + 1)
+        # No books means no height
+        dp[0] = 0
+        
+        # Iterate over each book
+        for i in range(1, n + 1):
+            # Initialize current shelf width and height
+            width = 0
+            height = 0
+            # Try to place books from j to i on the current shelf
+            for j in range(i, 0, -1):
+                # Accumulate the width of the books
+                width += books[j - 1][0]
+                # If the accumulated width exceeds the shelf width, break
+                if width > shelf_width:
+                    break
+                # Update the maximum height of the current shelf
+                height = max(height, books[j - 1][1])
+                # Update dp[i] with the minimum possible height
+                dp[i] = min(dp[i], dp[j - 1] + height)
+        
+        # Return the minimum height of the bookshelf for all books
+        return dp[n]
 
     minHeightShelves = min_height_shelves
