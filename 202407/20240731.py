@@ -35,7 +35,7 @@ class Solution:
         dp = [float("inf")] * (n + 1)
         # No books means no height
         dp[0] = 0
-        
+
         # Iterate over each book
         for i in range(1, n + 1):
             # Initialize current shelf width and height
@@ -52,7 +52,7 @@ class Solution:
                 height = max(height, books[j - 1][1])
                 # Update dp[i] with the minimum possible height
                 dp[i] = min(dp[i], dp[j - 1] + height)
-        
+
         # Return the minimum height of the bookshelf for all books
         return dp[n]
 
