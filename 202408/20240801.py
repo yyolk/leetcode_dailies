@@ -20,6 +20,14 @@ class Solution:
 
     """
 
-    def count_seniors(self, details: list[str]) -> int: ...
+    def count_seniors(self, details: list[str]) -> int:
+        count = 0
+        for detail in details:
+            # Extract the age from the 12th and 13th characters and convert it to an integer
+            age = int(detail[11:13])
+            # Check if the age is strictly greater than 60
+            if age > 60:
+                count += 1
+        return count
 
     countSeniors = count_seniors
