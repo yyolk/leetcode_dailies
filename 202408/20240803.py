@@ -12,6 +12,11 @@ class Solution:
 
     """
 
-    def can_be_equal(self, target: list[int], arr: list[int]) -> bool: ...
+    def can_be_equal(self, target: list[int], arr: list[int]) -> bool:
+        # Sort both arrays
+        target.sort()
+        arr.sort()
+        # Compare the sorted arrays
+        return target == arr
 
     canBeEqual = can_be_equal
