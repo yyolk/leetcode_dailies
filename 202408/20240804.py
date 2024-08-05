@@ -29,8 +29,8 @@ class Solution:
         subarray_sums.sort()
 
         # Step 3: Calculate the sum of elements from `left` to `right` (1-based index)
-        range_sum = sum(subarray_sums[left-1:right]) % MOD
-        
+        range_sum = sum(subarray_sums[left - 1 : right]) % MOD
+
         return range_sum
 
     rangeSum = range_sum
