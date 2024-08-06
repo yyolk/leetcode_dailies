@@ -23,7 +23,7 @@ class Solution:
                 count[string] += 1
             else:
                 count[string] = 1
-        
+
         # Iterate through the array and find the k-th distinct string
         distinct_count = 0
         for string in arr:
@@ -31,7 +31,7 @@ class Solution:
                 distinct_count += 1
                 if distinct_count == k:
                     return string
-        
+
         # If there are fewer than k distinct strings, return an empty string
         return ""
 
