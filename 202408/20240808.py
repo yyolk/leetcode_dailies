@@ -28,8 +28,8 @@ class Solution:
         # Directions: right, down, left, up
         directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
         # Start facing east (right)
-        d = 0  
-        
+        d = 0
+
         steps = 0
         r, c = r_start, c_start
 
@@ -43,9 +43,9 @@ class Solution:
                         result.append([r, c])
                     if len(result) == rows * cols:
                         return result
-                # Turn 90 degrees clockwise                        
+                # Turn 90 degrees clockwise
                 d = (d + 1) % 4
 
         return result
-    
+
     spiralMatrixIII = spiral_matrix_i_i_i
