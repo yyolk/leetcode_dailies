@@ -38,7 +38,7 @@ class Solution:
             # Main diagonal sum
             sum7 = sum(square[i][i] for i in range(3))
             # Anti-diagonal sum
-            sum8 = sum(square[i][2-i] for i in range(3))
+            sum8 = sum(square[i][2 - i] for i in range(3))
 
             # All sums must be equal to 15
             return sum1 == sum2 == sum3 == sum4 == sum5 == sum6 == sum7 == sum8 == 15
@@ -48,7 +48,7 @@ class Solution:
 
         for i in range(rows - 2):
             for j in range(cols - 2):
-                square = [grid[i+k][j:j+3] for k in range(3)]
+                square = [grid[i + k][j : j + 3] for k in range(3)]
                 if is_magic(square):
                     count += 1
 
