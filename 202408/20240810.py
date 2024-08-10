@@ -2,21 +2,22 @@
 
 
 class Solution:
-    """959. Regions Cut By Slashes
+    r"""959. Regions Cut By Slashes
 
     An `n x n` grid is composed of `1 x 1` squares where each `1 x 1` square consists of
-    a `'/'`, `'\\'`, or blank space `' '`. These characters divide the square into
+    a `"/"`, `"\\"`, or blank space `" "`. These characters divide the square into
     contiguous regions.
 
     Given the grid `grid` represented as a string array, return *the number of regions*.
 
-    Note that backslash characters are escaped, so a `'\\'` is represented as `'\\\\'`.
+    Note that backslash characters are escaped, so a `"\\"` is represented as `"\\\\"`.
 
     """
 
     def regions_by_slashes(self, grid: list[str]) -> int:
         n = len(grid)
-        parent = list(range(4 * n * n))  # Union-Find parent array
+        # Union-Find parent array
+        parent = list(range(4 * n * n))
 
         def find(x):
             if parent[x] != x:
@@ -30,13 +31,13 @@ class Solution:
             for j in range(n):
                 index = 4 * (i * n + j)
                 char = grid[i][j]
-                
+
                 # Connect the four triangles within the cell
-                if char == '/':
+                if char == "/":
                     # Connect top-right (1) with bottom-left (2)
                     union(index + 0, index + 3)
                     union(index + 1, index + 2)
-                elif char == '\\':
+                elif char == "\\":
                     # Connect top-left (0) with bottom-right (3)
                     union(index + 0, index + 1)
                     union(index + 2, index + 3)
@@ -45,7 +46,7 @@ class Solution:
                     union(index + 0, index + 1)
                     union(index + 1, index + 2)
                     union(index + 2, index + 3)
-                
+
                 # Connect the triangles between adjacent cells
                 # Connect the right triangle of current cell with the left triangle of the right cell
                 if j + 1 < n:
