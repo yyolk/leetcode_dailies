@@ -17,6 +17,7 @@ class Solution:
     Return *the minimum number of days to disconnect the grid*.
 
     """
+
     # Direction vectors for moving up, down, left, and right
     def __init__(self):
         self.xDir = [0, 0, -1, 1]
@@ -24,7 +25,12 @@ class Solution:
 
     # Check if the cell (i, j) is within bounds, unvisited, and is land (1)
     def is_safe(self, grid, i, j, visited):
-        return (0 <= i < len(grid) and 0 <= j < len(grid[0]) and not visited[i][j] and grid[i][j] == 1)
+        return (
+            0 <= i < len(grid)
+            and 0 <= j < len(grid[0])
+            and not visited[i][j]
+            and grid[i][j] == 1
+        )
 
     # Recursive DFS function to mark all connected parts of land as visited
     def island_count(self, grid, i, j, visited):
@@ -52,7 +58,6 @@ class Solution:
         return count
 
     def min_days(self, grid: list[list[int]]) -> int:
-
 
         rows = len(grid)
         cols = len(grid[0])
