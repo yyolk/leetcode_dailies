@@ -16,7 +16,7 @@ class Solution:
     def smallest_distance_pair(self, nums: list[int], k: int) -> int:
         # Sort the array to make pair distance calculations easier
         nums.sort()
-        
+
         # Helper function to count how many pairs have a distance <= mid
         def count_pairs(mid):
             count = 0
@@ -27,7 +27,7 @@ class Solution:
                     left += 1
                 count += right - left
             return count
-        
+
         # Binary search for the smallest distance
         low, high = 0, nums[-1] - nums[0]
         while low < high:
@@ -36,7 +36,7 @@ class Solution:
                 low = mid + 1
             else:
                 high = mid
-        
+
         return low
 
     smallestDistancePair = smallest_distance_pair
