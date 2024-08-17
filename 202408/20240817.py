@@ -25,6 +25,28 @@ class Solution:
 
     """
 
-    def max_points(self, points: list[list[int]]) -> int: ...
+    def max_points(self, points: list[list[int]]) -> int:
+        m, n = len(points), len(points[0])
+        dp = points[0][:]  # Initialize the DP table with the first row
+
+        for i in range(1, m):
+            left_dp = [0] * n
+            right_dp = [0] * n
+
+            # Left-to-right sweep
+            left_dp[0] = dp[0]
+            for j in range(1, n):
+                left_dp[j] = max(left_dp[j - 1] - 1, dp[j])
+
+            # Right-to-left sweep
+            right_dp[n - 1] = dp[n - 1]
+            for j in range(n - 2, -1, -1):
+                right_dp[j] = max(right_dp[j + 1] - 1, dp[j])
+
+            # Update dp for the current row
+            for j in range(n):
+                dp[j] = points[i][j] + max(left_dp[j], right_dp[j])
+
+        return max(dp)
 
     maxPoints = max_points
