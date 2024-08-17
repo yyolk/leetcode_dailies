@@ -23,7 +23,9 @@ class Solution:
         # Iterate through the arrays starting from the second one
         for i in range(1, len(arrays)):
             # Calculate the distance by comparing the current array's max and min with the global min and max
-            result = max(result, abs(arrays[i][-1] - min_val), abs(arrays[i][0] - max_val))
+            result = max(
+                result, abs(arrays[i][-1] - min_val), abs(arrays[i][0] - max_val)
+            )
 
             # Update the global min and max values
             min_val = min(min_val, arrays[i][0])
