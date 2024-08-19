@@ -17,6 +17,21 @@ class Solution:
 
     """
 
-    def min_steps(self, n: int) -> int: ...
+    def min_steps(self, n: int) -> int:
+        # Initialize the total number of operations
+        steps = 0
+
+        # Try dividing n by every number starting from 2 onwards
+        divisor = 2
+
+        while n > 1:
+            while n % divisor == 0:
+                # If n is divisible by the current divisor,
+                # then add the divisor to the steps and divide n by the divisor.
+                steps += divisor
+                n //= divisor
+            divisor += 1
+
+        return steps
 
     minSteps = min_steps
