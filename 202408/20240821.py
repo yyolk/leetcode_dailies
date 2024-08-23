@@ -19,7 +19,7 @@ class Solution:
     def strange_printer(self, s: str) -> int:
         # Length of the input string
         n = len(s)
-        
+
         # Initialize the DP table with infinity to represent uncomputed states
         dp = [[float("inf")] * n for _ in range(n)]
 
