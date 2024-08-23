@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/fraction-addition-and-subtraction/
+from math import gcd
 
 
 class Solution:
@@ -14,6 +15,27 @@ class Solution:
 
     """
 
-    def fraction_addition(self, expression: str) -> str: ...
+    def fraction_addition(self, expression: str) -> str:
+        # Helper function to add two fractions
+        def add_fractions(num1, den1, num2, den2):
+            numerator = num1 * den2 + num2 * den1
+            denominator = den1 * den2
+            common_divisor = gcd(abs(numerator), denominator)
+            return numerator // common_divisor, denominator // common_divisor
+        
+        # Parse the expression and initialize result as 0/1
+        fractions = expression.replace('-', '+-').split('+')
+        result_num, result_den = 0, 1
+        
+        for fraction in fractions:
+            if fraction:
+                num, den = map(int, fraction.split('/'))
+                result_num, result_den = add_fractions(result_num, result_den, num, den)
+        
+        # If result is 0, return "0/1"
+        if result_num == 0:
+            return "0/1"
+        
+        return f"{result_num}/{result_den}"
 
     fractionAddition = fraction_addition
