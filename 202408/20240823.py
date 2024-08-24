@@ -22,20 +22,20 @@ class Solution:
             denominator = den1 * den2
             common_divisor = gcd(abs(numerator), denominator)
             return numerator // common_divisor, denominator // common_divisor
-        
+
         # Parse the expression and initialize result as 0/1
-        fractions = expression.replace('-', '+-').split('+')
+        fractions = expression.replace("-", "+-").split("+")
         result_num, result_den = 0, 1
-        
+
         for fraction in fractions:
             if fraction:
-                num, den = map(int, fraction.split('/'))
+                num, den = map(int, fraction.split("/"))
                 result_num, result_den = add_fractions(result_num, result_den, num, den)
-        
+
         # If result is 0, return "0/1"
         if result_num == 0:
             return "0/1"
-        
+
         return f"{result_num}/{result_den}"
 
     fractionAddition = fraction_addition
