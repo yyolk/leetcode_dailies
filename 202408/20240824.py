@@ -17,12 +17,12 @@ class Solution:
         # Edge case: if n is a single digit, return n-1
         if length == 1:
             return str(int(n) - 1)
-        
+
         # Create the candidates
         candidates = set()
-        
+
         # The first candidate is by reflecting the first half of the string n
-        first_half = n[:(length + 1) // 2]
+        first_half = n[: (length + 1) // 2]
         for diff in [-1, 0, 1]:
             # Generate the first half with the possible adjustment (e.g., decrement or increment)
             new_first_half = str(int(first_half) + diff)
@@ -34,23 +34,23 @@ class Solution:
             else:
                 candidate = new_first_half + new_first_half[:-1][::-1]
             candidates.add(candidate)
-        
+
         # Edge cases
-        candidates.add('9' * (length - 1))  # 999...999 (one digit less)
-        candidates.add('1' + '0' * (length - 1) + '1')  # 100...001
-        
+        candidates.add("9" * (length - 1))  # 999...999 (one digit less)
+        candidates.add("1" + "0" * (length - 1) + "1")  # 100...001
+
         # Remove n itself from candidates
         candidates.discard(n)
-        
+
         # Convert the candidates to integers and find the closest palindrome
         closest = None
-        min_diff = float('inf')
+        min_diff = float("inf")
         for candidate in candidates:
             diff = abs(int(candidate) - int(n))
             if diff < min_diff or (diff == min_diff and int(candidate) < int(closest)):
                 closest = candidate
                 min_diff = diff
-        
-        return closest        
+
+        return closest
 
     nearestPalindromic = nearest_palindromic
