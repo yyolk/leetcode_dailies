@@ -18,7 +18,7 @@ class Solution:
     def postorder_traversal(self, root: Optional[TreeNode]) -> list[int]:
         # Initialize an empty list to store the result of the traversal.
         result = []
-        
+
         # Define a helper function to perform the recursive postorder traversal.
         def traverse(node: Optional[TreeNode]):
             if node:
@@ -28,10 +28,10 @@ class Solution:
                 traverse(node.right)
                 # Finally, visit the current node by adding its value to the result list.
                 result.append(node.val)
-        
+
         # Start the traversal from the root of the tree.
         traverse(root)
-        
+
         # Return the result list containing the postorder traversal.
         return result
 
