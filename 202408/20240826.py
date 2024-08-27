@@ -30,6 +30,6 @@ class Solution:
             # Append the current node's value after traversing children
             result.append(node.val)
             return result
-        
+
         # Start the traversal from the root
         return traverse(root)
