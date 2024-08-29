@@ -17,9 +17,7 @@ class Solution:
 
     """
 
-    def count_sub_islands(
-        self, grid1: list[list[int]], grid2: list[list[int]]
-    ) -> int:
+    def count_sub_islands(self, grid1: list[list[int]], grid2: list[list[int]]) -> int:
         m, n = len(grid2), len(grid2[0])
         sub_island_count = 0
 
@@ -34,10 +32,10 @@ class Solution:
             sub = grid1[i][j] == 1
 
             # Recursively check neighbors
-            sub &= dfs(i+1, j, is_sub)
-            sub &= dfs(i-1, j, is_sub)
-            sub &= dfs(i, j+1, is_sub)
-            sub &= dfs(i, j-1, is_sub)
+            sub &= dfs(i + 1, j, is_sub)
+            sub &= dfs(i - 1, j, is_sub)
+            sub &= dfs(i, j + 1, is_sub)
+            sub &= dfs(i, j - 1, is_sub)
 
             return sub
 
