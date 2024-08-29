@@ -16,6 +16,34 @@ class Solution:
 
     """
 
-    def remove_stones(self, stones: list[list[int]]) -> int: ...
+    def remove_stones(self, stones: list[list[int]]) -> int:
+        # Initialize parent dict for Union-Find
+        parent = {}
+
+        def find(x):
+            if x not in parent:
+                parent[x] = x
+            elif parent[x] != x:
+                # Path compression
+                parent[x] = find(parent[x])
+            return parent[x]
+
+        def union(x, y):
+            px, py = find(x), find(y)
+            if px != py:
+                parent[px] = py
+
+        # Union stones by row and column
+        for x, y in stones:
+            # Using ~y to avoid collision with x
+            union(x, ~y)
+
+        # Count unique roots, which represent islands of stones
+        unique_roots = set()
+        for x, y in stones:
+            unique_roots.add(find(x))
+
+        # The number of stones that can be removed is total stones minus unique roots
+        return len(stones) - len(unique_roots)
 
     removeStones = remove_stones
