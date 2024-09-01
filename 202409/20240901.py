@@ -20,6 +20,21 @@ class Solution:
 
     def construct2_d_array(
         self, original: list[int], m: int, n: int
-    ) -> list[list[int]]: ...
+    ) -> list[list[int]]:
+        # Check if the total number of elements in original can fill an m x n array
+        if len(original) != m * n:
+            # Return empty list if it's impossible to construct the 2D array
+            return []
+
+        # Initialize the result 2D list
+        result = []
+
+        # Iterate over the range of m to create each row
+        for i in range(m):
+            # Slice the original list to get elements for the current row
+            # i*n is the start index, (i+1)*n is the end index for each row
+            result.append(original[i*n : (i+1)*n])
+
+        return result
 
     construct2DArray = construct2_d_array
