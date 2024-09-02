@@ -33,7 +33,7 @@ class Solution:
         for i in range(m):
             # Slice the original list to get elements for the current row
             # i*n is the start index, (i+1)*n is the end index for each row
-            result.append(original[i*n : (i+1)*n])
+            result.append(original[i * n : (i + 1) * n])
 
         return result
 
