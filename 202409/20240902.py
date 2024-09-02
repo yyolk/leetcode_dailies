@@ -20,6 +20,17 @@ class Solution:
 
     """
 
-    def chalk_replacer(self, chalk: list[int], k: int) -> int: ...
+    def chalk_replacer(self, chalk: list[int], k: int) -> int:
+        # Calculate the total chalk needed for one complete round
+        total_chalk = sum(chalk)
+        
+        # Reduce k by the total chalk usage modulo total_chalk
+        k %= total_chalk
+        
+        # Find the student who will replace the chalk
+        for i, chalk_needed in enumerate(chalk):
+            if k < chalk_needed:
+                return i
+            k -= chalk_needed
 
     chalkReplacer = chalk_replacer
