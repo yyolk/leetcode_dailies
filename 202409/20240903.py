@@ -28,7 +28,7 @@ class Solution:
     def get_lucky(self, s: str, k: int) -> int:
         # Convert string to number string where "a" -> "1", "b" -> "2", etc.
         num_str = "".join(str(ord(c) - ord("a") + 1) for c in s)
-        
+
         # Perform k transformations
         result = num_str
         for _ in range(k):
@@ -39,7 +39,7 @@ class Solution:
                 return digit_sum
             # Otherwise, prepare for next transformation
             result = str(digit_sum)
-        
+
         # This line should not be reached if k > 0, but included for completeness
         return int(result)
 
