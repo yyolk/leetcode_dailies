@@ -34,6 +34,31 @@ class Solution:
 
     """
 
-    def robot_sim(self, commands: list[int], obstacles: list[list[int]]) -> int: ...
+    def robot_sim(self, commands: list[int], obstacles: list[list[int]]) -> int:
+        # Directions: North, East, South, West
+        directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
+        # Convert obstacles to a set for O(1) lookup time
+        obstacleSet = set(map(tuple, obstacles))
+        x, y = 0, 0  # Starting position
+        dir_index = 0  # Start facing North
+        max_distance = 0
+
+        for command in commands:
+            if command == -2:  # Turn left
+                dir_index = (dir_index - 1) % 4
+            elif command == -1:  # Turn right
+                dir_index = (dir_index + 1) % 4
+            else:  # Move forward command units
+                for _ in range(command):
+                    if (x + directions[dir_index][0], y + directions[dir_index][1]) not in obstacleSet:
+                        x += directions[dir_index][0]
+                        y += directions[dir_index][1]
+                        # Update max distance if necessary
+                        max_distance = max(max_distance, x*x + y*y)
+                    else:
+                        # If there's an obstacle, stop moving in this direction
+                        break
+
+        return max_distance
 
     robotSim = robot_sim
