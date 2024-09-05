@@ -50,11 +50,14 @@ class Solution:
                 dir_index = (dir_index + 1) % 4
             else:  # Move forward command units
                 for _ in range(command):
-                    if (x + directions[dir_index][0], y + directions[dir_index][1]) not in obstacleSet:
+                    if (
+                        x + directions[dir_index][0],
+                        y + directions[dir_index][1],
+                    ) not in obstacleSet:
                         x += directions[dir_index][0]
                         y += directions[dir_index][1]
                         # Update max distance if necessary
-                        max_distance = max(max_distance, x*x + y*y)
+                        max_distance = max(max_distance, x * x + y * y)
                     else:
                         # If there's an obstacle, stop moving in this direction
                         break
