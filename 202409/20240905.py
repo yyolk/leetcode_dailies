@@ -25,6 +25,37 @@ class Solution:
 
     """
 
-    def missing_rolls(self, rolls: list[int], mean: int, n: int) -> list[int]: ...
+    def missing_rolls(self, rolls: list[int], mean: int, n: int) -> list[int]:
+        # Total number of rolls
+        total_rolls = len(rolls) + n
+        
+        # Total sum if the mean were exact
+        total_sum = mean * total_rolls
+        
+        # Sum of the observed rolls
+        observed_sum = sum(rolls)
+        
+        # Sum of the missing rolls
+        missing_sum = total_sum - observed_sum
+        
+        # Check if it's possible to achieve this sum with n rolls of a 6-sided die
+        if missing_sum < n or missing_sum > 6 * n:
+            return []
+        
+        # Initialize missing rolls with the minimum possible value (1)
+        missing_rolls = [1] * n
+        
+        # Distribute the remaining sum
+        remaining_sum = missing_sum - n  # Subtract n because we've already added 1 to each roll
+        
+        for i in range(n):
+            # Add as much as possible to the current roll without exceeding 6
+            add = min(remaining_sum, 5)  # 5 because we started from 1, so 1 + 5 = 6 max
+            missing_rolls[i] += add
+            remaining_sum -= add
+            if remaining_sum == 0:
+                break
+        
+        return missing_rolls
 
     missingRolls = missing_rolls
