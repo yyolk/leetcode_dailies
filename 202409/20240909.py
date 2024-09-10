@@ -45,8 +45,11 @@ class Solution:
             next_row, next_col = row + directions[d][0], col + directions[d][1]
 
             # Check if we can move in the current direction
-            if (0 <= next_row < m and 0 <= next_col < n and
-                matrix[next_row][next_col] == -1):
+            if (
+                0 <= next_row < m
+                and 0 <= next_col < n
+                and matrix[next_row][next_col] == -1
+            ):
                 row, col = next_row, next_col
             else:
                 # Change direction
