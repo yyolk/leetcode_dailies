@@ -17,6 +17,13 @@ class Solution:
 
     """
 
-    def min_bit_flips(self, start: int, goal: int) -> int: ...
+    def min_bit_flips(self, start: int, goal: int) -> int:
+        # XOR of start and goal will give us a number where each '1' bit
+        # represents a bit that is different between start and goal
+        xor = start ^ goal
+
+        # Count the number of '1' bits in the XOR result
+        # This count is the number of flips needed
+        return bin(xor).count("1")
 
     minBitFlips = min_bit_flips
