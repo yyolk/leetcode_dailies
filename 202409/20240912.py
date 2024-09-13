@@ -15,15 +15,15 @@ class Solution:
     def count_consistent_strings(self, allowed: str, words: list[str]) -> int:
         # Convert the allowed string to a set for O(1) lookup time
         allowed_set = set(allowed)
-        
+
         # Count of consistent strings
         consistent_count = 0
-        
+
         for word in words:
             # Check if all characters in word are in allowed_set
             if all(char in allowed_set for char in word):
                 consistent_count += 1
-        
+
         return consistent_count
 
     countConsistentStrings = count_consistent_strings
