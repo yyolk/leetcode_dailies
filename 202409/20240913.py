@@ -14,6 +14,18 @@ class Solution:
 
     """
 
-    def xor_queries(self, arr: list[int], queries: list[list[int]]) -> list[int]: ...
+    def xor_queries(self, arr: list[int], queries: list[list[int]]) -> list[int]:
+        # Precompute XOR prefix sum for efficiency
+        xor_prefix = [0]
+        for num in arr:
+            xor_prefix.append(xor_prefix[-1] ^ num)
+        
+        results = []
+        for left, right in queries:
+            # XOR of range [left, right] can be computed using prefix XOR
+            result = xor_prefix[right + 1] ^ xor_prefix[left]
+            results.append(result)
+        
+        return results
 
     xorQueries = xor_queries
