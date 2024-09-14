@@ -21,6 +21,19 @@ class Solution:
 
     """
 
-    def longest_subarray(self, nums: list[int]) -> int: ...
+    def longest_subarray(self, nums: list[int]) -> int:
+        # Find the maximum number in nums, which sets an upper bound for max bitwise AND
+        max_num = max(nums)
+        
+        # If nums is empty, return 0
+        if not max_num:
+            return 0
+        
+        # Group consecutive equal elements in nums
+        grouped_nums = groupby(nums)
+        
+        # Find the longest group where the number equals max_num
+        # This works because max bitwise AND will always be max_num if all elements in subarray are max_num
+        return max(len(list(group)) for num, group in grouped_nums if num == max_num)
 
     longestSubarray = longest_subarray
