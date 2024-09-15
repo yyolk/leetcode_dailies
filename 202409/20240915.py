@@ -27,7 +27,7 @@ class Solution:
         Space complexity: O(1), as we use a fixed-size dictionary for states.
         """
         # Define vowels
-        vowels = 'aeiou'
+        vowels = "aeiou"
 
         # State mask where each bit represents the parity of a vowel
         state = 0
