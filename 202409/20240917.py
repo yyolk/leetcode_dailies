@@ -18,7 +18,7 @@ class Solution:
 
     def uncommon_from_sentences(self, s1: str, s2: str) -> list[str]:
         # Combine both sentences and split into words
-        words = (s1 + ' ' + s2).split()
+        words = (s1 + " " + s2).split()
         
         # Count occurrences of each word
         word_count = Counter(words)
