@@ -40,7 +40,7 @@ class Solution:
             return s
 
         # Add the reverse of the non-palindromic suffix to the front
-        add = rev[:len(s) - longest_palindrome_prefix]
+        add = rev[: len(s) - longest_palindrome_prefix]
 
         return add + s
 
