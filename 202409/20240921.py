@@ -13,14 +13,14 @@ class Solution:
 
     def lexical_order(self, n: int) -> list[int]:
         result = []
-        
+
         # Current number we are checking
         current = 1
-        
+
         # Loop until we've found all numbers
         for _ in range(n):
             result.append(current)
-            
+
             # If 10*current is within bounds, we go 'down' in lexicographical order
             if current * 10 <= n:
                 current *= 10
@@ -33,7 +33,7 @@ class Solution:
                 while (current // 10) % 10 == 9:
                     current //= 10
                 current = current // 10 + 1
-        
+
         return result
 
     lexicalOrder = lexical_order
