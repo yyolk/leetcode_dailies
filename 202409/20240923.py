@@ -14,6 +14,27 @@ class Solution:
 
     """
 
-    def min_extra_char(self, s: str, dictionary: list[str]) -> int: ...
+    def min_extra_char(self, s: str, dictionary: list[str]) -> int:
+        # We'll frequently re-use this length, set to n
+        n = len(s)
+        # A holding list for all the letters we'll use
+        # Assume all characters are extra initially
+        dp = [n] * (n + 1)
+        # Empty string case
+        dp[0] = 0
+
+        # Loop through the positions in the string s
+        for i in range(1, n + 1):
+            # Check each word in the dictionary to see if it matches the substring ending at position i
+            for word in dictionary:
+                if i >= len(word) and s[i - len(word):i] == word:
+                    # If the word matches, update dp[i] with the minimum extra characters needed
+                    dp[i] = min(dp[i], dp[i - len(word)])
+
+            # Update dp[i] to consider not breaking the string at this position
+            dp[i] = min(dp[i], dp[i - 1] + 1)
+
+        # Return the value at the end of the dp array, which now represents the minimum extra characters
+        return dp[n]
 
     minExtraChar = min_extra_char
