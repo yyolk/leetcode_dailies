@@ -22,6 +22,37 @@ class Solution:
 
     """
 
-    def longest_common_prefix(self, arr1: list[int], arr2: list[int]) -> int: ...
+    def longest_common_prefix(self, arr1: list[int], arr2: list[int]) -> int:
+        # Dictionary to store all prefixes from arr1
+        prefix_map = {}
+        
+        # Build the prefix map for arr1
+        for num in arr1:
+            str_num = str(num)
+            prefix = ""
+            for ch in str_num:
+                # Build prefix character by character
+                prefix += ch
+                # Add or update prefix in the map; increment count or initialize to 1
+                prefix_map[prefix] = prefix_map.get(prefix, 0) + 1
+        
+        # Track the longest common prefix length
+        max_length = 0
+        
+        # Check for common prefixes in arr2
+        for num in arr2:
+            str_num = str(num)
+            prefix = ""
+            for i, ch in enumerate(str_num):
+                prefix += ch
+                # If this prefix exists in our map, update max_length if necessary
+                if prefix in prefix_map:
+                    max_length = max(max_length, i + 1)  # i + 1 because enumerate starts at 0
+                else:
+                    # No need to continue with this number if no match at this length
+                    break
+
+        # Return the length of the longest common prefix found
+        return max_length
 
     longestCommonPrefix = longest_common_prefix
