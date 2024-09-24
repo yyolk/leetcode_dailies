@@ -27,7 +27,7 @@ class Solution:
         for i in range(1, n + 1):
             # Check each word in the dictionary to see if it matches the substring ending at position i
             for word in dictionary:
-                if i >= len(word) and s[i - len(word):i] == word:
+                if i >= len(word) and s[i - len(word) : i] == word:
                     # If the word matches, update dp[i] with the minimum extra characters needed
                     dp[i] = min(dp[i], dp[i - len(word)])
 
