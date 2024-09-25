@@ -36,7 +36,8 @@ class Solution:
                 if char not in node.children:
                     node.children[char] = TrieNode()
                 node = node.children[char]
-                node.count += 1  # Increment count for each character
+                # Increment count for each character
+                node.count += 1
 
         # Calculate prefix scores for each word
         result = []
@@ -45,7 +46,8 @@ class Solution:
             node = self.root
             for char in word:
                 if char not in node.children:
-                    break  # If char not in Trie, no need to continue for this word
+                    # If char not in Trie, no need to continue for this word
+                    break
                 node = node.children[char]
                 # Add the count of this prefix
                 score += node.count
