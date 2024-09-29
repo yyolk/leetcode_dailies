@@ -43,8 +43,8 @@ class AllOne:
     """
     def __init__(self):
         # Sentinel nodes for head and tail of the doubly linked list
-        self.head = Node(float('-inf'))
-        self.tail = Node(float('inf'))
+        self.head = Node(float("-inf"))
+        self.tail = Node(float("inf"))
         self.head.next = self.tail
         self.tail.prev = self.head
         # Key to node mapping for O(1) access
