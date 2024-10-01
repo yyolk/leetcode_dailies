@@ -43,6 +43,7 @@ class MyCircularDeque:
         param_7 = obj.isEmpty()
         param_8 = obj.isFull()
     """
+
     def __init__(self, k: int):
         """
         Initialize your data structure here. Set the size of the deque to be k.

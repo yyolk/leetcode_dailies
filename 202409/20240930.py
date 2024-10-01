@@ -27,6 +27,7 @@ class CustomStack:
         obj.increment(k,val)
 
     """
+
     def __init__(self, maxSize: int):
         # Initialize the stack with a list and store the max size
         self.stack = []

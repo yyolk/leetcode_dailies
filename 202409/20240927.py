@@ -26,6 +26,7 @@ class MyCalendarTwo:
         obj = MyCalendarTwo()
         param_1 = obj.book(start,end)
     """
+
     def __init__(self):
         # List to store all single bookings
         self.bookings = []

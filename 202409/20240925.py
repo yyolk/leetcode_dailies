@@ -25,6 +25,7 @@ class Solution:
     **Note** that a string is considered as a prefix of itself.
 
     """
+
     def __init__(self):
         self.root = TrieNode()
 

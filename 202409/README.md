@@ -160,21 +160,31 @@
    </a>
   </td>
   <td class="thu">
-   26
+   <a href="20240926.py">
+    26
+   </a>
   </td>
   <td class="fri">
-   27
+   <a href="20240927.py">
+    27
+   </a>
   </td>
   <td class="sat">
-   28
+   <a href="20240928.py">
+    28
+   </a>
   </td>
  </tr>
  <tr>
   <td class="sun">
-   29
+   <a href="20240929.py">
+    29
+   </a>
   </td>
   <td class="mon">
-   30
+   <a href="20240930.py">
+    30
+   </a>
   </td>
   <td class="noday">
   </td>

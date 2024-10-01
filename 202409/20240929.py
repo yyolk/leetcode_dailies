@@ -3,11 +3,13 @@
 
 class Node:
     """Linked list implementation."""
+
     def __init__(self, count=0):
         self.count = count
         self.keys = set()
         self.prev = None
         self.next = None
+
 
 class AllOne:
     """432. All O`one Data Structure
@@ -41,6 +43,7 @@ class AllOne:
         param_3 = obj.getMaxKey()
         param_4 = obj.getMinKey()
     """
+
     def __init__(self):
         # Sentinel nodes for head and tail of the doubly linked list
         self.head = Node(float("-inf"))
@@ -75,10 +78,10 @@ class AllOne:
                 self._add_node_after(new_node, current_node)
             else:
                 new_node = current_node.next
-            
+
             new_node.keys.add(key)
             self.key_to_node[key] = new_node
-            
+
             # Clean up the old count
             current_node.keys.remove(key)
             if not current_node.keys:
@@ -99,10 +102,10 @@ class AllOne:
                 self._add_node_after(new_node, current_node.prev)
             else:
                 new_node = current_node.prev
-            
+
             new_node.keys.add(key)
             self.key_to_node[key] = new_node
-            
+
             current_node.keys.remove(key)
 
         # Remove the node if it's empty

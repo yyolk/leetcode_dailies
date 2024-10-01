@@ -39,7 +39,7 @@ class MyCalendar:
         idx = bisect_left(self.bookings, (start, float("inf")))
 
         # Check for overlap with the previous event if it exists
-        if idx > 0 and self.bookings[idx-1][1] > start:
+        if idx > 0 and self.bookings[idx - 1][1] > start:
             return False
 
         # Check for overlap with the next event if it exists
