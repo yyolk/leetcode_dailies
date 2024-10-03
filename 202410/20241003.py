@@ -15,6 +15,32 @@ class Solution:
 
     """
 
-    def min_subarray(self, nums: list[int], p: int) -> int: ...
+    def min_subarray(self, nums: list[int], p: int) -> int:
+        n = len(nums)
+        if n == 0:
+            return -1
+
+        total = sum(nums)
+        if total % p == 0:
+            return 0
+
+        # We need to find the smallest subarray with sum % p == total % p
+        target = total % p
+        current_sum = 0
+        # Map remainder to the last index it was seen
+        last_seen = {0: -1}
+        # Initialize with worst case
+        min_length = n
+
+        for i, num in enumerate(nums):
+            current_sum = (current_sum + num) % p
+            if (current_sum - target) % p in last_seen:
+                min_length = min(min_length, i - last_seen[(current_sum - target) % p])
+
+            # Update the last seen index for current remainder
+            last_seen[current_sum] = i
+
+        # If min_length is still n, it means we couldn't find any subarray to remove
+        return min_length if min_length < n else -1
 
     minSubarray = min_subarray
