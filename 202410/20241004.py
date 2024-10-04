@@ -17,6 +17,28 @@ class Solution:
 
     """
 
-    def divide_players(self, skill: list[int]) -> int: ...
+    def divide_players(self, skill: list[int]) -> int:
+        n = len(skill)
+        if n % 2 != 0:
+            return -1  # If the length is not even, we can't make pairs
+        
+        # Sort the skill list
+        skill.sort()
+        
+        # The target sum for each team
+        target_sum = skill[0] + skill[-1]
+        
+        chemistry_sum = 0
+        
+        # Iterate over half of the list since we are making pairs
+        for i in range(n // 2):
+            # Check if the current pair sums to the target
+            if skill[i] + skill[n - 1 - i] != target_sum:
+                return -1  # If any pair does not match the target sum, return -1
+            
+            # Calculate chemistry for this pair
+            chemistry_sum += skill[i] * skill[n - 1 - i]
+
+        return chemistry_sum
 
     dividePlayers = divide_players
