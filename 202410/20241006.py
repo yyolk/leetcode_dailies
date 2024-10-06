@@ -28,6 +28,31 @@ class Solution:
 
     """
 
-    def are_sentences_similar(self, sentence1: str, sentence2: str) -> bool: ...
+    def are_sentences_similar(self, sentence1: str, sentence2: str) -> bool:
+        # Split the sentences into lists of words
+        words1 = sentence1.split()
+        words2 = sentence2.split()
+
+        # If sentences are identical or one is empty
+        if words1 == words2 or not words1 or not words2:
+            return True
+
+        # Ensure words1 is the shorter or equal length sentence for simplicity
+        if len(words1) > len(words2):
+            words1, words2 = words2, words1
+
+        i, j = 0, len(words1) - 1
+        # Check if words1 is a prefix of words2
+        while i < len(words1) and words1[i] == words2[i]:
+            i += 1
+        # Check if words1 is a suffix of words2
+        while j >= 0 and words1[j] == words2[j + (len(words2) - len(words1))]:
+            j -= 1
+
+        # If we've matched all of words1, then it's similar due to insertion in the middle or at edges
+        if i > j:
+            return True
+
+        return False
 
     areSentencesSimilar = are_sentences_similar
