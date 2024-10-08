@@ -21,8 +21,7 @@ class Solution:
         stack = []
         for char in s:
             if stack and (
-                (char == "B" and stack[-1] == "A") or
-                (char == "D" and stack[-1] == "C")
+                (char == "B" and stack[-1] == "A") or (char == "D" and stack[-1] == "C")
             ):
                 # Remove the last character because it forms "AB" or "CD"
                 stack.pop()
