@@ -25,7 +25,7 @@ class Solution:
     def min_swaps(self, s: str) -> int:
         misplaced_closing = 0
         open_count = 0
-        
+
         for bracket in s:
             if bracket == "[":
                 open_count += 1
@@ -35,7 +35,7 @@ class Solution:
                     misplaced_closing += 1
                 else:
                     open_count -= 1
-        
+
         # Each misplaced pair needs one swap to fix, but since one swap can fix two brackets,
         # we divide by 2. We also add 1 before division to handle odd numbers correctly by rounding up.
         return (misplaced_closing + 1) // 2
