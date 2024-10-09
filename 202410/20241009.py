@@ -23,6 +23,26 @@ class Solution:
 
     """
 
-    def min_add_to_make_valid(self, s: str) -> int: ...
+    def min_add_to_make_valid(self, s: str) -> int:
+        stack = []
+        # Count of additional parentheses needed
+        count = 0
+        
+        for char in s:
+            if char == "(":
+                # Push to stack for each opening parenthesis
+                stack.append(char)
+            elif char == ")":
+                if stack:
+                    # If there is an opening parenthesis to match, pop it
+                    stack.pop()
+                else:
+                    # If no matching opening parenthesis, we need to add one
+                    count += 1
+        
+        # After the loop, any remaining items in stack require closing parentheses
+        count += len(stack)
+        
+        return count
 
     minAddToMakeValid = min_add_to_make_valid
