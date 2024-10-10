@@ -12,6 +12,23 @@ class Solution:
 
     """
 
-    def max_width_ramp(self, nums: list[int]) -> int: ...
+    def max_width_ramp(self, nums: list[int]) -> int:
+        # Use a stack to keep indices of nums where nums is in non-increasing order
+        stack = []
+        n = len(nums)
+        
+        # First pass: build the stack with indices
+        for i in range(n):
+            if not stack or nums[stack[-1]] > nums[i]:
+                stack.append(i)
+
+        # Second pass: find the maximum width ramp by moving from right to left
+        max_width = 0
+        for i in range(n - 1, -1, -1):
+            while stack and nums[i] >= nums[stack[-1]]:
+                # If current element can form a ramp with the top of stack
+                max_width = max(max_width, i - stack.pop())
+        
+        return max_width
 
     maxWidthRamp = max_width_ramp
