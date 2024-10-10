@@ -27,7 +27,7 @@ class Solution:
         stack = []
         # Count of additional parentheses needed
         count = 0
-        
+
         for char in s:
             if char == "(":
                 # Push to stack for each opening parenthesis
@@ -39,10 +39,10 @@ class Solution:
                 else:
                     # If no matching opening parenthesis, we need to add one
                     count += 1
-        
+
         # After the loop, any remaining items in stack require closing parentheses
         count += len(stack)
-        
+
         return count
 
     minAddToMakeValid = min_add_to_make_valid
