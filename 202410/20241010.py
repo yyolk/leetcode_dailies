@@ -16,7 +16,7 @@ class Solution:
         # Use a stack to keep indices of nums where nums is in non-increasing order
         stack = []
         n = len(nums)
-        
+
         # First pass: build the stack with indices
         for i in range(n):
             if not stack or nums[stack[-1]] > nums[i]:
@@ -28,7 +28,7 @@ class Solution:
             while stack and nums[i] >= nums[stack[-1]]:
                 # If current element can form a ramp with the top of stack
                 max_width = max(max_width, i - stack.pop())
-        
+
         return max_width
 
     maxWidthRamp = max_width_ramp
