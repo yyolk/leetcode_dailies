@@ -1,4 +1,7 @@
 # https://leetcode.com/problems/maximal-score-after-applying-k-operations/
+import heapq
+
+from math import ceil
 
 
 class Solution:
@@ -23,6 +26,24 @@ class Solution:
 
     """
 
-    def max_kelements(self, nums: list[int], k: int) -> int: ...
+    def max_kelements(self, nums: list[int], k: int) -> int:
+        # Convert all numbers to negative for max heap behavior in Python's min heap
+        heap = [-num for num in nums]
+        heapq.heapify(heap)
+        
+        score = 0
+        
+        # Perform k operations
+        for _ in range(k):
+            # Get the largest element (remember, we're working with negatives)
+            largest = -heapq.heappop(heap)
+            # Add its value to the score
+            score += largest
+            
+            # Compute new value after operation and push back into heap
+            new_value = -ceil(largest / 3)
+            heapq.heappush(heap, new_value)
+        
+        return score
 
     maxKelements = max_kelements
