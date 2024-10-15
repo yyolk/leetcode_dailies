@@ -16,6 +16,36 @@ class Solution:
 
     """
 
-    def minimum_steps(self, s: str) -> int: ...
+    def minimum_steps(self, s: str) -> int:
+        """
+        Calculate the minimum number of adjacent swaps needed to group all black balls (1's) to the right.
+
+        This method works by counting how many white balls (0's) are encountered
+        as we scan from left to right since each white ball to the left of any black ball
+        will need to be swapped at least once to get all black balls to the right.
+
+        Args:
+        s: A string representing the sequence of balls where '0' is white and '1' is black.
+
+        Returns:
+        The minimum number of steps required.
+
+        Example:
+        >>> sol = Solution()
+        >>> sol.minimum_steps("10101")
+        3
+        """
+        steps = 0
+        black_balls_encountered = 0
+        
+        # Count each white ball that appears before black balls
+        for char in s:
+            if char == "1":
+                black_balls_encountered += 1
+            elif char == "0":
+                # For each white ball, we need as many steps as there are black balls to its right
+                steps += black_balls_encountered
+        
+        return steps
 
     minimumSteps = minimum_steps
