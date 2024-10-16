@@ -37,7 +37,7 @@ class Solution:
         """
         steps = 0
         black_balls_encountered = 0
-        
+
         # Count each white ball that appears before black balls
         for char in s:
             if char == "1":
@@ -45,7 +45,7 @@ class Solution:
             elif char == "0":
                 # For each white ball, we need as many steps as there are black balls to its right
                 steps += black_balls_encountered
-        
+
         return steps
 
     minimumSteps = minimum_steps
