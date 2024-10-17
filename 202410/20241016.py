@@ -45,7 +45,7 @@ class Solution:
                 # If the last two characters are the same as the current char, skip to next
                 if len(result) >= 2 and result[-1] == result[-2] == char:
                     continue
-                
+
                 # If we can add this char
                 if count[char] > 0:
                     result.append(char)
