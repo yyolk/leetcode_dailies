@@ -23,10 +23,13 @@ class Solution:
             for j in range(9, int(d), -1):
                 if last_occurrence.get(j, -1) > i:
                     # Perform the swap
-                    num_list[i], num_list[last_occurrence[j]] = num_list[last_occurrence[j]], num_list[i]
+                    num_list[i], num_list[last_occurrence[j]] = (
+                        num_list[last_occurrence[j]],
+                        num_list[i],
+                    )
                     # Convert back to integer and return since we can only swap once
                     return int("".join(num_list))
-    
+
         # If no swap occurred, return the original number
         return num
 
