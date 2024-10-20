@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/parsing-a-boolean-expression/
+from collections import deque
 
 
 class Solution:
@@ -27,6 +28,45 @@ class Solution:
 
     """
 
-    def parse_bool_expr(self, expression: str) -> bool: ...
+    def parse_bool_expr(self, expression: str) -> bool:
+        st = deque()
+        for c in expression:
+            # Ignore commas and opening parentheses as they don't affect logical evaluation
+            if c == "," or c == "(":
+                continue
+
+            # Push boolean values or operators onto the stack
+            if c in ["t", "f", "!", "&", "|"]:
+                st.append(c)
+
+            # Evaluate the expression when encountering a closing parenthesis
+            elif c == ")":
+                has_true = False
+                has_false = False
+
+                # Pop and check all values until an operator is found
+                while st[-1] not in ["!", "&", "|"]:
+                    top_value = st.pop()
+                    if top_value == "t":
+                        has_true = True
+                    elif top_value == "f":
+                        has_false = True
+
+                # Pop the operator
+                op = st.pop()
+
+                # Evaluate based on the operator
+                if op == "!":
+                    # NOT operation: if there was no 't', it's 't', otherwise 'f'
+                    st.append("t" if not has_true else "f")
+                elif op == "&":
+                    # AND operation: 'f' if there's any 'f', else 't'
+                    st.append("f" if has_false else "t")
+                else:  # op == "|"
+                    # OR operation: 't' if there's any 't', else 'f'
+                    st.append("t" if has_true else "f")
+
+        # The final result is whether the last item on the stack is 't'
+        return st[-1] == "t"
 
     parseBoolExpr = parse_bool_expr
