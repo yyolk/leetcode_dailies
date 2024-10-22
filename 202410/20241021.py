@@ -26,7 +26,7 @@ class Solution:
 
             # Try all possible splits from the current index
             for i in range(index, len(s)):
-                substring = s[index:i+1]
+                substring = s[index : i + 1]
                 if substring not in seen:
                     # Add this substring to our set of seen substrings
                     seen.add(substring)
