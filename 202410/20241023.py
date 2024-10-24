@@ -24,6 +24,7 @@ class Solution:
                 self.left = left
                 self.right = right
     """
+
     def __init__(self):
         # Initialize the level sum table
         self.level_sum_table = defaultdict(int)
@@ -36,7 +37,10 @@ class Solution:
         # For the root node, set value to 0 as it has no cousins
         # For other nodes, set the value to the sum of all nodes at this level minus the sum of its siblings
         if current_node.parent:
-            current_node.val = self.level_sum_table[current_node.level] - current_node.parent.children_sum
+            current_node.val = (
+                self.level_sum_table[current_node.level]
+                - current_node.parent.children_sum
+            )
         else:
             current_node.val = 0
 
