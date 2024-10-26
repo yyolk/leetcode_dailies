@@ -23,13 +23,13 @@ class Solution:
     def remove_subfolders(self, folder: list[str]) -> list[str]:
         # Sort the folder paths to ensure parent folders come before their subfolders
         folder.sort()
-        
+
         result = []
         for path in folder:
             # Check if the current path is not a subfolder of the last path in result
             if not result or not path.startswith(result[-1] + "/"):
                 result.append(path)
-        
+
         return result
 
     removeSubfolders = remove_subfolders
