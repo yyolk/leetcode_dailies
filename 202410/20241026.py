@@ -33,9 +33,7 @@ class Solution:
                 self.right = right
     """
 
-    def tree_queries(
-        self, root: Optional[TreeNode], queries: list[int]
-    ) -> list[int]:
+    def tree_queries(self, root: Optional[TreeNode], queries: list[int]) -> list[int]:
         # Initialize arrays to store heights and node information
         # Heights of leaf nodes
         heights = [0] * 50000
@@ -87,9 +85,9 @@ class Solution:
         # Build prefix and suffix maximum arrays
         for i in range(1, n):
             # Max height from left
-            maxl[i] = max(maxl[i-1], heights[i-1])
+            maxl[i] = max(maxl[i - 1], heights[i - 1])
             # Max height from right
-            maxr[n-i-1] = max(maxr[n-i], heights[n-i])
+            maxr[n - i - 1] = max(maxr[n - i], heights[n - i])
 
         # Result list
         ret = []
@@ -102,7 +100,7 @@ class Solution:
             # Max height to the right
             maxxr = maxr[r[query]]
             # Result is max of (max left height, max right height, current depth-1)
-            ret.append(max(max(maxxl, maxxr), d[query]-1))
+            ret.append(max(max(maxxl, maxxr), d[query] - 1))
 
         return ret
 
