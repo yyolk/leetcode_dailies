@@ -4,7 +4,7 @@
 class Solution:
     """2684. Maximum Number of Moves in a Grid
 
-    You are given a **0\\-indexed** `m x n` matrix `grid` consisting of **positive**
+    You are given a **0-indexed** `m x n` matrix `grid` consisting of **positive**
     integers.
 
     You can start at **any** cell in the first column of the matrix, and traverse the
