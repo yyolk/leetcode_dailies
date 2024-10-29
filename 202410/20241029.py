@@ -18,6 +18,30 @@ class Solution:
 
     """
 
-    def max_moves(self, grid: list[list[int]]) -> int: ...
+    def max_moves(self, grid: list[list[int]]) -> int:
+        m, n = len(grid), len(grid[0])
+        # Initialize DP with 0 for first column
+        dp = [[0 if j == 0 else -1 for j in range(n)] for _ in range(m)]
+
+        moves = [(-1, 1), (0, 1), (1, 1)]
+
+        for col in range(n - 1):
+            for row in range(m):
+                # If we can move from this cell
+                if dp[row][col] != -1:
+                    for dx, dy in moves:
+                        new_row, new_col = row + dx, col + dy
+                        if (
+                            0 <= new_row < m
+                            and new_col == col + 1
+                            and grid[new_row][new_col] > grid[row][col]
+                        ):
+                            # Update only if the move is valid and increases our move count
+                            dp[new_row][new_col] = max(
+                                dp[new_row][new_col], dp[row][col] + 1
+                            )
+
+        # Find the maximum number of moves in the last column
+        return max(max(row) for row in dp) if max(max(row) for row in dp) > 0 else 0
 
     maxMoves = max_moves
