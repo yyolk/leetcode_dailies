@@ -26,15 +26,15 @@ class Solution:
         # Use a dictionary to keep track of the longest streak ending with each number
         dp = {num: 1 for num in nums}
         max_streak = -1
-        
+
         for i in range(1, len(nums)):
-            sqrt = int(nums[i]**0.5)
+            sqrt = int(nums[i] ** 0.5)
             if sqrt * sqrt == nums[i] and sqrt in dp:
                 # If the current number is a perfect square of a previous number,
                 # extend the streak
                 dp[nums[i]] = dp[sqrt] + 1
                 max_streak = max(max_streak, dp[nums[i]])
-        
+
         # If max_streak is still 1, no valid square streak was found
         return max_streak if max_streak > 1 else -1
 
