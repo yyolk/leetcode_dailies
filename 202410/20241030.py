@@ -20,6 +20,38 @@ class Solution:
 
     """
 
-    def minimum_mountain_removals(self, nums: list[int]) -> int: ...
+    def minimum_mountain_removals(self, nums: list[int]) -> int:
+        if len(nums) < 3:
+            # Cannot form a mountain with fewer than 3 elements
+            return 0
+
+        def longest_increasing_subsequence(arr):
+            dp = [1] * len(arr)
+            for i in range(1, len(arr)):
+                for j in range(i):
+                    if arr[i] > arr[j]:
+                        dp[i] = max(dp[i], dp[j] + 1)
+            return dp
+
+        # LIS from left to right
+        left_to_right = longest_increasing_subsequence(nums)
+
+        # LIS from right to left
+        nums.reverse()
+        right_to_left = longest_increasing_subsequence(nums)
+        right_to_left.reverse()  # Correct the order back
+
+        # Find the peak where both left and right parts form an increasing and decreasing sequence
+        max_len = 0
+        # Skipping first and last to ensure mountain property
+        for i in range(1, len(nums) - 1):
+            # Must be peak
+            if left_to_right[i] > 1 and right_to_left[i] > 1:
+                # -1 to avoid counting peak twice
+                current_len = left_to_right[i] + right_to_left[i] - 1
+                max_len = max(max_len, current_len)
+
+        # Total elements minus the length of the longest mountain array
+        return len(nums) - max_len
 
     minimumMountainRemovals = minimum_mountain_removals
