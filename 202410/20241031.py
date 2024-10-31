@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/minimum-total-distance-traveled/
+from collections import deque
 
 
 class Solution:
@@ -43,7 +44,66 @@ class Solution:
     """
 
     def minimum_total_distance(
-        self, robot: list[int], factory: list[list[int]]
-    ) -> int: ...
+        self, robot_positions: list[int], factory_positions_and_limits: list[list[int]]
+    ) -> int:
+        # Sort robots and factories by their positions to optimize the matching process
+        robot_positions.sort()
+        factory_positions_and_limits.sort()
+
+        total_robots, total_factories = len(robot_positions), len(
+            factory_positions_and_limits
+        )
+
+        # Initialize dynamic programming table where dp[i][j] represents the minimum distance for i robots to be assigned to j factories
+        dp = [[0] * (total_factories + 1) for _ in range(total_robots + 1)]
+
+        # Base case: If there are no more factories, the distance for remaining robots is infinite
+        for i in range(total_robots):
+            dp[i][-1] = float("inf")
+
+        # Iterate through factories from right to left
+        for factory_index in range(total_factories - 1, -1, -1):
+            cumulative_distance_to_current_factory = 0
+            monotonic_queue = deque([(total_robots, 0)])
+
+            # Iterate through robots from right to left for the current factory
+            for robot_index in range(total_robots - 1, -1, -1):
+                # Calculate the distance from the current robot to the current factory
+                cumulative_distance_to_current_factory += abs(
+                    robot_positions[robot_index]
+                    - factory_positions_and_limits[factory_index][0]
+                )
+
+                # Remove entries from the queue that are out of the current factory's repair limit window
+                if (
+                    monotonic_queue[0][0]
+                    > robot_index + factory_positions_and_limits[factory_index][1]
+                ):
+                    monotonic_queue.popleft()
+
+                # Maintain the monotonic queue property where elements decrease in value
+                while (
+                    monotonic_queue
+                    and monotonic_queue[-1][1]
+                    >= dp[robot_index][factory_index + 1]
+                    - cumulative_distance_to_current_factory
+                ):
+                    monotonic_queue.pop()
+
+                # Add current robot's contribution to the queue
+                monotonic_queue.append(
+                    (
+                        robot_index,
+                        dp[robot_index][factory_index + 1]
+                        - cumulative_distance_to_current_factory,
+                    )
+                )
+
+                # Update the dp table with the minimum distance including the current factory
+                dp[robot_index][factory_index] = (
+                    monotonic_queue[0][1] + cumulative_distance_to_current_factory
+                )
+
+        return dp[0][0]
 
     minimumTotalDistance = minimum_total_distance
