@@ -15,6 +15,18 @@ class Solution:
 
     """
 
-    def make_fancy_string(self, s: str) -> str: ...
+    def make_fancy_string(self, s: str) -> str:
+        if len(s) <= 2:  # If the string length is 2 or less, it's already fancy
+            return s
+
+        # Start with the first two characters
+        result = [s[0], s[1]]
+
+        for i in range(2, len(s)):
+            # Add character if it's not the same as the last two characters in the result
+            if not (len(result) >= 2 and s[i] == result[-1] == result[-2]):
+                result.append(s[i])
+
+        return "".join(result)
 
     makeFancyString = make_fancy_string
