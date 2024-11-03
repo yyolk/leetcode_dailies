@@ -14,6 +14,15 @@ class Solution:
 
     """
 
-    def rotate_string(self, s: str, goal: str) -> bool: ...
+    def rotate_string(self, s: str, goal: str) -> bool:
+        # Check if lengths are different, if so, they can't be rotations of each other
+        if len(s) != len(goal):
+            return False
+
+        # Concatenate s with itself. If goal is a rotation, it must be a substring of this.
+        s_double = s + s
+
+        # Check if goal is a substring of s+s
+        return goal in s_double
 
     rotateString = rotate_string
