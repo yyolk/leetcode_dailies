@@ -31,11 +31,11 @@ class Solution:
 
     def is_circular_sentence(self, sentence: str) -> bool:
         words = sentence.split()
-        
+
         # Check if the sentence has at least one word
         if not words:
             return False
-        
+
         # Check circularity for all adjacent words
         for i in range(len(words)):
             # Check the last word with the first word for circularity
@@ -43,7 +43,7 @@ class Solution:
                 if words[i][-1] != words[0][0]:
                     return False
             # Check adjacent words for circularity
-            elif words[i][-1] != words[i+1][0]:
+            elif words[i][-1] != words[i + 1][0]:
                 return False
 
         return True
