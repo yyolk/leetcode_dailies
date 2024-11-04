@@ -18,6 +18,22 @@ class Solution:
 
     """
 
-    def compressed_string(self, word: str) -> str: ...
+    def compressed_string(self, word: str) -> str:
+        comp = []
+        i = 0
+        while i < len(word):
+            # Start with the current character
+            c = word[i]
+            # Count consecutive occurrences of the character, up to 9
+            count = 0
+            while i < len(word) and word[i] == c and count < 9:
+                count += 1
+                i += 1
+
+            # Append the count followed by the character to comp
+            comp.append(str(count) + c)
+
+        # Join the list into a single string for return
+        return "".join(comp)
 
     compressedString = compressed_string
