@@ -20,6 +20,14 @@ class Solution:
 
     """
 
-    def min_changes(self, s: str) -> int: ...
+    def min_changes(self, s: str) -> int:
+        changes = 0
+        for i in range(0, len(s), 2):
+            # Check if the current pair is not already beautiful (either both '0' or both '1')
+            if s[i] != s[i + 1]:
+                # We need at least one change per mismatched pair
+                changes += 1
+
+        return changes
 
     minChanges = min_changes
