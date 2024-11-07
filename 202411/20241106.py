@@ -15,7 +15,11 @@ class Solution:
     """
 
     def can_sort_array(self, nums: list[int]) -> bool:
-        min_group, max_group, max_prev_group = float("inf"), float("-inf"), float("-inf")
+        min_group, max_group, max_prev_group = (
+            float("inf"),
+            float("-inf"),
+            float("-inf"),
+        )
         prev_bit_cnt = None
 
         for i, num in enumerate(nums):
@@ -26,7 +30,9 @@ class Solution:
                     return False
 
                 # Update max_prev_group for the next check
-                max_prev_group = max_group if max_group != float("-inf") else float("-inf")
+                max_prev_group = (
+                    max_group if max_group != float("-inf") else float("-inf")
+                )
                 min_group, max_group = num, num
             else:
                 # Update min and max for the current group
