@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/largest-combination-with-bitwise-and-greater-than-zero/
+from collections import defaultdict
 
 
 class Solution:
@@ -19,6 +20,19 @@ class Solution:
 
     """
 
-    def largest_combination(self, candidates: list[int]) -> int: ...
+    def largest_combination(self, candidates: list[int]) -> int:
+        # Use a defaultdict to count how many numbers have each bit set
+        bit_counts = defaultdict(int)
+
+        # Count the occurrences of each bit set across all numbers
+        for num in candidates:
+            # Assuming 32-bit integers
+            for bit in range(32):
+                if num & (1 << bit):
+                    bit_counts[bit] += 1
+
+        # The maximum count is the answer since it represents the largest subset
+        # with all numbers having that bit set, thus AND > 0 for this subset
+        return max(bit_counts.values()) if bit_counts else 0
 
     largestCombination = largest_combination
