@@ -18,23 +18,23 @@ class Solution:
         pos = 0
         # Decrement n by 1 because we start with x, so we only need n-1 more numbers to increase
         n -= 1
-        
+
         # Loop to construct the next n-1 numbers
         while n > 0:
             # Get the least significant bit of n
             bit = n & 1
             # Right shift n to continue with the next bit
             n = n >> 1
-            
+
             # Find the next available bit position where x has a zero
             while x & (1 << pos) > 0:
                 pos += 1
-            
+
             # XOR the bit into x at the found position, effectively setting or unsetting the bit
             x = x ^ (bit << pos)
             # Move to the next bit position
             pos += 1
-        
+
         # At this point, x represents the last number in our sequence
         return x
 
