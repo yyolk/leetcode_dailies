@@ -19,6 +19,36 @@ class Solution:
 
     """
 
-    def prime_sub_operation(self, nums: list[int]) -> bool: ...
+    @staticmethod
+    def is_prime(n: int) -> bool:
+        """Check if a number is prime."""
+        if n < 2:
+            return False
+        for i in range(2, int(n**0.5) + 1):
+            if n % i == 0:
+                return False
+        return True
+
+    def prime_sub_operation(self, nums: list[int]) -> bool:
+        # Process each number in the array
+        for i in range(len(nums)):
+            # Calculate the upper bound for subtraction
+            bound = nums[0] if i == 0 else nums[i] - nums[i - 1]
+            
+            # If bound is not positive, sequence is impossible
+            if bound <= 0:
+                return False
+            
+            # Find the largest prime number less than bound
+            largest_prime = 0
+            for j in range(bound - 1, 1, -1):
+                if self.is_prime(j):
+                    largest_prime = j
+                    break
+            
+            # Subtract the largest prime from current number
+            nums[i] -= largest_prime
+        
+        return True
 
     primeSubOperation = prime_sub_operation
