@@ -29,14 +29,19 @@ class Solution:
 
         # For each query:
         # - If the query price is less than the smallest item price, return 0
-        # - Otherwise, find the position to insert the query price in the sorted price list 
+        # - Otherwise, find the position to insert the query price in the sorted price list
         #   and take the beauty at the previous index (since we want <= query)
         return [
             # If query price is less than the cheapest item, no item matches, so return 0
-            0 if q < price[0] else 
-            # Use binary search to find where q would go in price list, 
-            # then take the beauty of the item just before this position
-            beauty[bisect_right(price, q) - 1] for q in queries
+            (
+                0
+                if q < price[0]
+                else
+                # Use binary search to find where q would go in price list,
+                # then take the beauty of the item just before this position
+                beauty[bisect_right(price, q) - 1]
+            )
+            for q in queries
         ]
 
     maximumBeauty = maximum_beauty
