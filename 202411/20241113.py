@@ -21,14 +21,14 @@ class Solution:
         nums.sort()
         n = len(nums)
         count = 0
-        
+
         # Iterate over each number
         for i in range(n):
             # Find the index where the sum would be at least `lower`
             left = bisect_left(nums, lower - nums[i], i + 1)
             # Find the index where the sum would exceed `upper`
             right = bisect_right(nums, upper - nums[i], i + 1)
-            
+
             # Add the number of valid pairs for this number
             count += right - left
 
