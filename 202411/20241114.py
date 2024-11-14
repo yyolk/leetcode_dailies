@@ -23,6 +23,23 @@ class Solution:
 
     """
 
-    def minimized_maximum(self, n: int, quantities: list[int]) -> int: ...
+    def minimized_maximum(self, n: int, quantities: list[int]) -> int:
+        def can_distribute(x: int) -> bool:
+            # Check if it's possible to distribute products so that no store gets more than x items
+            stores_needed = sum((q + x - 1) // x for q in quantities)
+            return stores_needed <= n
+
+        # Binary search for the minimum maximized value
+        # right could be any product quantity
+        left, right = 1, max(quantities)
+
+        while left < right:
+            mid = (left + right) // 2
+            if can_distribute(mid):
+                right = mid
+            else:
+                left = mid + 1
+
+        return left
 
     minimizedMaximum = minimized_maximum
