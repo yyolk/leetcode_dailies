@@ -21,6 +21,39 @@ class Solution:
 
     """
 
-    def results_array(self, nums: list[int], k: int) -> list[int]: ...
+    def results_array(self, nums: list[int], k: int) -> list[int]:
+        n = len(nums)
+
+        # Special case for k=1, every single element is a valid subarray
+        if k == 1:
+            return nums
+
+        results = []
+
+        # Initialize variables for tracking consecutive elements
+        i, consecutive_size = 1, 1
+
+        # Loop through the array starting from the second element
+        while i < n:
+            # Check if current number is one more than the previous number
+            if nums[i] - 1 == nums[i - 1]:
+                consecutive_size += 1
+            else:
+                # Reset if not consecutive
+                consecutive_size = 1
+
+            # We start checking for subarrays once we have k-1 elements
+            if i >= k - 1:
+                # If we have at least k consecutive numbers, the power is the last number in this sequence
+                if consecutive_size >= k:
+                    # Note: The power isn't just the max; it's defined as the last element in the sequence
+                    results.append(nums[i])
+                else:
+                    # Subarray does not meet power criteria
+                    results.append(-1)
+
+            i += 1
+
+        return results
 
     resultsArray = results_array
