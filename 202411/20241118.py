@@ -24,6 +24,20 @@ class Solution:
 
     """
 
-    def decrypt(self, code: list[int], k: int) -> list[int]: ...
+    def decrypt(self, code: list[int], k: int) -> list[int]:
+        n = len(code)
+        result = [0] * n
 
-    decrypt = decrypt
+        if k == 0:
+            return result
+
+        for i in range(n):
+            if k > 0:
+                # Sum the next k elements
+                result[i] = sum(code[(i + j) % n] for j in range(1, k + 1))
+            # k < 0
+            else:
+                # Sum the previous k elements
+                result[i] = sum(code[(i - j) % n] for j in range(1, -k + 1))
+
+        return result
