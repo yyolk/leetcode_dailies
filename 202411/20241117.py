@@ -18,10 +18,12 @@ class Solution:
         n = len(nums)
         prefix_sum = [0] * (n + 1)
         for i in range(1, n + 1):
-            prefix_sum[i] = prefix_sum[i-1] + nums[i-1]
-        
+            prefix_sum[i] = prefix_sum[i - 1] + nums[i - 1]
+
         # Use a deque to keep track of indices in a way that they are always in increasing order of prefix sum
-        result = n + 1  # Start with a value larger than the possible maximum subarray length
+        result = (
+            n + 1
+        )  # Start with a value larger than the possible maximum subarray length
         dq = deque()
 
         # +1 because we need to consider the sum up to index n
