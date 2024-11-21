@@ -24,7 +24,9 @@ class Solution:
         count_of_all_characters = Counter(s)
 
         # Check if there are all three characters and if there are enough of each
-        if len(count_of_all_characters) < 3 or any(count < k for count in count_of_all_characters.values()):
+        if len(count_of_all_characters) < 3 or any(
+            count < k for count in count_of_all_characters.values()
+        ):
             return -1
 
         # Initialize a dictionary to keep track of excess characters taken
@@ -39,7 +41,11 @@ class Solution:
             count_of_excess_characters[character] += 1
 
             # While we have taken too few of the current character to meet k:
-            while count_of_all_characters[character] - count_of_excess_characters[character] < k:
+            while (
+                count_of_all_characters[character]
+                - count_of_excess_characters[character]
+                < k
+            ):
                 # Decrease the count of the character at the left pointer
                 count_of_excess_characters[s[left_pointer]] -= 1
                 # Move the left pointer to the right
