@@ -31,17 +31,20 @@ class Solution:
         # Traverse each row of the original box
         for row in box:
             # Initialize drop position to the last index of the row
-            drop_position = len(row) - 1  
-            
+            drop_position = len(row) - 1
+
             # Iterate from right to left
             for current_position in range(len(row) - 1, -1, -1):
                 # If we find an obstacle, adjust the drop position
-                if row[current_position] == "*":  
+                if row[current_position] == "*":
                     drop_position = current_position - 1
                 # If we find a stone, move it to the drop position
-                elif row[current_position] == "#":  
+                elif row[current_position] == "#":
                     # Swap the stone with the empty space at drop_position
-                    row[drop_position], row[current_position] = row[current_position], row[drop_position]
+                    row[drop_position], row[current_position] = (
+                        row[current_position],
+                        row[drop_position],
+                    )
                     # Adjust drop position for the next stone
                     drop_position -= 1
 
