@@ -20,13 +20,13 @@ class Solution:
     def max_matrix_sum(self, matrix: list[list[int]]) -> int:
         # Flatten the matrix to work with a single list
         flat = [num for row in matrix for num in row]
-        
+
         # Count of negative numbers
         neg_count = sum(1 for num in flat if num < 0)
-        
+
         # Calculate the absolute sum
         abs_sum = sum(abs(num) for num in flat)
-        
+
         # If there's an odd number of negatives, we need to subtract twice the smallest absolute value
         # because we'll flip this one to positive, reducing the sum by 2*abs(min value)
         if neg_count % 2 == 1:
