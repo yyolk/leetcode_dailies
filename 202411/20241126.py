@@ -29,6 +29,30 @@ class Solution:
 
     * A **DAG** is a directed graph that does not have any **cycle**."""
 
-    def find_champion(self, n: int, edges: list[list[int]]) -> int: ...
+    def find_champion(self, n: int, edges: list[list[int]]) -> int:
+        # Create an adjacency list to keep track of teams that are stronger than others
+        stronger_than = [set() for _ in range(n)]
+
+        # Populate the adjacency list
+        for u, v in edges:
+            stronger_than[u].add(v)
+
+        # Function to check if team 'a' is stronger than team 'b'
+        def is_stronger_than(a, b):
+            return b in stronger_than[a]
+
+        # Check each team if it could be the champion
+        for i in range(n):
+            # Check if there's any team stronger than i
+            if all(not is_stronger_than(j, i) for j in range(n) if j != i):
+                # Check if there's only one champion
+                for j in range(n):
+                    if i != j and all(not is_stronger_than(k, j) for k in range(n) if k != j):
+                        # More than one champion
+                        return -1
+                return i
+
+        # If we've gone through all teams and haven't returned, there's no unique champion
+        return -1
 
     findChampion = find_champion
