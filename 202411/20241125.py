@@ -21,8 +21,12 @@ class Solution:
 
         # Define valid moves for each position of "0"
         neighbors = {
-            0: (1, 3), 1: (0, 2, 4), 2: (1, 5),
-            3: (0, 4), 4: (1, 3, 5), 5: (2, 4)
+            0: (1, 3),
+            1: (0, 2, 4),
+            2: (1, 5),
+            3: (0, 4),
+            4: (1, 3, 5),
+            5: (2, 4),
         }
 
         def swap(s, i, j):
