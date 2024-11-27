@@ -47,7 +47,9 @@ class Solution:
             if all(not is_stronger_than(j, i) for j in range(n) if j != i):
                 # Check if there's only one champion
                 for j in range(n):
-                    if i != j and all(not is_stronger_than(k, j) for k in range(n) if k != j):
+                    if i != j and all(
+                        not is_stronger_than(k, j) for k in range(n) if k != j
+                    ):
                         # More than one champion
                         return -1
                 return i
