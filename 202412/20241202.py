@@ -14,6 +14,13 @@ class Solution:
 
     A **prefix** of a string `s` is any leading contiguous substring of `s`."""
 
-    def is_prefix_of_word(self, sentence: str, search_word: str) -> int: ...
+    def is_prefix_of_word(self, sentence: str, search_word: str) -> int:
+        # Split the sentence and keep a track of the index
+        for idx, word in enumerate(sentence.split()):
+            if word.startswith(search_word):
+                # The result should be the 1-index, we're tracking 0-index
+                return idx + 1
+        # No words start with search_word, return -1
+        return -1
 
     isPrefixOfWord = is_prefix_of_word
