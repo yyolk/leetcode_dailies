@@ -14,6 +14,8 @@ class Solution:
 
     Return*the modified string **after** the spaces have been added.*"""
 
-    def add_spaces(self, s: str, spaces: list[int]) -> str: ...
+    def add_spaces(self, s: str, spaces: list[int]) -> str:
+        # Add 0 at the beginning and length of s at the end to handle edges
+        return " ".join(s[a:b] for a, b in pairwise(chain([0], spaces, [len(s)])))
 
     addSpaces = add_spaces
