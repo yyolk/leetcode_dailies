@@ -24,7 +24,7 @@ class Solution:
             if str1[i] == str2[j] or self.next_char(str1[i]) == str2[j]:
                 j += 1
             i += 1
-        
+
         # If all characters of str2 have been matched, return True
         return j == len(str2)
 
