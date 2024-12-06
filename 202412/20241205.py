@@ -21,15 +21,18 @@ class Solution:
 
     def can_change(self, start: str, target: str) -> bool:
         # Check if strings have same length and same count of blank spaces
-        if (len(start) != len(target) or
-            start.count("_") != target.count("_")):
-                return False
+        if len(start) != len(target) or start.count("_") != target.count("_"):
+            return False
 
         # Create lists of non-blank characters with their indices for start string
-        start_non_blanks = [(char, index) for index, char in enumerate(start) if char != "_"]
-        
+        start_non_blanks = [
+            (char, index) for index, char in enumerate(start) if char != "_"
+        ]
+
         # Create lists of non-blank characters with their indices for target string
-        target_non_blanks = [(char, index) for index, char in enumerate(target) if char != "_"]
+        target_non_blanks = [
+            (char, index) for index, char in enumerate(target) if char != "_"
+        ]
 
         # Iterate through both lists simultaneously
         for start_tuple, target_tuple in zip(start_non_blanks, target_non_blanks):
@@ -40,11 +43,11 @@ class Solution:
             # If characters do not match, transformation is not possible
             if start_char != target_char:
                 return False
-            
+
             # Check if "L" can move left (start_index should not be less than target_index)
             if start_char == "L" and start_index < target_index:
                 return False
-            
+
             # Check if "R" can move right (start_index should not be greater than target_index)
             if start_char == "R" and start_index > target_index:
                 return False
