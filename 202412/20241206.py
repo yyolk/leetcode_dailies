@@ -18,6 +18,23 @@ class Solution:
     Return *the **maximum** number of integers you can choose following the mentioned
     rules*."""
 
-    def max_count(self, banned: list[int], n: int, max_sum: int) -> int: ...
+    def max_count(self, banned: list[int], n: int, max_sum: int) -> int:
+        # Convert banned to a set for O(1) lookup time
+        banned_set = set(banned)
+        count = 0
+        current_sum = 0
+        
+        # Iterate through the range from 1 to n
+        for num in range(1, n + 1):
+            if num not in banned_set:
+                # If adding this number doesn't exceed max_sum, add it
+                if current_sum + num <= max_sum:
+                    current_sum += num
+                    count += 1
+                else:
+                    # If adding this number would exceed max_sum, we stop here
+                    break
+        
+        return count
 
     maxCount = max_count
