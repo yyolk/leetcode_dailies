@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/minimum-limit-of-balls-in-a-bag/
+from math import ceil
 
 
 class Solution:
@@ -20,6 +21,33 @@ class Solution:
 
     Return *the minimum possible penalty after performing the operations*."""
 
-    def minimum_size(self, nums: list[int], max_operations: int) -> int: ...
+    def minimum_size(self, nums: list[int], max_operations: int) -> int:
+        # Define a helper function to check if a given penalty is achievable
+        def can_be_penalty(penalty: int) -> bool:
+            # Initialize operation counter
+            operations = 0
+            # Iterate through each number in nums
+            for num in nums:
+                # Calculate operations needed for current number with given penalty
+                operations += (num - 1) // penalty  # ceil(num / penalty) - 1
+            # Check if total operations do not exceed max_operations
+            return operations <= max_operations
+
+        # Set the lower bound of binary search to 1
+        left, right = 1, max(nums)
+        
+        # Perform binary search to find the minimum penalty
+        while left < right:
+            # Calculate midpoint for binary search
+            mid = (left + right) // 2
+            # If mid is a valid penalty, try a lower penalty
+            if can_be_penalty(mid):
+                right = mid
+            # If mid is not valid, we need to increase the penalty
+            else:
+                left = mid + 1
+        
+        # Return the minimum penalty found
+        return left
 
     minimumSize = minimum_size
