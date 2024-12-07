@@ -23,7 +23,7 @@ class Solution:
         banned_set = set(banned)
         count = 0
         current_sum = 0
-        
+
         # Iterate through the range from 1 to n
         for num in range(1, n + 1):
             if num not in banned_set:
@@ -34,7 +34,7 @@ class Solution:
                 else:
                     # If adding this number would exceed max_sum, we stop here
                     break
-        
+
         return count
 
     maxCount = max_count
