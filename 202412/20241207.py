@@ -35,7 +35,7 @@ class Solution:
 
         # Set the lower bound of binary search to 1
         left, right = 1, max(nums)
-        
+
         # Perform binary search to find the minimum penalty
         while left < right:
             # Calculate midpoint for binary search
@@ -46,7 +46,7 @@ class Solution:
             # If mid is not valid, we need to increase the penalty
             else:
                 left = mid + 1
-        
+
         # Return the minimum penalty found
         return left
 
