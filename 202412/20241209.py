@@ -14,9 +14,7 @@ class Solution:
     Return an array of booleans `answer` such that `answer[i]` is `true` if
     `nums[fromi..toi]` is special."""
 
-    def is_array_special(
-        self, nums: list[int], queries: list[list[int]]
-    ) -> list[bool]:
+    def is_array_special(self, nums: list[int], queries: list[list[int]]) -> list[bool]:
         n = len(nums)
         # Prefix array to count special pairs
         prefix = [0] * n
@@ -24,7 +22,9 @@ class Solution:
         # Build the prefix array
         for i in range(1, n):
             prefix[i] = prefix[i - 1]
-            if (nums[i - 1] % 2 == 0 and nums[i] % 2 == 0) or (nums[i - 1] % 2 != 0 and nums[i] % 2 != 0):
+            if (nums[i - 1] % 2 == 0 and nums[i] % 2 == 0) or (
+                nums[i - 1] % 2 != 0 and nums[i] % 2 != 0
+            ):
                 prefix[i] += 1
 
         result = []
