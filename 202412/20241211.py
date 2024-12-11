@@ -25,6 +25,27 @@ class Solution:
     deleting some elements (possibly none) without changing the order of the remaining
     elements."""
 
-    def maximum_beauty(self, nums: list[int], k: int) -> int: ...
+    def maximum_beauty(self, nums: list[int], k: int) -> int:
+        # Sort the array to consider numbers in ascending order
+        nums.sort()
+        
+        # Use two pointers
+        left = 0
+        right = 0
+        max_beauty = 0
+        
+        while right < len(nums):
+            # Check if the difference between current elements is within 2k
+            # Since we can increase or decrease by k, the range is nums[right] - nums[left] <= 2k
+            while right < len(nums) and nums[right] - nums[left] <= 2 * k:
+                right += 1
+            
+            # The beauty here is the count of numbers within the current window
+            max_beauty = max(max_beauty, right - left)
+            
+            # Move the left pointer for the next window
+            left += 1
+        
+        return max_beauty
 
     maximumBeauty = maximum_beauty
