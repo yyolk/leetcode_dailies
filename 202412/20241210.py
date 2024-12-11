@@ -28,7 +28,7 @@ class Solution:
             # Continue while we're within string bounds and characters match
             while current_index < len(s) and s[current_index] == s[i]:
                 # Append the special substring from 'i' to 'current_index + 1'
-                special_substrings.append(s[i:current_index + 1])
+                special_substrings.append(s[i : current_index + 1])
                 current_index += 1
 
         # Count occurrences of each special substring
