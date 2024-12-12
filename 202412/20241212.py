@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/take-gifts-from-the-richest-pile/
+import math
 
 
 class Solution:
@@ -16,6 +17,15 @@ class Solution:
 
     Return *the number of gifts remaining after* `k` *seconds.*"""
 
-    def pick_gifts(self, gifts: list[int], k: int) -> int: ...
+    def pick_gifts(self, gifts: list[int], k: int) -> int:
+        for _ in range(k):
+            # Find the index of the pile with the maximum number of gifts
+            max_index = gifts.index(max(gifts))
+            
+            # Replace the maximum value with its square root
+            gifts[max_index] = int(math.sqrt(gifts[max_index]))
+        
+        # Return the sum of all gifts remaining
+        return sum(gifts)
 
     pickGifts = pick_gifts
