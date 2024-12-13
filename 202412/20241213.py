@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/find-score-of-an-array-after-marking-all-elements/
+import heapq
 
 
 class Solution:
@@ -19,6 +20,26 @@ class Solution:
 
     Return *the score you get after applying the above algorithm*."""
 
-    def find_score(self, nums: list[int]) -> int: ...
+    def find_score(self, nums: list[int]) -> int:
+        # Use a min heap to always get the smallest unmarked number
+        # Each element in the heap is a tuple (value, index)
+        heap = [(num, i) for i, num in enumerate(nums)]
+        heapq.heapify(heap)
+        
+        score = 0
+        marked = [False] * len(nums)
+        
+        while heap:
+            val, index = heapq.heappop(heap)
+            if not marked[index]:  # If the number hasn't been marked
+                score += val
+                marked[index] = True
+                # Mark the two adjacent numbers if they exist
+                if index > 0:
+                    marked[index - 1] = True
+                if index < len(nums) - 1:
+                    marked[index + 1] = True
+        
+        return score
 
     findScore = find_score
