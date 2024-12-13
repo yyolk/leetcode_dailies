@@ -21,10 +21,10 @@ class Solution:
         for _ in range(k):
             # Find the index of the pile with the maximum number of gifts
             max_index = gifts.index(max(gifts))
-            
+
             # Replace the maximum value with its square root
             gifts[max_index] = int(math.sqrt(gifts[max_index]))
-        
+
         # Return the sum of all gifts remaining
         return sum(gifts)
 
