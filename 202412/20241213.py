@@ -25,10 +25,10 @@ class Solution:
         # Each element in the heap is a tuple (value, index)
         heap = [(num, i) for i, num in enumerate(nums)]
         heapq.heapify(heap)
-        
+
         score = 0
         marked = [False] * len(nums)
-        
+
         while heap:
             val, index = heapq.heappop(heap)
             if not marked[index]:  # If the number hasn't been marked
@@ -39,7 +39,7 @@ class Solution:
                     marked[index - 1] = True
                 if index < len(nums) - 1:
                     marked[index + 1] = True
-        
+
         return score
 
     findScore = find_score
