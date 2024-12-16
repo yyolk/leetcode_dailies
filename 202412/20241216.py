@@ -18,6 +18,18 @@ class Solution:
 
     def get_final_state(
         self, nums: list[int], k: int, multiplier: int
-    ) -> list[int]: ...
+    ) -> list[int]:
+        # Convert nums to a list if it isn't already, to allow for index manipulation
+        nums = list(nums)
+        
+        for _ in range(k):
+            # Find the index of the first occurrence of the minimum value
+            min_value = min(nums)
+            min_index = nums.index(min_value)
+            
+            # Multiply the minimum value by the multiplier
+            nums[min_index] *= multiplier
+
+        return nums
 
     getFinalState = get_final_state
