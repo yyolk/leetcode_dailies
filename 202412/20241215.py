@@ -24,19 +24,21 @@ class Solution:
     `extra_students` *students.* Answers within `10-5` of the actual answer will be
     accepted."""
 
-    def max_average_ratio(
-        self, classes: list[list[int]], extra_students: int
-    ) -> float:
+    def max_average_ratio(self, classes: list[list[int]], extra_students: int) -> float:
         # Function to calculate the gain in pass ratio for adding a student to a class
         def calculate_pass_ratio_gain(current_passing_students, current_total_students):
-            return (current_passing_students + 1) / (current_total_students + 1) - current_passing_students / current_total_students
-        
+            return (current_passing_students + 1) / (
+                current_total_students + 1
+            ) - current_passing_students / current_total_students
+
         # Max-heap to store the gain, -gain because heapq is a min-heap by default
         priority_queue = []
         for passing_students, total_students in classes:
             gain_in_ratio = calculate_pass_ratio_gain(passing_students, total_students)
-            heapq.heappush(priority_queue, (-gain_in_ratio, passing_students, total_students))
-        
+            heapq.heappush(
+                priority_queue, (-gain_in_ratio, passing_students, total_students)
+            )
+
         # Distribute the extra students
         for _ in range(extra_students):
             # Pop the class with the maximum gain
@@ -46,13 +48,15 @@ class Solution:
             total_students += 1
             # Recalculate gain and push back into priority queue
             new_gain = calculate_pass_ratio_gain(passing_students, total_students)
-            heapq.heappush(priority_queue, (-new_gain, passing_students, total_students))
-        
+            heapq.heappush(
+                priority_queue, (-new_gain, passing_students, total_students)
+            )
+
         # Calculate the final average pass ratio
         sum_of_pass_ratios = 0
         for _, passing_students, total_students in priority_queue:
             sum_of_pass_ratios += passing_students / total_students
-        
+
         return sum_of_pass_ratios / len(classes)
 
     maxAverageRatio = max_average_ratio
