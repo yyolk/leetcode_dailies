@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/construct-string-with-repeat-limit/
+from collections import Counter
 
 
 class Solution:
@@ -17,6 +18,37 @@ class Solution:
     b.length)` characters do not differ, then the longer string is the lexicographically
     larger one."""
 
-    def repeat_limited_string(self, s: str, repeat_limit: int) -> str: ...
+    def repeat_limited_string(self, s: str, repeat_limit: int) -> str:
+        char_count = Counter(s)
+        
+        result = []
+        prev_char = None
+        prev_count = 0
+        
+        while char_count:
+            # Always try to append the highest possible character
+            for char in sorted(char_count.keys(), reverse=True):
+                if char != prev_char:
+                    # If we've changed characters, reset the count
+                    result.append(char)
+                    char_count[char] -= 1
+                    if char_count[char] == 0:
+                        del char_count[char]
+                    prev_char = char
+                    prev_count = 1
+                    break
+                elif prev_count < repeat_limit:
+                    # We can add one more of the same character if under the limit
+                    result.append(char)
+                    char_count[char] -= 1
+                    if char_count[char] == 0:
+                        del char_count[char]
+                    prev_count += 1
+                    break
+            else:
+                # If we couldn't add any character, we're done
+                break
+        
+        return "".join(result)
 
     repeatLimitedString = repeat_limited_string
