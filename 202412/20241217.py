@@ -20,11 +20,11 @@ class Solution:
 
     def repeat_limited_string(self, s: str, repeat_limit: int) -> str:
         char_count = Counter(s)
-        
+
         result = []
         prev_char = None
         prev_count = 0
-        
+
         while char_count:
             # Always try to append the highest possible character
             for char in sorted(char_count.keys(), reverse=True):
@@ -48,7 +48,7 @@ class Solution:
             else:
                 # If we couldn't add any character, we're done
                 break
-        
+
         return "".join(result)
 
     repeatLimitedString = repeat_limited_string
