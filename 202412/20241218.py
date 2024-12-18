@@ -15,6 +15,18 @@ class Solution:
     Return an integer array `answer` where `answer[i]` is the final price you will pay
     for the `ith` item of the shop, considering the special discount."""
 
-    def final_prices(self, prices: list[int]) -> list[int]: ...
+    def final_prices(self, prices: list[int]) -> list[int]:
+        n = len(prices)
+        # Start with a copy of the original prices
+        answer = prices.copy()
+
+        for i in range(n):
+            for j in range(i + 1, n):
+                if prices[j] <= prices[i]:
+                    answer[i] = prices[i] - prices[j]
+                    # We've found the first applicable discount, no need to look further
+                    break
+
+        return answer
 
     finalPrices = final_prices
