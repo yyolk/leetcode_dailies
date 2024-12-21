@@ -9,6 +9,7 @@ class TreeNode:
         self.left = left
         self.right = right
 
+
 class Solution:
     """2415. Reverse Odd Levels of Binary Tree
 
@@ -29,7 +30,7 @@ class Solution:
     def reverse_odd_levels(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
         if not root:
             return None
-        
+
         # Use a queue for level-order traversal
         queue = deque([root])
         level = 0
@@ -38,26 +39,29 @@ class Solution:
             level_size = len(queue)
             # Store nodes at current level
             nodes_at_level = []
-            
+
             for _ in range(level_size):
                 node = queue.popleft()
                 nodes_at_level.append(node)
-                
+
                 if node.left:
                     queue.append(node.left)
                 if node.right:
                     queue.append(node.right)
-            
+
             # Reverse values at odd levels
             if level % 2 == 1:
                 left, right = 0, len(nodes_at_level) - 1
                 while left < right:
-                    nodes_at_level[left].val, nodes_at_level[right].val = nodes_at_level[right].val, nodes_at_level[left].val
+                    nodes_at_level[left].val, nodes_at_level[right].val = (
+                        nodes_at_level[right].val,
+                        nodes_at_level[left].val,
+                    )
                     left += 1
                     right -= 1
-            
+
             level += 1
-        
+
         return root
 
     reverseOddLevels = reverse_odd_levels
