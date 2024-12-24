@@ -9,6 +9,7 @@ class TreeNode:
         self.left = left
         self.right = right
 
+
 class Solution:
     """2471. Minimum Number of Operations to Sort a Binary Tree by Level
 
