@@ -21,6 +21,51 @@ class Solution:
 
     def minimum_diameter_after_merge(
         self, edges1: list[list[int]], edges2: list[list[int]]
-    ) -> int: ...
+    ) -> int:
+        def diameter_and_farthest_nodes(graph):
+            """Helper function to compute the diameter and the farthest nodes of a tree."""
+            def bfs(start):
+                queue = [(start, 0)]
+                visited = set()
+                farthest_node = start
+                max_distance = 0
+
+                while queue:
+                    node, dist = queue.pop(0)
+                    if node not in visited:
+                        visited.add(node)
+                        if dist > max_distance:
+                            max_distance = dist
+                            farthest_node = node
+                        for neighbor in graph[node]:
+                            if neighbor not in visited:
+                                queue.append((neighbor, dist + 1))
+                return farthest_node, max_distance
+
+            # Find the farthest node from an arbitrary starting point
+            start_node = 0
+            farthest_node, _ = bfs(start_node)
+            # Perform BFS again from the farthest node to get the diameter
+            other_end, tree_diameter = bfs(farthest_node)
+            return tree_diameter, (farthest_node, other_end)
+
+        # Build adjacency lists for both trees
+        graph1 = {i: [] for i in range(len(edges1) + 1)}
+        graph2 = {i: [] for i in range(len(edges2) + 1)}
+
+        for a, b in edges1:
+            graph1[a].append(b)
+            graph1[b].append(a)
+
+        for u, v in edges2:
+            graph2[u].append(v)
+            graph2[v].append(u)
+
+        # Calculate diameters and farthest nodes of both trees
+        diam1, ends1 = diameter_and_farthest_nodes(graph1)
+        diam2, ends2 = diameter_and_farthest_nodes(graph2)
+
+        # Minimum diameter after merging
+        return max((diam1 + 1) // 2 + (diam2 + 1) // 2 + 1, max(diam1, diam2))
 
     minimumDiameterAfterMerge = minimum_diameter_after_merge
