@@ -24,6 +24,7 @@ class Solution:
     ) -> int:
         def diameter_and_farthest_nodes(graph):
             """Helper function to compute the diameter and the farthest nodes of a tree."""
+
             def bfs(start):
                 queue = [(start, 0)]
                 visited = set()
