@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/number-of-ways-to-form-a-target-string-given-a-dictionary/
+MOD = 10**9 + 7
 
 
 class Solution:
@@ -27,6 +28,30 @@ class Solution:
     Return *the number of ways to form `target` from `words`*. Since the answer may be
     too large, return it **modulo** `109 + 7`."""
 
-    def num_ways(self, words: list[str], target: str) -> int: ...
+    def num_ways(self, words: list[str], target: str) -> int:
+        m, n = len(target), len(words[0])
+        
+        # Count occurrences of each character at each position
+        counts = [[0] * 26 for _ in range(n)]
+        for word in words:
+            for i, c in enumerate(word):
+                counts[i][ord(c) - ord("a")] += 1
+        
+        # dp[i][j] represents the number of ways to form the first j characters of target using the first i characters of any word
+        dp = [[0] * (m + 1) for _ in range(n + 1)]
+        
+        # Base case: there's one way to form an empty target string
+        for i in range(n + 1):
+            dp[i][0] = 1
+        
+        for i in range(1, n + 1):
+            for j in range(1, m + 1):
+                # If we don't use the current character from words
+                dp[i][j] = dp[i - 1][j]
+                # If we can use the current character from words
+                if counts[i - 1][ord(target[j - 1]) - ord("a")] > 0:
+                    dp[i][j] = (dp[i][j] + dp[i - 1][j - 1] * counts[i - 1][ord(target[j - 1]) - ord("a")]) % MOD
+        
+        return dp[n][m]
 
     numWays = num_ways
