@@ -24,14 +24,14 @@ class Solution:
     def count_good_strings(self, low: int, high: int, zero: int, one: int) -> int:
         dp = [0] * (high + 1)
         dp[0] = 1
-        
+
         for i in range(1, high + 1):
             if i >= zero:
                 dp[i] = (dp[i] + dp[i - zero]) % MOD
             if i >= one:
                 dp[i] = (dp[i] + dp[i - one]) % MOD
-        
+
         # Sum up the counts for lengths between low and high
-        return sum(dp[low:high+1]) % MOD
+        return sum(dp[low : high + 1]) % MOD
 
     countGoodStrings = count_good_strings
