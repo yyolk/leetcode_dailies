@@ -24,6 +24,28 @@ class Solution:
     Return *the minimum number of dollars you need to travel every day in the given list
     of days*."""
 
-    def mincost_tickets(self, days: list[int], costs: list[int]) -> int: ...
+    def mincost_tickets(self, days: list[int], costs: list[int]) -> int:
+        # Convert days to a set for O(1) lookup
+        travel_days = set(days)
+        last_day = days[-1]
+
+        # Initialize dp array
+        dp = [0] * (last_day + 1)
+
+        for day in range(1, last_day + 1):
+            if day not in travel_days:
+                dp[day] = dp[day - 1]
+            else:
+                # If we need to travel on this day, compute the cost for each pass option
+                dp[day] = min(
+                    # 1-day pass
+                    dp[max(0, day - 1)] + costs[0],
+                    # 7-day pass
+                    dp[max(0, day - 7)] + costs[1],
+                    # 30-day pass
+                    dp[max(0, day - 30)] + costs[2],
+                )
+
+        return dp[last_day]
 
     mincostTickets = mincost_tickets
