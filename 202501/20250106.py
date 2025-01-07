@@ -20,7 +20,7 @@ class Solution:
     def min_operations(self, boxes: str) -> list[int]:
         n = len(boxes)
         answer = [0] * n
-        
+
         # First pass: Count balls to the left for each position
         count_left = 0
         cost_left = 0
@@ -29,7 +29,7 @@ class Solution:
             if boxes[i] == "1":
                 count_left += 1
             cost_left += count_left
-        
+
         # Second pass: Count balls to the right for each position
         count_right = 0
         cost_right = 0
@@ -38,7 +38,7 @@ class Solution:
             if boxes[i] == "1":
                 count_right += 1
             cost_right += count_right
-        
+
         return answer
 
     minOperations = min_operations
