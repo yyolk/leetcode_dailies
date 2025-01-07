@@ -9,6 +9,16 @@ class Solution:
 
     A **substring** is a contiguous sequence of characters within a string"""
 
-    def string_matching(self, words: list[str]) -> list[str]: ...
+    def string_matching(self, words: list[str]) -> list[str]:
+        # Sort words by length to optimize checking for substrings
+        words.sort(key=len)
+        result = []
+        
+        # Check each word to see if it's a substring of any other word
+        for i, word in enumerate(words):
+            if any(word in other for other in words[i+1:]):
+                result.append(word)
+        
+        return result
 
     stringMatching = string_matching
