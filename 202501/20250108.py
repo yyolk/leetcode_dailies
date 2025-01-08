@@ -19,6 +19,19 @@ class Solution:
     Return *an integer denoting the **number** of index pairs* `(i, j)` *such that* `i <
     j`*, and* `isPrefixAndSuffix(words[i], words[j])` *is* `true`*.*"""
 
-    def count_prefix_suffix_pairs(self, words: list[str]) -> int: ...
+    def count_prefix_suffix_pairs(self, words: list[str]) -> int:
+        def is_prefix_and_suffix(str1: str, str2: str) -> bool:
+            return str2.startswith(str1) and str2.endswith(str1)
+
+        # Count each valid pair where i < j
+        return sum(
+            1
+            # Iterate over all words
+            for i in range(len(words))
+            # Iterate over subsequent words
+            for j in range(i + 1, len(words))
+            # Check if words[i] is prefix and suffix of words [j]
+            if is_prefix_and_suffix(words[i], words[j])
+        )
 
     countPrefixSuffixPairs = count_prefix_suffix_pairs
