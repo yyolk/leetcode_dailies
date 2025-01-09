@@ -10,6 +10,8 @@ class Solution:
 
     A **prefix** of a string `s` is any leading contiguous substring of `s`."""
 
-    def prefix_count(self, words: list[str], pref: str) -> int: ...
+    def prefix_count(self, words: list[str], pref: str) -> int:
+        # Count how many words start with pref
+        return sum(1 for word in words if word.startswith(pref))
 
     prefixCount = prefix_count
