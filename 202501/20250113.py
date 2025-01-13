@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/minimum-length-of-string-after-operations/
+from collections import Counter
 
 
 class Solution:
@@ -20,6 +21,10 @@ class Solution:
 
     Return the **minimum** length of the final string `s` that you can achieve."""
 
-    def minimum_length(self, s: str) -> int: ...
+    def minimum_length(self, s: str) -> int:
+        # Use Counter to count occurrences of each character in the string
+        # For each character, if the frequency is odd, we keep one instance,
+        # otherwise, we can reduce to 2 (one from each end if all were same)
+        return sum(1 if freq % 2 else 2 for freq in Counter(s).values())
 
     minimumLength = minimum_length
