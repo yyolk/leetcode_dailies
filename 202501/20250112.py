@@ -28,7 +28,7 @@ class Solution:
     def can_be_valid(self, s: str, locked: str) -> bool:
         # Get the length of the string
         string_length = len(s)
-        
+
         # Check if the string length is odd, which cannot make a valid parentheses string
         if string_length % 2 == 1:
             return False
@@ -39,11 +39,11 @@ class Solution:
 
         # Iterate through each character in the string
         for i in range(string_length):
-            if locked[i] == '0':  # If position is unlocked, add to unlocked_indices
+            if locked[i] == "0":  # If position is unlocked, add to unlocked_indices
                 unlocked_indices.append(i)
-            elif s[i] == '(':     # If character is '(', add its index to open_indices
+            elif s[i] == "(":  # If character is '(', add its index to open_indices
                 open_indices.append(i)
-            elif s[i] == ')':     # If character is ')', match or use an unlocked position
+            elif s[i] == ")":  # If character is ')', match or use an unlocked position
                 if open_indices:  # Try to match with an open parenthesis
                     open_indices.pop()
                 elif unlocked_indices:  # Use an unlocked position if possible
@@ -52,7 +52,11 @@ class Solution:
                     return False
 
         # Match remaining open parentheses with unlocked positions
-        while open_indices and unlocked_indices and open_indices[-1] < unlocked_indices[-1]:
+        while (
+            open_indices
+            and unlocked_indices
+            and open_indices[-1] < unlocked_indices[-1]
+        ):
             open_indices.pop()
             unlocked_indices.pop()
 
