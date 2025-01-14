@@ -15,6 +15,20 @@ class Solution:
     a sequence of `n` integers is called a **permutation** if it contains all integers
     from `1` to `n` exactly once."""
 
-    def find_the_prefix_common_array(self, a: list[int], b: list[int]) -> list[int]: ...
+    def find_the_prefix_common_array(self, a: list[int], b: list[int]) -> list[int]:
+        n = len(a)  # Get the length of the arrays
+        set_a, set_b = set(), set()  # Initialize sets to track elements from a and b
+        result = []  # List to store the result
+
+        for i in range(n):
+            # Add the current element to the corresponding set
+            set_a.add(a[i])  
+            set_b.add(b[i])  
+            
+            # Append the size of the intersection of set_a and set_b to result
+            # This intersection gives us the count of common elements up to index i
+            result.append(len(set_a & set_b))
+
+        return result
 
     findThePrefixCommonArray = find_the_prefix_common_array
