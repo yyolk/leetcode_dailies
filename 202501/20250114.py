@@ -22,9 +22,9 @@ class Solution:
 
         for i in range(n):
             # Add the current element to the corresponding set
-            set_a.add(a[i])  
-            set_b.add(b[i])  
-            
+            set_a.add(a[i])
+            set_b.add(b[i])
+
             # Append the size of the intersection of set_a and set_b to result
             # This intersection gives us the count of common elements up to index i
             result.append(len(set_a & set_b))
