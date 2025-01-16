@@ -27,8 +27,8 @@ class Solution:
                 num1 &= num1 - 1
         else:
             # Set the "diff_set_bits" least insignificant bits of the number "num1"
-            for _ in range(-diff_set_bits):  
-                num1 |= num1 + 1   
+            for _ in range(-diff_set_bits):
+                num1 |= num1 + 1
         return num1
 
     minimizeXor = minimize_xor
