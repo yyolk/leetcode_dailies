@@ -60,10 +60,16 @@ class Solution:
                 return current_cost
 
             # Check all possible directions
-            for direction_index, (delta_row, delta_col) in enumerate(movement_directions):
+            for direction_index, (delta_row, delta_col) in enumerate(
+                movement_directions
+            ):
                 new_row, new_col = current_row + delta_row, current_col + delta_col
                 # If new position is within grid and not visited
-                if 0 <= new_row < grid_height and 0 <= new_col < grid_width and not cell_visited[new_row][new_col]:
+                if (
+                    0 <= new_row < grid_height
+                    and 0 <= new_col < grid_width
+                    and not cell_visited[new_row][new_col]
+                ):
                     # If direction matches cell's sign, no cost increase
                     if grid[current_row][current_col] == direction_index + 1:
                         bfs_queue.appendleft((new_row, new_col, current_cost))
