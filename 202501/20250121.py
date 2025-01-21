@@ -23,6 +23,28 @@ class Solution:
     of points it collects. If both robots play **optimally**, return *the **number of
     points** collected by the **second** robot.*"""
 
-    def grid_game(self, grid: list[list[int]]) -> int: ...
+    def grid_game(self, grid: list[list[int]]) -> int:
+        # Initialize the sum of points for the top row
+        total_points_top_row = sum(grid[0])
+        
+        # Initialize points for the bottom row up to current position
+        points_collected_bottom_row = 0
+        
+        # Initialize max points for second robot with infinity
+        max_points_second_robot = float("inf")
+        
+        # Iterate through each column
+        for current_column in range(len(grid[0])):
+            # Subtract current column's points from top row total
+            total_points_top_row -= grid[0][current_column]
+            
+            # Update max points for second robot based on current strategy
+            max_points_second_robot = min(max_points_second_robot, max(total_points_top_row, points_collected_bottom_row))
+            
+            # Add current column's points to bottom row total
+            points_collected_bottom_row += grid[1][current_column]
+        
+        # Return the minimum of maximum points collected by second robot
+        return max_points_second_robot
 
     gridGame = grid_game
