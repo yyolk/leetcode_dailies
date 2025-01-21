@@ -15,13 +15,13 @@ class Solution:
 
     def first_complete_index(self, arr: list[int], mat: list[list[int]]) -> int:
         m, n = len(mat), len(mat[0])
-        
+
         # Dictionary to store positions of numbers in mat
         positions = {}
         for i in range(m):
             for j in range(n):
                 positions[mat[i][j]] = (i, j)
-        
+
         # Arrays to track painted cells in each row and column
         row_count = [0] * m
         col_count = [0] * n
@@ -30,7 +30,7 @@ class Solution:
             row, col = positions[num]
             row_count[row] += 1
             col_count[col] += 1
-            
+
             # Check if any row or column is completely painted
             if row_count[row] == n or col_count[col] == m:
                 return i
