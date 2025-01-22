@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/map-of-highest-peak/
+from collections import deque
 
 
 class Solution:
@@ -28,6 +29,29 @@ class Solution:
     cell* `(i, j)`*'s height. If there are multiple solutions, return **any** of them*.
     """
 
-    def highest_peak(self, is_water: list[list[int]]) -> list[list[int]]: ...
+    def highest_peak(self, is_water: list[list[int]]) -> list[list[int]]:
+        m, n = len(is_water), len(is_water[0])
+        height = [[-1] * n for _ in range(m)]
+        queue = deque()
+
+        # Initialize water cells
+        for i in range(m):
+            for j in range(n):
+                # Water cell
+                if is_water[i][j] == 1:
+                    height[i][j] = 0
+                    queue.append((i, j))
+
+        # BFS from water cells to land cells
+        directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+        while queue:
+            x, y = queue.popleft()
+            for dx, dy in directions:
+                nx, ny = x + dx, y + dy
+                if 0 <= nx < m and 0 <= ny < n and height[nx][ny] == -1:
+                    height[nx][ny] = height[x][y] + 1
+                    queue.append((nx, ny))
+
+        return height
 
     highestPeak = highest_peak
