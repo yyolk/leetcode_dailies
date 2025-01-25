@@ -161,7 +161,9 @@
    </a>
   </td>
   <td class="sat">
-   25
+   <a href="20250125.py">
+    25
+   </a>
   </td>
  </tr>
  <tr>
