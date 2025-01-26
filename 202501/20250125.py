@@ -23,17 +23,17 @@ class Solution:
     ) -> list[int]:
         # Get the length of the input array
         n = len(nums)
-        
+
         # Create sorted list of (value, original index) pairs sorted by value
         sorted_pairs = sorted((nums[i], i) for i in range(n))
-        
+
         # Initialize result array with zeros
         result = [0] * n
-        
+
         # Track current group of swappable elements and previous value
         current_group = []
         prev_val = None
-        
+
         # Process each element in sorted order
         for val, idx in sorted_pairs:
             if not current_group:
@@ -57,14 +57,14 @@ class Solution:
                     # Start new group with current element
                     current_group = [(val, idx)]
                     prev_val = val
-        
+
         # Process remaining elements in the last group
         if current_group:
             sorted_indices = sorted(i for (v, i) in current_group)
             sorted_values = [v for (v, i) in current_group]
             for pos, idx_sorted in enumerate(sorted_indices):
                 result[idx_sorted] = sorted_values[pos]
-        
+
         return result
 
     lexicographicallySmallestArray = lexicographically_smallest_array
