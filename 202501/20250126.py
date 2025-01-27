@@ -23,7 +23,7 @@ class Solution:
         employee_to_favorite = defaultdict(list)
         # Create the transpose of the graph for Kosaraju's algorithm
         favorite_to_employee = defaultdict(list)
-        
+
         # Populate the adjacency list and its transpose
         for employee_index in range(len(favorite)):
             employee_to_favorite[employee_index].append(favorite[employee_index])
@@ -75,7 +75,9 @@ class Solution:
                 strongly_connected_components.append(current_scc)
 
         # Find maximum size of SCCs, ignoring two-node cycles for now
-        max_scc_size = max([len(scc) if len(scc) != 2 else -1 for scc in strongly_connected_components])
+        max_scc_size = max(
+            [len(scc) if len(scc) != 2 else -1 for scc in strongly_connected_components]
+        )
 
         # Function to find the longest path from 'a' avoiding 'b'
         def find_longest_path(a, b):
@@ -90,7 +92,11 @@ class Solution:
         for scc in strongly_connected_components:
             if len(scc) == 2:
                 employee1, employee2 = list(scc)
-                count_two_node_cycles += 2 + find_longest_path(employee1, employee2) + find_longest_path(employee2, employee1)
+                count_two_node_cycles += (
+                    2
+                    + find_longest_path(employee1, employee2)
+                    + find_longest_path(employee2, employee1)
+                )
 
         # Return the maximum of direct SCC size or combined two-node cycles
         return max(max_scc_size, count_two_node_cycles)
