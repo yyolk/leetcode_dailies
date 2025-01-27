@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/course-schedule-iv/
+from collections import deque
 
 
 class Solution:
@@ -25,6 +26,34 @@ class Solution:
 
     def check_if_prerequisite(
         self, num_courses: int, prerequisites: list[list[int]], queries: list[list[int]]
-    ) -> list[bool]: ...
+    ) -> list[bool]:
+        # Build adjacency list
+        adj = [[] for _ in range(num_courses)]
+        for a, b in prerequisites:
+            adj[a].append(b)
+        
+        # Precompute reachable sets using BFS for each node
+        reachable = [set() for _ in range(num_courses)]
+        for u in range(num_courses):
+            queue = deque([u])
+            visited = set()
+            visited.add(u)
+            while queue:
+                current = queue.popleft()
+                for neighbor in adj[current]:
+                    if neighbor not in visited:
+                        visited.add(neighbor)
+                        queue.append(neighbor)
+            reachable[u] = visited
+        
+        # Process each query
+        answer = []
+        for u, v in queries:
+            if u == v:
+                answer.append(False)
+            else:
+                answer.append(v in reachable[u])
+        
+        return answer
 
     checkIfPrerequisite = check_if_prerequisite
