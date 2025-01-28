@@ -31,7 +31,7 @@ class Solution:
         adj = [[] for _ in range(num_courses)]
         for a, b in prerequisites:
             adj[a].append(b)
-        
+
         # Precompute reachable sets using BFS for each node
         reachable = [set() for _ in range(num_courses)]
         for u in range(num_courses):
@@ -45,7 +45,7 @@ class Solution:
                         visited.add(neighbor)
                         queue.append(neighbor)
             reachable[u] = visited
-        
+
         # Process each query
         answer = []
         for u, v in queries:
@@ -53,7 +53,7 @@ class Solution:
                 answer.append(False)
             else:
                 answer.append(v in reachable[u])
-        
+
         return answer
 
     checkIfPrerequisite = check_if_prerequisite
