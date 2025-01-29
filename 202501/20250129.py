@@ -17,6 +17,32 @@ class Solution:
     *nodes*. If there are multiple answers, return the answer that occurs last in the
     input."""
 
-    def find_redundant_connection(self, edges: list[list[int]]) -> list[int]: ...
+    def find_redundant_connection(self, edges: list[list[int]]) -> list[int]:
+        # 1-based indexing for nodes
+        parent = list(range(len(edges) + 1))
+        rank = [1] * (len(edges) + 1)
+
+        def find(u):
+            while parent[u] != u:
+                # Path compression
+                parent[u] = parent[parent[u]]
+                u = parent[u]
+            return u
+
+        for u, v in edges:
+            root_u = find(u)
+            root_v = find(v)
+            if root_u == root_v:
+                return [u, v]
+            # Union by rank
+            if rank[root_u] > rank[root_v]:
+                parent[root_v] = root_u
+            else:
+                parent[root_u] = root_v
+                if rank[root_u] == rank[root_v]:
+                    rank[root_v] += 1
+
+        # The problem guarantees a cycle, so this line is theoretical
+        return []
 
     findRedundantConnection = find_redundant_connection
