@@ -35,15 +35,15 @@ class Solution:
         def dfs(r: int, c: int) -> int:
             if r < 0 or r >= m or c < 0 or c >= n or visited[r][c] or grid[r][c] == 0:
                 return 0
-            
+
             visited[r][c] = True
             fish_count = grid[r][c]
-            
+
             # Check all four directions
             directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]
             for dr, dc in directions:
                 fish_count += dfs(r + dr, c + dc)
-            
+
             return fish_count
 
         for i in range(m):
