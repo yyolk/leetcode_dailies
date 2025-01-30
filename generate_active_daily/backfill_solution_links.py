@@ -2,7 +2,7 @@
 When run, will insert the permalink to the leetcode challenge to the
 top of the file as a single line comment.
 
-This is the only file currently using most of the extra functions in 
+This is the only file currently using most of the extra functions in
 `generate_active_daily.client(...)`
 """
 

@@ -1,12 +1,12 @@
 """
 Generates the current daily active challenge boilerplate file.
 
-This will use the 'undocumented' graphQL endpoint for leetcode. 
+This will use the 'undocumented' graphQL endpoint for leetcode.
 We could also authenticate but we don't need the extra context it would provide.
 
 TODO:
     - handle other boilerplate scaffolds that don't look like:
-        
+
         class Solution:
             def myProblemSolution(self, in_: List[str]) -> int:
 
