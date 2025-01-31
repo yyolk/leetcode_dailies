@@ -30,11 +30,11 @@ class Solution:
         for u, v in edges:
             adjacency_list[u].append(v)
             adjacency_list[v].append(u)
-        
+
         # Track visited nodes to identify connected components
         visited = [False] * (n + 1)
         total_groups = 0
-        
+
         for node in range(1, n + 1):
             if not visited[node]:
                 # Collect all nodes in the current connected component and check bipartiteness
@@ -46,7 +46,7 @@ class Solution:
                 visited[node] = True
                 color[node] = 0
                 component_nodes.append(node)
-                
+
                 while queue:
                     current_node = queue.popleft()
                     for neighbor in adjacency_list[current_node]:
@@ -58,11 +58,11 @@ class Solution:
                         else:
                             if color[neighbor] == color[current_node]:
                                 is_bipartite = False
-                
+
                 # If the component is not bipartite, return -1
                 if not is_bipartite:
                     return -1
-                
+
                 # Calculate the maximum number of groups for this component
                 max_eccentricity = 0
                 for start_node in component_nodes:
@@ -80,10 +80,10 @@ class Solution:
                                 bfs_queue.append(neighbor)
                     # Update maximum eccentricity for the component
                     max_eccentricity = max(max_eccentricity, max_distance + 1)
-                
+
                 # Add the component's contribution to the total groups
                 total_groups += max_eccentricity
-        
+
         return total_groups
 
     magnificentSets = magnificent_sets
