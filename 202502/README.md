@@ -48,7 +48,9 @@
  </tr>
  <tr>
   <td class="sun">
-   2
+   <a href="20250202.py">
+    2
+   </a>
   </td>
   <td class="mon">
    3
