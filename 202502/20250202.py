@@ -14,6 +14,13 @@ class Solution:
     length such that `A[i] == B[(i+x) % A.length]`, where `%` is the modulo operation.
     """
 
-    def check(self, nums: list[int]) -> bool: ...
-
-    check = check
+    def check(self, nums: list[int]) -> bool:
+        pivot_count = 0
+        n = len(nums)
+        
+        for i in range(n):
+            if nums[i] > nums[(i + 1) % n]:
+                pivot_count += 1
+        
+        # If there is at most one pivot, the array is sorted and rotated
+        return pivot_count <= 1
