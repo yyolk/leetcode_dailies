@@ -16,18 +16,18 @@ class Solution:
     def max_ascending_sum(self, nums: list[int]) -> int:
         if not nums:
             return 0
-        
+
         max_sum = current_sum = nums[0]
-        
+
         for i in range(1, len(nums)):
-            if nums[i] > nums[i-1]:
+            if nums[i] > nums[i - 1]:
                 current_sum += nums[i]
             else:
                 current_sum = nums[i]
-            
+
             if current_sum > max_sum:
                 max_sum = current_sum
-        
+
         return max_sum
 
     maxAscendingSum = max_ascending_sum
