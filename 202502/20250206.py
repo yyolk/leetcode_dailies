@@ -10,7 +10,7 @@ class Solution:
 
     def tuple_same_product(self, nums: list[int]) -> int:
         product_count = {}
-        
+
         # Generate all possible products of pairs
         for a, b in combinations(nums, 2):
             product = a * b
@@ -18,14 +18,14 @@ class Solution:
                 product_count[product] += 1
             else:
                 product_count[product] = 1
-        
+
         total = 0
-        
+
         # Calculate the number of valid tuples for each product
         for count in product_count.values():
             if count >= 2:
                 total += comb(count, 2) * 8
-        
+
         return total
 
     tupleSameProduct = tuple_same_product
