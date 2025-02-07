@@ -17,6 +17,38 @@ class Solution:
     **Note** that when answering a query, lack of a color *will not* be considered as a
     color."""
 
-    def query_results(self, limit: int, queries: list[list[int]]) -> list[int]: ...
+    def query_results(self, limit: int, queries: list[list[int]]) -> list[int]:
+        # Ball -> Color
+        colors = {}
+        distinct_colors = set()
+        # Color -> Count
+        color_counts = {}
+        result = []
+
+        for x, y in queries:
+            old_color = colors.get(x)
+
+            # New ball
+            if old_color is None:
+                if y not in distinct_colors:
+                    distinct_colors.add(y)
+                # Increment count
+                color_counts[y] = color_counts.get(y, 0) + 1
+            # Color change
+            elif old_color != y:
+                # Decrement old color count
+                color_counts[old_color] -= 1
+                if color_counts[old_color] == 0:
+                    distinct_colors.remove(old_color)
+                
+                if y not in distinct_colors:
+                    distinct_colors.add(y)
+                #Increment new color count
+                color_counts[y] = color_counts.get(y, 0) + 1
+
+            colors[x] = y
+            result.append(len(distinct_colors))
+
+        return result
 
     queryResults = query_results
