@@ -14,6 +14,10 @@ class Solution:
 
     A **substring** is a contiguous sequence of characters in a string."""
 
-    def remove_occurrences(self, s: str, part: str) -> str: ...
+    def remove_occurrences(self, s: str, part: str) -> str:
+        while part in s:
+            s = s.replace(part, "", 1)
+        return s
 
     removeOccurrences = remove_occurrences
+
