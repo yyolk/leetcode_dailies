@@ -20,4 +20,3 @@ class Solution:
         return s
 
     removeOccurrences = remove_occurrences
-
