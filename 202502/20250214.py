@@ -29,7 +29,6 @@ class ProductOfNumbers:
     def __init__(self):
         # Initialize with 1 to handle the first product calculation
         self.prefix_products = [1]
-        
 
     def add(self, num: int) -> None:
         if num == 0:
@@ -38,7 +37,6 @@ class ProductOfNumbers:
         else:
             # Append the product of the last prefix product and the new number
             self.prefix_products.append(self.prefix_products[-1] * num)
-        
 
     def get_product(self, k: int) -> int:
         if k >= len(self.prefix_products):
