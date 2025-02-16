@@ -48,7 +48,7 @@ class Solution:
                         dp[i].add(current)
             # Check if the target sum is achievable with the full string
             return target in dp[length]
-        
+
         # Initialize the result to accumulate the sum of valid squares
         result = 0
         # Iterate through all numbers from 1 to n (inclusive)
