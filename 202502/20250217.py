@@ -13,7 +13,7 @@ class Solution:
     def num_tile_possibilities(self, tiles: str) -> int:
         # Count the frequency of each character in the tiles
         counter = Counter(tiles)
-        
+
         # Helper function to perform backtracking
         def backtrack(counter):
             count = 0
@@ -27,7 +27,7 @@ class Solution:
                     # Backtrack: restore the counter for the next iteration
                     counter[char] += 1
             return count
-        
+
         return backtrack(counter)
 
     numTilePossibilities = num_tile_possibilities
