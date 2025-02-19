@@ -24,7 +24,7 @@ class Solution:
         n = len(pattern)
         result = []
         stack = []
-        
+
         for i in range(n + 1):
             # Push the current digit onto the stack
             stack.append(str(i + 1))
@@ -32,7 +32,7 @@ class Solution:
                 # Pop all digits from the stack and append to the result
                 while stack:
                     result.append(stack.pop())
-        
+
         return "".join(result)
 
     smallestNumber = smallest_number
