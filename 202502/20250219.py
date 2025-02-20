@@ -23,26 +23,26 @@ class Solution:
     def get_happy_string(self, n: int, k: int) -> str:
         # Available characters
         chars = ["a", "b", "c"]
-        
+
         # DP table: dp[i][j] = number of happy strings of length i starting with chars[j]
         dp = [[0] * 3 for _ in range(n + 1)]
-        
+
         # Base case: length 1
         for j in range(3):
             dp[1][j] = 1
-        
+
         # Fill DP table for lengths 2 to n
         for i in range(2, n + 1):
             for j in range(3):
                 for prev_j in range(3):
                     if j != prev_j:
                         dp[i][j] += dp[i - 1][prev_j]
-        
+
         # Total number of happy strings of length n
         total = sum(dp[n][j] for j in range(3))
         if k > total:
             return ""
-        
+
         # Construct the k-th happy string
         result = []
         # Index of the current character
@@ -63,7 +63,7 @@ class Solution:
                     elif current_char_index != j:
                         k -= dp[length][j]
             result.append(chars[current_char_index])
-        
+
         return "".join(result)
 
     getHappyString = get_happy_string
