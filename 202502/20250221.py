@@ -29,10 +29,12 @@ class TreeNode:
         self.left = left
         self.right = right
 
+
 class FindElements:
     def __init__(self, root: TreeNode | None):
         # Set to store recovered node values for O(1) lookup
         self.values = set()
+
         # DFS helper to assign values and collect them
         def recover(node, val):
             # If node exists, process it
@@ -45,6 +47,7 @@ class FindElements:
                 recover(node.left, 2 * val + 1)
                 # Recover right child with 2x + 2
                 recover(node.right, 2 * val + 2)
+
         # If root exists, start recovery from value 0
         if root:
             recover(root, 0)
