@@ -31,14 +31,14 @@ class Solution:
             depth = len(match.group(1))
             value = int(match.group(2))
             nodes.append((depth, value))
-        
+
         if not nodes:
             return None
-        
+
         # Initialize stack and root
         stack = []
         root = None
-        
+
         for depth, value in nodes:
             new_node = TreeNode(value)
             # Pop stack until it has 'depth' number of nodes
@@ -53,7 +53,7 @@ class Solution:
                 else:
                     parent.right = new_node
             stack.append(new_node)
-        
+
         return root
 
     recoverFromPreorder = recover_from_preorder
