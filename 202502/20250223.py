@@ -27,7 +27,9 @@ class Solution:
         # Create a hash map for postorder values to quickly find indices
         post_map = {val: idx for idx, val in enumerate(postorder)}
 
-        def build(pre_start: int, pre_end: int, post_start: int, post_end: int) -> TreeNode | None:
+        def build(
+            pre_start: int, pre_end: int, post_start: int, post_end: int
+        ) -> TreeNode | None:
             # Base case: if no elements to process
             if pre_start > pre_end:
                 return None
@@ -49,17 +51,17 @@ class Solution:
 
             # Recursively build left and right subtrees
             root.left = build(
-                pre_start + 1,              # Start of left in preorder
-                pre_start + left_size,      # End of left in preorder
-                post_start,                 # Start of left in postorder
-                left_post_end               # End of left in postorder
+                pre_start + 1,  # Start of left in preorder
+                pre_start + left_size,  # End of left in preorder
+                post_start,  # Start of left in postorder
+                left_post_end,  # End of left in postorder
             )
 
             root.right = build(
                 pre_start + left_size + 1,  # Start of right in preorder
-                pre_end,                    # End of right in preorder
-                left_post_end + 1,          # Start of right in postorder
-                post_end - 1                # End of right in postorder (exclude root)
+                pre_end,  # End of right in preorder
+                left_post_end + 1,  # Start of right in postorder
+                post_end - 1,  # End of right in postorder (exclude root)
             )
 
             return root
