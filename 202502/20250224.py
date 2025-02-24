@@ -41,6 +41,60 @@ class Solution:
 
     def most_profitable_path(
         self, edges: list[list[int]], bob: int, amount: list[int]
-    ) -> int: ...
+    ) -> int:
+        # Build adjacency list representation of the tree
+        n = len(edges) + 1
+        graph = [[] for _ in range(n)]
+        for u, v in edges:
+            graph[u].append(v)
+            graph[v].append(u)
+
+        # Track Bob's path to node 0
+        bob_path = []
+
+        def find_bob_path(node: int, parent: int) -> bool:
+            if node == bob:
+                bob_path.append(node)
+                return True
+
+            for next_node in graph[node]:
+                if next_node != parent:
+                    if find_bob_path(next_node, node):
+                        bob_path.append(node)
+                        return True
+            return False
+
+        find_bob_path(0, -1)
+
+        # Calculate time when Bob reaches each node on his path
+        bob_time = {}
+        for i, node in enumerate(bob_path):
+            bob_time[node] = i
+
+        # DFS to find Alice's most profitable path
+        def dfs(node: int, parent: int, time: int, income: int) -> int:
+            # Calculate current node's contribution
+            curr_amount = amount[node]
+            if node in bob_time and bob_time[node] == time:
+                # Alice and Bob meet simultaneously, split the amount
+                curr_amount //= 2
+            elif node in bob_time and bob_time[node] < time:
+                # Bob already passed, no amount to collect/spend
+                curr_amount = 0
+
+            # If leaf node (only one neighbor which is parent)
+            if len(graph[node]) == 1 and parent != -1:
+                return income + curr_amount
+
+            # Explore all children
+            max_income = float("-inf")
+            for next_node in graph[node]:
+                if next_node != parent:
+                    max_income = max(
+                        max_income, dfs(next_node, node, time + 1, income + curr_amount)
+                    )
+            return max_income
+
+        return dfs(0, -1, 0, 0)
 
     mostProfitablePath = most_profitable_path
