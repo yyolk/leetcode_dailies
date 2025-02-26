@@ -16,6 +16,23 @@ class Solution:
 
     * If `x` is a non-negative integer, then `abs(x) = x`."""
 
-    def max_absolute_sum(self, nums: list[int]) -> int: ...
+    def max_absolute_sum(self, nums: list[int]) -> int:
+        # Initialize variables with the first element
+        max_ending_here = min_ending_here = nums[0]
+        max_so_far = min_so_far = nums[0]
+        
+        # Iterate through the array starting from the second element
+        for num in nums[1:]:
+            # Update maximum sum ending at current position
+            max_ending_here = max(num, max_ending_here + num)
+            # Update minimum sum ending at current position
+            min_ending_here = min(num, min_ending_here + num)
+            # Update global maximum subarray sum
+            max_so_far = max(max_so_far, max_ending_here)
+            # Update global minimum subarray sum
+            min_so_far = min(min_so_far, min_ending_here)
+        
+        # Return the maximum absolute sum, considering empty subarray (sum 0)
+        return max(0, max_so_far, -min_so_far)
 
     maxAbsoluteSum = max_absolute_sum
