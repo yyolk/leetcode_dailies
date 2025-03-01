@@ -23,6 +23,17 @@ class Solution:
 
     **Note** that the operations are applied **sequentially**, not all at once."""
 
-    def apply_operations(self, nums: list[int]) -> list[int]: ...
+    def apply_operations(self, nums: list[int]) -> list[int]:
+        n = len(nums)
+        # Step 1: Apply operations sequentially
+        for i in range(n - 1):
+            if nums[i] == nums[i + 1]:
+                nums[i] = 2 * nums[i]
+                nums[i + 1] = 0
+        # Step 2: Collect non-zero elements
+        result = [x for x in nums if x != 0]
+        # Step 3: Append zeros to maintain original length
+        result += [0] * (n - len(result))
+        return result
 
     applyOperations = apply_operations
