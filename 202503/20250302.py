@@ -29,6 +29,31 @@ class Solution:
 
     def merge_arrays(
         self, nums1: list[list[int]], nums2: list[list[int]]
-    ) -> list[list[int]]: ...
+    ) -> list[list[int]]:
+        result = []
+        i, j = 0, 0
+        
+        # Traverse both arrays using two pointers
+        while i < len(nums1) and j < len(nums2):
+            if nums1[i][0] == nums2[j][0]:
+                # If ids are equal, sum the values and add to result
+                result.append([nums1[i][0], nums1[i][1] + nums2[j][1]])
+                i += 1
+                j += 1
+            elif nums1[i][0] < nums2[j][0]:
+                # If id in nums1 is smaller, add it to result
+                result.append(nums1[i])
+                i += 1
+            else:
+                # If id in nums2 is smaller, add it to result
+                result.append(nums2[j])
+                j += 1
+        
+        # Append any remaining elements from nums1
+        result.extend(nums1[i:])
+        # Append any remaining elements from nums2
+        result.extend(nums2[j:])
+        
+        return result
 
     mergeArrays = merge_arrays
