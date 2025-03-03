@@ -22,6 +22,25 @@ class Solution:
 
     Return `nums` *after the rearrangement.*"""
 
-    def pivot_array(self, nums: list[int], pivot: int) -> list[int]: ...
+    def pivot_array(self, nums: list[int], pivot: int) -> list[int]:
+        # Initialize three lists to hold elements less than, equal to, and greater than the pivot
+        less = []
+        equal = []
+        greater = []
+
+        # Iterate through each element in the input array
+        for x in nums:
+            # If the element is less than the pivot, append it to the 'less' list
+            if x < pivot:
+                less.append(x)
+            # If the element is equal to the pivot, append it to the 'equal' list
+            elif x == pivot:
+                equal.append(x)
+            # If the element is greater than the pivot, append it to the 'greater' list
+            else:
+                greater.append(x)
+
+        # Concatenate the three lists: less + equal + greater to form the final array
+        return less + equal + greater
 
     pivotArray = pivot_array
