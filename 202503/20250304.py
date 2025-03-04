@@ -10,6 +10,11 @@ class Solution:
     An integer `y` is a power of three if there exists an integer `x` such that `y ==
     3x`."""
 
-    def check_powers_of_three(self, n: int) -> bool: ...
+    def check_powers_of_three(self, n: int) -> bool:
+        while n > 0:
+            if n % 3 == 2:
+                return False
+            n = n // 3
+        return True
 
     checkPowersOfThree = check_powers_of_three
