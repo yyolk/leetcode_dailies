@@ -20,6 +20,12 @@ class Solution:
 
     Return *the number of **colored cells** at the end of* `n` *minutes*."""
 
-    def colored_cells(self, n: int) -> int: ...
+    def colored_cells(self, n: int) -> int:
+        if n == 1:
+            return 1
+        # Formula derived from pattern:
+        # - n² represents the outer layer contribution
+        # - (n-1)² represents the inner layers
+        return n * n + (n - 1) * (n - 1)
 
     coloredCells = colored_cells
