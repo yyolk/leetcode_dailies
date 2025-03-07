@@ -15,20 +15,20 @@ class Solution:
     def find_missing_and_repeated_values(self, grid: list[list[int]]) -> list[int]:
         # Get the size n of the grid (n x n)
         n = len(grid)
-        
+
         # Create a count array to track frequency of each number
         # Size is n*n + 1 because numbers range from 1 to n²
         count = [0] * (n * n + 1)
-        
+
         # Count occurrences of each number in the grid
         for row in grid:
             for num in row:
                 count[num] += 1
-        
+
         # Variables to store our answers
         repeated = None
         missing = None
-        
+
         # Find the repeated and missing numbers
         # Check each number from 1 to n²
         for i in range(1, n * n + 1):
@@ -36,7 +36,7 @@ class Solution:
                 repeated = i  # Number that appears twice
             elif count[i] == 0:
                 missing = i  # Number that appears zero times
-        
+
         # Return array with [repeated, missing]
         return [repeated, missing]
 
