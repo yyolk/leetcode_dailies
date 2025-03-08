@@ -17,6 +17,13 @@ class Solution:
     Return *the **minimum** number of operations needed such that there is at least
     **one** occurrence of* `k` *consecutive black blocks.*"""
 
-    def minimum_recolors(self, blocks: str, k: int) -> int: ...
+    def minimum_recolors(self, blocks: str, k: int) -> int:
+        min_operations = k
+        n = len(blocks)
+
+        for i in range(n - k + 1):
+            min_operations = min(min_operations, blocks[i : i + k].count("W"))
+
+        return min_operations
 
     minimumRecolors = minimum_recolors
