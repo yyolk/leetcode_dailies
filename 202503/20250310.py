@@ -16,20 +16,26 @@ class Solution:
         n = len(word)
         # Initialize the result to store the total count of valid substrings
         result = 0
-        
+
         # Precompute next_consonant array: for each index i, store the next index where a consonant occurs
         # If no consonant follows, store n (end of string)
         next_consonant = [n] * n  # Initialize all positions to n
-        next_cons_index = n  # Start with the end of the string as the next consonant position
+        next_cons_index = (
+            n  # Start with the end of the string as the next consonant position
+        )
         for i in range(n - 1, -1, -1):  # Iterate backwards through the string
-            next_consonant[i] = next_cons_index  # Set the next consonant index for position i
+            next_consonant[i] = (
+                next_cons_index  # Set the next consonant index for position i
+            )
             if word[i] not in vowels:  # If current character is a consonant
-                next_cons_index = i  # Update the next consonant position to current index
+                next_cons_index = (
+                    i  # Update the next consonant position to current index
+                )
 
         # Initialize data structures for the sliding window
         vowel_count = {}  # Dictionary to count occurrences of each vowel in the window
-        cons_count = 0    # Counter for consonants in the window
-        left = 0          # Left pointer of the sliding window
+        cons_count = 0  # Counter for consonants in the window
+        left = 0  # Left pointer of the sliding window
 
         # Iterate over the string with the right pointer
         for right in range(n):
