@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/maximum-count-of-positive-integer-and-negative-integer/
+import bisect
 
 
 class Solution:
@@ -12,6 +13,12 @@ class Solution:
 
     **Note** that `0` is neither positive nor negative."""
 
-    def maximum_count(self, nums: list[int]) -> int: ...
-
+    def maximum_count(self, nums: list[int]) -> int:
+        # Count of negative numbers: index of first element >= 0
+        neg_count = bisect.bisect_left(nums, 0)
+        # Count of positive numbers: total length minus index of first element > 0
+        pos_count = len(nums) - bisect.bisect_right(nums, 0)
+        # Return the maximum of the two counts
+        return max(neg_count, pos_count)
+    
     maximumCount = maximum_count
