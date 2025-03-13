@@ -20,5 +20,5 @@ class Solution:
         pos_count = len(nums) - bisect.bisect_right(nums, 0)
         # Return the maximum of the two counts
         return max(neg_count, pos_count)
-    
+
     maximumCount = maximum_count
