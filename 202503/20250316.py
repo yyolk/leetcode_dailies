@@ -25,17 +25,17 @@ class Solution:
 
         # Preprocess: build frequency map
         freq = [0] * 101  # Initialize frequency array for ranks 0-100
-        for r in ranks:   # Count mechanics for each rank
+        for r in ranks:  # Count mechanics for each rank
             freq[r] += 1
 
         # Binary search on time
         lo, hi = 0, 10**14  # Set initial search range (0 to 10^14 minutes)
-        while lo < hi:      # Continue until search range converges
+        while lo < hi:  # Continue until search range converges
             mid = (lo + hi) // 2  # Calculate midpoint of current range
             if check(mid, freq, cars):  # If mid time is sufficient
-                hi = mid       # Search lower half
-            else:              # If mid time is insufficient
-                lo = mid + 1   # Search upper half
+                hi = mid  # Search lower half
+            else:  # If mid time is insufficient
+                lo = mid + 1  # Search upper half
         return lo  # Return minimum time needed
 
     repairCars = repair_cars
