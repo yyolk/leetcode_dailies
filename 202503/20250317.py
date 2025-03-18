@@ -19,7 +19,7 @@ class Solution:
     def divide_array(self, nums: list[int]) -> bool:
         # Count the frequency of each number in the array
         counter = Counter(nums)
-        
+
         # Check if all frequencies are even
         return all(count % 2 == 0 for count in counter.values())
 
