@@ -30,6 +30,51 @@ class Solution:
 
     def minimum_cost(
         self, n: int, edges: list[list[int]], query: list[list[int]]
-    ) -> list[int]: ...
+    ) -> list[int]:
+        # Union-Find helper functions
+        def find(parent, x):
+            if parent[x] != x:
+                parent[x] = find(parent, parent[x])  # Path compression
+            return parent[x]
+        
+        def union(parent, rank, x, y):
+            px = find(parent, x)
+            py = find(parent, y)
+            if px == py:
+                return
+            if rank[px] < rank[py]:
+                parent[px] = py
+            elif rank[px] > rank[py]:
+                parent[py] = px
+            else:
+                parent[py] = px
+                rank[px] += 1
+        
+        # Initialize Union-Find data structures
+        parent = [i for i in range(n)]
+        rank = [0] * n
+        
+        # Step 1: Build connected components using all edges
+        for u, v, _ in edges:
+            union(parent, rank, u, v)
+        
+        # Step 2: Precompute the root for each vertex for efficiency
+        root = [find(parent, i) for i in range(n)]
+        
+        # Step 3: Compute the AND of all edge weights for each component
+        and_value = [-1] * n  # -1 means all bits set, neutral for AND
+        for u, v, w in edges:
+            r = root[u]  # Root of the component containing u (and v)
+            and_value[r] &= w
+        
+        # Step 4: Process each query
+        answer = []
+        for s, t in query:
+            if root[s] == root[t]:
+                answer.append(and_value[root[s]])  # Minimum cost is the AND of the component
+            else:
+                answer.append(-1)  # No walk exists between different components
+        
+        return answer
 
     minimumCost = minimum_cost
