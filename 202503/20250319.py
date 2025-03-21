@@ -21,7 +21,7 @@ class Solution:
         n = len(nums)
         x_prev2 = 0  # Represents x[i-2], initially for positions before 0
         x_prev1 = 0  # Represents x[i-1], initially for positions before 0
-        count = 0    # Counts the number of operations
+        count = 0  # Counts the number of operations
 
         # Process positions from 0 to n-3 to determine operations
         for i in range(n - 2):
@@ -36,8 +36,8 @@ class Solution:
 
         # Check if the last two positions can be made 1 with the operations chosen
         sum_n2 = (x_prev2 + x_prev1) % 2  # Total flips at position n-2
-        sum_n1 = x_prev1                  # Total flips at position n-1 (always x_{n-3})
-        
+        sum_n1 = x_prev1  # Total flips at position n-1 (always x_{n-3})
+
         # If total flips make nums[n-2] and nums[n-1] become 1, solution is valid
         if sum_n2 == 1 - nums[n - 2] and sum_n1 == 1 - nums[n - 1]:
             return count
