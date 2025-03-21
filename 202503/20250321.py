@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/find-all-possible-recipes-from-given-supplies/
+from collections import deque, defaultdict
 
 
 class Solution:
@@ -20,6 +21,38 @@ class Solution:
 
     def find_all_recipes(
         self, recipes: list[str], ingredients: list[list[str]], supplies: list[str]
-    ) -> list[str]: ...
+    ) -> list[str]:
+        # Convert supplies to a set for O(1) lookup
+        supplies_set = set(supplies)
+        
+        # Build a graph where each ingredient points to recipes that need it
+        graph = defaultdict(list)
+        
+        # Calculate initial indegree for each recipe (dependencies not in supplies)
+        indegree = {}
+        
+        # Populate graph and indegree
+        for i, recipe in enumerate(recipes):
+            for ingredient in ingredients[i]:
+                graph[ingredient].append(recipe)
+            indegree[recipe] = sum(1 for ingredient in ingredients[i] if ingredient not in supplies_set)
+        
+        # Initialize queue with recipes that have no dependencies (indegree 0)
+        queue = deque([recipe for recipe in recipes if indegree.get(recipe, 0) == 0])
+        
+        # List to store recipes that can be made
+        made_recipes = []
+        
+        # Process recipes using BFS
+        while queue:
+            recipe = queue.popleft()
+            made_recipes.append(recipe)
+            # For each recipe that depends on the current recipe
+            for neighbor in graph[recipe]:
+                indegree[neighbor] -= 1
+                if indegree[neighbor] == 0:
+                    queue.append(neighbor)
+        
+        return made_recipes
 
     findAllRecipes = find_all_recipes
