@@ -24,10 +24,10 @@ class Solution:
         for u, v in edges:
             adj[u].append(v)
             adj[v].append(u)  # Undirected graph: add both directions
-        
+
         # Step 2: Initialize visited array to track explored vertices
         visited = [False] * n
-        
+
         # Step 3: Define DFS to find connected components
         def dfs(vertex, component):
             visited[vertex] = True
@@ -35,17 +35,17 @@ class Solution:
             for neighbor in adj[vertex]:
                 if not visited[neighbor]:
                     dfs(neighbor, component)
-        
+
         # Step 4: Count complete components
         complete_count = 0
-        
+
         for vertex in range(n):
             if not visited[vertex]:
                 # Find the connected component starting from this vertex
                 component = []
                 dfs(vertex, component)
                 k = len(component)  # Number of vertices in the component
-                
+
                 # Count edges within the component
                 component_set = set(component)  # For O(1) membership testing
                 edge_count = 0
@@ -54,12 +54,12 @@ class Solution:
                         if w in component_set:
                             edge_count += 1
                 edge_count //= 2  # Divide by 2 since each edge is counted twice
-                
+
                 # Check if the component is complete
                 required_edges = k * (k - 1) // 2
                 if edge_count == required_edges:
                     complete_count += 1
-        
+
         return complete_count
 
     countCompleteComponents = count_complete_components
