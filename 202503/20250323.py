@@ -27,18 +27,18 @@ class Solution:
         for u, v, time in roads:
             adj[u].append((v, time))
             adj[v].append((u, time))  # Bi-directional
-        
+
         # Initialize distance and ways arrays
-        dist = [float('inf')] * n
+        dist = [float("inf")] * n
         dist[0] = 0
         ways = [0] * n
         ways[0] = 1
-        
+
         # Priority queue: (distance, node)
         pq = [(0, 0)]
         # Visited array to mark processed nodes
         visited = [False] * n
-        
+
         # Process nodes with Dijkstra's algorithm
         while pq:
             dist_u, u = heapq.heappop(pq)
@@ -46,7 +46,7 @@ class Solution:
             if visited[u]:
                 continue
             visited[u] = True
-            
+
             # Explore neighbors
             for v, time in adj[u]:
                 new_time = dist[u] + time
@@ -58,7 +58,7 @@ class Solution:
                 elif new_time == dist[v]:
                     # Found another path with the same shortest time
                     ways[v] = (ways[v] + ways[u]) % MOD
-        
-        return ways[n-1]
+
+        return ways[n - 1]
 
     countPaths = count_paths
