@@ -18,15 +18,15 @@ class Solution:
         # If there are no meetings, all days are free
         if not meetings:
             return days
-        
+
         # Sort meetings by start day to process them sequentially
         meetings.sort()
-        
+
         # Initialize variables to track total covered days and current merged interval
         covered = 0
         current_start = meetings[0][0]
         current_end = meetings[0][1]
-        
+
         # Iterate through meetings starting from the second one
         for meeting in meetings[1:]:
             if meeting[0] <= current_end:
@@ -39,10 +39,10 @@ class Solution:
                 covered += current_end - current_start + 1
                 current_start = meeting[0]
                 current_end = meeting[1]
-        
+
         # Add the last merged interval to the total covered days
         covered += current_end - current_start + 1
-        
+
         # Return the number of free days by subtracting covered days from total days
         return days - covered
 
