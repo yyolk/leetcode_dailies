@@ -45,13 +45,13 @@ class Solution:
             for rect in sorted_rects[1:]:
                 start = rect[dim]
                 end = rect[dim + 2]
-                
+
                 if start >= max_end:
                     gaps += 1
                     if gaps >= 2:
                         return True  # Two gaps found, cuts are possible
                 max_end = max(max_end, end)  # Update the furthest end seen
-            
+
             return gaps >= 2
 
         # Check both vertical (x) and horizontal (y) cuts
