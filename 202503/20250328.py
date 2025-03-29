@@ -26,23 +26,23 @@ class Solution:
 
     def max_points(self, grid: list[list[int]], queries: list[int]) -> list[int]:
         m, n = len(grid), len(grid[0])
-        
+
         # Initialize distance matrix
-        distance = [[float('inf')] * n for _ in range(m)]
+        distance = [[float("inf")] * n for _ in range(m)]
         distance[0][0] = grid[0][0]
-        
+
         # Priority queue: (dist, row, col)
         heap = [(grid[0][0], 0, 0)]
         visited = set()
         directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]  # right, left, down, up
-        
+
         # Dijkstra's algorithm
         while heap:
             dist, r, c = heapq.heappop(heap)
             if (r, c) in visited:
                 continue
             visited.add((r, c))
-            
+
             # Explore adjacent cells
             for dr, dc in directions:
                 nr, nc = r + dr, c + dc
@@ -51,16 +51,16 @@ class Solution:
                     if new_dist < distance[nr][nc]:
                         distance[nr][nc] = new_dist
                         heapq.heappush(heap, (new_dist, nr, nc))
-        
+
         # Collect and sort all distances
         all_distances = sorted(distance[r][c] for r in range(m) for c in range(n))
-        
+
         # Process each query
         answer = []
         for q in queries:
             count = bisect.bisect_left(all_distances, q)
             answer.append(count)
-        
+
         return answer
 
     maxPoints = max_points
