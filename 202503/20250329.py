@@ -92,7 +92,11 @@ class Solution:
         # Iterate through the sorted list of number-index pairs to compute the maximum score
         for number, index in number_index_tuples:
             # Calculate the maximum number of operations possible for this number based on its subarray range
-            operations = min((index - prev_greater_or_equal_index[index]) * (next_greater_index[index] - index), k)
+            operations = min(
+                (index - prev_greater_or_equal_index[index])
+                * (next_greater_index[index] - index),
+                k,
+            )
 
             # Update the result by multiplying with the number raised to the power of operations, modulo MOD
             result = (result * self.pow(number, operations)) % MOD
