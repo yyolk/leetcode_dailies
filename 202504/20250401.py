@@ -24,6 +24,19 @@ class Solution:
 
     Return *the **maximum** points you can earn for the exam*."""
 
-    def most_points(self, questions: list[list[int]]) -> int: ...
+    def most_points(self, questions: list[list[int]]) -> int:
+        N = len(questions)
+        # Initialize DP array with size N+1, all zeros
+        dp = [0] * (N + 1)
+        
+        # Iterate from the last question to the first
+        for i in range(N - 1, -1, -1):
+            points_i, brainpower_i = questions[i]
+            # Next index after skipping brainpower_i questions
+            next_idx = min(i + brainpower_i + 1, N)
+            # Maximum of solving current question or skipping it
+            dp[i] = max(points_i + dp[next_idx], dp[i + 1])
+        
+        return dp[0]
 
     mostPoints = most_points
