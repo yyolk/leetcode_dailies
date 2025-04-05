@@ -17,6 +17,12 @@ class Solution:
     An array `a` is a **subset** of an array `b` if `a` can be obtained from `b` by
     deleting some (possibly zero) elements of `b`."""
 
-    def subset_x_o_r_sum(self, nums: list[int]) -> int: ...
+    def subset_xor_sum(self, nums: list[int]) -> int:
+        or_all = 0
+        for num in nums:
+            # Bitwise OR of all elements
+            or_all |= num
+        # 2^(n-1) * or_all
+        return (1 << (len(nums) - 1)) * or_all
 
-    subsetXORSum = subset_x_o_r_sum
+    subsetXORSum = subset_xor_sum
