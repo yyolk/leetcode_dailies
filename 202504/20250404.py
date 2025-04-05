@@ -7,6 +7,7 @@ class TreeNode:
         self.left = left
         self.right = right
 
+
 class Solution:
     """1123. Lowest Common Ancestor of Deepest Leaves
 
@@ -41,7 +42,7 @@ class Solution:
                 return (right_max_depth, right_lca)
             else:
                 return (left_max_depth, node)
-        
+
         # Start recursion from root at depth 0 and return the LCA
         return helper(root, 0)[1]
 
