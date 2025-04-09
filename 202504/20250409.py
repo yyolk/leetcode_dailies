@@ -22,6 +22,13 @@ class Solution:
     **equal** to `k`. If it is impossible to make all elements equal to `k`, return -1.
     """
 
-    def min_operations(self, nums: list[int], k: int) -> int: ...
+    def min_operations(self, nums: list[int], k: int) -> int:
+        # Check if any element is less than k
+        if any(num < k for num in nums):
+            return -1
+        # Collect distinct values greater than k
+        greater_than_k = set(num for num in nums if num > k)
+        # Return the number of distinct values greater than k
+        return len(greater_than_k)
 
     minOperations = min_operations
