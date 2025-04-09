@@ -23,7 +23,7 @@ class Solution:
         # Loop until we find the smallest number of operations to make the suffix distinct
         while True:
             # Extract the suffix after removing the first 3*k elements
-            suffix = nums[3 * k:]
+            suffix = nums[3 * k :]
             # Check if the suffix has all distinct elements by comparing set length to list length
             if len(set(suffix)) == len(suffix):
                 # If suffix is distinct (or empty), return the number of operations performed
