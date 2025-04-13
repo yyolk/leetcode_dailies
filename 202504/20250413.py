@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/count-good-numbers/
+MOD = 10**9 + 7
 
 
 class Solution:
@@ -12,11 +13,13 @@ class Solution:
     is **not** good because `3` is at an even index but is not even.
 
     Given an integer `n`, return *the **total** number of good digit strings of length*
-    `n`. Since the answer may be large, **return it modulo** `109 + 7`.
+    `n`. Since the answer may be large, **return it modulo** `10^9 + 7`.
 
     A **digit string** is a string consisting of digits `0` through `9` that may contain
     leading zeros."""
 
-    def count_good_numbers(self, n: int) -> int: ...
+    def count_good_numbers(self, n: int) -> int:
+        result = (pow(20, n // 2, MOD) * (5 if n % 2 else 1)) % MOD
+        return result
 
     countGoodNumbers = count_good_numbers
