@@ -23,6 +23,7 @@ class FenwickTree:
             index -= index & -index
         return total
 
+
 class Solution:
     """2179. Count Good Triplets in an Array
 
