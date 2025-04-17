@@ -19,7 +19,7 @@ class Solution:
         left = 0
         current_pairs = 0
         freq = defaultdict(int)  # Frequency of elements in the current window
-        count_less_than_k = 0    # Number of subarrays with < k pairs
+        count_less_than_k = 0  # Number of subarrays with < k pairs
 
         # Iterate over all possible right endpoints
         for right in range(n):
