@@ -13,7 +13,7 @@ class Solution:
         index_dict = defaultdict(list)
         for i, num in enumerate(nums):
             index_dict[num].append(i)
-        
+
         # Step 2: Count valid pairs
         count = 0
         for indices in index_dict.values():
