@@ -22,6 +22,22 @@ class Solution:
     Given a positive integer `n`, return *the* `nth` *element of the **count-and-say**
     sequence*."""
 
-    def count_and_say(self, n: int) -> str: ...
+    def count_and_say(self, n: int) -> str:
+        if n == 1:
+            return "1"
+        term = "1"
+        for i in range(2, n + 1):
+            result = []
+            idx = 0
+            while idx < len(term):
+                current_digit = term[idx]
+                count = 0
+                while idx < len(term) and term[idx] == current_digit:
+                    count += 1
+                    idx += 1
+                result.append(str(count))
+                result.append(current_digit)
+            term = "".join(result)
+        return term
 
     countAndSay = count_and_say
