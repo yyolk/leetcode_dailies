@@ -27,17 +27,17 @@ class Solution:
                 else:
                     right -= 1
             return count
-        
+
         # Sort the array to enable two-pointer technique
         nums.sort()
-        
+
         # Count pairs with sum <= upper
         pairs_up_to_upper = count_pairs_less_equal(upper)
-        
+
         # Count pairs with sum < lower by using lower - 1
         # Since sums are integers, sum < lower is equivalent to sum <= lower - 1
         pairs_below_lower = count_pairs_less_equal(lower - 1)
-        
+
         # Number of pairs with lower <= sum <= upper
         return pairs_up_to_upper - pairs_below_lower
 
