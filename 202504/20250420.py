@@ -11,6 +11,30 @@ class Solution:
     Given the array `answers`, return *the minimum number of rabbits that could be in
     the forest*."""
 
-    def num_rabbits(self, answers: list[int]) -> int: ...
+    def num_rabbits(self, answers: list[int]) -> int:
+        """
+        Calculate the minimum number of rabbits in the forest based on their answers.
+
+        Args:
+            answers (list[int]): Array where answers[i] is the number of other rabbits
+                                 with the same color as the ith rabbit.
+
+        Returns:
+            int: The minimum possible number of rabbits in the forest.
+        """
+        # Count the frequency of each answer
+        count = collections.Counter(answers)
+        
+        total = 0
+        # Process each unique answer k
+        for k, m_k in count.items():
+            # Group size is k + 1 (including the rabbit itself)
+            group_size = k + 1
+            # Number of groups needed, using ceiling division
+            groups = (m_k + group_size - 1) // group_size
+            # Total rabbits for this answer = number of groups * group size
+            total += groups * group_size
+        
+        return total
 
     numRabbits = num_rabbits
