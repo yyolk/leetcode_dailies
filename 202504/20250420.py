@@ -24,7 +24,7 @@ class Solution:
         """
         # Count the frequency of each answer
         count = collections.Counter(answers)
-        
+
         total = 0
         # Process each unique answer k
         for k, m_k in count.items():
@@ -34,7 +34,7 @@ class Solution:
             groups = (m_k + group_size - 1) // group_size
             # Total rabbits for this answer = number of groups * group size
             total += groups * group_size
-        
+
         return total
 
     numRabbits = num_rabbits
