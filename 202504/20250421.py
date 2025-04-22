@@ -25,24 +25,22 @@ class Solution:
     Return *the number of **possible** hidden sequences there are.* If there are no
     possible sequences, return `0`."""
 
-    def number_of_arrays(
-        self, differences: list[int], lower: int, upper: int
-    ) -> int:
-    # Initialize variables to track the current prefix sum and its min/max values
+    def number_of_arrays(self, differences: list[int], lower: int, upper: int) -> int:
+        # Initialize variables to track the current prefix sum and its min/max values
         current_prefix = 0
         min_prefix = 0
         max_prefix = 0
-        
+
         # Compute prefix sums and track their minimum and maximum
         for diff in differences:
             current_prefix += diff
             min_prefix = min(min_prefix, current_prefix)
             max_prefix = max(max_prefix, current_prefix)
-        
+
         # Calculate the bounds for the starting value h[0]
         L = lower - min_prefix
         U = upper - max_prefix
-        
+
         # Return the number of possible integer values for h[0]
         return max(0, U - L + 1)
 
