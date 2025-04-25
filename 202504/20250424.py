@@ -24,33 +24,33 @@ class Solution:
         m = k - 1
         # Total number of possible subarrays
         total = n * (n + 1) // 2
-        
+
         # Helper function to count subarrays with at most m distinct elements
         def at_most(m):
             count = 0
             left = 0
             counter = defaultdict(int)
             distinct = 0
-            
+
             # Iterate over all possible right endpoints
             for right in range(n):
                 # Add the right element to the window
                 if counter[nums[right]] == 0:
                     distinct += 1
                 counter[nums[right]] += 1
-                
+
                 # Shrink the window if distinct elements exceed m
                 while distinct > m and left <= right:
                     counter[nums[left]] -= 1
                     if counter[nums[left]] == 0:
                         distinct -= 1
                     left += 1
-                
+
                 # Add the number of valid subarrays ending at right
                 count += right - left + 1
-            
+
             return count
-        
+
         # Number of complete subarrays = total - subarrays with at most k-1 distinct elements
         return total - at_most(m)
 
