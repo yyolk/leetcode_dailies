@@ -21,6 +21,34 @@ class Solution:
 
     def count_interesting_subarrays(
         self, nums: list[int], modulo: int, k: int
-    ) -> int: ...
+    ) -> int:
+        # Initialize frequency map with 0 sum having frequency 1
+        freq = {0: 1}
+        current_sum = 0  # Running sum of indicator values
+        total_count = 0  # Count of interesting subarrays
+
+        # Iterate through each element in nums
+        for num in nums:
+            # Indicator is 1 if num % modulo == k, else 0
+            indicator = 1 if num % modulo == k else 0
+            current_sum += indicator  # Update prefix sum
+
+            # Current prefix sum modulo modulo
+            prefix_mod = current_sum % modulo
+
+            # Target value that prefix_sum[l] % modulo should equal
+            target = (prefix_mod - k) % modulo
+
+            # If target exists in freq, add its frequency to total_count
+            if target in freq:
+                total_count += freq[target]
+
+            # Update frequency of current prefix_mod
+            if prefix_mod in freq:
+                freq[prefix_mod] += 1
+            else:
+                freq[prefix_mod] = 1
+
+        return total_count
 
     countInterestingSubarrays = count_interesting_subarrays
