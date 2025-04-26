@@ -19,9 +19,7 @@ class Solution:
     **Note:** A subarray is *a contiguous non-empty sequence of elements within an
     array*."""
 
-    def count_interesting_subarrays(
-        self, nums: list[int], modulo: int, k: int
-    ) -> int:
+    def count_interesting_subarrays(self, nums: list[int], modulo: int, k: int) -> int:
         # Initialize frequency map with 0 sum having frequency 1
         freq = {0: 1}
         current_sum = 0  # Running sum of indicator values
