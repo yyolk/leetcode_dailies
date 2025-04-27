@@ -19,11 +19,11 @@ class Solution:
 
     def count_subarrays(self, nums: list[int], min_k: int, max_k: int) -> int:
         # Initialize variables to track positions and count
-        bad_pos = -1      # Last position where element is outside [min_k, max_k]
-        minK_pos = -1     # Last position where min_k was seen
-        maxK_pos = -1     # Last position where max_k was seen
-        total_count = 0   # Total number of valid subarrays
-        
+        bad_pos = -1  # Last position where element is outside [min_k, max_k]
+        minK_pos = -1  # Last position where min_k was seen
+        maxK_pos = -1  # Last position where max_k was seen
+        total_count = 0  # Total number of valid subarrays
+
         # Iterate through the array
         for i in range(len(nums)):
             # Check if current element is outside the range [min_k, max_k]
@@ -41,7 +41,7 @@ class Solution:
                 if minK_pos != -1 and maxK_pos != -1:
                     # Number of valid subarrays ending at i
                     total_count += min(minK_pos, maxK_pos) - bad_pos
-        
+
         return total_count
 
     countSubarrays = count_subarrays
