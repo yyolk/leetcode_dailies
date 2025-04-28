@@ -13,6 +13,25 @@ class Solution:
 
     A **subarray** is a contiguous sequence of elements within an array."""
 
-    def count_subarrays(self, nums: list[int], k: int) -> int: ...
+    def count_subarrays(self, nums: list[int], k: int) -> int:
+        n = len(nums)
+        result = 0
+        left = 0
+        current_sum = 0
+        
+        for right in range(n):
+            # Add the current element to the window's sum
+            current_sum += nums[right]
+            
+            # Shrink the window from the left while the score is >= k
+            while left <= right and current_sum * (right - left + 1) >= k:
+                current_sum -= nums[left]
+                left += 1
+            
+            # Count the number of valid subarrays ending at 'right'
+            if left <= right:
+                result += right - left + 1
+        
+        return result
 
     countSubarrays = count_subarrays
