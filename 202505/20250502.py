@@ -33,28 +33,28 @@ class Solution:
         result = list(dominoes)  # Convert to list for mutability
         # Find indices of all pushed dominoes ("L" or "R")
         indices = [i for i in range(n) if dominoes[i] in "LR"]
-        
+
         # If no "L" or "R", the string remains unchanged
         if not indices:
             return dominoes
-        
+
         # Handle leading "."s
         if indices[0] > 0 and dominoes[indices[0]] == "L":
             for i in range(indices[0]):
                 result[i] = "L"
-        
+
         # Handle trailing "."s
         if indices[-1] < n - 1 and dominoes[indices[-1]] == "R":
             for i in range(indices[-1] + 1, n):
                 result[i] = "R"
-        
+
         # Process each segment between consecutive pushed dominoes
         for j in range(len(indices) - 1):
             left = indices[j]
             right = indices[j + 1]
             left_char = dominoes[left]
             right_char = dominoes[right]
-            
+
             if left_char == "R" and right_char == "L":
                 # Forces meet; split the segment
                 m = right - left - 1  # Number of "."s between
@@ -77,7 +77,7 @@ class Solution:
             elif left_char == "L" and right_char == "R":
                 # All remain "." (no change needed)
                 pass
-        
+
         return "".join(result)  # Convert back to string
 
     pushDominoes = push_dominoes
