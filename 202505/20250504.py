@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/number-of-equivalent-domino-pairs/
+from collections import Counter
 
 
 class Solution:
@@ -11,6 +12,10 @@ class Solution:
     Return *the number of pairs* `(i, j)` *for which* `0 <= i < j < dominoes.length`*,
     and* `dominoes[i]` *is **equivalent to*** `dominoes[j]`."""
 
-    def num_equiv_domino_pairs(self, dominoes: list[list[int]]) -> int: ...
+    def num_equiv_domino_pairs(self, dominoes: list[list[int]]) -> int:
+        # Count frequencies of normalized dominoes
+        count = Counter((min(a, b), max(a, b)) for a, b in dominoes)
+        # Sum the number of pairs for each frequency
+        return sum(k * (k - 1) // 2 for k in count.values())
 
     numEquivDominoPairs = num_equiv_domino_pairs
