@@ -11,6 +11,7 @@ class Solution:
     A **zero-based permutation** `nums` is an array of **distinct** integers from `0` to
     `nums.length - 1` (**inclusive**)."""
 
-    def build_array(self, nums: list[int]) -> list[int]: ...
+    def build_array(self, nums: list[int]) -> list[int]:
+        return [nums[nums[i]] for i in range(len(nums))]
 
     buildArray = build_array
