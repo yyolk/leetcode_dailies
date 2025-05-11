@@ -15,11 +15,11 @@ class Solution:
         # Sum of non-zero elements and count of zeros in nums1
         s1 = sum(num for num in nums1 if num != 0)
         z1 = nums1.count(0)
-        
+
         # Sum of non-zero elements and count of zeros in nums2
         s2 = sum(num for num in nums2 if num != 0)
         z2 = nums2.count(0)
-        
+
         # Case 1: No zeros in either array
         if z1 == 0 and z2 == 0:
             return s1 if s1 == s2 else -1
