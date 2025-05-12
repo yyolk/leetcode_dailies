@@ -13,4 +13,5 @@ class Solution:
             if a % 2 == 1 and b % 2 == 1 and c % 2 == 1:
                 return True
         return False
+
     threeConsecutiveOdds = three_consecutive_odds
