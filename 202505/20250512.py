@@ -25,7 +25,7 @@ class Solution:
     def find_even_numbers(self, digits: list[int]) -> list[int]:
         # Set to store unique valid numbers
         result = set()
-        
+
         # Generate all permutations of 3 digits
         for perm in permutations(digits, 3):
             # Check conditions:
@@ -35,7 +35,7 @@ class Solution:
                 # Form the three-digit number
                 num = 100 * perm[0] + 10 * perm[1] + perm[2]
                 result.add(num)
-        
+
         # Return sorted list of unique numbers
         return sorted(list(result))
 
