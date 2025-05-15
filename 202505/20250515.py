@@ -25,6 +25,21 @@ class Solution:
 
     def get_longest_subsequence(
         self, words: list[str], groups: list[int]
-    ) -> list[str]: ...
+    ) -> list[str]:
+        # Initialize the result with the first word
+        result = [words[0]]
+        # Track the group of the last included word
+        last_group = groups[0]
+        
+        # Iterate through the remaining words starting from index 1
+        for i in range(1, len(words)):
+            # If the current group differs from the last included group
+            if groups[i] != last_group:
+                # Add the current word to the subsequence
+                result.append(words[i])
+                # Update the last_group to the current group
+                last_group = groups[i]
+        
+        return result
 
     getLongestSubsequence = get_longest_subsequence
