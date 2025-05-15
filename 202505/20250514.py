@@ -60,7 +60,7 @@ class Solution:
         # Step 5: Compute initial count vector from input string
         initial_count = [0] * N
         for char in s:
-            idx = ord(char) - ord('a')
+            idx = ord(char) - ord("a")
             initial_count[idx] += 1
 
         # Step 6: Compute final count vector: final_count = M_t * initial_count
