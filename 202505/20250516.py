@@ -29,6 +29,36 @@ class Solution:
 
     def get_words_in_longest_subsequence(
         self, words: list[str], groups: list[int]
-    ) -> list[str]: ...
+    ) -> list[str]:
+        n = len(words)
+        # dp[i] stores the length of the longest valid subsequence ending at index i
+        dp = [1] * n
+        # prev[i] stores the previous index in the longest subsequence ending at i
+        prev = [-1] * n
+        
+        # Fill the dp and prev arrays
+        for i in range(1, n):
+            for j in range(i):
+                # Check if words[j] and words[i] have the same length
+                if len(words[j]) == len(words[i]) and groups[j] != groups[i]:
+                    # Compute Hamming distance
+                    hd = sum(a != b for a, b in zip(words[j], words[i]))
+                    # If Hamming distance is 1 and extending from j improves the length
+                    if hd == 1 and dp[j] + 1 > dp[i]:
+                        dp[i] = dp[j] + 1
+                        prev[i] = j
+        
+        # Find the index where the longest subsequence ends
+        k = max(range(n), key=lambda x: dp[x])
+        
+        # Reconstruct the subsequence
+        subseq = []
+        while k != -1:
+            subseq.append(words[k])
+            k = prev[k]
+        # Reverse to get the words in increasing order of indices
+        subseq.reverse()
+        
+        return subseq
 
     getWordsInLongestSubsequence = get_words_in_longest_subsequence
