@@ -35,7 +35,7 @@ class Solution:
         dp = [1] * n
         # prev[i] stores the previous index in the longest subsequence ending at i
         prev = [-1] * n
-        
+
         # Fill the dp and prev arrays
         for i in range(1, n):
             for j in range(i):
@@ -47,10 +47,10 @@ class Solution:
                     if hd == 1 and dp[j] + 1 > dp[i]:
                         dp[i] = dp[j] + 1
                         prev[i] = j
-        
+
         # Find the index where the longest subsequence ends
         k = max(range(n), key=lambda x: dp[x])
-        
+
         # Reconstruct the subsequence
         subseq = []
         while k != -1:
@@ -58,7 +58,7 @@ class Solution:
             k = prev[k]
         # Reverse to get the words in increasing order of indices
         subseq.reverse()
-        
+
         return subseq
 
     getWordsInLongestSubsequence = get_words_in_longest_subsequence
