@@ -20,25 +20,25 @@ class Solution:
 
     def is_zero_array(self, nums: list[int], queries: list[list[int]]) -> bool:
         n = len(nums)
-        
+
         # Step 1: Check if any element in nums is negative
         if any(num < 0 for num in nums):
             return False
-        
+
         # Step 2: Initialize cover array to track query coverage using difference array technique
         cover = [0] * (n + 1)
         for li, ri in queries:
             cover[li] += 1
             if ri + 1 < n:
                 cover[ri + 1] -= 1
-        
+
         # Step 3: Compute prefix sum and check feasibility
         current = 0
         for i in range(n):
             current += cover[i]
             if nums[i] > current:
                 return False
-        
+
         return True
 
     isZeroArray = is_zero_array
