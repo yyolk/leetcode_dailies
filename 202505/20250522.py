@@ -26,10 +26,10 @@ class Solution:
         n = len(nums)
         if n == 0:
             return len(queries)
-        
+
         # Sort queries by start index
         queries.sort(key=lambda x: x[0])
-        
+
         # Max-heap for queries, using -ri for largest ri first
         H = []
         # Min-heap for endpoints where coverage decreases
@@ -37,19 +37,19 @@ class Solution:
         current_coverage = 0
         selected = 0
         k = 0  # Index for next query to consider
-        
+
         for j in range(n):
             # Add queries that start at or before j
             while k < len(queries) and queries[k][0] <= j:
                 li, ri = queries[k]
                 heapq.heappush(H, (-ri, li))
                 k += 1
-            
+
             # Decrease coverage for queries ending before j
             while end_points and end_points[0] <= j:
                 heapq.heappop(end_points)
                 current_coverage -= 1
-            
+
             # Ensure coverage meets nums[j]
             while current_coverage < nums[j]:
                 if not H:
@@ -65,7 +65,7 @@ class Solution:
                 current_coverage += 1
                 if ri + 1 < n:
                     heapq.heappush(end_points, ri + 1)
-        
+
         return len(queries) - selected
 
     maxRemoval = max_removal
