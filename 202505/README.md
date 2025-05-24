@@ -158,7 +158,9 @@
    </a>
   </td>
   <td class="sat">
-   24
+   <a href="20250524.py">
+    24
+   </a>
   </td>
  </tr>
  <tr>
