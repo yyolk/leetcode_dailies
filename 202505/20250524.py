@@ -11,6 +11,7 @@ class Solution:
 
     **Note** that the returned array may be in **any** order."""
 
-    def find_words_containing(self, words: list[str], x: str) -> list[int]: ...
+    def find_words_containing(self, words: list[str], x: str) -> list[int]:
+        return [idx for idx, word in enumerate(words) if x in word]
 
     findWordsContaining = find_words_containing
