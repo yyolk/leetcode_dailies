@@ -31,13 +31,13 @@ class Solution:
                 if word == rev:  # Word is a palindrome (e.g., "aa")
                     pairs = freq[word] // 2
                     total_length += pairs * 4  # Each pair contributes 4 letters
-                    freq[word] -= pairs * 2    # Use up the paired words
-                    if freq[word] > 0:         # If any remain, can use one in center
+                    freq[word] -= pairs * 2  # Use up the paired words
+                    if freq[word] > 0:  # If any remain, can use one in center
                         has_center = True
                 else:  # Word and its reverse are different (e.g., "ab" and "ba")
                     pairs = min(freq[word], freq[rev])
                     total_length += pairs * 4  # Each pair contributes 4 letters
-                    freq[word] -= pairs        # Use up the paired words
+                    freq[word] -= pairs  # Use up the paired words
                     freq[rev] -= pairs
 
         # Add 2 to the length if we can place a palindrome word in the center
