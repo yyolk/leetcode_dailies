@@ -23,49 +23,49 @@ class Solution:
 
     def largest_path_value(self, colors: str, edges: list[list[int]]) -> int:
         n = len(colors)
-        
+
         # Build adjacency list for outgoing edges and list for incoming edges
         adj_list = [[] for _ in range(n)]
         incoming_edges = [[] for _ in range(n)]
         for a, b in edges:
-            adj_list[a].append(b)      # a -> b (outgoing)
-            incoming_edges[b].append(a) # b <- a (incoming)
-        
+            adj_list[a].append(b)  # a -> b (outgoing)
+            incoming_edges[b].append(a)  # b <- a (incoming)
+
         # Compute indegree for each node
         indegree = [len(incoming_edges[i]) for i in range(n)]
-        
+
         # Initialize queue with nodes having no incoming edges
         queue = deque([i for i in range(n) if indegree[i] == 0])
-        
+
         # freq[node][c] is the max frequency of color c in paths ending at node
         freq = [[0] * 26 for _ in range(n)]
         max_freq = 0  # Tracks the largest color value
         processed = 0  # Counts nodes processed to detect cycles
-        
+
         # Process nodes in topological order
         while queue:
             node = queue.popleft()
             processed += 1
-            
+
             # Convert current node's color to index (0-25)
-            color_idx = ord(colors[node]) - ord('a')
-            
+            color_idx = ord(colors[node]) - ord("a")
+
             # Update frequency for each color
             for c in range(26):
                 # Max frequency of color c from all predecessors
                 max_pred = max([freq[pred][c] for pred in incoming_edges[node]] or [0])
                 # Add 1 if current node's color matches c
                 freq[node][c] = max_pred + (1 if c == color_idx else 0)
-            
+
             # Update global maximum frequency
             max_freq = max(max_freq, max(freq[node]))
-            
+
             # Process neighbors
             for neighbor in adj_list[node]:
                 indegree[neighbor] -= 1
                 if indegree[neighbor] == 0:
                     queue.append(neighbor)
-        
+
         # If not all nodes processed, there’s a cycle
         return max_freq if processed == n else -1
 
