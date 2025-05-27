@@ -16,6 +16,20 @@ class Solution:
 
     Return *the integer* `num1 - num2`."""
 
-    def difference_of_sums(self, n: int, m: int) -> int: ...
+    def difference_of_sums(self, n: int, m: int) -> int:
+        # Calculate the total sum of numbers from 1 to n
+        sum_all = n * (n + 1) // 2
+        
+        # Calculate the number of multiples of m up to n
+        k = n // m
+        
+        # Calculate the sum of all numbers divisible by m (num2)
+        num2 = m * k * (k + 1) // 2
+        
+        # Calculate the sum of all numbers not divisible by m (num1)
+        num1 = sum_all - num2
+        
+        # Return the difference num1 - num2
+        return num1 - num2
 
     differenceOfSums = difference_of_sums
