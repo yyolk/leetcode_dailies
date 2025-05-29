@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/maximize-the-number-of-target-nodes-after-connecting-trees-ii/
+from collections import deque
 
 
 class Solution:
@@ -24,6 +25,58 @@ class Solution:
 
     def max_target_nodes(
         self, edges1: list[list[int]], edges2: list[list[int]]
-    ) -> list[int]: ...
+    ) -> list[int]:
+        # Helper function to build adjacency list
+        def build_adj(edges, n):
+            adj = [[] for _ in range(n)]
+            for u, v in edges:
+                adj[u].append(v)
+                adj[v].append(u)
+            return adj
+
+        # Helper function to perform BFS and compute even/odd counts and levels
+        def bfs_count(tree, root):
+            n = len(tree)
+            level = [-1] * n
+            level[root] = 0
+            q = deque([root])
+            even_count = 0
+            odd_count = 0
+            while q:
+                u = q.popleft()
+                if level[u] % 2 == 0:
+                    even_count += 1
+                else:
+                    odd_count += 1
+                for v in tree[u]:
+                    if level[v] == -1:
+                        level[v] = level[u] + 1
+                        q.append(v)
+            return even_count, odd_count, level
+
+        # Compute sizes of the trees
+        n = len(edges1) + 1  # Number of nodes in first tree
+        m = len(edges2) + 1  # Number of nodes in second tree
+
+        # Build adjacency lists
+        adj1 = build_adj(edges1, n)
+        adj2 = build_adj(edges2, m)
+
+        # BFS on second tree to get the size of the larger color class
+        even_count2, odd_count2, _ = bfs_count(adj2, 0)
+        max_size = max(even_count2, odd_count2)
+
+        # BFS on first tree to get level parities and counts
+        count0, count1, level = bfs_count(adj1, 0)
+
+        # Compute answer for each node i in the first tree
+        answer = [0] * n
+        for i in range(n):
+            if level[i] % 2 == 0:
+                answer[i] = count0 + max_size
+            else:
+                answer[i] = count1 + max_size
+
+        return answer
 
     maxTargetNodes = max_target_nodes
