@@ -31,20 +31,20 @@ class Solution:
         # Build adjacency lists for both trees
         g1 = self.build_graph(edges1)
         g2 = self.build_graph(edges2)
-        
+
         # If k is 0, each node is only target to itself
         if k == 0:
             return [1] * len(g1)
-        
+
         # Count nodes within distance k from each node in the first tree
         cnt1 = self.bfs_count_max(g1, k)
-        
+
         # Count nodes within distance k-1 from each node in the second tree
         cnt2 = self.bfs_count_max(g2, k - 1)
-        
+
         # Find the maximum number of nodes within distance k-1 in the second tree
         max_cnt2 = max(cnt2)
-        
+
         # Compute the answer for each node by adding its count to the maximum from the second tree
         return [cnt + max_cnt2 for cnt in cnt1]
 
