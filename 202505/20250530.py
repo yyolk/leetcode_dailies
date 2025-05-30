@@ -21,6 +21,39 @@ class Solution:
 
     Note that `edges` may contain cycles."""
 
-    def closest_meeting_node(self, edges: list[int], node1: int, node2: int) -> int: ...
+    def closest_meeting_node(self, edges: list[int], node1: int, node2: int) -> int:
+        def get_distances(start: int) -> dict[int, int]:
+            """Helper function to compute distances from a starting node to all reachable nodes."""
+            dist = {}
+            current = start
+            distance = 0
+            # Traverse until we hit a node with no outgoing edge or a cycle
+            while current != -1 and current not in dist:
+                dist[current] = distance
+                next_node = edges[current]
+                if next_node == -1:
+                    break
+                current = next_node
+                distance += 1
+            return dist
+        
+        # Compute distances from node1 and node2 to all reachable nodes
+        dist1 = get_distances(node1)
+        dist2 = get_distances(node2)
+        
+        # Find nodes reachable from both node1 and node2
+        common_nodes = set(dist1.keys()) & set(dist2.keys())
+        
+        # If no common nodes exist, return -1
+        if not common_nodes:
+            return -1
+        
+        # Find the minimum of the maximum distances from node1 and node2
+        min_max_dist = min(max(dist1[node], dist2[node]) for node in common_nodes)
+        # Get all nodes that achieve this minimum maximum distance
+        candidates = [node for node in common_nodes if max(dist1[node], dist2[node]) == min_max_dist]
+        
+        # Return the node with the smallest index among the candidates
+        return min(candidates)
 
     closestMeetingNode = closest_meeting_node
