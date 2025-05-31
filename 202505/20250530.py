@@ -36,23 +36,27 @@ class Solution:
                 current = next_node
                 distance += 1
             return dist
-        
+
         # Compute distances from node1 and node2 to all reachable nodes
         dist1 = get_distances(node1)
         dist2 = get_distances(node2)
-        
+
         # Find nodes reachable from both node1 and node2
         common_nodes = set(dist1.keys()) & set(dist2.keys())
-        
+
         # If no common nodes exist, return -1
         if not common_nodes:
             return -1
-        
+
         # Find the minimum of the maximum distances from node1 and node2
         min_max_dist = min(max(dist1[node], dist2[node]) for node in common_nodes)
         # Get all nodes that achieve this minimum maximum distance
-        candidates = [node for node in common_nodes if max(dist1[node], dist2[node]) == min_max_dist]
-        
+        candidates = [
+            node
+            for node in common_nodes
+            if max(dist1[node], dist2[node]) == min_max_dist
+        ]
+
         # Return the node with the smallest index among the candidates
         return min(candidates)
 
