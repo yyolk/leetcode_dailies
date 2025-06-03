@@ -29,6 +29,43 @@ class Solution:
         keys: list[list[int]],
         contained_boxes: list[list[int]],
         initial_boxes: list[int],
-    ) -> int: ...
+    ) -> int:
+        # Initialize sets to track state
+        accessible = set(initial_boxes)  # Boxes we have access to
+        have_key = set()                 # Boxes we have keys for
+        opened = set()                   # Boxes we have opened
+        total_candies = 0                # Total candies collected
+        
+        # Initially, we can open any accessible box that has status 1
+        openable = set(box for box in accessible if status[box] == 1)
+        
+        # Process boxes as long as there are boxes we can open
+        while openable:
+            box = openable.pop()  # Take a box we can open
+            if box in opened:
+                continue  # Skip if already opened (safety check)
+            
+            # Open the box and collect its candies
+            opened.add(box)
+            total_candies += candies[box]
+            
+            # Add all keys found in this box to our key set
+            for key in keys[box]:
+                have_key.add(key)
+                # If this key unlocks an accessible, unopened, initially closed box,
+                # we can now open it
+                if key in accessible and key not in opened and status[key] == 0:
+                    openable.add(key)
+            
+            # Add all contained boxes to accessible set
+            for contained in contained_boxes[box]:
+                if contained not in accessible:
+                    accessible.add(contained)
+                    # If this contained box can be opened (either initially open or we have its key),
+                    # add it to openable
+                    if contained not in opened and (status[contained] == 1 or contained in have_key):
+                        openable.add(contained)
+        
+        return total_candies
 
     maxCandies = max_candies
