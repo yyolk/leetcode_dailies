@@ -17,6 +17,11 @@ class Solution:
     Find the lexicographically largest string from the box after all the rounds are
     finished."""
 
-    def answer_string(self, word: str, num_friends: int) -> str: ...
+    def answer_string(self, word: str, num_friends: int) -> str:
+        m = len(word) - num_friends + 1  # splits to be done with m length 
+        if num_friends == 1:  # if only one split we can do total word is taken 
+            return word
+        # else check all m length splits and find max in them 
+        return max(word[i:i+m] for i in range(len(word) - m + 1))
 
     answerString = answer_string
