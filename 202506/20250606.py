@@ -19,18 +19,18 @@ class Solution:
         n = len(s)
         if n == 0:
             return ""
-        
+
         # Precompute the smallest character in the suffix s[i:]
         min_suffix = [0] * n
         min_suffix[-1] = s[-1]
-        for i in range(n-2, -1, -1):
-            min_suffix[i] = min(s[i], min_suffix[i+1])
-        
+        for i in range(n - 2, -1, -1):
+            min_suffix[i] = min(s[i], min_suffix[i + 1])
+
         # Initialize stack t, result list paper, and index i
         t = []
         paper = []
         i = 0
-        
+
         # Process until both s and t are empty
         while i < n or t:
             if t and (i == n or t[-1] <= min_suffix[i]):
@@ -38,7 +38,7 @@ class Solution:
             else:
                 t.append(s[i])
                 i += 1
-        
+
         return "".join(paper)
 
     robotWithString = robot_with_string
