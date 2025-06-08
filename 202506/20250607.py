@@ -36,7 +36,9 @@ class Solution:
             # Initialize a counter for consecutive '*' characters
             star_count = 0
             # Count the number of consecutive '*' characters
-            while current_index < len(input_string) and input_string[current_index] == "*":
+            while (
+                current_index < len(input_string) and input_string[current_index] == "*"
+            ):
                 star_count += 1
                 current_index += 1
 
