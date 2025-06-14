@@ -22,6 +22,29 @@ class Solution:
 
     * The resulting number after remapping can contain leading zeroes."""
 
-    def min_max_difference(self, num: int) -> int: ...
+    def min_max_difference(self, num: int) -> int:
+        s = str(num)
+        
+        # Find maximum value
+        for i in range(len(s)):
+            if s[i] != "9":
+                d = s[i]
+                max_s = s.replace(d, "9")
+                break
+        else:
+            max_s = s  # All digits are "9", so maximum is the original number
+        max_num = int(max_s)
+        
+        # Find minimum value
+        for i in range(len(s)):
+            if s[i] != "0":
+                d = s[i]
+                min_s = s.replace(d, "0")
+                break
+        else:
+            min_s = s  # All digits are "0", so minimum is 0
+        min_num = int(min_s)
+        
+        return max_num - min_num
 
     minMaxDifference = min_max_difference
