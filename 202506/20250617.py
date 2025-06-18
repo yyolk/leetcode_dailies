@@ -17,7 +17,7 @@ class Solution:
     Since the answer may be very large, return it **modulo** `109 + 7`."""
 
     def count_good_arrays(self, n: int, m: int, k: int) -> int:
-        mod = 10 ** 9 + 7
+        mod = 10**9 + 7
         # Calculate the number of good arrays:
         # - m: choices for the first element (any value from 1 to m)
         # - (m-1)^(n-k-1): for the n-k-1 positions where arr[i] != arr[i-1], choose from (m-1) values
