@@ -20,10 +20,10 @@ class Solution:
     def divide_array(self, nums: list[int], k: int) -> list[list[int]]:
         # Sort the array to bring elements that are close in value next to each other
         nums.sort()
-        
+
         # Initialize the result list to store the subarrays
         result = []
-        
+
         # Iterate through the array in steps of 3
         for i in range(0, len(nums), 3):
             # Check if the difference between max and min in the group exceeds k
@@ -31,7 +31,7 @@ class Solution:
                 return []
             # If the condition is satisfied, append the group to the result
             result.append([nums[i], nums[i + 1], nums[i + 2]])
-        
+
         # Return the list of subarrays if all groups satisfy the condition
         return result
 
