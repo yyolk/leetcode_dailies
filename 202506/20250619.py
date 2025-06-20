@@ -19,21 +19,21 @@ class Solution:
         # Handle empty array case
         if not nums:
             return 0
-        
+
         # Sort the array to group elements by value
         nums.sort()
-        
+
         # Initialize count of subsequences and current maximum threshold
         count = 1
         current_max = nums[0] + k
-        
+
         # Iterate through sorted array
         for num in nums:
             # If current number exceeds the maximum allowed value for current subsequence
             if num > current_max:
                 count += 1
                 current_max = num + k
-        
+
         return count
 
     partitionArray = partition_array
