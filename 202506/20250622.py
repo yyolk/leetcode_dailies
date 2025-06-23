@@ -24,7 +24,7 @@ class Solution:
 
     def divide_string(self, s: str, k: int, fill: str) -> list[str]:
         # Create list of groups using list comprehension
-        result = [s[i:i+k] for i in range(0, len(s), k)]
+        result = [s[i : i + k] for i in range(0, len(s), k)]
         # Check and fill the last group if necessary
         if result and len(result[-1]) < k:
             result[-1] += fill * (k - len(result[-1]))
