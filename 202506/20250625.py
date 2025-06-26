@@ -9,9 +9,7 @@ class Solution:
     integer `k`, return *the* `kth` *(**1-based**) smallest product of* `nums1[i] *
     nums2[j]` *where* `0 <= i < nums1.length` *and* `0 <= j < nums2.length`."""
 
-    def kth_smallest_product(
-        self, nums1: list[int], nums2: list[int], k: int
-    ) -> int:
+    def kth_smallest_product(self, nums1: list[int], nums2: list[int], k: int) -> int:
         def count_less_equal(mid: int) -> int:
             """Count the number of products nums1[i] * nums2[j] <= mid."""
             count = 0
@@ -37,7 +35,7 @@ class Solution:
             return count
 
         # Binary search range based on min and max possible products
-        low, high = -10**10, 10**10
+        low, high = -(10**10), 10**10
         while low < high:
             mid = low + (high - low) // 2
             if count_less_equal(mid) >= k:
