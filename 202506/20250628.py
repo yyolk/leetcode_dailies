@@ -15,16 +15,16 @@ class Solution:
     def max_subsequence(self, nums: list[int], k: int) -> list[int]:
         # Create list of (value, index) pairs to track original positions
         indexed_nums = [(nums[i], i) for i in range(len(nums))]
-        
+
         # Get the k largest elements with their indices
         largest_k = heapq.nlargest(k, indexed_nums, key=lambda x: x[0])
-        
+
         # Sort them by their original index to maintain sequence order
         sorted_by_index = sorted(largest_k, key=lambda x: x[1])
-        
+
         # Extract just the values in the sorted order
         result = [x[0] for x in sorted_by_index]
-        
+
         return result
 
     maxSubsequence = max_subsequence
