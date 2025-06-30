@@ -182,7 +182,9 @@
    </a>
   </td>
   <td class="mon">
-   30
+   <a href="20250630.py">
+    30
+   </a>
   </td>
   <td class="noday">
   </td>
