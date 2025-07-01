@@ -17,6 +17,12 @@ class Solution:
     Return the total number of *possible* original strings that Alice *might* have
     intended to type."""
 
-    def possible_string_count(self, word: str) -> int: ...
+    def possible_string_count(self, word: str) -> int:
+        # Start with 1 to account for the no-mistake scenario
+        count = 1
+        for i in range(1, len(word)):
+            if word[i] == word[i - 1]:
+                count += 1
+        return count
 
     possibleStringCount = possible_string_count
