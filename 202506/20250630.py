@@ -15,7 +15,7 @@ class Solution:
         # Count the frequency of each number in the array
         counter = Counter(nums)
         max_length = 0
-        
+
         # Check each unique number and its consecutive number
         for x in counter:
             if x + 1 in counter:
@@ -23,7 +23,7 @@ class Solution:
                 current_length = counter[x] + counter[x + 1]
                 # Update max_length if current_length is greater
                 max_length = max(max_length, current_length)
-                
+
         return max_length
 
     findLHS = find_l_h_s
