@@ -18,7 +18,7 @@ class Solution:
 
     def possible_string_count(self, word: str, k: int) -> int:
         MOD = 1_000_000_007
-        
+
         # Step 1: Parse the runs
         runs = []
         if word:
@@ -32,23 +32,23 @@ class Solution:
                     current_char = char
                     count = 1
             runs.append(count)  # Append the last run
-        
+
         m = len(runs)
-        
+
         # Step 2: Compute total number of ways
         prod = 1
         for ri in runs:
             prod = (prod * ri) % MOD
-        
+
         # Step 3: If m >= k, all combinations are valid
         if m >= k:
             return prod
-        
+
         # Step 4: Dynamic Programming for m < k
         S = 2000  # k <= 2000, so t = k - m - 1 <= 1999
         prev = [0] * (S + 1)
         prev[0] = 1  # Base case: empty sum is 1 way
-        
+
         for i in range(1, m + 1):
             curr = [0] * (S + 1)
             curr[0] = prev[0]  # n_i = 0
@@ -57,14 +57,14 @@ class Solution:
                 if s - runs[i - 1] >= 0:
                     curr[s] = (curr[s] - prev[s - runs[i - 1]] + MOD) % MOD
             prev = curr
-        
+
         # Step 5: Compute number of ways where sum m_i < k
         t = k - m - 1  # sum n_i <= k - m - 1
         if t >= 0:
-            sum_dp = sum(prev[:t + 1]) % MOD
+            sum_dp = sum(prev[: t + 1]) % MOD
         else:
             sum_dp = 0  # No ways if t < 0, since sum n_i >= 0
-        
+
         # Step 6: Final answer
         answer = (prod - sum_dp) % MOD
         return answer
