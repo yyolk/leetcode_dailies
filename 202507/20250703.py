@@ -21,6 +21,10 @@ class Solution:
 
     **Note** that the character `'z'` can be changed to `'a'` in the operation."""
 
-    def kth_character(self, k: int) -> str: ...
+    def kth_character(self, k: int) -> str:
+        # Calculate the number of 1's in the binary representation of (k-1)
+        m = bin(k - 1).count("1")
+        # Compute the character by shifting "a" by (m % 26) positions in the alphabet
+        return chr((m % 26) + ord("a"))
 
     kthCharacter = kth_character
