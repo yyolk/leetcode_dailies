@@ -60,10 +60,14 @@
  </tr>
  <tr>
   <td class="sun">
-   6
+   <a href="20250706.py">
+    6
+   </a>
   </td>
   <td class="mon">
-   7
+   <a href="20250707.py">
+    7
+   </a>
   </td>
   <td class="tue">
    8

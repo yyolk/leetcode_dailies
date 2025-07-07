@@ -15,13 +15,13 @@ class Solution:
         freq = {}
         for num in arr:
             freq[num] = freq.get(num, 0) + 1
-        
+
         # Find lucky numbers where frequency equals value
         lucky = -1
         for num in freq:
             if num == freq[num]:
                 lucky = max(lucky, num)
-        
+
         return lucky
 
     findLucky = find_lucky
