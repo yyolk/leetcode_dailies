@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/meeting-rooms-iii/
+import heapq
 
 
 class Solution:
@@ -26,6 +27,44 @@ class Solution:
     A **half-closed interval** `[a, b)` is the interval between `a` and `b`
     **including** `a` and **not including** `b`."""
 
-    def most_booked(self, n: int, meetings: list[list[int]]) -> int: ...
+    def most_booked(self, n: int, meetings: list[list[int]]) -> int:
+        # Sort meetings by start time
+        meetings.sort(key=lambda x: x[0])
+        # Initialize count of meetings per room
+        counts = [0] * n
+        # Min-heap for available rooms
+        available = list(range(n))
+        heapq.heapify(available)
+        # Min-heap for busy rooms: (end_time, room)
+        busy = []
+        
+        for start, end in meetings:
+            duration = end - start
+            # Free up rooms that are done by current start time
+            while busy and busy[0][0] <= start:
+                _, room = heapq.heappop(busy)
+                heapq.heappush(available, room)
+            
+            if available:
+                # Assign the lowest available room
+                room = heapq.heappop(available)
+                counts[room] += 1
+                new_end = start + duration
+                heapq.heappush(busy, (new_end, room))
+            else:
+                if busy:
+                    # Delay meeting until the earliest busy room frees up
+                    free_time, room = heapq.heappop(busy)
+                    counts[room] += 1
+                    new_end = free_time + duration
+                    heapq.heappush(busy, (new_end, room))
+        
+        # Find the maximum meetings count
+        max_count = max(counts)
+        # Return the lowest room number with max meetings
+        for i in range(n):
+            if counts[i] == max_count:
+                return i
+        return -1  # Should not reach here
 
     mostBooked = most_booked
