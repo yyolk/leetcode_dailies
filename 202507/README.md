@@ -90,7 +90,9 @@
    </a>
   </td>
   <td class="sat">
-   12
+   <a href="20250712.py">
+    12
+   </a>
   </td>
  </tr>
  <tr>
