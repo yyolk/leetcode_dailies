@@ -38,6 +38,27 @@ class Solution:
 
     def earliest_and_latest(
         self, n: int, first_player: int, second_player: int
-    ) -> list[int]: ...
+    ) -> list[int]:
+        @functools.lru_cache(None)
+        def dp(l: int, r: int, k: int) -> list[int]:
+            if l == r:
+                return [1, 1]
+            if l > r:
+                return dp(r, l, k)
+
+            a = math.inf
+            b = -math.inf
+
+            for i in range(1, l + 1):
+                for j in range(l - i + 1, r - i + 1):
+                    if not l + r - k // 2 <= i + j <= (k + 1) // 2:
+                        continue
+                    x, y = dp(i, j, (k + 1) // 2)
+                    a = min(a, x + 1)
+                    b = max(b, y + 1)
+
+            return [a, b]
+
+        return dp(first_player, n - second_player + 1, n)
 
     earliestAndLatest = earliest_and_latest
