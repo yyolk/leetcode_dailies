@@ -19,6 +19,31 @@ class Solution:
 
     def match_players_and_trainers(
         self, players: list[int], trainers: list[int]
-    ) -> int: ...
+    ) -> int:
+        # Sort players in ascending order of ability
+        players.sort()
+        # Sort trainers in ascending order of capacity
+        trainers.sort()
+        # Initialize pointer for players
+        i = 0
+        # Initialize pointer for trainers
+        j = 0
+        # Initialize match counter
+        count = 0
+        # Loop while both pointers are within array bounds
+        while i < len(players) and j < len(trainers):
+            # Check if current player can be matched with current trainer
+            if players[i] <= trainers[j]:
+                # Increment match count
+                count += 1
+                # Move to next player
+                i += 1
+                # Move to next trainer
+                j += 1
+            else:
+                # Skip this trainer as it's too small for the current player
+                j += 1
+        # Return the total number of matches
+        return count
 
     matchPlayersAndTrainers = match_players_and_trainers
