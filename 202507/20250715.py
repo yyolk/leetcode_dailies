@@ -24,6 +24,20 @@ class Solution:
 
     * A **consonant** is an English letter that is not a vowel."""
 
-    def is_valid(self, word: str) -> bool: ...
+    def is_valid(self, word: str) -> bool:
+        if len(word) < 3:
+            return False
+        has_vowel = False
+        has_consonant = False
+        for char in word:
+            if not char.isalnum():
+                return False
+            if char.isalpha():
+                lower = char.lower()
+                if lower in 'aeiou':
+                    has_vowel = True
+                else:
+                    has_consonant = True
+        return has_vowel and has_consonant
 
     isValid = is_valid
