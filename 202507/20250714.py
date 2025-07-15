@@ -6,6 +6,7 @@ class ListNode:
         self.val = val
         self.next = next
 
+
 class Solution:
     """1290. Convert Binary Number in a Linked List to Integer
 
