@@ -34,7 +34,7 @@ class Solution:
                 return False
             if char.isalpha():
                 lower = char.lower()
-                if lower in 'aeiou':
+                if lower in "aeiou":
                     has_vowel = True
                 else:
                     has_consonant = True
