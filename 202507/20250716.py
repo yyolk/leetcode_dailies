@@ -26,7 +26,7 @@ class Solution:
         count_odd = len(nums) - count_even
         # Maximum length for all same parity subsequence
         max_same = max(count_even, count_odd)
-        
+
         # Initialize DP for longest alternating ending with even
         dp_even = 0
         # Initialize DP for longest alternating ending with odd
@@ -41,7 +41,7 @@ class Solution:
             else:
                 # Update dp_odd: continue from dp_odd or extend from dp_even
                 dp_odd = max(dp_odd, dp_even + 1)
-        
+
         # Maximum length for alternating parity subsequence
         max_alt = max(dp_even, dp_odd)
         # Return the overall maximum
