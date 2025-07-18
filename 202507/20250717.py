@@ -13,6 +13,20 @@ class Solution:
 
     Return the length of the **longest** **valid** subsequence of `nums`."""
 
-    def maximum_length(self, nums: list[int], k: int) -> int: ...
+    def maximum_length(self, nums: list[int], k: int) -> int:
+        if not nums:
+            return 0
+        ans = 1
+        for r in range(k):
+            max_len = [0] * k
+            for num in nums:
+                res = num % k
+                prev = (r - res) % k
+                newl = 1
+                if max_len[prev] > 0:
+                    newl = max_len[prev] + 1
+                max_len[res] = max(max_len[res], newl)
+            ans = max(ans, max(max_len))
+        return ans
 
     maximumLength = maximum_length
