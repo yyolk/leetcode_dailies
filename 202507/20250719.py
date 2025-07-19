@@ -18,6 +18,23 @@ class Solution:
     * For example, `"/leetcode"` and `"/leetcode/problems"` are valid paths while an
     empty string and `"/"` are not."""
 
-    def remove_subfolders(self, folder: list[str]) -> list[str]: ...
+    def remove_subfolders(self, folder: list[str]) -> list[str]:
+        # Check if the input list is empty, return empty list if true
+        if not folder:
+            return []
+        # Sort the folder list to ensure parent folders come before sub-folders
+        folder.sort()
+        # Initialize result with the first folder (after sorting)
+        result = [folder[0]]
+        # Iterate through remaining folders to check for sub-folders
+        for cur in folder[1:]:
+            # Get the last folder added to the result
+            last = result[-1]
+            # Check if current folder is not a sub-folder of the last result folder
+            if not cur.startswith(last + "/"):
+                # Add current folder to result if it's not a sub-folder
+                result.append(cur)
+        # Return the list of folders with sub-folders removed
+        return result
 
     removeSubfolders = remove_subfolders
