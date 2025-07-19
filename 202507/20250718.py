@@ -55,7 +55,7 @@ class Solution:
             left_sum -= popped
             # Store the updated sum in left_sums
             left_sums[i + 1] = left_sum
-        
+
         # Comment for the right part: using a min-heap to maintain the largest n elements for the right side
         # Right: min-heap to maintain largest n elements
         # Initialize an empty list for the right heap
@@ -86,9 +86,9 @@ class Solution:
             right_sum -= popped
             # Store the updated sum in right_sums
             right_sums[i + 1] = right_sum
-        
+
         # Initialize answer to positive infinity
-        ans = float('inf')
+        ans = float("inf")
         # Loop over possible i to find the minimum difference
         for i in range(n + 1):
             # Update ans with the minimum of current ans and the difference left_sums[i] - right_sums[n - i]
