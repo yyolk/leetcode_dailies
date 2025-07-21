@@ -7,6 +7,7 @@ class Node:
         self.children = {}
         self.sig = None
 
+
 class Solution:
     """1948. Delete Duplicate Folders in System
 
