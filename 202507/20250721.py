@@ -17,14 +17,14 @@ class Solution:
         # If string length is less than 3, no three consecutive chars possible
         if len(s) < 3:
             return s
-            
+
         # Convert string to list for easier manipulation
         result = []
         # Keep track of count of current character
         count = 1
         # Add first character
         result.append(s[0])
-        
+
         # Iterate through string starting from second character
         for i in range(1, len(s)):
             # If current char same as last char in result
@@ -37,7 +37,7 @@ class Solution:
                 # Reset count for new character
                 count = 1
                 result.append(s[i])
-                
+
         return "".join(result)
 
     makeFancyString = make_fancy_string
