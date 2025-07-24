@@ -20,7 +20,9 @@ class Solution:
 
     def maximum_gain(self, s: str, x: int, y: int) -> int:
         # Define helper function to remove pairs and calculate score
-        def remove_pairs(input_str: str, first_char: str, second_char: str, points: int):
+        def remove_pairs(
+            input_str: str, first_char: str, second_char: str, points: int
+        ):
             # Initialize stack to track characters
             stack = []
             # Initialize score for removed pairs
@@ -37,19 +39,19 @@ class Solution:
                     # Add current character to stack if no pair is formed
                     stack.append(c)
             # Return total score and remaining string
-            return score, ''.join(stack)
+            return score, "".join(stack)
 
         # Determine which pair to remove first based on points
         if x >= y:
             # Remove "ab" pairs first if x points are higher or equal
-            pri_score, remaining = remove_pairs(s, 'a', 'b', x)
+            pri_score, remaining = remove_pairs(s, "a", "b", x)
             # Remove "ba" pairs from remaining string
-            sec_score, _ = remove_pairs(remaining, 'b', 'a', y)
+            sec_score, _ = remove_pairs(remaining, "b", "a", y)
         else:
             # Remove "ba" pairs first if y points are higher
-            pri_score, remaining = remove_pairs(s, 'b', 'a', y)
+            pri_score, remaining = remove_pairs(s, "b", "a", y)
             # Remove "ab" pairs from remaining string
-            sec_score, _ = remove_pairs(remaining, 'a', 'b', x)
+            sec_score, _ = remove_pairs(remaining, "a", "b", x)
         # Return total score from both removals
         return pri_score + sec_score
 
