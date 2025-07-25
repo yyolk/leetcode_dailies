@@ -48,6 +48,7 @@ class Solution:
         exit_ = [0] * n
         # Initialize timer for DFS traversal
         timer = 0
+
         # Define DFS function to compute subtree XOR and entry/exit times
         def dfs(node, parent):
             nonlocal timer
@@ -66,12 +67,14 @@ class Solution:
                     subtree_xor[node] ^= subtree_xor[nei]
             # Record exit time for current node
             exit_[node] = timer
+
         # Start DFS from root (node 0)
         dfs(0, -1)
         # Compute total XOR of all nodes
         total = subtree_xor[0]
         # Initialize minimum score to maximum possible integer
         import sys
+
         min_score = sys.maxsize
         # Iterate over all pairs of nodes to consider edge removals
         for u in range(1, n):
