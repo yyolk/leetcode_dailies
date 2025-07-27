@@ -15,6 +15,26 @@ class Solution:
 
     Return *the number of hills and valleys in* `nums`."""
 
-    def count_hill_valley(self, nums: list[int]) -> int: ...
+    def count_hill_valley(self, nums: list[int]) -> int:
+        if not nums:
+            return 0
+        n = len(nums)
+        count = 0
+        i = 0
+        while i < n:
+            j = i + 1
+            while j < n and nums[j] == nums[i]:
+                j += 1
+            # Plateau from i to j-1
+            if i > 0 and j < n:
+                left = nums[i - 1]
+                val = nums[i]
+                right = nums[j]
+                if left < val and val > right:
+                    count += 1
+                elif left > val and val < right:
+                    count += 1
+            i = j
+        return count
 
     countHillValley = count_hill_valley
