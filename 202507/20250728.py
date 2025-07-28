@@ -15,6 +15,21 @@ class Solution:
     The bitwise OR of an array `a` is equal to `a[0] OR a[1] OR ... OR a[a.length - 1]`
     (**0-indexed**)."""
 
-    def count_max_or_subsets(self, nums: list[int]) -> int: ...
+    def count_max_or_subsets(self, nums: list[int]) -> int:
+        max_or = 0
+        for num in nums:
+            max_or |= num
+        n = len(nums)
+
+        def dfs(i: int, curr: int) -> int:
+            if i == n:
+                return 1 if curr == max_or else 0
+            if curr == max_or:
+                return 1 << (n - i)
+            count = dfs(i + 1, curr)
+            count += dfs(i + 1, curr | nums[i])
+            return count
+
+        return dfs(0, 0)
 
     countMaxOrSubsets = count_max_or_subsets
