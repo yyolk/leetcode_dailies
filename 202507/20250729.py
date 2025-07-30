@@ -24,22 +24,22 @@ class Solution:
         n = len(nums)
         if n == 0:
             return []
-        
+
         # Precompute max_or for suffixes
         max_or = [0] * n
         max_or[-1] = nums[-1]
-        for i in range(n-2, -1, -1):
-            max_or[i] = max_or[i+1] | nums[i]
-        
+        for i in range(n - 2, -1, -1):
+            max_or[i] = max_or[i + 1] | nums[i]
+
         # Precompute next_set for each bit
         next_set = [[n] * n for _ in range(32)]
         for b in range(32):
             last = n
-            for j in range(n-1, -1, -1):
+            for j in range(n - 1, -1, -1):
                 if nums[j] & (1 << b):
                     last = j
                 next_set[b][j] = last
-        
+
         # Compute answer
         answer = [0] * n
         for i in range(n):
@@ -49,7 +49,7 @@ class Solution:
                 if mor & (1 << b):
                     max_pos = max(max_pos, next_set[b][i])
             answer[i] = max_pos - i + 1
-        
+
         return answer
 
     smallestSubarrays = smallest_subarrays
