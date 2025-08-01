@@ -30,6 +30,6 @@ class Solution:
             # Add all current subarray OR results to the final answer set
             ans.update(cur)
         # Return the count of unique bitwise OR results
-        return len(ans)      
+        return len(ans)
 
     subarrayBitwiseORs = subarray_bitwise_o_rs
