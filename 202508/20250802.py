@@ -51,4 +51,5 @@ class Solution:
             cost += min(swapped[i], 2 * min_num)
         # Return the total computed cost
         return cost
+
     minCost = min_cost
