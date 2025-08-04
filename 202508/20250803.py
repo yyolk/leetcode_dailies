@@ -18,9 +18,7 @@ class Solution:
 
     Return *the **maximum total number** of fruits you can harvest*."""
 
-    def max_total_fruits(
-        self, fruits: list[list[int]], start_pos: int, k: int
-    ) -> int:
+    def max_total_fruits(self, fruits: list[list[int]], start_pos: int, k: int) -> int:
         # Get the number of fruit positions
         n = len(fruits)
         # Extract the positions of the fruits into a list
