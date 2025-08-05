@@ -29,6 +29,7 @@ class Solution:
             return 0
         # Import defaultdict from collections to use a dictionary that provides default values
         from collections import defaultdict
+
         # Initialize a counter using defaultdict to keep track of fruit types in the current window
         counter = defaultdict(int)
         # Initialize the left pointer for the sliding window
