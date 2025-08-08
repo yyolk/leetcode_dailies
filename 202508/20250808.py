@@ -31,6 +31,35 @@ class Solution:
     both soups are used up in the **same turn**. Answers within `10-5` of the actual
     answer will be accepted."""
 
-    def soup_servings(self, n: int) -> float: ...
+    def soup_servings(self, n: int) -> float:
+        # Handle the edge case where n is 0, both soups are already empty
+        if n == 0:
+            return 0.5
+        # Scale down the problem by dividing by 25, using ceiling division
+        m = (n + 24) // 25
+        # For large m, the probability is very close to 1, within the tolerance
+        if m >= 179:
+            return 1.0
+        # Define the operations in units of 25 mL
+        ops = [(4, 0), (3, 1), (2, 2), (1, 3)]
+        # Use memoization for the recursive function
+        from functools import cache
+
+        @cache
+        def dp(a: int, b: int) -> float:
+            # Base case: both soups empty
+            if a <= 0 and b <= 0:
+                return 0.5
+            # Base case: A empty, B not
+            if a <= 0:
+                return 1.0
+            # Base case: B empty, A not
+            if b <= 0:
+                return 0.0
+            # Recursive case: average over the four operations
+            return 0.25 * sum(dp(max(a - da, 0), max(b - db, 0)) for da, db in ops)
+
+        # Compute the probability for the scaled amounts
+        return dp(m, m)
 
     soupServings = soup_servings
