@@ -47,7 +47,7 @@ class Solution:
         # For child B (top-right)
         def get_extra_B() -> int:
             # Define negative infinity for initialization
-            INF = float('-inf')
+            INF = float("-inf")
             # Create a 2D DP table of size n x n initialized with -inf
             dp = [[INF] * n for _ in range(n)]
             # Starting column for child B
@@ -81,7 +81,7 @@ class Solution:
         # For child C (bottom-left)
         def get_extra_C() -> int:
             # Define negative infinity for initialization
-            INF = float('-inf')
+            INF = float("-inf")
             # Create a 2D DP table of size n x n initialized with -inf
             dp = [[INF] * n for _ in range(n)]
             # Starting row for child C
