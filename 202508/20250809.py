@@ -11,7 +11,7 @@ class Solution:
     2x`."""
 
     def is_power_of_two(self, n: int) -> bool:
-        # Returns True if n is a positive integer with exactly one bit set in 
+        # Returns True if n is a positive integer with exactly one bit set in
         # its binary representation (i.e., a power of two).
         return n > 0 and (n & (n - 1)) == 0
 
