@@ -1,4 +1,6 @@
 # https://leetcode.com/problems/ways-to-express-an-integer-as-sum-of-powers/
+# Define the modulo constant
+MOD = 10**9 + 7
 
 
 class Solution:
@@ -15,6 +17,27 @@ class Solution:
     For example, if `n = 160` and `x = 3`, one way to express `n` is `n = 23 + 33 + 53`.
     """
 
-    def number_of_ways(self, n: int, x: int) -> int: ...
+    def number_of_ways(self, n: int, x: int) -> int:
+        # Generate the list of possible x-th powers <= n
+        powers = []
+        k = 1
+        while True:
+            p = k ** x
+            if p > n:
+                break
+            powers.append(p)
+            k += 1
+        
+        # Initialize dp array where dp[j] is the number of ways to sum to j
+        dp = [0] * (n + 1)
+        dp[0] = 1
+        
+        # Update dp for each power using 0-1 knapsack style
+        for p in powers:
+            for j in range(n, p - 1, -1):
+                dp[j] = (dp[j] + dp[j - p]) % MOD
+        
+        # Return the number of ways for n
+        return dp[n]        
 
     numberOfWays = number_of_ways
