@@ -52,6 +52,6 @@ class Solution:
             # Append the computed answer to the answers list
             answers.append(ans)
         # Return the list of answers for all queries
-        return answers        
+        return answers
 
     productQueries = product_queries
