@@ -20,6 +20,11 @@ class Solution:
 
     * There may be **leading zeroes** in `num` or a good integer."""
 
-    def largest_good_integer(self, num: str) -> str: ...
+    def largest_good_integer(self, num: str) -> str:
+        for d in range(9, -1, -1):
+            s = str(d) * 3
+            if s in num:
+                return s
+        return ""
 
     largestGoodInteger = largest_good_integer
