@@ -10,6 +10,7 @@ class Solution:
     An integer `n` is a power of four, if there exists an integer `x` such that `n ==
     4x`."""
 
-    def is_power_of_four(self, n: int) -> bool: ...
+    def is_power_of_four(self, n: int) -> bool:
+        return n > 0 and (n & (n - 1)) == 0 and n % 3 == 1
 
     isPowerOfFour = is_power_of_four
