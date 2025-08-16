@@ -9,6 +9,7 @@ class Solution:
     Return *the maximum number you can get by changing **at most** one digit (*`6`
     *becomes* `9`*, and* `9` *becomes* `6`*)*."""
 
-    def maximum69_number(self, num: int) -> int: ...
+    def maximum69_number(self, num: int) -> int:
+        return int(str(num).replace("6", "9", 1))
 
     maximum69Number = maximum69_number
