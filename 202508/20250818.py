@@ -28,6 +28,43 @@ class Solution:
     Return `true` if you can get such expression that evaluates to `24`, and `false`
     otherwise."""
 
-    def judge_point24(self, cards: list[int]) -> bool: ...
+    def judge_point24(self, cards: list[int]) -> bool:
+        # Convert integers to floats to handle divisions accurately
+        nums = [float(card) for card in cards]
+        # Define a small epsilon for floating-point comparisons
+        EPS = 1e-6
+        # Define a recursive helper function that takes the current list of numbers
+        def helper(current: list[float]) -> bool:
+            # If only one number left, check if it's approximately 24
+            if len(current) == 1:
+                return abs(current[0] - 24) < EPS
+            # Iterate over all unique pairs of indices (i < j)
+            for i in range(len(current)):
+                for j in range(i + 1, len(current)):
+                    # Extract the two numbers
+                    a, b = current[i], current[j]
+                    # Create a new list excluding the two selected numbers
+                    new_current = [current[k] for k in range(len(current)) if k != i and k != j]
+                    # List all possible operation results: a+b, a-b, b-a, a*b
+                    ops = [a + b, a - b, b - a, a * b]
+                    # Add a/b if b != 0
+                    if abs(b) > EPS:
+                        ops.append(a / b)
+                    # Add b/a if a != 0
+                    if abs(a) > EPS:
+                        ops.append(b / a)
+                    # For each possible result from the operations
+                    for val in ops:
+                        # Add the result to the new list
+                        new_current.append(val)
+                        # Recurse to see if this leads to 24
+                        if helper(new_current):
+                            return True
+                        # Backtrack: remove the added value
+                        new_current.pop()
+            # If no combination works, return False
+            return False
+        # Start the recursion with the initial list
+        return helper(nums)
 
     judgePoint24 = judge_point24
