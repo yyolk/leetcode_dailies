@@ -33,6 +33,7 @@ class Solution:
         nums = [float(card) for card in cards]
         # Define a small epsilon for floating-point comparisons
         EPS = 1e-6
+
         # Define a recursive helper function that takes the current list of numbers
         def helper(current: list[float]) -> bool:
             # If only one number left, check if it's approximately 24
@@ -44,7 +45,9 @@ class Solution:
                     # Extract the two numbers
                     a, b = current[i], current[j]
                     # Create a new list excluding the two selected numbers
-                    new_current = [current[k] for k in range(len(current)) if k != i and k != j]
+                    new_current = [
+                        current[k] for k in range(len(current)) if k != i and k != j
+                    ]
                     # List all possible operation results: a+b, a-b, b-a, a*b
                     ops = [a + b, a - b, b - a, a * b]
                     # Add a/b if b != 0
@@ -64,6 +67,7 @@ class Solution:
                         new_current.pop()
             # If no combination works, return False
             return False
+
         # Start the recursion with the initial list
         return helper(nums)
 
