@@ -52,6 +52,6 @@ class Solution:
                 local += h[i] * l_dist * r_dist
             # Add to total answer
             ans += local
-        return ans        
+        return ans
 
     numSubmat = num_submat
