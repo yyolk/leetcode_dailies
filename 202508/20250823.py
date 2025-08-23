@@ -1,0 +1,17 @@
+# https://leetcode.com/problems/find-the-minimum-area-to-cover-all-ones-ii/
+
+
+class Solution:
+    """3197. Find the Minimum Area to Cover All Ones II
+
+    You are given a 2D **binary** array `grid`. You need to find 3 **non-overlapping**
+    rectangles having **non-zero** areas with horizontal and vertical sides such that
+    all the 1's in `grid` lie inside these rectangles.
+
+    Return the **minimum** possible sum of the area of these rectangles.
+
+    **Note** that the rectangles are allowed to touch."""
+
+    def minimum_sum(self, grid: list[list[int]]) -> int: ...
+
+    minimumSum = minimum_sum
