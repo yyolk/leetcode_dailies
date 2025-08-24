@@ -14,6 +14,7 @@ class Solution:
 
     def minimum_sum(self, grid: list[list[int]]) -> int:
         import math
+
         m = len(grid)
         n = len(grid[0])
         # Initialize answer to a large value, the total grid area
