@@ -13,6 +13,23 @@ class Solution:
     multiple rectangles with the longest diagonal, return the area of the rectangle
     having the **maximum** area.*"""
 
-    def area_of_max_diagonal(self, dimensions: list[list[int]]) -> int: ...
+    def area_of_max_diagonal(self, dimensions: list[list[int]]) -> int:
+        # Initialize max diagonal squared and max area
+        max_diag_sq = 0
+        max_area = 0
+        for rect in dimensions:
+            l, w = rect
+            # Compute diagonal squared to avoid floating point
+            diag_sq = l * l + w * w
+            # Compute area
+            area = l * w
+            if diag_sq > max_diag_sq:
+                # Update for longer diagonal
+                max_diag_sq = diag_sq
+                max_area = area
+            elif diag_sq == max_diag_sq:
+                # For same diagonal, take larger area
+                max_area = max(max_area, area)
+        return max_area
 
     areaOfMaxDiagonal = area_of_max_diagonal
