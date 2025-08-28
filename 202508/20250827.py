@@ -63,11 +63,13 @@ class Solution:
                 # Return 1 plus the maximum of continuing or turning (no more turns after turning)
                 return 1 + max(
                     dfs(next_r_continue, next_c_continue, can_turn, dir_, next_val),
-                    dfs(next_r_turn, next_c_turn, False, turn_dir, next_val)
+                    dfs(next_r_turn, next_c_turn, False, turn_dir, next_val),
                 )
             else:
                 # If no turn allowed, only continue in current direction
-                return 1 + dfs(next_r_continue, next_c_continue, can_turn, dir_, next_val)
+                return 1 + dfs(
+                    next_r_continue, next_c_continue, can_turn, dir_, next_val
+                )
 
         # Initialize the maximum length found
         max_length = 0
@@ -81,7 +83,7 @@ class Solution:
                         dfs(i + deltas[0][0], j + deltas[0][1], True, 0, 2),
                         dfs(i + deltas[1][0], j + deltas[1][1], True, 1, 2),
                         dfs(i + deltas[2][0], j + deltas[2][1], True, 2, 2),
-                        dfs(i + deltas[3][0], j + deltas[3][1], True, 3, 2)
+                        dfs(i + deltas[3][0], j + deltas[3][1], True, 3, 2),
                     )
                     # Update max_length with the segment length from this starting point (at least 1)
                     max_length = max(max_length, 1 + max_ext)
