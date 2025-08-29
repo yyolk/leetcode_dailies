@@ -32,6 +32,16 @@ class Solution:
     Return *the number of possible pairs* `(x, y)` *that satisfy the conditions
     mentioned in the statement*."""
 
-    def flower_game(self, n: int, m: int) -> int: ...
+    def flower_game(self, n: int, m: int) -> int:
+        # Calculate number of odd values in 1 to n
+        odd_n = (n + 1) // 2
+        # Calculate number of even values in 1 to n
+        even_n = n // 2
+        # Calculate number of odd values in 1 to m
+        odd_m = (m + 1) // 2
+        # Calculate number of even values in 1 to m
+        even_m = m // 2
+        # Alice wins when x + y is odd: (odd x and even y) or (even x and odd y)
+        return odd_n * even_m + even_n * odd_m
 
     flowerGame = flower_game
