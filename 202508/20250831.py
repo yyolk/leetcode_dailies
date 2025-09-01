@@ -29,7 +29,7 @@ class Solution:
         # Populate tracking arrays based on initial board values
         for i in range(9):
             for j in range(9):
-                if board[i][j] != '.':
+                if board[i][j] != ".":
                     num = int(board[i][j])
                     idx = num - 1
                     rows[i][idx] = True
@@ -48,7 +48,7 @@ class Solution:
                 return solve(row + 1, 0)
 
             # Skip to next cell if current is already filled
-            if board[row][col] != '.':
+            if board[row][col] != ".":
                 return solve(row, col + 1)
 
             # Try numbers 1-9 in current empty cell
@@ -66,7 +66,7 @@ class Solution:
                     if solve(row, col + 1):
                         return True
                     # Backtrack: remove number and reset tracking
-                    board[row][col] = '.'
+                    board[row][col] = "."
                     rows[row][idx] = False
                     cols[col][idx] = False
                     boxes[box_id][idx] = False

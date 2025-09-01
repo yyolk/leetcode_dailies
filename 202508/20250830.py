@@ -25,7 +25,7 @@ class Solution:
         row_sets = [set() for _ in range(9)]
         col_sets = [set() for _ in range(9)]
         box_sets = [set() for _ in range(9)]
-        
+
         # Iterate over each cell in the 9x9 board
         for i in range(9):
             for j in range(9):
@@ -33,24 +33,24 @@ class Solution:
                 # Skip empty cells marked with "."
                 if num == ".":
                     continue
-                
+
                 # Check for duplicate in the current row
                 if num in row_sets[i]:
                     return False
                 row_sets[i].add(num)
-                
+
                 # Check for duplicate in the current column
                 if num in col_sets[j]:
                     return False
                 col_sets[j].add(num)
-                
+
                 # Calculate the index for the 3x3 box
                 box_index = (i // 3) * 3 + (j // 3)
                 # Check for duplicate in the current box
                 if num in box_sets[box_index]:
                     return False
                 box_sets[box_index].add(num)
-        
+
         # If no duplicates found in rows, columns, or boxes, the board is valid
         return True
 
