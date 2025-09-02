@@ -24,9 +24,7 @@ class Solution:
     `extra_students` *students.* Answers within `10-5` of the actual answer will be
     accepted."""
 
-    def max_average_ratio(
-        self, classes: list[list[int]], extra_students: int
-    ) -> float:
+    def max_average_ratio(self, classes: list[list[int]], extra_students: int) -> float:
         # Use a max-heap (simulated via min-heap with negative deltas) to prioritize classes by ratio increase
         heap = []
         # Initialize heap with classes where adding a student increases the ratio (pass < total)
