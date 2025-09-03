@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/find-the-number-of-ways-to-place-people-ii/
+from math import inf
 
 
 class Solution:
@@ -37,6 +38,24 @@ class Solution:
 
     ![](https://assets.leetcode.com/uploads/2024/01/04/example0alicebob-1.png)"""
 
-    def number_of_pairs(self, points: list[list[int]]) -> int: ...
+    def number_of_pairs(self, points: list[list[int]]) -> int:
+        # Sort points by x-coordinate ascending, then y-coordinate descending for same x
+        points.sort(key=lambda point: (point[0], -point[1]))
+        ans = 0  # Counter for valid pairs
+        
+        # Iterate over each possible Alice position
+        for i in range(len(points)):
+            y1 = points[i][1]  # Alice's y-coordinate
+            max_y = -inf  # Track the maximum y of counted Bobs for this Alice
+            
+            # Check each possible Bob position after Alice in the sorted list
+            for j in range(i + 1, len(points)):
+                y2 = points[j][1]  # Bob's y-coordinate
+                # Count if y2 is within range and greater than previous max_y to ensure no interfering points
+                if max_y < y2 <= y1:
+                    max_y = y2  # Update the max_y to block lower y's if needed
+                    ans += 1  # Increment the pair count
+        
+        return ans  # Return the total number of valid pairs
 
     numberOfPairs = number_of_pairs
