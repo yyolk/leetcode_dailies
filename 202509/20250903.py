@@ -42,12 +42,12 @@ class Solution:
         # Sort points by x-coordinate ascending, then y-coordinate descending for same x
         points.sort(key=lambda point: (point[0], -point[1]))
         ans = 0  # Counter for valid pairs
-        
+
         # Iterate over each possible Alice position
         for i in range(len(points)):
             y1 = points[i][1]  # Alice's y-coordinate
             max_y = -inf  # Track the maximum y of counted Bobs for this Alice
-            
+
             # Check each possible Bob position after Alice in the sorted list
             for j in range(i + 1, len(points)):
                 y2 = points[j][1]  # Bob's y-coordinate
@@ -55,7 +55,7 @@ class Solution:
                 if max_y < y2 <= y1:
                     max_y = y2  # Update the max_y to block lower y's if needed
                     ans += 1  # Increment the pair count
-        
+
         return ans  # Return the total number of valid pairs
 
     numberOfPairs = number_of_pairs
