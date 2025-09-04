@@ -25,6 +25,18 @@ class Solution:
 
     Return the result accordingly."""
 
-    def find_closest(self, x: int, y: int, z: int) -> int: ...
+    def find_closest(self, x: int, y: int, z: int) -> int:
+        # Calculate absolute distance from Person 1 to Person 3
+        dist1 = abs(x - z)
+        # Calculate absolute distance from Person 2 to Person 3
+        dist2 = abs(y - z)
+        # Compare distances: smaller distance means arrives first since speeds are equal
+        if dist1 < dist2:
+            return 1
+        elif dist2 < dist1:
+            return 2
+        else:
+            # Distances equal, so arrive at same time
+            return 0
 
     findClosest = find_closest
