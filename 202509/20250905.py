@@ -14,6 +14,21 @@ class Solution:
 
     If it is impossible to make `num1` equal to `0`, return `-1`."""
 
-    def make_the_integer_zero(self, num1: int, num2: int) -> int: ...
+    def make_the_integer_zero(self, num1: int, num2: int) -> int:
+        # Loop over possible number of operations m (up to 61 is sufficient since max popcount ~30)
+        for m in range(1, 61):
+            # Compute the required sum of powers of 2
+            s = num1 - m * num2
+            # Skip if s cannot be sum of m powers (>= m) or negative
+            if s < m:
+                continue
+            # Compute the number of set bits in s
+            pop = bin(s).count('1')
+            # Check if s can be expressed as sum of exactly m powers of 2
+            if pop <= m:
+                # Return the minimal such m
+                return m
+        # Return -1 if no such m found
+        return -1
 
     makeTheIntegerZero = make_the_integer_zero
