@@ -23,7 +23,7 @@ class Solution:
             if s < m:
                 continue
             # Compute the number of set bits in s
-            pop = bin(s).count('1')
+            pop = bin(s).count("1")
             # Check if s can be expressed as sum of exactly m powers of 2
             if pop <= m:
                 # Return the minimal such m
