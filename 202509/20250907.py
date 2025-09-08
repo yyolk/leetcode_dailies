@@ -11,7 +11,7 @@ class Solution:
         # Initialize an empty list to hold the unique integers
         result = []
         # Loop to add pairs of positive and negative integers that cancel each other
-        for i in range(1, n//2 + 1):
+        for i in range(1, n // 2 + 1):
             # Add the positive integer
             result.append(i)
             # Add its negative counterpart to cancel the sum
