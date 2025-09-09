@@ -28,6 +28,6 @@ class Solution:
             # Check if both "a" and "b" have no zeros
             if has_no_zero(a) and has_no_zero(b):
                 # Return the pair if conditions are met
-                return [a, b]        
+                return [a, b]
 
     getNoZeroIntegers = get_no_zero_integers
