@@ -26,6 +26,29 @@ class Solution:
 
     def minimum_teachings(
         self, n: int, languages: list[list[int]], friendships: list[list[int]]
-    ) -> int: ...
+    ) -> int:
+        # Determine number of users
+        m = len(languages)
+        # Convert languages to sets for efficient intersection checks
+        lang_sets = [set(langs) for langs in languages]
+        # Collect users involved in friendships where no common language exists
+        affected_users = set()
+        for u, v in friendships:
+            u_idx = u - 1
+            v_idx = v - 1
+            # Check if the pair shares any language
+            if not lang_sets[u_idx] & lang_sets[v_idx]:
+                affected_users.add(u_idx)
+                affected_users.add(v_idx)
+        # If no affected users, no teaching needed
+        if not affected_users:
+            return 0
+        # Initialize counts of how many affected users know each language
+        know_counts = [0] * (n + 1)
+        for user in affected_users:
+            for lang in lang_sets[user]:
+                know_counts[lang] += 1
+        # The minimum teachings is total affected minus max already known for any language
+        return len(affected_users) - max(know_counts)
 
     minimumTeachings = minimum_teachings
