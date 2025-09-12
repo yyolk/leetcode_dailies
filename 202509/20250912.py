@@ -22,6 +22,16 @@ class Solution:
 
     The English vowels are: `a`, `e`, `i`, `o`, and `u`."""
 
-    def does_alice_win(self, s: str) -> bool: ...
+    def does_alice_win(self, s: str) -> bool:
+        # Define vowels for checking
+        vowels = set("aeiou")
+        # Count total vowels in the string
+        vowel_count = sum(1 for c in s if c in vowels)
+        
+        # If no vowels, Alice can't make a move (needs odd vowels)
+        if vowel_count == 0:
+            return False
+        # If any vowels exist, Alice can always make a move to force a win
+        return True
 
     doesAliceWin = does_alice_win
