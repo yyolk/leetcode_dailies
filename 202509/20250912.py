@@ -27,7 +27,7 @@ class Solution:
         vowels = set("aeiou")
         # Count total vowels in the string
         vowel_count = sum(1 for c in s if c in vowels)
-        
+
         # If no vowels, Alice can't make a move (needs odd vowels)
         if vowel_count == 0:
             return False
