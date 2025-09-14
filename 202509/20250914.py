@@ -20,7 +20,7 @@ class Solution:
 
       + Example: `wordlist = ["yellow"]`, `query = "yellow"`: `correct = "yellow"`
 
-    * Vowel Errors: If after replacing the vowels `('a', 'e', 'i', 'o', 'u')` of the
+    * Vowel Errors: If after replacing the vowels `("a", "e", "i", "o", "u")` of the
     query word with any vowel individually, it matches a word in the wordlist (**case-
     insensitive**), then the query word is returned with the same case as the match in
     the wordlist.
@@ -47,6 +47,47 @@ class Solution:
     Given some `queries`, return a list of words `answer`, where `answer[i]` is the
     correct word for `query = queries[i]`."""
 
-    def spellchecker(self, wordlist: list[str], queries: list[str]) -> list[str]: ...
+    def spellchecker(self, wordlist: list[str], queries: list[str]) -> list[str]:
+        # Set for exact case-sensitive matches
+        exact = set(wordlist)
+        # Dict for case-insensitive matches, mapping lowercase to first original word
+        cap = {}
+        # Dict for vowel-error matches, mapping consonant skeleton to first original word
+        vowel = {}
+        # Set of lowercase vowels for replacement checks
+        vows = set("aeiou")
+
+        # Preprocess wordlist
+        for word in wordlist:
+            wlow = word.lower()
+            # Map lowercase to first occurrence for capitalization
+            if wlow not in cap:
+                cap[wlow] = word
+            # Compute skeleton: replace vowels with "*" to match consonant positions
+            skel = "".join(c if c not in vows else "*" for c in wlow)
+            # Map skeleton to first occurrence for vowel errors
+            if skel not in vowel:
+                vowel[skel] = word
+
+        result = []
+        for query in queries:
+            # Check exact match first (case-sensitive)
+            if query in exact:
+                result.append(query)
+                continue
+            # Lowercase query for next checks
+            qlow = query.lower()
+            # Check capitalization match
+            if qlow in cap:
+                result.append(cap[qlow])
+                continue
+            # Compute query skeleton for vowel errors
+            qskel = "".join(c if c not in vows else "*" for c in qlow)
+            # Check vowel error match
+            if qskel in vowel:
+                result.append(vowel[qskel])
+            else:
+                result.append("")
+        return result
 
     spellchecker = spellchecker
