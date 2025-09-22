@@ -23,8 +23,8 @@ class Spreadsheet:
 
     **Note:** If `getValue` references a cell that has not been explicitly set using
     `setCell`, its value is considered 0.
-    
-    
+
+
     Your Spreadsheet object will be instantiated and called as such:
         obj = Spreadsheet(rows)
         obj.setCell(cell,value)
@@ -58,7 +58,7 @@ class Spreadsheet:
 
     def get_value(self, formula: str) -> int:
         # Split the formula after '=' into two parts separated by '+'
-        parts = formula[1:].split('+')
+        parts = formula[1:].split("+")
         # Initialize sum to 0
         total = 0
         # Process each part (X and Y)

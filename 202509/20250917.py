@@ -35,12 +35,12 @@ class FoodRatings:
     before `y` in dictionary order, that is, either `x` is a prefix of `y`, or if `i` is
     the first position such that `x[i] != y[i]`, then `x[i]` comes before `y[i]` in
     alphabetic order.
-    
+
 
     Your FoodRatings object will be instantiated and called as such:
         obj = FoodRatings(foods, cuisines, ratings)
         obj.changeRating(food,newRating)
-        param_2 = obj.highestRated(cuisine)    
+        param_2 = obj.highestRated(cuisine)
     """
 
     def __init__(self, foods: list[str], cuisines: list[str], ratings: list[int]):
@@ -49,7 +49,7 @@ class FoodRatings:
         self.food_to_rating = {}
         # Initialize dictionary to store max heaps for each cuisine
         self.cuisine_to_heap = defaultdict(list)
-        
+
         # Populate the dictionaries and heaps with initial data
         for food, cuisine, rating in zip(foods, cuisines, ratings):
             # Map food to its cuisine
@@ -70,7 +70,7 @@ class FoodRatings:
     def highestRated(self, cuisine: str) -> str:
         # Get the heap for the given cuisine
         heap = self.cuisine_to_heap[cuisine]
-        
+
         # Pop items from the heap until we find a valid one (matching current rating)
         while heap:
             rating, food = heap[0]
@@ -79,6 +79,6 @@ class FoodRatings:
                 return food
             # Remove outdated entry (lazy deletion)
             heapq.heappop(heap)
-        
+
         # Return empty string if no valid food is found (should not happen per problem constraints)
         return ""

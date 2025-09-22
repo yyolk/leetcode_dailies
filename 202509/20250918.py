@@ -1,5 +1,6 @@
 import heapq
 
+
 class TaskManager:
     """3678. Design Task Manager
 

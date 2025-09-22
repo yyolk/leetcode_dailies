@@ -26,18 +26,18 @@ class Solution:
     Two values `x` and `y` are **non-coprime** if `GCD(x, y) > 1` where `GCD(x, y)` is
     the **Greatest Common Divisor** of `x` and `y`."""
 
-    def replace_non_coprimes(self, nums: list[int]) -> list[int]:        
+    def replace_non_coprimes(self, nums: list[int]) -> list[int]:
         # Helper function to compute LCM: a * b // gcd(a, b)
         def lcm(a: int, b: int) -> int:
             return a * b // gcd(a, b)
-        
+
         # Use stack to efficiently merge adjacent non-coprime numbers
         stack = []
-        
+
         for num in nums:
             # Append current number to stack
             stack.append(num)
-            
+
             # Merge while the last two numbers are non-coprime (gcd > 1)
             while len(stack) >= 2 and gcd(stack[-1], stack[-2]) > 1:
                 # Pop the last two numbers
@@ -45,7 +45,7 @@ class Solution:
                 a = stack.pop()
                 # Replace with their LCM
                 stack.append(lcm(a, b))
-        
+
         # Stack now holds the final modified array
         return stack
 

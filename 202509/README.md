@@ -115,24 +115,36 @@
    </a>
   </td>
   <td class="wed">
-   17
+   <a href="20250917.py">
+    17
+   </a>
   </td>
   <td class="thu">
-   18
+   <a href="20250918.py">
+    18
+   </a>
   </td>
   <td class="fri">
-   19
+   <a href="20250919.py">
+    19
+   </a>
   </td>
   <td class="sat">
-   20
+   <a href="20250920.py">
+    20
+   </a>
   </td>
  </tr>
  <tr>
   <td class="sun">
-   21
+   <a href="20250921.py">
+    21
+   </a>
   </td>
   <td class="mon">
-   22
+   <a href="20250922.py">
+    22
+   </a>
   </td>
   <td class="tue">
    23

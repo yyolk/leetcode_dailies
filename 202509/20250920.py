@@ -51,14 +51,15 @@ class Router:
 
     **Note** that queries for `addPacket` will be made in increasing order of
     `timestamp`.
-    
+
 
     Your Router object will be instantiated and called as such:
         obj = Router(memory_limit)
         param_1 = obj.addPacket(source,destination,timestamp)
         param_2 = obj.forwardPacket()
-        param_3 = obj.getCount(destination,start_time,end_time)    
+        param_3 = obj.getCount(destination,start_time,end_time)
     """
+
     def __init__(self, memory_limit: int):
         # Initialize memory limit
         self.memory_limit = memory_limit
@@ -86,7 +87,7 @@ class Router:
         self.packet_set.add(key)
         self.packet_lists[destination].append(timestamp)
         return True
-    
+
     addPacket = add_packet
 
     def forward_packet(self) -> list[int]:
@@ -114,5 +115,5 @@ class Router:
         # Adjust for active suffix starting at start_idx
         count = max(0, idx_right - max(idx_left, start_idx))
         return count
-    
+
     getCount = get_count
