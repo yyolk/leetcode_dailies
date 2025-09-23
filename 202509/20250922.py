@@ -18,21 +18,21 @@ class Solution:
         for num in nums:
             # Increment count for the current number, default to 0 if not present
             freq[num] = freq.get(num, 0) + 1
-        
+
         # Handle empty list case, though problem assumes positive integers array
         if not freq:
             return 0
-        
+
         # Find the maximum frequency value among all elements
         max_freq = max(freq.values())
-        
+
         # Initialize total to sum frequencies equal to max_freq
         total = 0
         for f in freq.values():
             # Add frequency if it matches the maximum
             if f == max_freq:
                 total += f
-        
+
         # Return the sum, which is count of max freq elements times max_freq
         return total
 
