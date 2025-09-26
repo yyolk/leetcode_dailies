@@ -21,7 +21,9 @@ class Solution:
             # For each position in the current row
             for col in range(row + 1):
                 # Add the minimum of the two adjacent values from the row below
-                triangle[row][col] += min(triangle[row + 1][col], triangle[row + 1][col + 1])
+                triangle[row][col] += min(
+                    triangle[row + 1][col], triangle[row + 1][col + 1]
+                )
         # The top element now holds the minimum path sum
         return triangle[0][0]
 
