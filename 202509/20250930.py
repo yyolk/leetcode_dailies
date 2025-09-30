@@ -22,6 +22,14 @@ class Solution:
 
     Return *the triangular sum of* `nums`."""
 
-    def triangular_sum(self, nums: list[int]) -> int: ...
+    def triangular_sum(self, nums: list[int]) -> int:
+        # Continue the process while there is more than one element in the array
+        while len(nums) > 1:
+            # Create a new array where each element is the sum of adjacent elements from nums, modulo 10
+            new_nums = [(nums[i] + nums[i + 1]) % 10 for i in range(len(nums) - 1)]
+            # Replace the current array with the new one to reduce the size by 1
+            nums = new_nums
+        # The process ends when one element remains, which is the triangular sum
+        return nums[0]
 
     triangularSum = triangular_sum
