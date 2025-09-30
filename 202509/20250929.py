@@ -35,11 +35,14 @@ class Solution:
                 # Compute ending index j
                 j = i + length
                 # Start with infinite cost for minimization
-                dp[i][j] = float('inf')
+                dp[i][j] = float("inf")
                 # Try every possible split point k between i and j
                 for k in range(i + 1, j):
                     # Cost = sub-cost i to k + sub-cost k to j + triangle i-k-j product
-                    dp[i][j] = min(dp[i][j], dp[i][k] + dp[k][j] + values[i] * values[k] * values[j])
+                    dp[i][j] = min(
+                        dp[i][j],
+                        dp[i][k] + dp[k][j] + values[i] * values[k] * values[j],
+                    )
         # Return min cost for full polygon (vertices 0 to n-1)
         return dp[0][n - 1]
 
