@@ -20,6 +20,21 @@ class Solution:
 
     Return *the **maximum** number of water bottles you can drink*."""
 
-    def max_bottles_drunk(self, num_bottles: int, num_exchange: int) -> int: ...
+    def max_bottles_drunk(self, num_bottles: int, num_exchange: int) -> int:
+        # Initialize with all initial bottles drunk and turned into empties
+        drunk = num_bottles
+        empty = num_bottles
+        # Continue exchanging as long as there are enough empties for the current exchange rate
+        while empty >= num_exchange:
+            # Spend the required empties for one exchange
+            empty -= num_exchange
+            # Increase the exchange rate for the next potential exchange
+            num_exchange += 1
+            # Account for drinking the newly acquired full bottle
+            drunk += 1
+            # Add the empty from the drunk bottle
+            empty += 1
+        # Return the total bottles drunk
+        return drunk
 
     maxBottlesDrunk = max_bottles_drunk
