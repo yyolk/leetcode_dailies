@@ -24,7 +24,7 @@ class Solution:
         n = len(grid)
         if n == 0:
             return 0
-        
+
         # Define the BFS function to check if reachable at time t
         def can_reach(t: int) -> bool:
             # Skip if start cell elevation > t
@@ -32,6 +32,7 @@ class Solution:
                 return False
             # Use deque for BFS queue
             from collections import deque
+
             q = deque([(0, 0)])
             # Track visited cells
             visited = set([(0, 0)])
@@ -45,13 +46,18 @@ class Solution:
                 for dx, dy in directions:
                     nx, ny = x + dx, y + dy
                     # Validate bounds, not visited, and elevation <= t
-                    if 0 <= nx < n and 0 <= ny < n and (nx, ny) not in visited and grid[nx][ny] <= t:
+                    if (
+                        0 <= nx < n
+                        and 0 <= ny < n
+                        and (nx, ny) not in visited
+                        and grid[nx][ny] <= t
+                    ):
                         visited.add((nx, ny))
                         q.append((nx, ny))
             return False
-        
+
         # Set binary search low to max of start and end elevations
-        low = max(grid[0][0], grid[n-1][n-1])
+        low = max(grid[0][0], grid[n - 1][n - 1])
         # Set high to maximum elevation in grid
         high = max(max(row) for row in grid)
         # Perform binary search for minimum t
