@@ -1,4 +1,7 @@
 # https://leetcode.com/problems/avoid-flood-in-the-city/
+import heapq
+
+from collections import defaultdict
 
 
 class Solution:
@@ -30,6 +33,56 @@ class Solution:
     Notice that if you chose to dry a full lake, it becomes empty, but if you chose to
     dry an empty lake, nothing changes."""
 
-    def avoid_flood(self, rains: list[int]) -> list[int]: ...
+    def avoid_flood(self, rains: list[int]) -> list[int]:
+        # Determine the number of days
+        n = len(rains)
+        # Initialize the answer list with placeholders
+        ans = [0] * n
+        # Map each lake to the list of days it rains
+        lake_to_days = defaultdict(list)
+        for i in range(n):
+            if rains[i] > 0:
+                lake_to_days[rains[i]].append(i)
+        # Track the next rain index for each lake
+        next_idx = defaultdict(int)
+        # Set of currently full lakes
+        full = set()
+        # Min-heap for (next_rain_day, lake) of full lakes with future rains
+        heap = []
+        for i in range(n):
+            if rains[i] > 0:
+                lake = rains[i]
+                # Check if raining on a full lake causes flood
+                if lake in full:
+                    return []
+                # Mark the lake as full
+                full.add(lake)
+                # Set answer for rainy day
+                ans[i] = -1
+                # Get the rain days for this lake
+                days = lake_to_days[lake]
+                # Current index in rain days
+                idx = next_idx[lake]
+                # Advance index past current day if matching
+                if idx < len(days) and days[idx] == i:
+                    next_idx[lake] += 1
+                # Update index after advance
+                idx = next_idx[lake]
+                # If there is a future rain, add to heap
+                if idx < len(days):
+                    heapq.heappush(heap, (days[idx], lake))
+            else:
+                # Handle dry day
+                if heap:
+                    # Get the lake with the soonest next rain
+                    next_day, lake = heapq.heappop(heap)
+                    # Set to dry this lake
+                    ans[i] = lake
+                    # Remove from full lakes
+                    full.remove(lake)
+                else:
+                    # No urgent lake, dry any (e.g., lake 1)
+                    ans[i] = 1
+        return ans
 
     avoidFlood = avoid_flood
