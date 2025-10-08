@@ -16,6 +16,34 @@ class Solution:
 
     def successful_pairs(
         self, spells: list[int], potions: list[int], success: int
-    ) -> list[int]: ...
+    ) -> list[int]:
+        # Sort potions in ascending order to enable binary search
+        potions.sort()
+        
+        # Helper function: binary search to find leftmost index where arr[idx] >= target
+        def binary_search(arr: list[int], target: int) -> int:
+            left, right = 0, len(arr)
+            while left < right:
+                mid = (left + right) // 2
+                if arr[mid] >= target:
+                    right = mid
+                else:
+                    left = mid + 1
+            return left
+        
+        # Initialize result list
+        result = []
+        
+        # For each spell, compute required potion strength and count successful pairs
+        for spell in spells:
+            # Compute ceiling of success / spell using integer arithmetic
+            required = (success + spell - 1) // spell
+            # Find starting index of potions >= required
+            idx = binary_search(potions, required)
+            # Count potions from idx to end
+            count = len(potions) - idx
+            result.append(count)
+        
+        return result
 
     successfulPairs = successful_pairs
