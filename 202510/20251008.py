@@ -19,7 +19,7 @@ class Solution:
     ) -> list[int]:
         # Sort potions in ascending order to enable binary search
         potions.sort()
-        
+
         # Helper function: binary search to find leftmost index where arr[idx] >= target
         def binary_search(arr: list[int], target: int) -> int:
             left, right = 0, len(arr)
@@ -30,10 +30,10 @@ class Solution:
                 else:
                     left = mid + 1
             return left
-        
+
         # Initialize result list
         result = []
-        
+
         # For each spell, compute required potion strength and count successful pairs
         for spell in spells:
             # Compute ceiling of success / spell using integer arithmetic
@@ -43,7 +43,7 @@ class Solution:
             # Count potions from idx to end
             count = len(potions) - idx
             result.append(count)
-        
+
         return result
 
     successfulPairs = successful_pairs
