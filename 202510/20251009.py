@@ -34,9 +34,11 @@ class Solution:
                 # Subtract the brewing time of the next wizard on the previous potion to get the completion time on current wizard
                 prev_potion_done -= skill[i + 1] * mana[j - 1]
                 # Update to the maximum of the current completion on previous potion or adjusted previous value
-                prev_wizard_done = max(prev_potion_done, prev_wizard_done - skill[i] * mana[j])
+                prev_wizard_done = max(
+                    prev_potion_done, prev_wizard_done - skill[i] * mana[j]
+                )
             # Add the total brewing time for the current potion to get its completion time
             prev_wizard_done += sum_skill * mana[j]
-        return prev_wizard_done        
+        return prev_wizard_done
 
     minTime = min_time
