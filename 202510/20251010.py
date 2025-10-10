@@ -22,6 +22,35 @@ class Solution:
     **Note** that when you are reach a magician, you *must* take energy from them,
     whether it is negative or positive energy."""
 
-    def maximum_energy(self, energy: list[int], k: int) -> int: ...
+    def maximum_energy(self, energy: list[int], k: int) -> int:
+        # Initialize the answer to the smallest possible integer
+        ans = float('-inf')
+        # Iterate over each possible residue class modulo k
+        for r in range(k):
+            # Collect the energy values for this residue class
+            b = [energy[i] for i in range(r, len(energy), k)]
+            # Get the length of this group
+            m = len(b)
+            # Skip if the group is empty
+            if m == 0:
+                continue
+            # Compute the total sum of the group
+            total = sum(b)
+            # Initialize min_prefix to 0 (empty prefix)
+            min_prefix = 0
+            # Initialize current prefix sum
+            current = 0
+            # Compute prefixes up to m-1 and track the minimum
+            for j in range(1, m):
+                # Add the next element to the current prefix
+                current += b[j - 1]
+                # Update the minimum prefix
+                min_prefix = min(min_prefix, current)
+            # The max suffix sum for this group is total minus the min prefix
+            max_group = total - min_prefix
+            # Update the overall answer with this group's max
+            ans = max(ans, max_group)
+        # Return the maximum energy found
+        return ans
 
     maximumEnergy = maximum_energy
