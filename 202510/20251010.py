@@ -24,7 +24,7 @@ class Solution:
 
     def maximum_energy(self, energy: list[int], k: int) -> int:
         # Initialize the answer to the smallest possible integer
-        ans = float('-inf')
+        ans = float("-inf")
         # Iterate over each possible residue class modulo k
         for r in range(k):
             # Collect the energy values for this residue class
