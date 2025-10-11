@@ -1,4 +1,6 @@
 # https://leetcode.com/problems/maximum-total-damage-with-spell-casting/
+from collections import Counter
+import bisect
 
 
 class Solution:
@@ -17,6 +19,28 @@ class Solution:
 
     Return the **maximum** possible *total damage* that a magician can cast."""
 
-    def maximum_total_damage(self, power: list[int]) -> int: ...
+    def maximum_total_damage(self, power: list[int]) -> int:
+        # Count frequency of each damage value
+        freq = Counter(power)
+        if not freq:
+            return 0
+        # Sort unique damage values
+        ds = sorted(freq.keys())
+        k = len(ds)
+        # Precompute value for each unique damage: damage * frequency
+        val = [ds[i] * freq[ds[i]] for i in range(k)]
+        # dp[i] will be the max damage using the first i unique damages
+        dp = [0] * (k + 1)
+        for i in range(1, k + 1):
+            # Option 1: Skip the current damage, take previous max
+            max_sum = dp[i - 1]
+            # Find the position p: number of damages <= ds[i-1] - 3
+            target = ds[i - 1] - 3
+            p = bisect.bisect_right(ds, target)
+            # Option 2: Take current, add to max from damages up to p (those <= ds[i-1] - 3)
+            take = val[i - 1] + dp[p]
+            # Update dp[i] with the better option
+            dp[i] = max(max_sum, take)
+        return dp[k]
 
     maximumTotalDamage = maximum_total_damage
