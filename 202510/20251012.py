@@ -46,6 +46,7 @@ class Solution:
                 pows[i][f] = (pows[i][f - 1] * nums[i]) % MOD
         # Use lru_cache for memoization
         from functools import lru_cache
+
         @lru_cache(None)
         def dfs(pos: int, rem: int, carry: int, ones: int) -> int:
             # Base case: processed all positions
@@ -53,7 +54,7 @@ class Solution:
                 if rem > 0:
                     return 0
                 # Calculate extra set bits from remaining carry
-                extra = bin(carry).count('1')
+                extra = bin(carry).count("1")
                 # Check if total set bits match k
                 if ones + extra == k:
                     return 1
@@ -78,6 +79,7 @@ class Solution:
                 # Accumulate the result
                 res = (res + val * sub) % MOD
             return res
+
         # Start DFS from position 0, remaining m, carry 0, ones 0
         return dfs(0, m, 0, 0)
 
