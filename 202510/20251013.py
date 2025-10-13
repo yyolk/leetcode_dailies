@@ -19,6 +19,18 @@ class Solution:
     word or phrase using all the original letters exactly once. For example, `"dacb"` is
     an anagram of `"abdc"`."""
 
-    def remove_anagrams(self, words: list[str]) -> list[str]: ...
+    def remove_anagrams(self, words: list[str]) -> list[str]:
+        # Initialize an empty list to build the result
+        result = []
+        # Process each word in the input list
+        for word in words:
+            # Check if result is empty or current word is not an anagram of the last in result
+            # Anagram check via sorting characters for frequency comparison
+            if not result or sorted(result[-1]) != sorted(word):
+                # Append the word if condition met
+                result.append(word)
+            # Else skip (effectively delete) the word as it's an anagram of the previous
+        # Return the final list after all operations simulated
+        return result
 
     removeAnagrams = remove_anagrams
