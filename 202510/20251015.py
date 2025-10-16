@@ -25,10 +25,10 @@ class Solution:
         # If n < 2, no possible k >= 1
         if n < 2:
             return 0
-        
+
         # Binary search for maximum k
         low, high = 0, n // 2
-        
+
         # Helper function to check if k is possible
         def can_have_k(k: int) -> bool:
             # If 2k > n, impossible
@@ -51,7 +51,7 @@ class Solution:
                 if sum1 == k - 1 and sum2 == k - 1:
                     return True
             return False
-        
+
         # Perform binary search to find max k
         while low < high:
             # Bias towards higher values
