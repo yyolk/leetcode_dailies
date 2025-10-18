@@ -30,7 +30,7 @@ class Solution:
                 return 1
 
             # Bit for the current character
-            char_bit = 1 << (ord(s[index]) - ord('a'))
+            char_bit = 1 << (ord(s[index]) - ord("a"))
 
             # Attempt to add current character to the partition
             next_chars = current_chars | char_bit
