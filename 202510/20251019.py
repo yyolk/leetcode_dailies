@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/lexicographically-smallest-string-after-applying-operations/
+import math
 
 
 class Solution:
@@ -25,6 +26,44 @@ class Solution:
     is lexicographically smaller than `"0190"` because the first position they differ is
     at the third letter, and `'5'` comes before `'9'`."""
 
-    def find_lex_smallest_string(self, s: str, a: int, b: int) -> str: ...
+    def find_lex_smallest_string(self, s: str, a: int, b: int) -> str:
+        # Compute length of s
+        n = len(s)
+        # Compute gcd for rotation steps
+        g_rot = math.gcd(b, n)
+        # Compute gcd for addition cycles
+        g_add = math.gcd(a, 10)
+        # Collect possible addition values mod 10
+        poss_d = set((k * a) % 10 for k in range(10))
+        # Initialize min_str to a large string for comparison
+        min_str = '9' * n
+        # Determine if rotations preserve or flip parities
+        if b % 2 == 0:
+            # For even b, cannot increment even positions
+            for d_odd in poss_d:
+                d_even = 0
+                # Build modified digits with additions applied
+                modified = [(int(s[i]) + (d_even if i % 2 == 0 else d_odd)) % 10 for i in range(n)]
+                # Check all possible allowed rotations
+                for start in range(0, n, g_rot):
+                    # Construct rotated string
+                    curr = ''.join(str(modified[(start + j) % n]) for j in range(n))
+                    # Update if smaller
+                    if curr < min_str:
+                        min_str = curr
+        else:
+            # For odd b, can increment both parity groups independently
+            for d_even in poss_d:
+                for d_odd in poss_d:
+                    # Build modified digits with additions applied
+                    modified = [(int(s[i]) + (d_even if i % 2 == 0 else d_odd)) % 10 for i in range(n)]
+                    # Check all possible allowed rotations
+                    for start in range(0, n, g_rot):
+                        # Construct rotated string
+                        curr = ''.join(str(modified[(start + j) % n]) for j in range(n))
+                        # Update if smaller
+                        if curr < min_str:
+                            min_str = curr
+        return min_str
 
     findLexSmallestString = find_lex_smallest_string
