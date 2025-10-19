@@ -30,7 +30,7 @@ class Solution:
                 res += 1
                 # Update smallest to the next available slot: max of next after current or element's lower bound
                 smallest_elem = max(smallest_elem + 1, num - k)
-        
+
         # Return the maximum number of distinct elements
         return res
 
