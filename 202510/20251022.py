@@ -24,6 +24,7 @@ class Solution:
         n = len(a)
         # Get frequency of each value
         from collections import Counter
+
         freq = Counter(nums)
         # Compute max window size where elements differ by at most 2*k
         left = 0
@@ -40,6 +41,7 @@ class Solution:
         max_cand = cand_new
         # Use bisect for efficient range queries
         import bisect
+
         for v in freq:
             # Compute bounds for the window around v
             low = v - k
