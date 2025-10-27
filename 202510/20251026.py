@@ -30,11 +30,9 @@ class Bank:
     false otherwise.
     """
 
-
     def __init__(self, balance: list[int]):
         # Store the balances; accounts are 1-indexed, list is 0-indexed
         self.balance = balance
-        
 
     def transfer(self, account1: int, account2: int, money: int) -> bool:
         # Determine the number of accounts
@@ -50,7 +48,6 @@ class Bank:
             self.balance[account2 - 1] += money
             return True
         return False
-        
 
     def deposit(self, account: int, money: int) -> bool:
         # Determine the number of accounts
@@ -61,7 +58,6 @@ class Bank:
         # Add money to the account
         self.balance[account - 1] += money
         return True
-        
 
     def withdraw(self, account: int, money: int) -> bool:
         # Determine the number of accounts
