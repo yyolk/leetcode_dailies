@@ -29,6 +29,30 @@ class Solution:
 
     Return the number of possible **valid** selections."""
 
-    def count_valid_selections(self, nums: list[int]) -> int: ...
+    def count_valid_selections(self, nums: list[int]) -> int:
+      # Compute the total sum of all elements in the array
+        total_sum = sum(nums)
+        
+        # Initialize the count of valid selections and the left sum
+        valid_count = 0
+        left_sum = 0
+        
+        # Iterate through each element in the array
+        for num in nums:
+            if num != 0:
+                # Add the non-zero element to the left sum, as it is now to the left of future positions
+                left_sum += num
+            else:
+                # At a potential starting zero position, calculate the right sum implicitly
+                # Check if left sum equals right sum (balanced)
+                if left_sum * 2 == total_sum:
+                    # Both directions are valid when sums are equal
+                    valid_count += 2
+                # Check if the absolute difference between left and right sums is exactly 1
+                elif abs(left_sum * 2 - total_sum) == 1:
+                    # One direction is valid when sums differ by 1
+                    valid_count += 1
+        
+        return valid_count
 
     countValidSelections = count_valid_selections
