@@ -30,13 +30,13 @@ class Solution:
     Return the number of possible **valid** selections."""
 
     def count_valid_selections(self, nums: list[int]) -> int:
-      # Compute the total sum of all elements in the array
+        # Compute the total sum of all elements in the array
         total_sum = sum(nums)
-        
+
         # Initialize the count of valid selections and the left sum
         valid_count = 0
         left_sum = 0
-        
+
         # Iterate through each element in the array
         for num in nums:
             if num != 0:
@@ -52,7 +52,7 @@ class Solution:
                 elif abs(left_sum * 2 - total_sum) == 1:
                     # One direction is valid when sums differ by 1
                     valid_count += 1
-        
+
         return valid_count
 
     countValidSelections = count_valid_selections
