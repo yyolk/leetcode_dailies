@@ -14,6 +14,19 @@ class Solution:
 
     The test cases are generated so that the answer fits in a 32-bit integer."""
 
-    def min_number_operations(self, target: list[int]) -> int: ...
+    def min_number_operations(self, target: list[int]) -> int:
+        # Initialize total operations counter
+        ans = 0
+        # Track the previous value, starting from initial 0
+        prev = 0
+        # Process each target value in sequence
+        for num in target:
+            # Add increments only when ascending (difference represents new layers needed)
+            if num > prev:
+                ans += num - prev
+            # Update previous value for next comparison
+            prev = num
+        # Return accumulated minimum operations
+        return ans
 
     minNumberOperations = min_number_operations
