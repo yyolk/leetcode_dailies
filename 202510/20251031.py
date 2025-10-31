@@ -13,6 +13,21 @@ class Solution:
     array of size **two** containing the two numbers (in *any order*), so peace can
     return to Digitville."""
 
-    def get_sneaky_numbers(self, nums: list[int]) -> list[int]: ...
+    def get_sneaky_numbers(self, nums: list[int]) -> list[int]:
+        # Initialize a set to track seen numbers
+        seen = set()
+        # List to hold the duplicate numbers
+        result = []
+        # Iterate through each number in the list
+        for num in nums:
+            # Check if the number is already in the seen set
+            if num in seen:
+                # If seen, it's a duplicate; add to result
+                result.append(num)
+            else:
+                # Otherwise, add to seen set
+                seen.add(num)
+        # Return the list of duplicates
+        return result
 
     getSneakyNumbers = get_sneaky_numbers
