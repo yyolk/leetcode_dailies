@@ -1,6 +1,5 @@
 # https://leetcode.com/problems/maximum-number-of-k-divisible-components/
 import sys
-from typing import List
 
 sys.setrecursionlimit(10**5)
 
@@ -23,7 +22,7 @@ class Solution:
 
     Return the maximum number of components in any valid split.
     """
-    def max_k_divisible_components(self, n: int, edges: List[List[int]], values: List[int], k: int) -> int:
+    def max_k_divisible_components(self, n: int, edges: list[list[int]], values: list[int], k: int) -> int:
         # Build adjacency list for the tree
         adj = [[] for _ in range(n)]
         for a, b in edges:
