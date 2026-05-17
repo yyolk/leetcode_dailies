@@ -2,7 +2,6 @@ import os
 
 import requests
 
-
 PUSHOVER_TOKEN = os.environ["PUSHOVER_TOKEN"]
 PUSHOVER_USER = os.environ["PUSHOVER_USER"]
 JOB_STATUS = os.environ["JOB_STATUS"]

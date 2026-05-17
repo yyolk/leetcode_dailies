@@ -1,7 +1,6 @@
 # https://leetcode.com/problems/largest-3-same-digit-number-in-string/
 import re
 
-
 CONTIGUOUS_DIGIT_PATTERN = re.compile(r"(\d)\1{2}")
 
 

@@ -21,7 +21,6 @@ from generate_active_daily.client import (
     query_question_of_today,
 )
 
-
 DIR_PATTERN = re.compile(r"\d{6}")
 FILE_PATTERN = re.compile(r"\d{8}")
 TARGET_DATE = datetime(year=2023, month=8, day=23)

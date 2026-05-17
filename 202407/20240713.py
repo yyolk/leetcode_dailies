@@ -46,7 +46,9 @@ class Solution:
         robots.sort()
 
         stack = []  # To keep track of robots moving to the right
-        survivors = []  # To store final healths of surviving robots in the order of their original indices
+        survivors = (
+            []
+        )  # To store final healths of surviving robots in the order of their original indices
 
         for pos, health, direction, index in robots:
             if direction == "R":

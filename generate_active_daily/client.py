@@ -13,8 +13,7 @@ async def query_question_of_today():
     async with Client(
         transport=transport, fetch_schema_from_transport=False
     ) as session:
-        query = gql(
-            """
+        query = gql("""
             query questionOfToday {
                 activeDailyCodingChallengeQuestion {
                     date
@@ -42,8 +41,7 @@ async def query_question_of_today():
                     }
                 }
             }
-            """
-        )
+            """)
 
         result = await session.execute(query)
         return result
@@ -55,8 +53,7 @@ async def query_previous_question(current_question_slug, env_id, env_type):
         transport=transport,
         fetch_schema_from_transport=False,
     ) as session:
-        query = gql(
-            """
+        query = gql("""
             query learningContext($currentQuestionSlug: String!, $categorySlug: String, $envId: String, $envType: String, $filters: QuestionListFilterInput) {
                 learningContextV2(
                 currentQuestionSlug: $currentQuestionSlug
@@ -76,8 +73,7 @@ async def query_previous_question(current_question_slug, env_id, env_type):
                     }
                 }
             }
-            """
-        )
+            """)
         params = {
             "currentQuestionSlug": current_question_slug,
             "envId": env_id,
@@ -107,8 +103,7 @@ async def query_qd_challenge_question(title_slug):
         #   }
         #   """
         # )
-        query = gql(
-            """
+        query = gql("""
             query qdChallengeQuestion($titleSlug: String!) {
                 question(titleSlug: $titleSlug) {
                     challengeQuestion {
@@ -116,8 +111,7 @@ async def query_qd_challenge_question(title_slug):
                     }
                 }
             }
-            """
-        )
+            """)
         params = {"titleSlug": title_slug}
         return (await session.execute(query, variable_values=params))["question"][
             "challengeQuestion"

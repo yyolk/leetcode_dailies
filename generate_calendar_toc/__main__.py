@@ -16,7 +16,6 @@ from pathlib import Path
 
 from bs4 import BeautifulSoup
 
-
 SOLUTIONS_DIR_PATTERN = re.compile(r"\d{6}")
 FILE_PATTERN = re.compile(r"\d{8}")
 DAYS_PATTERN = re.compile(r"\d")

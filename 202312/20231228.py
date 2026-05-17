@@ -48,11 +48,7 @@ class Solution:
                             + (
                                 3
                                 if cnt >= 100
-                                else 2
-                                if cnt >= 10
-                                else 1
-                                if cnt >= 2
-                                else 0
+                                else 2 if cnt >= 10 else 1 if cnt >= 2 else 0
                             ),
                         )
 

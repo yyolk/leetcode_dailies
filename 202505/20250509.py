@@ -3,7 +3,6 @@ from collections import Counter
 from functools import cache
 from math import comb
 
-
 MODULUS = 1_000_000_007
 
 

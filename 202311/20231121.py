@@ -1,7 +1,6 @@
 # https://leetcode.com/problems/count-nice-pairs-in-an-array/
 from collections import Counter
 
-
 MOD = 10**9 + 7
 
 

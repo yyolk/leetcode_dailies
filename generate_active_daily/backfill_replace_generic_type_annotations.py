@@ -1,7 +1,6 @@
 import os
 import re
 
-
 generic_types_pep_585 = [
     "Tuple",
     "List",

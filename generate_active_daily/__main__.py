@@ -33,7 +33,6 @@ from markdownify import markdownify
 from .constants import LEETCODE_BASE_URL, TEXT_WIDTH
 from .client import query_question_of_today
 
-
 parser = argparse.ArgumentParser(
     description="Generates the current daily active challenge boilerplate file."
 )
@@ -278,7 +277,8 @@ initial_python_code = next(
 )["defaultCode"] + (
     # add an elipsis into the default solution method so AST can parse, the 8th column is a guess!
     # TODO: upon encountering a challenge like 20208/20230828.py, this will have to be refactored
-    " " * 8 + "..."
+    " " * 8
+    + "..."
 )
 
 # our docstring is pretty simple, everything before the examples, the number and the title
