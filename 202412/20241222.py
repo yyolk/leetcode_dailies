@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/find-building-where-alice-and-bob-can-meet/
+from bisect import bisect_right
 from collections import deque
 
 

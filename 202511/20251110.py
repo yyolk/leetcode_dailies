@@ -15,6 +15,7 @@ class Solution:
     Return the minimum number of operations required to make all elements in
     the array 0.
     """
+
     def min_operations(self, nums: list[int]) -> int:
         # Initialize the operation count
         ans = 0

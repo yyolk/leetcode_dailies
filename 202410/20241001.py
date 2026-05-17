@@ -1,6 +1,9 @@
 # https://leetcode.com/problems/check-if-array-pairs-are-divisible-by-k/
 
 
+from collections import Counter
+
+
 class Solution:
     """1497. Check If Array Pairs Are Divisible by k
 

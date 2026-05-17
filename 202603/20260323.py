@@ -1,8 +1,9 @@
 # https://leetcode.com/problems/maximum-non-negative-product-in-a-matrix
 
+
 class Solution:
     """1594. Maximum Non Negative Product in a Matrix
-    
+
     You are given a m x n matrix grid. Initially, you are located at the top-left
     corner (0, 0), and in each step, you can only move right or down in the matrix.
     Among all possible paths starting from the top-left corner (0, 0) and ending in
@@ -13,6 +14,7 @@ class Solution:
     product is negative, return -1.
     Notice that the modulo is performed after getting the maximum product.
     """
+
     def max_product_path(self, grid: list[list[int]]) -> int:
         rows = len(grid)
         cols = len(grid[0])

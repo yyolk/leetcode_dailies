@@ -1,6 +1,10 @@
 # https://leetcode.com/problems/find-x-sum-of-all-k-long-subarrays-ii/
 
 
+from collections import Counter
+from sortedcontainers import SortedList
+
+
 class Solution:
     """3321. Find X-Sum of All K-Long Subarrays II
 
@@ -12,15 +16,16 @@ class Solution:
     Keep only the occurrences of the top x most frequent elements. If two elements
     have the same number of occurrences, the element with the bigger value is
     considered more frequent.
-    
+
     Calculate the sum of the resulting array.
-    
+
     Note that if an array has less than x distinct elements, its x-sum is the sum
     of the array.
 
     Return an integer array answer of length n - k + 1 where answer[i] is the x-sum
     of the subarray nums[i..i + k - 1].
     """
+
     def find_x_sum(self, nums: list[int], k: int, x: int) -> list[int]:
         # Define function to add a value's current frequency tuple to the appropriate sorted list
         def add(v: int):
@@ -28,10 +33,10 @@ class Solution:
                 return
             p = (cnt[v], v)
             # If top list exists and current is greater than the smallest in top, add to top
-            if l and p > l[0]:
+            if top and p > top[0]:
                 nonlocal s
                 s += p[0] * p[1]  # Add contribution to sum
-                l.add(p)
+                top.add(p)
             else:
                 r.add(p)
 
@@ -41,15 +46,15 @@ class Solution:
                 return
             p = (cnt[v], v)
             # Check if in top list and remove if present, updating sum
-            if p in l:
+            if p in top:
                 nonlocal s
                 s -= p[0] * p[1]  # Subtract contribution from sum
-                l.remove(p)
+                top.remove(p)
             else:
                 r.remove(p)
 
         # SortedList for top x elements (ascending order)
-        l = SortedList()
+        top = SortedList()
         # SortedList for remaining elements (ascending order)
         r = SortedList()
         # Counter for frequencies in current window
@@ -73,13 +78,13 @@ class Solution:
             if j < 0:
                 continue
             # Move from remaining to top if top has less than x
-            while r and len(l) < x:
+            while r and len(top) < x:
                 p = r.pop()  # Get largest from remaining
-                l.add(p)
+                top.add(p)
                 s += p[0] * p[1]  # Update sum
             # Move from top to remaining if top has more than x
-            while len(l) > x:
-                p = l.pop(0)  # Get smallest from top
+            while len(top) > x:
+                p = top.pop(0)  # Get smallest from top
                 s -= p[0] * p[1]  # Update sum
                 r.add(p)
             # Record the current sum for this window

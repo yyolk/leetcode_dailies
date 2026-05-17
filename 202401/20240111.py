@@ -19,7 +19,7 @@ class Solution:
                 self.right = right
     """
 
-    def max_ancestor_diff(self, root: Optional[TreeNode]) -> int:
+    def max_ancestor_diff(self, root: TreeNode | None) -> int:
         def dfs(node, min_val, max_val):
             # Base case: if the node is None, return the difference between max and min
             if not node:

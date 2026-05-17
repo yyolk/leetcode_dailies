@@ -1,5 +1,4 @@
 # https://leetcode.com/problems/add-one-row-to-tree/
-from typing import Optional
 
 
 class Solution:
@@ -36,8 +35,8 @@ class Solution:
     """
 
     def add_one_row(
-        self, root: Optional[TreeNode], val: int, depth: int
-    ) -> Optional[TreeNode]:
+        self, root: TreeNode | None, val: int, depth: int
+    ) -> TreeNode | None:
         # If depth is 1, create a new root with the original tree as its left subtree
         if depth == 1:
             new_root = TreeNode(val)

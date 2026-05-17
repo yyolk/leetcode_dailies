@@ -7,6 +7,7 @@ class Solution:
     Given two strings s1 and s2, return the lowest ASCII sum of deleted
     characters to make two strings equal.
     """
+
     def minimum_delete_sum(self, s1: str, s2: str) -> int:
         # Swap to ensure s1 is longer or equal (minimizes dp array size)
         if len(s1) < len(s2):

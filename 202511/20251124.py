@@ -10,10 +10,11 @@ class Solution:
 
     Example: nums = [1,0,1] → x0 = 1, x1 = 2 (10₂), x2 = 5 (101₂)
     """
+
     def prefixes_div_by_5(self, nums: list[int]) -> list[bool]:
-        ans = []           # result list
-        cur = 0            # running value of the prefix interpreted as decimal
-        
+        ans = []  # result list
+        cur = 0  # running value of the prefix interpreted as decimal
+
         for bit in nums:
             # Update current number: cur = (cur * 2 + bit)
             cur = (cur << 1) | bit
@@ -21,7 +22,7 @@ class Solution:
             cur %= 5
             # xi is divisible by 5 iff cur % 5 == 0
             ans.append(cur == 0)
-        
+
         return ans
 
     prefixesDivBy5 = prefixes_div_by_5

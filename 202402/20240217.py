@@ -1,6 +1,9 @@
 # https://leetcode.com/problems/furthest-building-you-can-reach/
 
 
+import heapq
+
+
 class Solution:
     """1642. Furthest Building You Can Reach
 

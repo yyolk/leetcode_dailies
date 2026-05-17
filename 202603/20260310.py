@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/find-all-possible-stable-binary-arrays-ii
 
+
 class Solution:
     """3130. Find All Possible Stable Binary Arrays II
 
@@ -9,6 +10,7 @@ class Solution:
     size > limit must contain both 0 and 1. Return the total number of stable
     binary arrays modulo 10^9 + 7.
     """
+
     def number_of_stable_arrays(self, zero: int, one: int, limit: int) -> int:
         MOD = 10**9 + 7
         # dp[i][j][k]: ways using i zeros, j ones, ending with k (0 or 1)

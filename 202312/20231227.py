@@ -17,7 +17,7 @@ class Solution:
     """
 
     def min_cost(self, colors: str, needed_time: list[int]) -> int:
-        start, consecutive_count, total = 0, 1, 0
+        _start, consecutive_count, total = 0, 1, 0
         current_sum = needed_time[0]
         max_time = needed_time[0]
 
@@ -37,7 +37,6 @@ class Solution:
 
                 # Reset variables for the new color.
                 consecutive_count = 1
-                start = i
                 current_sum = needed_time[i]
                 max_time = needed_time[i]
 

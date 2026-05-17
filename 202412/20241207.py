@@ -1,5 +1,4 @@
 # https://leetcode.com/problems/minimum-limit-of-balls-in-a-bag/
-from math import ceil
 
 
 class Solution:

@@ -28,11 +28,11 @@ class Solution:
             dp[i][i] = 1
 
         # Iterate over all possible lengths of substrings, starting from 2
-        for l in range(2, n + 1):
-            # Iterate over all possible starting indices of substrings of length l
-            for i in range(n - l + 1):
+        for length in range(2, n + 1):
+            # Iterate over all possible starting indices of substrings of length length
+            for i in range(n - length + 1):
                 # Calculate the ending index j of the current substring
-                j = i + l - 1
+                j = i + length - 1
                 # If the characters at the start and end of the substring are the same
                 if s[i] == s[j]:
                     # No additional turn needed, so we can extend the previous result

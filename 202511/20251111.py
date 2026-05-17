@@ -11,13 +11,14 @@ class Solution:
 
     A set x is a subset of a set y if all elements of x are also elements of y.
     """
+
     def find_max_form(self, strs: list[str], m: int, n: int) -> int:
         # Initialize DP table: dp[i][j] will be max subset size with <=i zeros and <=j ones
         dp = [[0] * (n + 1) for _ in range(m + 1)]
 
         for s in strs:
             # Count zeros and ones in the string
-            zeros = s.count('0')
+            zeros = s.count("0")
             ones = len(s) - zeros
 
             # Update DP table in reverse order to avoid using same item multiple times

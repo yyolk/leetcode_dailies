@@ -1,5 +1,4 @@
 # https://leetcode.com/problems/sum-root-to-leaf-numbers/
-from typing import Optional
 
 
 class Solution:
@@ -26,7 +25,7 @@ class Solution:
 
     """
 
-    def sum_numbers(self, root: Optional[TreeNode]) -> int:
+    def sum_numbers(self, root: TreeNode | None) -> int:
         if not root:
             return 0
 

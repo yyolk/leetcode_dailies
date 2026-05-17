@@ -29,6 +29,6 @@ python -m generate_calendar_toc
 ```
 
 
-[^1]: See [#3](https://github.com/yyolk/leetcode_dailies/pull/3) 
+[^1]: See [#3](https://github.com/yyolk/leetcode_dailies/pull/3)
   and [#6](https://github.com/yyolk/leetcode_dailies/issues/6)
   for context and last run.

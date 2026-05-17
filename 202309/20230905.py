@@ -42,7 +42,7 @@ class Solution:
 
     """
 
-    def copyRandomList(self, head: "Optional[Node]") -> "Optional[Node]":
+    def copyRandomList(self, head: "Node | None") -> "Node | None":
         """Performs a deepcopy of the list
 
         Args:

@@ -1,6 +1,5 @@
 # https://leetcode.com/problems/reverse-odd-levels-of-binary-tree/
 from collections import deque
-from typing import Optional
 
 
 class TreeNode:
@@ -27,7 +26,7 @@ class Solution:
     The **level** of a node is the number of edges along the path between it and the
     root node."""
 
-    def reverse_odd_levels(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+    def reverse_odd_levels(self, root: TreeNode | None) -> TreeNode | None:
         if not root:
             return None
 

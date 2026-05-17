@@ -33,14 +33,14 @@ class Solution:
                 self.right = right
     """
 
-    def tree_queries(self, root: Optional[TreeNode], queries: list[int]) -> list[int]:
+    def tree_queries(self, root: TreeNode | None, queries: list[int]) -> list[int]:
         # Initialize arrays to store heights and node information
         # Heights of leaf nodes
         heights = [0] * 50000
         # Depth of each node
         d = [0] * 100001
         # Left index for each node
-        l = [0] * 100001
+        li = [0] * 100001
         # Right index for each node
         r = [0] * 100001
         # Counter for leaf nodes
@@ -56,12 +56,12 @@ class Solution:
                 # Store leaf height
                 heights[len_leaves] = h
                 # Both indices same for leaf
-                l[p.val] = r[p.val] = len_leaves
+                li[p.val] = r[p.val] = len_leaves
                 len_leaves += 1
                 return
 
             # Store left index for current node
-            l[p.val] = len_leaves
+            li[p.val] = len_leaves
 
             # Recursively process left and right subtrees
             if p.left:
@@ -96,7 +96,7 @@ class Solution:
         for query in queries:
             # Find maximum height excluding current node's subtree
             # Max height to the left
-            maxxl = maxl[l[query]]
+            maxxl = maxl[li[query]]
             # Max height to the right
             maxxr = maxr[r[query]]
             # Result is max of (max left height, max right height, current depth-1)

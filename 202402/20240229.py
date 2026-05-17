@@ -1,6 +1,5 @@
 # https://leetcode.com/problems/even-odd-tree/
 from collections import deque
-from typing import Optional
 
 
 class Solution:
@@ -30,7 +29,7 @@ class Solution:
 
     """
 
-    def is_even_odd_tree(self, root: Optional[TreeNode]) -> bool:
+    def is_even_odd_tree(self, root: TreeNode | None) -> bool:
         if not root:
             return True
 

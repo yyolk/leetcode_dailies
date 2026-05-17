@@ -13,7 +13,6 @@ class Solution:
 
     Return `true` *if there is a cycle in the linked list*. Otherwise, return `false`.
 
-
     Definition for singly-linked list.
 
         class ListNode:
@@ -23,7 +22,7 @@ class Solution:
 
     """
 
-    def hasCycle(self, head: Optional[ListNode]) -> bool:
+    def hasCycle(self, head: ListNode | None) -> bool:
         """Determines if the input linked-list has a cycle in it
 
         Proposed solution uses Floyd's tortoise and hare algorithm

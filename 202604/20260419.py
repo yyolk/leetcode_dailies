@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/maximum-distance-between-a-pair-of-values
 
+
 class Solution:
     """1855. Maximum Distance Between a Pair of Values
 
@@ -10,6 +11,7 @@ class Solution:
     pair (i, j). If there are no valid pairs, return 0. An array arr is
     non-increasing if arr[i-1] >= arr[i] for every 1 <= i < arr.length.
     """
+
     def max_distance(self, nums_1: list[int], nums_2: list[int]) -> int:
         # two pointers exploiting non-increasing order: i only advances
         max_dist = 0

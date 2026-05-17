@@ -16,6 +16,7 @@ class Solution:
 
     Return the matrix mat after performing every query.
     """
+
     def range_add_queries(self, n: int, queries: list[list[int]]) -> list[list[int]]:
         # Initialize the difference array of size (n+1) x (n+1)
         diff = [[0] * (n + 1) for _ in range(n + 1)]

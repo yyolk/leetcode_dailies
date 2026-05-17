@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/maximum-amount-of-money-robot-can-earn
 
+
 class Solution:
     """3418. Maximum Amount of Money Robot Can Earn
 
@@ -15,10 +16,11 @@ class Solution:
     Note: The robot's total coins can be negative.
     Return the maximum profit the robot can gain on the route.
     """
+
     def maximum_amount(self, coins: list[list[int]]) -> int:
         m = len(coins)
         n = len(coins[0])
-        NEG_INF = -10**18
+        NEG_INF = -(10**18)
         dp = [[[NEG_INF] * 3 for _ in range(n)] for _ in range(m)]
         # Initialize starting cell
         val = coins[0][0]

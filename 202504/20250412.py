@@ -34,7 +34,7 @@ class Solution:
             fact.append(fact[-1] * i)
 
         # Function to check if a frequency vector has at least one valid palindrome
-        def has_valid_palindrome(freq: List[int]) -> bool:
+        def has_valid_palindrome(freq: list[int]) -> bool:
             # Determine the number of digits to generate (first half + middle if odd)
             m = n // 2  # Length of first half
             if n % 2 == 0:
@@ -48,7 +48,7 @@ class Solution:
 
             # Recursive function to build palindrome and check conditions
             def recurse(
-                pos: int, curr_freq: List[int], curr_sum: int, first_digit: int
+                pos: int, curr_freq: list[int], curr_sum: int, first_digit: int
             ) -> bool:
                 if pos == m:
                     # Check if first digit is not zero and number is divisible by k
@@ -70,7 +70,7 @@ class Solution:
             return recurse(0, target_freq, start_sum, -1)
 
         # Generate frequency vectors with all even frequencies (n even)
-        def generate_even_freq(pos: int, remaining: int, freq: List[int]):
+        def generate_even_freq(pos: int, remaining: int, freq: list[int]):
             if pos == 10:
                 if remaining == 0:
                     yield freq[:]
@@ -80,7 +80,7 @@ class Solution:
                 yield from generate_even_freq(pos + 1, remaining - f, freq)
 
         # Generate frequency vectors with exactly one odd frequency (n odd)
-        def generate_odd_freq(c: int, pos: int, remaining: int, freq: List[int]):
+        def generate_odd_freq(c: int, pos: int, remaining: int, freq: list[int]):
             if pos == 10:
                 if remaining == 0:
                     yield freq[:]
@@ -97,7 +97,7 @@ class Solution:
         total = 0
 
         # Compute number of permutations without leading zeros
-        def count_permutations(freq: List[int]) -> int:
+        def count_permutations(freq: list[int]) -> int:
             prod_den = 1
             for f in freq:
                 prod_den *= fact[f]

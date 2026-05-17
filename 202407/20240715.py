@@ -1,5 +1,4 @@
 # https://leetcode.com/problems/create-binary-tree-from-descriptions/
-from typing import Optional
 
 
 class Solution:
@@ -27,7 +26,7 @@ class Solution:
 
     """
 
-    def create_binary_tree(self, descriptions: list[list[int]]) -> Optional[TreeNode]:
+    def create_binary_tree(self, descriptions: list[list[int]]) -> TreeNode | None:
         nodes = {}  # Dictionary to hold all TreeNode instances
         children = set()  # Set to keep track of all child nodes
 

@@ -25,7 +25,7 @@ class Solution:
 
         # Calculate frequencies based on remainder
         for num in nums:
-            remainder = num % difference
+            remainder = num % k
             frequency_map[remainder][num] = frequency_map[remainder].get(num, 0) + 1
 
         # Iterate through each remainder group
@@ -45,7 +45,7 @@ class Solution:
                 take = 2 ** subsets[i][1] - 1
 
                 # If next number has a 'difference', calculate subsets; otherwise, move to next
-                if i + 1 < n and subsets[i + 1][0] - subsets[i][0] == difference:
+                if i + 1 < n and subsets[i + 1][0] - subsets[i][0] == k:
                     take *= next2
                 else:
                     take *= next1

@@ -1,4 +1,6 @@
 # https://leetcode.com/problems/total-characters-in-string-after-transformations-i/
+from collections import Counter
+
 MODULO_CONSTANT = 1_000_000_007
 # Initialize a list to store precomputed dynamic programming values for transformations
 dynamic_programming_array = [1] * (100_000 + 26)

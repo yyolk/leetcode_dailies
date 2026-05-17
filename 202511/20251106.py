@@ -32,7 +32,10 @@ class Solution:
     Note: The power grid preserves its structure; an offline (nonoperational) node
     remains part of its grid and taking it offline does not alter connectivity.
     """
-    def process_queries(self, c: int, connections: list[list[int]], queries: list[list[int]]) -> list[int]:
+
+    def process_queries(
+        self, c: int, connections: list[list[int]], queries: list[list[int]]
+    ) -> list[int]:
         # Disjoint Set Union for finding connected components
         class DSU:
             def __init__(self, n: int):

@@ -12,6 +12,7 @@ class Solution:
 
     Example: [1,2,3,4] -> 2  (1->0 or 2, 4->3 or 5)
     """
+
     def minimum_operations(self, nums: list[int]) -> int:
         total = 0
         for x in nums:

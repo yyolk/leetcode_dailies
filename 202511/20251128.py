@@ -3,6 +3,7 @@ import sys
 
 sys.setrecursionlimit(10**5)
 
+
 class Solution:
     """2872. Maximum Number of K-Divisible Components
 
@@ -22,13 +23,16 @@ class Solution:
 
     Return the maximum number of components in any valid split.
     """
-    def max_k_divisible_components(self, n: int, edges: list[list[int]], values: list[int], k: int) -> int:
+
+    def max_k_divisible_components(
+        self, n: int, edges: list[list[int]], values: list[int], k: int
+    ) -> int:
         # Build adjacency list for the tree
         adj = [[] for _ in range(n)]
         for a, b in edges:
             adj[a].append(b)
             adj[b].append(a)
-        
+
         def dfs(u: int, p: int) -> tuple[int, int]:
             # Initialize mod sum with current node's value % k
             mod_sum = values[u] % k
@@ -46,7 +50,7 @@ class Solution:
                     if child_mod == 0:
                         split_comp += 1
             return mod_sum, split_comp
-        
+
         # Run DFS from root 0
         _, max_split = dfs(0, -1)
         # Total components = split-offs + 1 (root remaining, valid since total % k == 0)

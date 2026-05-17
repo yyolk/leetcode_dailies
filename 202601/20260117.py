@@ -12,7 +12,10 @@ class Solution:
     You need to find the maximum area of a square that can fit inside the intersecting region of
     at least two rectangles. Return 0 if such a square does not exist.
     """
-    def largest_square_area(self, bottom_left: list[list[int]], top_right: list[list[int]]) -> int:
+
+    def largest_square_area(
+        self, bottom_left: list[list[int]], top_right: list[list[int]]
+    ) -> int:
         n = len(bottom_left)
         max_side = 0
 

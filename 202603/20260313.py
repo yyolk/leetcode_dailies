@@ -2,9 +2,10 @@
 
 import math
 
+
 class Solution:
     """3296. Minimum Number of Seconds to Make Mountain Height Zero
-    
+
     You are given an integer mountainHeight denoting the height of a mountain.
     You are also given an integer array workerTimes representing the work time of
     workers in seconds. The workers work simultaneously to reduce the height of
@@ -16,7 +17,10 @@ class Solution:
     representing the minimum number of seconds required for the workers to make
     the height of the mountain 0.
     """
-    def min_number_of_seconds(self, mountain_height: int, worker_times: list[int]) -> int:
+
+    def min_number_of_seconds(
+        self, mountain_height: int, worker_times: list[int]
+    ) -> int:
         def get_reduced_height(time: int) -> int:
             # Total height reducible in `time` seconds by all workers
             total = 0

@@ -7,6 +7,7 @@ class Solution:
     Given a binary string s and an integer k, return true if every binary code of
     length k is a substring of s. Otherwise, return false.
     """
+
     def has_all_codes(self, s: str, k: int) -> bool:
         n: int = len(s)
         if n < k:

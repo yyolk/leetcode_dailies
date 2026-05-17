@@ -13,7 +13,7 @@ class Solution:
         if not matrix:
             return 0
 
-        rows = len(matrix)
+        len(matrix)
         cols = len(matrix[0])
 
         heights = [0] * cols

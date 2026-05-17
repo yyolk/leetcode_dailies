@@ -3,6 +3,7 @@
 
 import math
 
+
 class Solution:
     """2654. Minimum Number of Operations to Make All Array Elements Equal to 1
 
@@ -18,6 +19,7 @@ class Solution:
     The gcd of two integers is the greatest common divisor of the two
     integers.
     """
+
     def min_operations(self, nums: list[int]) -> int:
         # Handle base case for empty array, though constraints imply n >= 1
         n = len(nums)
@@ -50,7 +52,7 @@ class Solution:
             st[0][i] = nums[i]
         for k in range(1, logn):
             for i in range(n - (1 << k) + 1):
-                st[k][i] = math.gcd(st[k-1][i], st[k-1][i + (1 << (k-1))])
+                st[k][i] = math.gcd(st[k - 1][i], st[k - 1][i + (1 << (k - 1))])
 
         # Query function for GCD from left to right inclusive
         def get_gcd(left: int, right: int) -> int:

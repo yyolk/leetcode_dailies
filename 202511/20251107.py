@@ -27,6 +27,7 @@ class Solution:
 
     Note that you can build the k power stations in multiple cities.
     """
+
     def max_power(self, stations: list[int], r: int, k: int) -> int:
         n = len(stations)
         # Difference array with extra space for safety
@@ -40,7 +41,7 @@ class Solution:
             if end < n + 1:
                 df[end] -= stations[i]
         # Compute the minimum initial power
-        initial_min = float('inf')
+        initial_min = float("inf")
         cur = 0
         for i in range(n):
             cur += df[i]

@@ -24,9 +24,7 @@ class Solution:
 
     """
 
-    def splitListToParts(
-        self, head: Optional[ListNode], k: int
-    ) -> list[Optional[ListNode]]:
+    def splitListToParts(self, head: ListNode | None, k: int) -> list[ListNode | None]:
         """Split input linked list into parts
 
         Proposed solution using nested iteration and divmod(...)

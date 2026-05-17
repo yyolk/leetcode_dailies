@@ -12,6 +12,7 @@ class Solution:
 
     Return the element that is repeated n times.
     """
+
     def repeated_n_times(self, nums: list[int]) -> int:
         # Set to track elements seen so far; others appear once, repeated appears n times
         seen = set()

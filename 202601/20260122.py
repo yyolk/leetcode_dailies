@@ -16,6 +16,7 @@ class Solution:
     An array is said to be non-decreasing if each element is greater than
     or equal to its previous element (if it exists).
     """
+
     def minimum_pair_removal(self, nums: list[int]) -> int:
         # Copy the list to avoid modifying the original
         nums = nums[:]
@@ -30,7 +31,7 @@ class Solution:
             if is_non_dec:
                 return ops
             # Find the leftmost pair with the minimum sum
-            min_sum = float('inf')
+            min_sum = float("inf")
             min_i = -1
             for i in range(len(nums) - 1):
                 cur_sum = nums[i] + nums[i + 1]

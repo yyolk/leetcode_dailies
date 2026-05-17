@@ -1,6 +1,9 @@
 # https://leetcode.com/problems/shortest-distance-after-road-addition-queries-i/
 
 
+import heapq
+
+
 class Solution:
     """3243. Shortest Distance After Road Addition Queries I
 

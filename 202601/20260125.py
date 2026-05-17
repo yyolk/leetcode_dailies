@@ -12,11 +12,12 @@ class Solution:
 
     Return the minimum possible difference.
     """
+
     def minimum_difference(self, nums: list[int], k: int) -> int:
         # Sort the array to enable sliding window for minimal range
         nums.sort()
         # Initialize minimum difference to a large value
-        min_diff = float('inf')
+        min_diff = float("inf")
         # Slide window of size k over sorted array
         for i in range(len(nums) - k + 1):
             # Compute difference for current window

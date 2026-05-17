@@ -17,6 +17,7 @@ class Solution:
 
     Return the minimum possible size of a containing set.
     """
+
     def intersection_size_two(self, intervals: list[list[int]]) -> int:
         # Sort intervals by their end points in ascending order
         intervals.sort(key=lambda x: x[1])

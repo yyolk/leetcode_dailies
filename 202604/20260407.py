@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/walking-robot-simulation-ii
 
+
 class Robot:
     """2069. Walking Robot Simulation II
 
@@ -23,6 +24,7 @@ class Robot:
     getPos() returns the current cell [x, y].
     getDir() returns the current direction string.
     """
+
     def __init__(self, width: int, height: int):
         # precompute positions/directions along perimeter cycle (CCW)
         # index 0 is dummy (0,0,"South") to align modulo for full cycles

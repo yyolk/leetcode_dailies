@@ -9,6 +9,7 @@ class Solution:
     Determine if a pyramid can be built from the given bottom row using only the
     allowed triangular patterns, reaching a single block at the top.
     """
+
     def pyramid_transition(self, bottom: str, allowed: list[str]) -> bool:
         # Map each pair of bottom blocks to the list of possible top blocks
         next_map = defaultdict(list)
@@ -27,7 +28,7 @@ class Solution:
             possibilities = []
             n = len(row)
             for i in range(n - 1):
-                pair = row[i:i + 2]
+                pair = row[i : i + 2]
                 opts = next_map[pair]
                 if not opts:  # No way to place a block here
                     return False
@@ -35,7 +36,7 @@ class Solution:
 
             # Generate all possible next rows and check if any works
             for candidate in product(*possibilities):
-                next_row = ''.join(candidate)
+                next_row = "".join(candidate)
                 if can_build(next_row):
                     return True
             return False

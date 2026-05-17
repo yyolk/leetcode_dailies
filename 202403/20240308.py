@@ -31,4 +31,4 @@ class Solution:
 
         return total_frequency
 
-    maxFrequencyElements = max_frequency_element
+    maxFrequencyElements = max_frequency_elements

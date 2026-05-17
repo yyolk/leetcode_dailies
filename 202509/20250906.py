@@ -47,9 +47,9 @@ class Solution:
 
         # Initialize total sum of operations
         total = 0
-        for l, r in queries:
-            # Calculate total division counts for range [l, r]
-            sum_div = prefix(r) - prefix(l - 1)
+        for lo, r in queries:
+            # Calculate total division counts for range [lo, r]
+            sum_div = prefix(r) - prefix(lo - 1)
             # Compute min operations as ceil(sum_div / 2)
             ops = (sum_div + 1) // 2
             # Accumulate the operations

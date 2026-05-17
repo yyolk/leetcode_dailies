@@ -19,9 +19,7 @@ class Solution:
                 self.right = right
     """
 
-    def remove_leaf_nodes(
-        self, root: Optional[TreeNode], target: int
-    ) -> Optional[TreeNode]:
+    def remove_leaf_nodes(self, root: TreeNode | None, target: int) -> TreeNode | None:
         # If the root is None, return None (base case for recursion)
         if not root:
             return None

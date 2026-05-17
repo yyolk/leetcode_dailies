@@ -17,7 +17,7 @@ class Solution:
 
     def minimum_operations(self, nums: list[int]) -> int:
         # Store the length of the array for easier reference
-        n = len(nums)
+        len(nums)
         # Initialize the operation counter to track the number of removals
         k = 0
         # Loop until we find the smallest number of operations to make the suffix distinct

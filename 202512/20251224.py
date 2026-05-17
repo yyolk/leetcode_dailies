@@ -14,13 +14,14 @@ class Solution:
 
     Note that apples from the same pack can be put into multiple boxes.
     """
+
     def minimum_boxes(self, apple: list[int], capacity: list[int]) -> int:
         # Total apples that must be stored
         total = sum(apple)
-        
+
         # Sort boxes descending - greedily use largest capacities first
         capacity.sort(reverse=True)
-        
+
         # Accumulate capacity until it meets or exceeds total apples needed
         used = 0
         for i in range(len(capacity)):
@@ -28,8 +29,8 @@ class Solution:
             if used >= total:
                 # i+1 boxes are sufficient
                 return i + 1
-        
+
         # Edge case: should not reach here if capacity can hold all apples
         return len(capacity)
-    
+
     minimumBoxes = minimum_boxes

@@ -16,7 +16,7 @@ class Solution:
                 self.right = right
     """
 
-    def generate_trees(self, n: int) -> list[Optional[TreeNode]]:
+    def generate_trees(self, n: int) -> list[TreeNode | None]:
         # If n is 0, return an empty list
         if n == 0:
             return []

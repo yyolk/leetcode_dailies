@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/amount-of-time-for-binary-tree-to-be-infected/
+
 from collections import defaultdict, deque
 
 
@@ -24,7 +25,7 @@ class Solution:
                 self.right = right
     """
 
-    def amount_of_time(self, root: Optional[TreeNode], start: int) -> int:
+    def amount_of_time(self, root: TreeNode | None, start: int) -> int:
         def dfs(node):
             """Function to perform DFS and populate the graph with edges."""
             if node is None:

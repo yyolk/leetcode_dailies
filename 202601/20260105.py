@@ -17,6 +17,7 @@ class Solution:
     Return the maximum sum of the matrix's elements using the operation
     mentioned above.
     """
+
     def max_matrix_sum(self, matrix: list[list[int]]) -> int:
         # Sum of absolute values (maximum possible if all non-negative)
         total_abs = 0

@@ -22,7 +22,10 @@ class Solution:
     "restaurant", and then by code in lexicographical (ascending) order within
     each category.
     """
-    def validate_coupons(self, code: list[str], business_line: list[str], is_active: list[bool]) -> list[str]:
+
+    def validate_coupons(
+        self, code: list[str], business_line: list[str], is_active: list[bool]
+    ) -> list[str]:
         # Define sort order for business lines
         order = {"electronics": 0, "grocery": 1, "pharmacy": 2, "restaurant": 3}
         valid_categories = set(order.keys())
@@ -39,7 +42,7 @@ class Solution:
             if bl not in valid_categories:
                 continue
             # Skip if code empty or contains invalid chars
-            if not c or not all(ch.isalnum() or ch == '_' for ch in c):
+            if not c or not all(ch.isalnum() or ch == "_" for ch in c):
                 continue
             # Add tuple for sorting
             valid.append((order[bl], c))

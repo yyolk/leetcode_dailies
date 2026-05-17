@@ -41,7 +41,6 @@ class Solution:
             start_time_of_second_event,
             value_of_second_event,
         ) in start_times_for_second_meeting:
-
             # Skip events where the first meeting's end time overlaps with the second's start time
             while end_time_of_first_event < start_time_of_second_event:
                 # Update the maximum value that can be obtained from the first event

@@ -18,8 +18,8 @@ class Solution:
     """
 
     def reverseBetween(
-        self, head: Optional[ListNode], left: int, right: int
-    ) -> Optional[ListNode]:
+        self, head: ListNode | None, left: int, right: int
+    ) -> ListNode | None:
         """Reverse slice of input ListNode
 
         Proposed solution.

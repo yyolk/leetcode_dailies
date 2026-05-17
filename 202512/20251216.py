@@ -13,7 +13,14 @@ class Solution:
     with total effective_cost <= budget. Each stock buyable at most once.
     """
 
-    def max_profit(self, n: int, present: list[int], future: list[int], hierarchy: list[list[int]], budget: int) -> int:
+    def max_profit(
+        self,
+        n: int,
+        present: list[int],
+        future: list[int],
+        hierarchy: list[list[int]],
+        budget: int,
+    ) -> int:
         # Build adjacency list (0-based indexing, root 0 for employee 1)
         tree = [[] for _ in range(n)]
         for boss, sub in hierarchy:
@@ -44,13 +51,17 @@ class Solution:
             full_cost = present[u]
             full_profit = future[u] - full_cost
             for b in range(full_cost, budget + 1):
-                dp_no[b] = max(dp_no[b], with_disc_children[b - full_cost] + full_profit)
+                dp_no[b] = max(
+                    dp_no[b], with_disc_children[b - full_cost] + full_profit
+                )
 
             # Option: buy u at half price (only when incoming discount)
             half_cost = present[u] // 2
             half_profit = future[u] - half_cost
             for b in range(half_cost, budget + 1):
-                dp_with[b] = max(dp_with[b], with_disc_children[b - half_cost] + half_profit)
+                dp_with[b] = max(
+                    dp_with[b], with_disc_children[b - half_cost] + half_profit
+                )
 
             return dp_no, dp_with
 

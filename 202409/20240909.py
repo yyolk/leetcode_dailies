@@ -22,9 +22,7 @@ class Solution:
                 self.next = next
     """
 
-    def spiral_matrix(
-        self, m: int, n: int, head: Optional[ListNode]
-    ) -> list[list[int]]:
+    def spiral_matrix(self, m: int, n: int, head: ListNode | None) -> list[list[int]]:
         # Initialize the matrix with -1
         matrix = [[-1 for _ in range(n)] for _ in range(m)]
 

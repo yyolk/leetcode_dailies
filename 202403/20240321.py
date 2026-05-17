@@ -1,5 +1,4 @@
 # https://leetcode.com/problems/reverse-linked-list/
-from typing import Optional
 
 
 class Solution:
@@ -17,7 +16,7 @@ class Solution:
 
     """
 
-    def reverse_list(self, head: Optional[ListNode]) -> Optional[ListNode]:
+    def reverse_list(self, head: ListNode | None) -> ListNode | None:
         # Initialize pointers
         # Previous node (initialized to None for the first node)
         prev = None

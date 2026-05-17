@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/insert-greatest-common-divisors-in-linked-list/
+
 from math import gcd
 
 
@@ -25,9 +26,7 @@ class Solution:
 
     """
 
-    def insert_greatest_common_divisors(
-        self, head: Optional[ListNode]
-    ) -> Optional[ListNode]:
+    def insert_greatest_common_divisors(self, head: ListNode | None) -> ListNode | None:
         # If the list is empty or has only one node, no insertion is needed
         if not head or not head.next:
             return head

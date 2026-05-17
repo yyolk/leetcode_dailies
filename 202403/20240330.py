@@ -1,6 +1,9 @@
 # https://leetcode.com/problems/subarrays-with-k-different-integers/
 
 
+from collections import defaultdict
+
+
 class Solution:
     """992. Subarrays with K Different Integers
 

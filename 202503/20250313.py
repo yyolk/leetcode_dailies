@@ -41,12 +41,12 @@ class Solution:
 
             # Accept queries until cur is sufficient to make nums[i] zero
             while q and cur < x:
-                l, r, height = q.pop()  # Get the next query
+                lo, r, height = q.pop()  # Get the next query
                 if r >= i:  # Query affects this index or beyond
-                    if l <= i:  # Query includes current index
+                    if lo <= i:  # Query includes current index
                         cur += height  # Apply decrement now
                     else:  # Query starts after current index
-                        delta[l] += height  # Defer decrement to later
+                        delta[lo] += height  # Defer decrement to later
                     if r + 1 < n:  # Ensure we don’t go out of bounds
                         delta[r + 1] -= height  # End the range effect
 

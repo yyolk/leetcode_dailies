@@ -15,6 +15,7 @@ class Solution:
     lexicographically largest resulting string possible after applying the
     mentioned operations on the string.
     """
+
     def make_largest_special(self, s: str) -> str:
         parts = []
         count = 0

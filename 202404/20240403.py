@@ -17,7 +17,7 @@ class Solution:
     def find_words(self, board, words):
         res = []
         for word in words:
-            if self.exist(board, word) == True:
+            if self.exist(board, word):
                 res.append(word)
         return res
 

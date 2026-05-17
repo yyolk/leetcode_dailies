@@ -29,7 +29,7 @@ class Solution:
                 self.right = right
     """
 
-    def is_sub_path(self, head: Optional[ListNode], root: Optional[TreeNode]) -> bool:
+    def is_sub_path(self, head: ListNode | None, root: TreeNode | None) -> bool:
         if not head:
             # An empty list is a subpath of any tree
             return True
@@ -44,7 +44,7 @@ class Solution:
             or self.is_sub_path(head, root.right)
         )
 
-    def _check_path(self, head: Optional[ListNode], node: Optional[TreeNode]) -> bool:
+    def _check_path(self, head: ListNode | None, node: TreeNode | None) -> bool:
         # Base cases
         if not head:
             # All nodes in list matched

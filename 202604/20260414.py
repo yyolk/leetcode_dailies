@@ -4,7 +4,7 @@ from collections import deque
 
 class Solution:
     """2463. Minimum Total Distance Traveled
-    
+
     There are some robots and factories on the X-axis. You are given an
     integer array robot where robot[i] is the position of the ith robot. You
     are also given a 2D integer array factory where factory[j] = [positionj,
@@ -21,6 +21,7 @@ class Solution:
     traveled by all the robots. The test cases are generated such that all the
     robots can be repaired.
     """
+
     def minimum_total_distance(self, robot: list[int], factory: list[list[int]]) -> int:
         # Sort to enable ordered greedy assignment of robot suffixes to factories
         robot.sort()

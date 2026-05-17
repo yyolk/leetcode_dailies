@@ -15,6 +15,7 @@ class Solution:
 
     Note: Squares may overlap. Overlapping areas are counted multiple times.
     """
+
     def separate_squares(self, squares: list[list[int]]) -> float:
         # Handle empty or zero-area cases early
         if not squares:

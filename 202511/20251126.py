@@ -12,6 +12,7 @@ class Solution:
     divisible by k. Since the answer may be very large, return it modulo 10^9 +
     7.
     """
+
     def number_of_paths(self, grid: list[list[int]], k: int) -> int:
         # Define modulo for large numbers
         MOD = 10**9 + 7
