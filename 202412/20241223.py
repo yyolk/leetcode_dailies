@@ -1,15 +1,13 @@
 # https://leetcode.com/problems/minimum-number-of-operations-to-sort-a-binary-tree-by-level/
-from typing import List
+
 from collections import deque
 from typing import Optional
-
 
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
         self.val = val
         self.left = left
         self.right = right
-
 
 class Solution:
     """2471. Minimum Number of Operations to Sort a Binary Tree by Level
@@ -26,7 +24,7 @@ class Solution:
     root node*.*"""
 
     def minimum_operations(self, root: Optional[TreeNode]) -> int:
-        def min_swaps_to_sort(arr: List[int]) -> int:
+        def min_swaps_to_sort(arr: list[int]) -> int:
             # Get the sorted version of the array and track the indices
             sorted_arr = sorted((val, idx) for idx, val in enumerate(arr))
             visited = [False] * len(arr)

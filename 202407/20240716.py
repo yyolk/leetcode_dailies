@@ -1,7 +1,5 @@
 # https://leetcode.com/problems/step-by-step-directions-from-a-binary-tree-node-to-another/
 
-
-from typing import List
 from typing import Optional
 class Solution:
     """2096. Step-By-Step Directions From a Binary Tree Node to Another
@@ -45,7 +43,7 @@ class Solution:
                 return node
             return left if left else right
 
-        def find_path(node: TreeNode, target: int, path: List[str]) -> bool:
+        def find_path(node: TreeNode, target: int, path: list[str]) -> bool:
             if not node:
                 return False
             if node.val == target:

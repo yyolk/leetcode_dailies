@@ -1,7 +1,5 @@
 # https://leetcode.com/problems/minimize-the-maximum-difference-of-pairs/
 
-
-from typing import List
 class Solution:
     """2720. Minimize the Maximum Difference of Pairs
 
@@ -19,7 +17,7 @@ class Solution:
 
     """
 
-    def minimize_max(self, nums: List[int], p: int) -> int:
+    def minimize_max(self, nums: list[int], p: int) -> int:
         # Step 1: Sort the input array
         nums.sort()
         n = len(nums)

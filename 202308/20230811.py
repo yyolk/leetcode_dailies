@@ -1,7 +1,5 @@
 # https://leetcode.com/problems/coin-change-ii/
 
-
-from typing import List
 class Solution:
     """518. Coin Change II
 
@@ -17,7 +15,7 @@ class Solution:
 
     """
 
-    def change(self, amount: int, coins: List[int]) -> int:
+    def change(self, amount: int, coins: list[int]) -> int:
         # Initialize a list to store the number of combinations for each amount from 0 to the target amount
         dp = [0] * (amount + 1)
 

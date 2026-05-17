@@ -1,8 +1,7 @@
 # https://leetcode.com/problems/finding-pairs-with-a-certain-sum/
 
-
 from collections import Counter
-from typing import List
+
 class FindSumPairs:
     """1995. Finding Pairs With a Certain Sum
 
@@ -25,7 +24,7 @@ class FindSumPairs:
     * `int count(int tot)` Returns the number of pairs `(i, j)` such that `nums1[i] +
     nums2[j] == tot`."""
 
-    def __init__(self, nums1: List[int], nums2: List[int]):
+    def __init__(self, nums1: list[int], nums2: list[int]):
         """Initialize the FindSumPairs object with two integer arrays nums1 and nums2."""
         self.nums1 = nums1
         self.nums2 = nums2

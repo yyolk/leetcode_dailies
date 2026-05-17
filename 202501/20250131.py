@@ -1,8 +1,7 @@
 # https://leetcode.com/problems/making-a-large-island/
 
-
 from collections import defaultdict
-from typing import List
+
 class Solution:
     """827. Making A Large Island
 
@@ -43,7 +42,7 @@ class Solution:
 
         return max_size
 
-    def dfs(self, grid: List[List[int]], i: int, j: int, label: int) -> int:
+    def dfs(self, grid: list[list[int]], i: int, j: int, label: int) -> int:
         n = len(grid)
         if i < 0 or i >= n or j < 0 or j >= n or grid[i][j] != 1:
             return 0

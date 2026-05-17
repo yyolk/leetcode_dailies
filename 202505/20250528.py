@@ -1,7 +1,6 @@
 # https://leetcode.com/problems/maximize-the-number-of-target-nodes-after-connecting-trees-i/
-from typing import List
-from collections import deque
 
+from collections import deque
 
 class Solution:
     """3372. Maximize the Number of Target Nodes After Connecting Trees I
@@ -49,7 +48,7 @@ class Solution:
         # Compute the answer for each node by adding its count to the maximum from the second tree
         return [cnt + max_cnt2 for cnt in cnt1]
 
-    def build_graph(self, edges: List[List[int]]) -> List[List[int]]:
+    def build_graph(self, edges: list[list[int]]) -> list[list[int]]:
         # Calculate number of nodes (number of edges + 1)
         n = len(edges) + 1
         # Initialize adjacency list for the graph
