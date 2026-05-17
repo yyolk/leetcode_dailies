@@ -7,6 +7,7 @@ class TreeNode:
         self.left = left
         self.right = right
 
+
 class Solution:
     """1022. Sum of Root To Leaf Binary Numbers
 
@@ -19,6 +20,7 @@ class Solution:
     from the root to that leaf. Return the sum of these numbers. The test cases
     are generated so that the answer fits in a 32-bits integer.
     """
+
     def sum_root_to_leaf(self, root: TreeNode | None) -> int:
         def dfs(node: TreeNode | None, current: int) -> int:
             if not node:
@@ -30,6 +32,7 @@ class Solution:
                 return current
             # Sum from both subtrees
             return dfs(node.left, current) + dfs(node.right, current)
+
         # Start with 0 at root
         return dfs(root, 0)
 

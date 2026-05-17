@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/sum-of-left-leaves/
 
+
 class Solution:
     """404. Sum of Left Leaves
 

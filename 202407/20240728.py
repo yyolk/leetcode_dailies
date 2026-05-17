@@ -3,6 +3,8 @@
 
 from collections import defaultdict
 from collections import deque
+
+
 class Solution:
     """2045. Second Minimum Time to Reach Destination
 

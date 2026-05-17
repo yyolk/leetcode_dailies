@@ -12,6 +12,7 @@ class Solution:
 
     Note: grid may contain numbers up to 15.
     """
+
     def num_magic_squares_inside(self, grid: list[list[int]]) -> int:
         rows, cols = len(grid), len(grid[0])
         if rows < 3 or cols < 3:
@@ -22,7 +23,7 @@ class Solution:
         for i in range(rows - 2):
             for j in range(cols - 2):
                 # Extract the 3x3 subgrid as list of rows
-                square = [grid[i + k][j:j + 3] for k in range(3)]
+                square = [grid[i + k][j : j + 3] for k in range(3)]
                 if self._is_magic(square):
                     count += 1
         return count
@@ -37,7 +38,11 @@ class Solution:
         magic = 15
 
         # Check all row sums
-        if sum(square[0]) != magic or sum(square[1]) != magic or sum(square[2]) != magic:
+        if (
+            sum(square[0]) != magic
+            or sum(square[1]) != magic
+            or sum(square[2]) != magic
+        ):
             return False
 
         # Check all column sums

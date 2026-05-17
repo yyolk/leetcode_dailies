@@ -2,6 +2,8 @@
 
 
 from itertools import chain, pairwise
+
+
 class Solution:
     """2109. Adding Spaces to a String
 

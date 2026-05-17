@@ -1,12 +1,14 @@
 # https://leetcode.com/problems/concatenation-of-consecutive-binary-numbers
 MOD = 10**9 + 7
 
+
 class Solution:
     """1680. Concatenation of Consecutive Binary Numbers
-    
+
     Given an integer n, return the decimal value of the binary string formed by
     concatenating the binary representations of 1 to n in order, modulo 10^9 + 7.
     """
+
     def concatenated_binary(self, n: int) -> int:
         result = 0
         for i in range(1, n + 1):

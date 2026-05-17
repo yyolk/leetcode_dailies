@@ -2,6 +2,8 @@
 
 
 from collections import defaultdict
+
+
 class Solution:
     """2799. Count Complete Subarrays in an Array
 

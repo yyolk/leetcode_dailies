@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/find-the-count-of-good-integers/
 
+
 class Solution:
     """3272. Find the Count of Good Integers
 

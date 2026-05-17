@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/make-sum-divisible-by-p/
 
+
 class Solution:
     """1590. Make Sum Divisible by P
 
@@ -12,6 +13,7 @@ class Solution:
 
     A subarray is defined as a contiguous block of elements in the array.
     """
+
     def min_subarray(self, nums: list[int], p: int) -> int:
         n = len(nums)
         # Compute total sum and its modulo p

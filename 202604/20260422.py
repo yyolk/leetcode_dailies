@@ -1,8 +1,9 @@
 # https://leetcode.com/problems/words-within-two-edits-of-dictionary
 
+
 class Solution:
     """2452. Words Within Two Edits of Dictionary
-    
+
     You are given two string arrays, queries and dictionary. All words in each array
     comprise of lowercase English letters and have the same length.
     In one edit you can take a word from queries, and change any letter in it to any
@@ -12,6 +13,7 @@ class Solution:
     dictionary after a maximum of two edits. Return the words in the same order they
     appear in queries.
     """
+
     def two_edit_words(self, queries: list[str], dictionary: list[str]) -> list[str]:
         # result collects matching queries in original order
         result = []

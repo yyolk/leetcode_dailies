@@ -2,6 +2,8 @@
 
 
 from collections import Counter
+
+
 class Solution:
     """3583. Count Special Triplets
 
@@ -16,11 +18,12 @@ class Solution:
 
     Since the answer may be large, return it modulo 10**9 + 7.
     """
+
     def special_triplets(self, nums: list[int]) -> int:
         # Early return for empty array
         if not nums:
             return 0
-        
+
         MOD = 10**9 + 7
         # Precompute total frequency of each value in nums
         total_freq = Counter(nums)
@@ -28,7 +31,7 @@ class Solution:
         freq_left = Counter()
         # Accumulate answer modulo MOD
         ans = 0
-        
+
         for j in range(len(nums)):
             # Target value for i and k: twice nums[j]
             target = 2 * nums[j]
@@ -44,7 +47,7 @@ class Solution:
             ans = (ans + left_count * right_count) % MOD
             # Update left frequency for next j
             freq_left[nums[j]] += 1
-        
+
         return ans
 
     specialTriplets = special_triplets

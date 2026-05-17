@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/minimize-the-maximum-difference-of-pairs/
 
+
 class Solution:
     """2720. Minimize the Maximum Difference of Pairs
 

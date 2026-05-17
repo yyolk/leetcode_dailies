@@ -58,7 +58,6 @@ class Solution:
         return count
 
     def min_days(self, grid: list[list[int]]) -> int:
-
         rows = len(grid)
         cols = len(grid[0])
 

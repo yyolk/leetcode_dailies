@@ -28,7 +28,6 @@ import heapq
 
 
 class NumberContainers:
-
     def __init__(self):
         # Maps index to number
         self.index_to_number = {}

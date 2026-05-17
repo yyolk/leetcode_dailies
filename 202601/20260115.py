@@ -10,7 +10,9 @@ class Solution:
     Return the maximum possible area of a square-shaped hole after removals.
     """
 
-    def maximize_square_hole_area(self, n: int, m: int, h_bars: list[int], v_bars: list[int]) -> int:
+    def maximize_square_hole_area(
+        self, n: int, m: int, h_bars: list[int], v_bars: list[int]
+    ) -> int:
         # Sort the removable horizontal and vertical bars
         h_bars.sort()
         v_bars.sort()

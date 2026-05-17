@@ -1,8 +1,9 @@
 # https://leetcode.com/problems/cyclically-rotating-a-grid/
 
+
 class Solution:
     """1914. Cyclically Rotating a Grid
-    
+
     You are given an m x n integer matrix grid, where m and n are both even
     integers, and an integer k. The matrix is composed of several layers. A
     cyclic rotation of the matrix is done by cyclically rotating each layer in
@@ -10,6 +11,7 @@ class Solution:
     will take the place of the adjacent element in the counter-clockwise
     direction. Return the matrix after applying k cyclic rotations to it.
     """
+
     def rotate_grid(self, grid: list[list[int]], k: int) -> list[list[int]]:
         m = len(grid)
         n = len(grid[0])

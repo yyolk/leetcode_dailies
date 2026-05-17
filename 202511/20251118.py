@@ -12,6 +12,7 @@ class Solution:
     Given a binary array bits that ends with 0, return true if the last
     character must be a one-bit character.
     """
+
     def is_one_bit_character(self, bits: list[int]) -> bool:
         # Initialize starting index
         i = 0

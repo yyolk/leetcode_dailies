@@ -23,13 +23,14 @@ class Solution:
     Return the maximum total profit you can earn by making at most k
     transactions.
     """
+
     def maximum_profit(self, prices: list[int], k: int) -> int:
         n = len(prices)
         if n < 2:
             return 0
 
         # Large negative sentinel for impossible states
-        NEG = -10**18
+        NEG = -(10**18)
 
         # max_pos[t]: max over possible opens (prev_profit_with_t + open_price)
         # max_neg[t]: max over possible opens (prev_profit_with_t - open_price)

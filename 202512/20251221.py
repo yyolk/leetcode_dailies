@@ -7,6 +7,7 @@ class Solution:
     Given n strings of equal length, find the minimum number of columns to delete
     so that the remaining strings are in lexicographic order.
     """
+
     def min_deletion_size(self, strs: list[str]) -> int:
         if not strs:
             return 0

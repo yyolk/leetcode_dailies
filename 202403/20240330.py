@@ -2,6 +2,8 @@
 
 
 from collections import defaultdict
+
+
 class Solution:
     """992. Subarrays with K Different Integers
 

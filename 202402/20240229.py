@@ -1,6 +1,7 @@
 # https://leetcode.com/problems/even-odd-tree/
 from collections import deque
 
+
 class Solution:
     """1609. Even Odd Tree
 

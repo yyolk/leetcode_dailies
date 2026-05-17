@@ -36,7 +36,6 @@ Your MyQueue object will be instantiated and called as such:
 
 
 class MyQueue:
-
     def __init__(self):
         # For enqueue (push)
         self.stack1 = []

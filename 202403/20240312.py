@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/remove-zero-sum-consecutive-nodes-from-linked-list/
 
+
 class Solution:
     """1171. Remove Zero Sum Consecutive Nodes from Linked List
 

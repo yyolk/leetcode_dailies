@@ -25,7 +25,6 @@ Your ProductOfNumbers object will be instantiated and called as such:
 
 
 class ProductOfNumbers:
-
     def __init__(self):
         # Initialize with 1 to handle the first product calculation
         self.prefix_products = [1]

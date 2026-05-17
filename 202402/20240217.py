@@ -2,6 +2,8 @@
 
 
 import heapq
+
+
 class Solution:
     """1642. Furthest Building You Can Reach
 

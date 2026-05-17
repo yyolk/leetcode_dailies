@@ -3,6 +3,8 @@
 
 from collections import Counter
 from sortedcontainers import SortedList
+
+
 class Solution:
     """3321. Find X-Sum of All K-Long Subarrays II
 
@@ -14,15 +16,16 @@ class Solution:
     Keep only the occurrences of the top x most frequent elements. If two elements
     have the same number of occurrences, the element with the bigger value is
     considered more frequent.
-    
+
     Calculate the sum of the resulting array.
-    
+
     Note that if an array has less than x distinct elements, its x-sum is the sum
     of the array.
 
     Return an integer array answer of length n - k + 1 where answer[i] is the x-sum
     of the subarray nums[i..i + k - 1].
     """
+
     def find_x_sum(self, nums: list[int], k: int, x: int) -> list[int]:
         # Define function to add a value's current frequency tuple to the appropriate sorted list
         def add(v: int):

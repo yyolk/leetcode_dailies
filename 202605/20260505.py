@@ -1,10 +1,12 @@
 # https://leetcode.com/problems/rotate-list/
 
+
 class Solution:
     """61. Rotate List
-    
+
     Given the head of a linked list, rotate the list to the right by k places.
     """
+
     def rotate_right(self, head: ListNode | None, k: int) -> ListNode | None:
         if not head or not head.next:
             return head

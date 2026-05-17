@@ -2,6 +2,8 @@
 
 
 from collections import Counter
+
+
 class Solution:
     """2962. Count Subarrays Where Max Element Appears at Least K Times
 

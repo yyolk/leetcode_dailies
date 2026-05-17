@@ -15,6 +15,7 @@ class Solution:
     If it is not possible to find such a value for ans[i] that satisfies the
     condition, then set ans[i] = -1.
     """
+
     def min_bitwise_array(self, nums: list[int]) -> list[int]:
         # Initialize the result list
         ans = []

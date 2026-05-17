@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/rotating-the-box/
 
+
 class Solution:
     """1861. Rotating the Box
 
@@ -19,6 +20,7 @@ class Solution:
     Return an n x m matrix representing the box after the rotation described
     above.
     """
+
     def rotate_the_box(self, box_grid: list[list[str]]) -> list[list[str]]:
         m = len(box_grid)
         n = len(box_grid[0])

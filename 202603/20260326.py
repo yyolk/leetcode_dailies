@@ -1,8 +1,9 @@
 # https://leetcode.com/problems/equal-sum-grid-partition-ii
 
+
 class Solution:
     """3548. Equal Sum Grid Partition II
-    
+
     You are given an m x n matrix grid of positive integers. Your task is to
     determine if it is possible to make either one horizontal or one vertical cut
     on the grid such that each of the two resulting sections formed by the cut is
@@ -13,6 +14,7 @@ class Solution:
     connected if every cell in it can be reached from any other cell by moving up,
     down, left, or right through other cells in the section.
     """
+
     def can_partition_grid(self, grid: list[list[int]]) -> bool:
         m = len(grid)
         n = len(grid[0]) if m > 0 else 0

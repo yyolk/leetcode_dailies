@@ -1,8 +1,9 @@
 # https://leetcode.com/problems/walking-robot-simulation
 
+
 class Solution:
     """874. Walking Robot Simulation
-    
+
     A robot on an infinite XY-plane starts at point (0, 0) facing north. The robot
     receives an array of integers commands, which represents a sequence of moves
     that it needs to execute. There are only three possible types of instructions
@@ -13,11 +14,12 @@ class Solution:
     the block adjacent to the obstacle) and move onto the next command. Return
     the maximum squared Euclidean distance that the robot reaches at any point in
     its path (i.e. if the distance is 5, return 25).
-    
+
     Note: There can be an obstacle at (0, 0). The robot ignores it until moved
     off origin but cannot return due to the obstacle. North +Y, East +X,
     South -Y, West -X.
     """
+
     def robot_sim(self, commands: list[int], obstacles: list[list[int]]) -> int:
         # set for O(1) obstacle checks (tuples since lists are unhashable)
         obs = {tuple(o) for o in obstacles}

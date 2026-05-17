@@ -3,6 +3,7 @@ import heapq
 
 from collections import deque
 
+
 class Solution:
     """2583. Kth Largest Sum in a Binary Tree
 

@@ -2,6 +2,7 @@
 
 from collections import deque
 
+
 class Solution:
     """513. Find Bottom Left Tree Value
 

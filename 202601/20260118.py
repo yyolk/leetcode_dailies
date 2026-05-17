@@ -12,6 +12,7 @@ class Solution:
     Given an m x n integer grid, return the size (i.e., the side length k)
     of the largest magic square that can be found within this grid.
     """
+
     def largest_magic_square(self, grid: list[list[int]]) -> int:
         m = len(grid)
         if m == 0:
@@ -35,14 +36,17 @@ class Solution:
             for start_row in range(m - k + 1):
                 for start_col in range(n - k + 1):
                     # Use first row sum as candidate magic constant
-                    magic = (row_prefix[start_row][start_col + k] -
-                             row_prefix[start_row][start_col])
+                    magic = (
+                        row_prefix[start_row][start_col + k]
+                        - row_prefix[start_row][start_col]
+                    )
 
                     # Verify all other row sums match magic
                     rows_match = True
                     for r in range(start_row + 1, start_row + k):
-                        if (row_prefix[r][start_col + k] -
-                                row_prefix[r][start_col]) != magic:
+                        if (
+                            row_prefix[r][start_col + k] - row_prefix[r][start_col]
+                        ) != magic:
                             rows_match = False
                             break
                     if not rows_match:
@@ -51,8 +55,9 @@ class Solution:
                     # Verify all column sums match magic
                     cols_match = True
                     for c in range(start_col, start_col + k):
-                        col_sum = (col_prefix[c][start_row + k] -
-                                   col_prefix[c][start_row])
+                        col_sum = (
+                            col_prefix[c][start_row + k] - col_prefix[c][start_row]
+                        )
                         if col_sum != magic:
                             cols_match = False
                             break

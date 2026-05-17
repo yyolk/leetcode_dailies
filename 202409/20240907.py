@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/linked-list-in-binary-tree/
 
+
 class Solution:
     """1367. Linked List in Binary Tree
 

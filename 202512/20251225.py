@@ -14,10 +14,11 @@ class Solution:
     Return the maximum sum of the happiness values of the selected children
     you can achieve by selecting k children.
     """
+
     def maximum_happiness_sum(self, happiness: list[int], k: int) -> int:
         # Sort in descending order to always consider the current highest
         happiness.sort(reverse=True)
-        
+
         total = 0
         for i in range(k):
             # After i turns, all remaining children have lost i happiness

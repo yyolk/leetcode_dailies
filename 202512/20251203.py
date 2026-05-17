@@ -3,6 +3,7 @@
 from collections import defaultdict
 from math import gcd
 
+
 class Solution:
     """3625. Count Number of Trapezoids II
 
@@ -15,6 +16,7 @@ class Solution:
     A trapezoid is a convex quadrilateral with at least one pair of parallel
     sides. Two lines are parallel if and only if they have the same slope.
     """
+
     def count_trapezoids(self, points: list[list[int]]) -> int:
         # Group diagonals by midpoint and their normalized slope to count non-degenerate parallelograms
         mid_slope_count = defaultdict(lambda: defaultdict(int))

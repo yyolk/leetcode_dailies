@@ -3,16 +3,17 @@
 
 class Solution:
     """3714. Longest Balanced Substring II
-    
+
     You are given a string s consisting only of the characters 'a', 'b', and 'c'.
     A substring of s is called balanced if all distinct characters in the
     substring appear the same number of times.
     Return the length of the longest balanced substring of s.
     """
+
     def longest_balanced(self, s: str) -> int:
         n = len(s)
         ans = 0
-        
+
         # Longest run of identical characters (balanced with 1 distinct char)
         streak = 0
         prev = None
@@ -23,7 +24,7 @@ class Solution:
                 streak = 1
                 prev = ch
             ans = max(ans, streak)
-        
+
         # Balanced with 3 distinct characters (equal non-zero counts)
         seen_three = {(0, 0): -1}
         diff_ab = 0  # count_a - count_b
@@ -41,7 +42,7 @@ class Solution:
                 ans = max(ans, i - seen_three[key])
             if key not in seen_three:
                 seen_three[key] = i
-        
+
         # Balanced with 2 distinct characters (equal non-zero counts)
         pairs = [("a", "b", "c"), ("a", "c", "b"), ("b", "c", "a")]
         for c1, c2, excl in pairs:
@@ -64,7 +65,7 @@ class Solution:
                     i += 1
                 pair_max = max(pair_max, local)
             ans = max(ans, pair_max)
-        
+
         return ans
 
     longestBalanced = longest_balanced

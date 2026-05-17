@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/check-if-array-is-good/
 
+
 class Solution:
     """2784. Check if Array is Good
 
@@ -11,6 +12,7 @@ class Solution:
     return false. Note: A permutation of integers represents an arrangement of
     these numbers.
     """
+
     def is_good(self, nums: list[int]) -> bool:
         m = len(nums)
         if m < 2:

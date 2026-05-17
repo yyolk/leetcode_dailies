@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/split-linked-list-in-parts/
 
+
 class Solution:
     """725. Split Linked List in Parts
 
@@ -23,9 +24,7 @@ class Solution:
 
     """
 
-    def splitListToParts(
-        self, head: ListNode | None, k: int
-    ) -> list[ListNode | None]:
+    def splitListToParts(self, head: ListNode | None, k: int) -> list[ListNode | None]:
         """Split input linked list into parts
 
         Proposed solution using nested iteration and divmod(...)

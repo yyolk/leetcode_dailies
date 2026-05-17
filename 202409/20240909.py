@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/spiral-matrix-iv/
 
+
 class Solution:
     """2326. Spiral Matrix IV
 
@@ -21,9 +22,7 @@ class Solution:
                 self.next = next
     """
 
-    def spiral_matrix(
-        self, m: int, n: int, head: ListNode | None
-    ) -> list[list[int]]:
+    def spiral_matrix(self, m: int, n: int, head: ListNode | None) -> list[list[int]]:
         # Initialize the matrix with -1
         matrix = [[-1 for _ in range(n)] for _ in range(m)]
 

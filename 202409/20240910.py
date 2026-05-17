@@ -2,6 +2,7 @@
 
 from math import gcd
 
+
 class Solution:
     """2807. Insert Greatest Common Divisors in Linked List
 
@@ -25,9 +26,7 @@ class Solution:
 
     """
 
-    def insert_greatest_common_divisors(
-        self, head: ListNode | None
-    ) -> ListNode | None:
+    def insert_greatest_common_divisors(self, head: ListNode | None) -> ListNode | None:
         # If the list is empty or has only one node, no insertion is needed
         if not head or not head.next:
             return head

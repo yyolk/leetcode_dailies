@@ -8,6 +8,7 @@ class Solution:
     (0 <= i < n-1) where the difference between the sum of the left subarray
     [0..i] and the right subarray [i+1..n-1] is even.
     """
+
     def count_partitions(self, nums: list[int]) -> int:
         # diff = left - right = 2*left - total; 2*left is always even
         # → diff is even iff total sum is even → every possible split works

@@ -26,23 +26,24 @@ class Solution:
 
     Return the total number of collisions that will happen on the road.
     """
+
     def count_collisions(self, directions: str) -> int:
         # Count total number of moving cars (those with 'R' or 'L')
-        total_moving = sum(1 for c in directions if c != 'S')
-        
+        total_moving = sum(1 for c in directions if c != "S")
+
         # Compute length of prefix consisting only of 'L's
         prefix = 0
-        while prefix < len(directions) and directions[prefix] == 'L':
+        while prefix < len(directions) and directions[prefix] == "L":
             prefix += 1
-        
+
         # Compute length of suffix consisting only of 'R's
         suffix = 0
         n = len(directions)
         i = n - 1
-        while i >= 0 and directions[i] == 'R':
+        while i >= 0 and directions[i] == "R":
             suffix += 1
             i -= 1
-        
+
         # Collisions equal moving cars minus those that never collide
         # (leading 'L's move left freely, trailing 'R's move right freely)
         return total_moving - prefix - suffix

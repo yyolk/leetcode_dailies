@@ -35,13 +35,14 @@ class Solution:
     Note that a user can be mentioned multiple times in a single
     message event, and each mention should be counted separately.
     """
+
     def count_mentions(self, numberOfUsers: int, events: list[list[str]]) -> list[int]:
         # Collect specific mentions, ALL counts, HERE events, and offline starts
         specific = [0] * numberOfUsers
         total_all = 0
         here_events = []  # (timestamp, h_count)
         offline_starts = [[] for _ in range(numberOfUsers)]
-        
+
         for event in events:
             event_type = event[0]
             if event_type == "MESSAGE":
@@ -67,10 +68,10 @@ class Solution:
                 uid = int(event[2])
                 if 0 <= uid < numberOfUsers:
                     offline_starts[uid].append(t)
-        
+
         # Compute total HERE mentions if always online
         total_here = sum(h for _, h in here_events)
-        
+
         # Sort HERE events by timestamp
         here_events.sort(key=lambda x: x[0])
         times = [t for t, _ in here_events]
@@ -78,10 +79,10 @@ class Solution:
         prefix = [0] * (len(here_events) + 1)
         for i in range(len(here_events)):
             prefix[i + 1] = prefix[i] + here_events[i][1]
-        
+
         # Initialize mentions with specific + ALL + full HERE
         mentions = [specific[i] + total_all + total_here for i in range(numberOfUsers)]
-        
+
         # For each user, compute missed HERE due to offline periods
         for i in range(numberOfUsers):
             starts = offline_starts[i]
@@ -100,7 +101,7 @@ class Solution:
                     curr_start = s
                     curr_end = s + 60
             intervals.append((curr_start, curr_end))
-            
+
             # For each merged offline interval [lo, r), sum h for HERE t in [lo, r)
             missed = 0
             for lo, r in intervals:
@@ -109,9 +110,9 @@ class Solution:
                 # Binary search for first t >= r
                 right_idx = bisect_left(times, r)
                 missed += prefix[right_idx] - prefix[left_idx]
-            
+
             mentions[i] -= missed
-        
+
         return mentions
 
     countMentions = count_mentions

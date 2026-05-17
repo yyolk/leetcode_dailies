@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/remove-nth-node-from-end-of-list/
 
+
 class Solution:
     """19. Remove Nth Node From End of List
 
@@ -8,9 +9,7 @@ class Solution:
 
     """
 
-    def remove_nth_from_end(
-        self, head: ListNode | None, n: int
-    ) -> ListNode | None:
+    def remove_nth_from_end(self, head: ListNode | None, n: int) -> ListNode | None:
         # Create a dummy node to simplify edge cases
         dummy = ListNode(0)
         dummy.next = head

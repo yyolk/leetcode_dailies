@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/minimum-moves-to-make-array-complementary/
 
+
 class Solution:
     """1674. Minimum Moves to Make Array Complementary
 
@@ -13,6 +14,7 @@ class Solution:
 
     Return the minimum number of moves required to make nums complementary.
     """
+
     def min_moves(self, nums: list[int], limit: int) -> int:
         n = len(nums)
         # max possible S is 2 * limit

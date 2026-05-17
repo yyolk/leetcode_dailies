@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/xor-after-range-multiplication-queries-ii
 
+
 class Solution:
     """3655. XOR After Range Multiplication Queries II
 
@@ -11,6 +12,7 @@ class Solution:
     idx += k_i. Return the bitwise XOR of all elements in nums after processing
     all queries.
     """
+
     def xor_after_queries(self, nums: list[int], queries: list[list[int]]) -> int:
         MOD = 10**9 + 7
         n = len(nums)

@@ -1,6 +1,7 @@
 # https://leetcode.com/problems/smallest-string-starting-from-leaf/
 from collections import deque
 
+
 class Solution:
     """988. Smallest String Starting From Leaf
 

@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/delete-leaves-with-a-given-value/
 
+
 class Solution:
     """1325. Delete Leaves With a Given Value
 
@@ -18,9 +19,7 @@ class Solution:
                 self.right = right
     """
 
-    def remove_leaf_nodes(
-        self, root: TreeNode | None, target: int
-    ) -> TreeNode | None:
+    def remove_leaf_nodes(self, root: TreeNode | None, target: int) -> TreeNode | None:
         # If the root is None, return None (base case for recursion)
         if not root:
             return None

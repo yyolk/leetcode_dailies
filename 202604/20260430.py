@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/maximum-path-score-in-a-grid/
 
+
 class Solution:
     """3742. Maximum Path Score in a Grid
 
@@ -13,6 +14,7 @@ class Solution:
     of k, or -1 if no valid path exists. Note: If you reach the last cell but
     the total cost exceeds k, the path is invalid.
     """
+
     def max_path_score(self, grid: list[list[int]], k: int) -> int:
         m, n = len(grid), len(grid[0])
         if m == 0 or n == 0:
@@ -67,14 +69,12 @@ class Solution:
                         # from above
                         if prev_dp[j][prev_used] != -1:
                             curr_dp[j][used] = max(
-                                curr_dp[j][used],
-                                prev_dp[j][prev_used] + cell_score
+                                curr_dp[j][used], prev_dp[j][prev_used] + cell_score
                             )
                         # from left
                         if curr_dp[j - 1][prev_used] != -1:
                             curr_dp[j][used] = max(
-                                curr_dp[j][used],
-                                curr_dp[j - 1][prev_used] + cell_score
+                                curr_dp[j][used], curr_dp[j - 1][prev_used] + cell_score
                             )
 
             prev_dp = curr_dp

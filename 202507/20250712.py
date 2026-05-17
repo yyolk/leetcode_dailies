@@ -3,6 +3,8 @@
 
 import functools
 import math
+
+
 class Solution:
     """1900. The Earliest and Latest Rounds Where Players Compete
 

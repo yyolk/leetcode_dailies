@@ -28,6 +28,7 @@ class Solution:
     Note that the password for the computer with label 0 is decrypted, and
     not the computer with the first position in the permutation.
     """
+
     def count_permutations(self, complexity: list[int]) -> int:
         # MOD for the result
         MOD = 10**9 + 7

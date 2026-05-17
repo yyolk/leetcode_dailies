@@ -17,6 +17,7 @@ class Solution:
 
     Since the answer may be very large, return it modulo 10^9 + 7.
     """
+
     def count_trapezoids(self, points: list[list[int]]) -> int:
         MOD = 10**9 + 7
         # Group points by y-coordinate using Counter

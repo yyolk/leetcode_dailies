@@ -35,6 +35,7 @@ class Solution:
     def find_rotate_steps(self, ring: str, key: str) -> int:
         # Length of ring and key, and defaultdict for positions
         r_length, k_length, d = len(ring), len(key), defaultdict(list)
+
         # Function to calculate distance with circular wrapping
         def dist(x, y):
             return min((x - y) % r_length, (y - x) % r_length)

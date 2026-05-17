@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/rotate-function/
 
+
 class Solution:
     """396. Rotate Function
 
@@ -9,6 +10,7 @@ class Solution:
     1) * arrk[n - 1]. Return the maximum value of F(0), F(1), ..., F(n-1). The
     test cases are generated so that the answer fits in a 32-bit integer.
     """
+
     def max_rotate_function(self, nums: list[int]) -> int:
         n = len(nums)
         # precompute sum S for O(1) updates per rotation

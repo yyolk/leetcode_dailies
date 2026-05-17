@@ -1,24 +1,34 @@
 # https://leetcode.com/problems/minimum-cost-to-convert-string-ii
 
+
 class TrieNode:
     def __init__(self):
         self.children: dict[str, "TrieNode"] = {}
         self.is_end: bool = False
         self.pat_id: int = -1
 
+
 class Solution:
     """
     2977. Minimum Cost to Convert String II
-    
+
     You are given two 0-indexed strings source and target of length n,
     consisting of lowercase English characters. Also given are string arrays
     original and changed, and integer array cost for conversions.
-    
+
     Operations replace substrings with rules, but chosen ranges must be
     disjoint or identical. Return minimum cost to make source into target,
     or -1 if impossible.
     """
-    def minimum_cost(self, source: str, target: str, original: list[str], changed: list[str], cost: list[int]) -> int:
+
+    def minimum_cost(
+        self,
+        source: str,
+        target: str,
+        original: list[str],
+        changed: list[str],
+        cost: list[int],
+    ) -> int:
         # Collect unique patterns appearing in rules
         patterns = set(original) | set(changed)
         pattern_list = list(patterns)

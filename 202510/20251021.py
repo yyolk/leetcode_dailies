@@ -19,7 +19,6 @@ class Solution:
     the **operations**."""
 
     def max_frequency(self, nums: list[int], k: int, num_operations: int) -> int:
-
         # Handle empty array case
         if not nums:
             return 0

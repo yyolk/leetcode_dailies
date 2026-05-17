@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/detect-cycles-in-2d-grid/
 
+
 class Solution:
     """1559. Detect Cycles in 2D Grid
 
@@ -18,6 +19,7 @@ class Solution:
     Return true if any cycle of the same value exists in grid, otherwise,
     return false.
     """
+
     def contains_cycle(self, grid: list[list[str]]) -> bool:
         if not grid or not grid[0]:
             return False

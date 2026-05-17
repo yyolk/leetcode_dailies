@@ -9,13 +9,14 @@ class Solution:
     The strings form a grid where you delete unsorted columns
     lexicographically. Return the number of columns to delete.
     """
+
     def min_deletion_size(self, strs: list[str]) -> int:
         if not strs:
             return 0
-        
+
         num_rows = len(strs)
         num_cols = len(strs[0])
-        
+
         delete_count = 0
         # Iterate over each column index
         for col in range(num_cols):
@@ -24,7 +25,7 @@ class Solution:
                 if strs[row][col] < strs[row - 1][col]:
                     delete_count += 1
                     break  # Column is unsorted, no need to check further rows
-        
+
         return delete_count
 
     minDeletionSize = min_deletion_size

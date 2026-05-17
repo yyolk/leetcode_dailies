@@ -2,6 +2,7 @@
 
 from collections import defaultdict, deque
 
+
 class Solution:
     """2385. Amount of Time for Binary Tree to Be Infected
 

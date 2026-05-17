@@ -2,6 +2,8 @@
 
 
 from collections import defaultdict
+
+
 class Solution:
     """2537. Count the Number of Good Subarrays
 

@@ -1,6 +1,7 @@
 # https://leetcode.com/problems/cousins-in-binary-tree-ii/
 from collections import defaultdict
 
+
 class Solution:
     """2641. Cousins in Binary Tree II
 

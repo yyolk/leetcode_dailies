@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/fancy-sequence/description
 
+
 class Fancy:
     """1622. Fancy Sequence
 
@@ -15,6 +16,7 @@ class Fancy:
     sequence modulo 10^9 + 7. If the index is greater or equal than the
     length of the sequence, return -1.
     """
+
     def __init__(self):
         # base stored values (transformed so current = mult * base + add)
         self.seq = []

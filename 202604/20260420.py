@@ -1,7 +1,6 @@
-
 class Solution:
     """2078. Two Furthest Houses With Different Colors
-    
+
     There are n houses evenly lined up on the street, and each house is
     beautifully painted. You are given a 0-indexed integer array colors of
     length n, where colors[i] represents the color of the i^th house.
@@ -9,6 +8,7 @@ class Solution:
     The distance between the i^th and j^th houses is abs(i - j), where abs(x)
     is the absolute value of x.
     """
+
     def max_distance(self, colors: list[int]) -> int:
         n: int = len(colors)
         max_d: int = 0

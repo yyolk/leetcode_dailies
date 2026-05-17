@@ -2,6 +2,8 @@
 
 
 import math
+
+
 class Solution:
     """3197. Find the Minimum Area to Cover All Ones II
 
@@ -14,7 +16,6 @@ class Solution:
     **Note** that the rectangles are allowed to touch."""
 
     def minimum_sum(self, grid: list[list[int]]) -> int:
-
         m = len(grid)
         n = len(grid[0])
         # Initialize answer to a large value, the total grid area

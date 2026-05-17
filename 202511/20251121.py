@@ -19,6 +19,7 @@ class Solution:
 
     For example, "ace" is a subsequence of "abcde".
     """
+
     def count_palindromic_subsequence(self, s: str) -> int:
         count = 0
         # Iterate over each possible outer character (a-z)
@@ -30,7 +31,7 @@ class Solution:
             if first >= 0 and first < last:
                 # Count unique characters strictly between first and last c
                 # Using set on slice is concise and fast enough (n<=1000)
-                count += len(set(s[first + 1:last]))
+                count += len(set(s[first + 1 : last]))
         return count
 
     countPalindromicSubsequence = count_palindromic_subsequence

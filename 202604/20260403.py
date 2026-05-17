@@ -2,9 +2,10 @@
 
 from bisect import bisect_left
 
+
 class Solution:
     """3661. Maximum Walls Destroyed by Robots
-    
+
     There is an endless straight line populated with some robots and walls.
     You are given integer arrays robots, distance, and walls: robots[i] is
     the position of the ith robot. distance[i] is the maximum distance the
@@ -15,22 +16,25 @@ class Solution:
     another robot before reaching a wall, it immediately stops at that robot
     and cannot continue. Return the maximum number of unique walls that can
     be destroyed by the robots.
-    
+
     Notes: A wall and a robot may share the same position; the wall can be
     destroyed by the robot at that position. Robots are not destroyed by
     bullets.
     """
-    def max_walls(self, robots: list[int], distance: list[int], walls: list[int]) -> int:
+
+    def max_walls(
+        self, robots: list[int], distance: list[int], walls: list[int]
+    ) -> int:
         n = len(robots)
         # pair robot positions with distances; sort by position (robots unique)
         arr = sorted(zip(robots, distance))
         # sort walls once for O(log m) range counts via binary search
         wall_pos = sorted(walls)
-        
+
         # prev_dp[0/1] holds max walls for robots processed so far when the
         # "next-robot direction" parameter for the prior state was left/right
         prev_dp = [0, 0]
-        
+
         for i in range(n):
             pos, dist = arr[i]
             # left-fire range: clipped by previous robot (if any) to avoid overlap
@@ -41,7 +45,7 @@ class Solution:
             l_idx = bisect_left(wall_pos, left_pos)
             r_idx = bisect_left(wall_pos, pos + 1)
             left_cnt = r_idx - l_idx
-            
+
             new_dp = [0] * 2
             for j in range(2):
                 # right-fire range: own distance clipped by next robot
@@ -62,7 +66,7 @@ class Solution:
                 # for this assumed next direction j
                 new_dp[j] = max(left_cnt + prev_dp[0], right_cnt + prev_dp[1])
             prev_dp = new_dp
-        
+
         # final answer uses fictional next robot firing right (j = 1)
         return prev_dp[1]
 

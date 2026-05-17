@@ -1,6 +1,7 @@
 # https://leetcode.com/problems/copy-list-with-random-pointer/
 # import copy  # Possible to solve just using copy.deepcopy
 
+
 class Solution:
     """138. Copy List with Random Pointer
 

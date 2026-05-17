@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/palindrome-linked-list/
 
+
 class Solution:
     """234. Palindrome Linked List
 

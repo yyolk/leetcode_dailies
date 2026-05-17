@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/maximize-spanning-tree-stability-with-upgrades
 
+
 class Solution:
     """3600. Maximize Spanning Tree Stability with Upgrades
 
@@ -18,14 +19,17 @@ class Solution:
     that connects all nodes together (i.e. the graph is connected) without
     forming any cycles, and uses exactly n - 1 edges.
     """
+
     def max_stability(self, n: int, edges: list[list[int]], k: int) -> int:
         # Pre-check must edges for cycles (independent of stability)
         parent = list(range(n))
         rank = [0] * n
+
         def find(x: int) -> int:
             if parent[x] != x:
                 parent[x] = find(parent[x])
             return parent[x]
+
         def union(x: int, y: int) -> bool:
             px = find(x)
             py = find(y)
@@ -39,6 +43,7 @@ class Solution:
                 parent[py] = px
                 rank[px] += 1
             return True
+
         for u, v, s, m in edges:
             if m == 1 and not union(u, v):
                 return -1
@@ -49,10 +54,12 @@ class Solution:
             # Fresh UF and component count for this stability check
             parent = list(range(n))
             rank = [0] * n
+
             def find(x: int) -> int:
                 if parent[x] != x:
                     parent[x] = find(parent[x])
                 return parent[x]
+
             def union(x: int, y: int) -> bool:
                 px = find(x)
                 py = find(y)
@@ -66,6 +73,7 @@ class Solution:
                     parent[py] = px
                     rank[px] += 1
                 return True
+
             comp = n
             # Add all must edges (fixed, cannot upgrade)
             for u, v, s, m in edges:
