@@ -1,4 +1,4 @@
-from typing import AsyncIterator, Dict
+from typing import AsyncIterator
 from urllib.parse import urljoin
 
 from gql import Client, gql
@@ -124,7 +124,7 @@ async def query_qd_challenge_question(title_slug):
         ]
 
 
-async def previous_questions(limit: int) -> AsyncIterator[list[Dict[str, str]]]:
+async def previous_questions(limit: int) -> AsyncIterator[list[dict[str, str]]]:
     if limit <= 0:
         return
 
