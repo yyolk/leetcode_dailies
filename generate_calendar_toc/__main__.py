@@ -33,19 +33,34 @@ def wrap_solved_days_with_links(table, root_soup, year, month, href_func, solved
             el.string.wrap(root_soup.new_tag("a", href=href_func(idx)))
 
 
-def build_year_calendar_html(year, href_func, solved_dates):
-    """Build a full-year HTML calendar with linked solved days."""
+def build_year_calendar_html(year, href_func, solved_dates, months=None):
+    """Build a year HTML calendar with linked solved days."""
     cal = calendar.HTMLCalendar(calendar.SUNDAY)
     soup = BeautifulSoup(cal.formatyear(year, width=2), "html.parser")
+    months_to_render = set(months or range(1, 13))
 
     for month_table in soup.find_all("table", class_="month"):
         month_header = month_table.find("th", class_="month")
         if month_header is None:
             continue
         month = month_name_to_num(month_header.get_text(strip=True))
+        if month not in months_to_render:
+            month_container = month_table.find_parent("td")
+            if month_container is None:
+                month_table.decompose()
+            else:
+                month_container.decompose()
+            continue
         wrap_solved_days_with_links(
             month_table, soup, year, month, href_func, solved_dates
         )
+
+    if soup.table:
+        for row in soup.table.find_all("tr", recursive=False):
+            if row.find("th", class_="year"):
+                continue
+            if not row.find("table", class_="month"):
+                row.decompose()
 
     if soup.table:
         soup.table["align"] = "center"
@@ -77,20 +92,19 @@ def replace_or_append_root_calendar_section(section):
 
 month_directories = []
 solved_files_by_date = {}
-months_by_year = defaultdict(set)
+solved_months_by_year = defaultdict(set)
 
 for month_dir in BASE_SOLUTIONS_DIR.glob("*/*"):
     if not month_dir.is_dir() or not MONTH_DIR_PATTERN.match(month_dir.name):
         continue
 
     month_directories.append(month_dir)
-    month_date = datetime.strptime(month_dir.name, "%Y%m")
-    months_by_year[month_date.year].add(month_date.month)
 
     for file_path in month_dir.glob("*.py"):
         if FILE_PATTERN.match(file_path.name):
             extracted_date = datetime.strptime(file_path.stem, "%Y%m%d")
             solved_files_by_date[extracted_date] = file_path
+            solved_months_by_year[extracted_date.year].add(extracted_date.month)
 
 for month_dir in sorted(month_directories):
     readme = month_dir / "README.md"
@@ -114,7 +128,7 @@ for month_dir in sorted(month_directories):
     readme.write_text(readme_content)
 
 root_year_sections = []
-for year in sorted(months_by_year):
+for year in sorted(solved_months_by_year):
     year_dir = BASE_SOLUTIONS_DIR / str(year)
     year_readme = year_dir / "README.md"
     year_html = build_year_calendar_html(
@@ -128,6 +142,7 @@ for year in sorted(months_by_year):
 
     root_year_html = build_year_calendar_html(
         year=year,
+        months=sorted(solved_months_by_year[year]),
         href_func=lambda idx: f"solutions/{idx:%Y}/{idx:%Y%m}/{idx:%Y%m%d}.py",
         solved_dates=solved_files_by_date,
     )
