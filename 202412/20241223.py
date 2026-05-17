@@ -1,7 +1,6 @@
 # https://leetcode.com/problems/minimum-number-of-operations-to-sort-a-binary-tree-by-level/
 
 from collections import deque
-from typing import Optional
 
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
@@ -23,7 +22,7 @@ class Solution:
     The **level** of a node is the number of edges along the path between it and the
     root node*.*"""
 
-    def minimum_operations(self, root: Optional[TreeNode]) -> int:
+    def minimum_operations(self, root: TreeNode | None) -> int:
         def min_swaps_to_sort(arr: list[int]) -> int:
             # Get the sorted version of the array and track the indices
             sorted_arr = sorted((val, idx) for idx, val in enumerate(arr))

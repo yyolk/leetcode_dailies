@@ -1,6 +1,4 @@
 # https://leetcode.com/problems/sum-of-left-leaves/
-from typing import Optional
-
 
 class Solution:
     """404. Sum of Left Leaves
@@ -20,7 +18,7 @@ class Solution:
 
     """
 
-    def sum_of_left_leaves(self, root: Optional[TreeNode]) -> int:
+    def sum_of_left_leaves(self, root: TreeNode | None) -> int:
         if not root:
             return 0
 

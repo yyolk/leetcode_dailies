@@ -1,6 +1,4 @@
 # https://leetcode.com/problems/reorder-list/
-from typing import Optional
-
 
 class Solution:
     """143. Reorder List
@@ -33,7 +31,7 @@ class Solution:
 
     """
 
-    def reorder_list(self, head: Optional[ListNode]):
+    def reorder_list(self, head: ListNode | None):
         if not head or not head.next:
             return
 

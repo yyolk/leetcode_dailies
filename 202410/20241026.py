@@ -1,7 +1,5 @@
 # https://leetcode.com/problems/height-of-binary-tree-after-subtree-removal-queries/
 
-
-from typing import Optional
 class Solution:
     """2458. Height of Binary Tree After Subtree Removal Queries
 
@@ -34,7 +32,7 @@ class Solution:
                 self.right = right
     """
 
-    def tree_queries(self, root: Optional[TreeNode], queries: list[int]) -> list[int]:
+    def tree_queries(self, root: TreeNode | None, queries: list[int]) -> list[int]:
         # Initialize arrays to store heights and node information
         # Heights of leaf nodes
         heights = [0] * 50000

@@ -1,7 +1,5 @@
 # https://leetcode.com/problems/find-the-minimum-and-maximum-number-of-nodes-between-critical-points/
 
-
-from typing import Optional
 class Solution:
     """2058. Find the Minimum and Maximum Number of Nodes Between Critical Points
 
@@ -32,7 +30,7 @@ class Solution:
 
     """
 
-    def nodes_between_critical_points(self, head: Optional[ListNode]) -> list[int]:
+    def nodes_between_critical_points(self, head: ListNode | None) -> list[int]:
         if not head or not head.next or not head.next.next:
             # If the list has fewer than 3 nodes, there can't be any critical points
             return [-1, -1]

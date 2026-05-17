@@ -1,6 +1,5 @@
 # https://leetcode.com/problems/step-by-step-directions-from-a-binary-tree-node-to-another/
 
-from typing import Optional
 class Solution:
     """2096. Step-By-Step Directions From a Binary Tree Node to Another
 
@@ -32,7 +31,7 @@ class Solution:
     """
 
     def get_directions(
-        self, root: Optional[TreeNode], start_value: int, dest_value: int
+        self, root: TreeNode | None, start_value: int, dest_value: int
     ) -> str:
         def find_lca(node: TreeNode, p: int, q: int) -> TreeNode:
             if not node or node.val == p or node.val == q:

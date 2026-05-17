@@ -1,7 +1,5 @@
 # https://leetcode.com/problems/flip-equivalent-binary-trees/
 
-
-from typing import Optional
 class Solution:
     """951. Flip Equivalent Binary Trees
 
@@ -23,7 +21,7 @@ class Solution:
 
     """
 
-    def flip_equiv(self, root1: Optional[TreeNode], root2: Optional[TreeNode]) -> bool:
+    def flip_equiv(self, root1: TreeNode | None, root2: TreeNode | None) -> bool:
         # Base case: if both nodes are None, trees are equivalent
         if not root1 and not root2:
             return True

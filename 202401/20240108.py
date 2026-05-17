@@ -1,7 +1,5 @@
 # https://leetcode.com/problems/range-sum-of-bst/
 
-
-from typing import Optional
 class Solution:
     """938. Range Sum of BST
 
@@ -18,7 +16,7 @@ class Solution:
                 self.right = right
     """
 
-    def range_sum_b_s_t(self, root: Optional[TreeNode], low: int, high: int) -> int:
+    def range_sum_b_s_t(self, root: TreeNode | None, low: int, high: int) -> int:
         # Initialize the result to store the sum
         result = 0
 

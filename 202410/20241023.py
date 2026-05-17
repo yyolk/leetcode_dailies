@@ -1,7 +1,5 @@
 # https://leetcode.com/problems/cousins-in-binary-tree-ii/
 from collections import defaultdict
-from typing import Optional
-
 
 class Solution:
     """2641. Cousins in Binary Tree II
@@ -29,7 +27,7 @@ class Solution:
         # Initialize the level sum table
         self.level_sum_table = defaultdict(int)
 
-    def depth_first_search_update(self, current_node: Optional["TreeNode"]):
+    def depth_first_search_update(self, current_node: "TreeNode" | None):
         # If the current node does not exist, return immediately
         if not current_node:
             return
@@ -48,7 +46,7 @@ class Solution:
         self.depth_first_search_update(current_node.right)
         self.depth_first_search_update(current_node.left)
 
-    def replace_value_in_tree(self, root: Optional["TreeNode"]) -> Optional["TreeNode"]:
+    def replace_value_in_tree(self, root: "TreeNode" | None) -> "TreeNode" | None:
         # Initialize root properties
         root.parent = None
         root.level = 0

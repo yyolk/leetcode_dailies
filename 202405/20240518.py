@@ -1,7 +1,5 @@
 # https://leetcode.com/problems/distribute-coins-in-binary-tree/
 
-
-from typing import Optional
 class Solution:
     """979. Distribute Coins in Binary Tree
 
@@ -22,7 +20,7 @@ class Solution:
                 self.right = right
     """
 
-    def distribute_coins(self, root: Optional[TreeNode]) -> int:
+    def distribute_coins(self, root: TreeNode | None) -> int:
         self.moves = 0
 
         def dfs(node):

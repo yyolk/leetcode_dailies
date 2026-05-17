@@ -1,9 +1,7 @@
 # https://leetcode.com/problems/kth-largest-sum-in-a-binary-tree/
 import heapq
 
-from typing import Optional
 from collections import deque
-
 
 class Solution:
     """2583. Kth Largest Sum in a Binary Tree
@@ -27,7 +25,7 @@ class Solution:
                 self.right = right
     """
 
-    def kth_largest_level_sum(self, root: Optional[TreeNode], k: int) -> int:
+    def kth_largest_level_sum(self, root: TreeNode | None, k: int) -> int:
         if not root:
             return -1
 

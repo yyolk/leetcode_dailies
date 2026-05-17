@@ -1,7 +1,5 @@
 # https://leetcode.com/problems/construct-string-from-binary-tree/
 
-
-from typing import Optional
 class Solution:
     """606. Construct String from Binary Tree
 
@@ -20,7 +18,7 @@ class Solution:
                 self.right = right
     """
 
-    def tree2str(self, root: Optional[TreeNode]) -> str:
+    def tree2str(self, root: TreeNode | None) -> str:
         """Constructs a string representation of the input binary tree.
 
         Args:
@@ -32,7 +30,7 @@ class Solution:
                 when they do not affect the one-to-one mapping relationship.
         """
 
-        def preorder(node: Optional[TreeNode]) -> str:
+        def preorder(node: TreeNode | None) -> str:
             """Helper function for preorder traversal."""
             if not node:
                 return ""

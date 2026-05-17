@@ -1,7 +1,5 @@
 # https://leetcode.com/problems/evaluate-boolean-binary-tree/
 
-
-from typing import Optional
 class Solution:
     """2331. Evaluate Boolean Binary Tree
 
@@ -37,7 +35,7 @@ class Solution:
 
     """
 
-    def evaluate_tree(self, root: Optional[TreeNode]) -> bool:
+    def evaluate_tree(self, root: TreeNode | None) -> bool:
         if not root:
             return False
 

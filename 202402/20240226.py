@@ -1,7 +1,5 @@
 # https://leetcode.com/problems/same-tree/
 
-
-from typing import Optional
 class Solution:
     """100. Same Tree
 
@@ -21,7 +19,7 @@ class Solution:
 
     """
 
-    def is_same_tree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
+    def is_same_tree(self, p: TreeNode | None, q: TreeNode | None) -> bool:
         # Base case: If both trees are None, they are the same
         if not p and not q:
             return True

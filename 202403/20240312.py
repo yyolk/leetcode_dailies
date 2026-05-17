@@ -1,7 +1,5 @@
 # https://leetcode.com/problems/remove-zero-sum-consecutive-nodes-from-linked-list/
 
-
-from typing import Optional
 class Solution:
     """1171. Remove Zero Sum Consecutive Nodes from Linked List
 
@@ -20,7 +18,7 @@ class Solution:
 
     """
 
-    def remove_zero_sum_sublists(self, head: Optional[ListNode]) -> Optional[ListNode]:
+    def remove_zero_sum_sublists(self, head: ListNode | None) -> ListNode | None:
         # Create a dummy node to handle cases where the entire list is removed
         dummy = ListNode(0)
         dummy.next = head

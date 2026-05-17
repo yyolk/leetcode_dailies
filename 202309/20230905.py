@@ -1,8 +1,6 @@
 # https://leetcode.com/problems/copy-list-with-random-pointer/
 # import copy  # Possible to solve just using copy.deepcopy
 
-
-from typing import Optional
 class Solution:
     """138. Copy List with Random Pointer
 
@@ -43,7 +41,7 @@ class Solution:
 
     """
 
-    def copyRandomList(self, head: "Optional[Node]") -> "Optional[Node]":
+    def copyRandomList(self, head: "Node | None") -> "Node | None":
         """Performs a deepcopy of the list
 
         Args:

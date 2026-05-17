@@ -5,9 +5,9 @@
 #         self.left = left
 #         self.right = right
 from collections import deque
-from typing import Optional
+
 class Solution:
-    def maxLevelSum(self, root: Optional[TreeNode]) -> int:
+    def maxLevelSum(self, root: TreeNode | None) -> int:
         queue = deque([root])
         level = 1
 

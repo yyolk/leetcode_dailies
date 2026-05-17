@@ -1,7 +1,5 @@
 # https://leetcode.com/problems/maximum-difference-between-node-and-ancestor/
 
-
-from typing import Optional
 class Solution:
     """1026. Maximum Difference Between Node and Ancestor
 
@@ -20,7 +18,7 @@ class Solution:
                 self.right = right
     """
 
-    def max_ancestor_diff(self, root: Optional[TreeNode]) -> int:
+    def max_ancestor_diff(self, root: TreeNode | None) -> int:
         def dfs(node, min_val, max_val):
             # Base case: if the node is None, return the difference between max and min
             if not node:

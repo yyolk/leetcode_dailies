@@ -1,7 +1,5 @@
 # https://leetcode.com/problems/delete-nodes-from-linked-list-present-in-array/
 
-
-from typing import Optional
 class Solution:
     """3217. Delete Nodes From Linked List Present in Array
 
@@ -18,8 +16,8 @@ class Solution:
     """
 
     def modified_list(
-        self, nums: list[int], head: Optional[ListNode]
-    ) -> Optional[ListNode]:
+        self, nums: list[int], head: ListNode | None
+    ) -> ListNode | None:
         # Convert nums to a set for O(1) lookup time
         num_set = set(nums)
 

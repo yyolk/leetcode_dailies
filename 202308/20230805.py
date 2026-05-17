@@ -1,7 +1,5 @@
 # https://leetcode.com/problems/unique-binary-search-trees-ii/
 
-
-from typing import Optional
 class Solution:
     """95. Unique Binary Search Trees II
 
@@ -17,7 +15,7 @@ class Solution:
                 self.right = right
     """
 
-    def generate_trees(self, n: int) -> list[Optional[TreeNode]]:
+    def generate_trees(self, n: int) -> list[TreeNode | None]:
         # If n is 0, return an empty list
         if n == 0:
             return []

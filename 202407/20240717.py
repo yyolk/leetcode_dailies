@@ -1,6 +1,4 @@
 # https://leetcode.com/problems/delete-nodes-and-return-forest/
-from typing import Optional
-
 
 class Solution:
     """1110. Delete Nodes And Return Forest
@@ -22,7 +20,7 @@ class Solution:
     """
 
     def del_nodes(
-        self, root: Optional[TreeNode], to_delete: list[int]
+        self, root: TreeNode | None, to_delete: list[int]
     ) -> list[TreeNode]:
         to_delete_set = set(to_delete)  # Convert list to set for O(1) lookups
         forest = []

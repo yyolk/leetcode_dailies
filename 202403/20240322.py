@@ -1,6 +1,4 @@
 # https://leetcode.com/problems/palindrome-linked-list/
-from typing import Optional
-
 
 class Solution:
     """234. Palindrome Linked List
@@ -15,7 +13,7 @@ class Solution:
                 self.next = next
     """
 
-    def is_palindrome(self, head: Optional[ListNode]) -> bool:
+    def is_palindrome(self, head: ListNode | None) -> bool:
         # Helper function to reverse a linked list
         def reverse_linked_list(node):
             prev = None

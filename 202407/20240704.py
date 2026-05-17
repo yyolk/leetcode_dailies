@@ -1,7 +1,5 @@
 # https://leetcode.com/problems/merge-nodes-in-between-zeros/
 
-
-from typing import Optional
 class Solution:
     """2181. Merge Nodes in Between Zeros
 
@@ -24,7 +22,7 @@ class Solution:
 
     """
 
-    def merge_nodes(self, head: Optional[ListNode]) -> Optional[ListNode]:
+    def merge_nodes(self, head: ListNode | None) -> ListNode | None:
         # Skip the initial zero node
         current = head.next
         # This will be the new head of the resulting list

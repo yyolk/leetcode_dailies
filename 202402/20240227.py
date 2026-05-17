@@ -1,7 +1,5 @@
 # https://leetcode.com/problems/diameter-of-binary-tree/
 
-
-from typing import Optional
 class Solution:
     """543. Diameter of Binary Tree
 
@@ -24,7 +22,7 @@ class Solution:
 
     """
 
-    def diameter_of_binary_tree(self, root: Optional[TreeNode]) -> int:
+    def diameter_of_binary_tree(self, root: TreeNode | None) -> int:
         # Initialize the variable to store the maximum diameter
         diameter = 0
 

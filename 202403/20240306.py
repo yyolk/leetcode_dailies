@@ -1,7 +1,5 @@
 # https://leetcode.com/problems/linked-list-cycle/
 
-
-from typing import Optional
 class Solution:
     """141. Linked List Cycle
 
@@ -17,7 +15,7 @@ class Solution:
 
     """
 
-    def has_cycle(self, head: Optional[ListNode]) -> bool:
+    def has_cycle(self, head: ListNode | None) -> bool:
         # Check if the linked list is empty or has only one node
         if not head or not head.next:
             return False

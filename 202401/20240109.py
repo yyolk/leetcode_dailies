@@ -1,7 +1,5 @@
 # https://leetcode.com/problems/leaf-similar-trees/
 
-
-from typing import Optional
 class Solution:
     """872. Leaf-Similar Trees
 
@@ -28,7 +26,7 @@ class Solution:
     """
 
     def leaf_similar(
-        self, root1: Optional[TreeNode], root2: Optional[TreeNode]
+        self, root1: TreeNode | None, root2: TreeNode | None
     ) -> bool:
         def get_leaf_values(root, values):
             """Helper function to get the leaf values of a binary tree."""

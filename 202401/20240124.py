@@ -1,7 +1,5 @@
 # https://leetcode.com/problems/pseudo-palindromic-paths-in-a-binary-tree/
 
-
-from typing import Optional
 class Solution:
     """1457. Pseudo-Palindromic Paths in a Binary Tree
 
@@ -20,7 +18,7 @@ class Solution:
                 self.right = right
     """
 
-    def pseudo_palindromic_paths(self, root: Optional[TreeNode]) -> int:
+    def pseudo_palindromic_paths(self, root: TreeNode | None) -> int:
         def is_pseudo_palindrome(path_count):
             """Helper function to check if a list of counts represents a pseudo-palindrome."""
             odd_count = 0

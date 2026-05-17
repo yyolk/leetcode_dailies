@@ -1,6 +1,4 @@
 # https://leetcode.com/problems/remove-nodes-from-linked-list/
-from typing import Optional
-
 
 class Solution:
     """2487. Remove Nodes From Linked List
@@ -19,7 +17,7 @@ class Solution:
                 self.next = next
     """
 
-    def remove_nodes(self, head: Optional[ListNode]) -> Optional[ListNode]:
+    def remove_nodes(self, head: ListNode | None) -> ListNode | None:
         if not head or not head.next:
             return head
 

@@ -1,7 +1,5 @@
 # https://leetcode.com/problems/find-largest-value-in-each-tree-row/
 
-
-from typing import Optional
 class Solution:
     """515. Find Largest Value in Each Tree Row
 
@@ -17,7 +15,7 @@ class Solution:
                 self.right = right
     """
 
-    def largest_values(self, root: Optional[TreeNode]) -> list[int]:
+    def largest_values(self, root: TreeNode | None) -> list[int]:
         """Returns an array of the largest value in each row of the tree.
 
         Proposed solution using Breadth-First-Search (BFS).
