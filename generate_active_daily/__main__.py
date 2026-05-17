@@ -28,7 +28,7 @@ from markdownify import markdownify
 
 from .constants import LEETCODE_BASE_URL, TEXT_WIDTH
 from .client import query_question_of_today
-from .utils import camel_to_snake, modify_class_docstring, wrap_docstring, write_file
+from .utils import modify_class_docstring, write_file
 
 parser = argparse.ArgumentParser(
     description="Generates the current daily active challenge boilerplate file."

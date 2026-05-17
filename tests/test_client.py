@@ -1,7 +1,6 @@
 """Tests for generate_active_daily.client module."""
 
 import asyncio
-import pytest
 
 from generate_active_daily.client import make_leetcode_url_from_slug, previous_questions
 

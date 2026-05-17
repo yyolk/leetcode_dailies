@@ -1,7 +1,6 @@
 """Tests for generate_calendar_toc.utils module."""
 
 import calendar
-import pytest
 
 from datetime import datetime
 from pathlib import Path

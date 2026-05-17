@@ -9,7 +9,6 @@ from bs4 import BeautifulSoup
 
 from .utils import (
     BASE_SOLUTIONS_DIR,
-    DAYS_PATTERN,
     FILE_PATTERN,
     MONTH_DIR_PATTERN,
     build_year_calendar_html,

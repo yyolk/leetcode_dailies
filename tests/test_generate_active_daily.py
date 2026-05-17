@@ -3,7 +3,6 @@
 import ast
 import pytest
 
-from pathlib import Path
 
 from generate_active_daily.utils import (
     camel_to_snake,
@@ -94,18 +93,24 @@ class Solution:
 """
 
     def test_renames_method_to_snake_case(self):
-        result = modify_class_docstring(self.SIMPLE_CODE, ["Two sum description"], "1. Two Sum\n")
+        result = modify_class_docstring(
+            self.SIMPLE_CODE, ["Two sum description"], "1. Two Sum\n"
+        )
         tree = ast.parse(result)
         for node in ast.walk(tree):
             if isinstance(node, ast.FunctionDef):
                 assert node.name == "two_sum"
 
     def test_adds_camel_alias(self):
-        result = modify_class_docstring(self.SIMPLE_CODE, ["Two sum description"], "1. Two Sum\n")
+        result = modify_class_docstring(
+            self.SIMPLE_CODE, ["Two sum description"], "1. Two Sum\n"
+        )
         assert "twoSum = two_sum" in result
 
     def test_inserts_docstring(self):
-        result = modify_class_docstring(self.SIMPLE_CODE, ["Two sum description"], "1. Two Sum\n")
+        result = modify_class_docstring(
+            self.SIMPLE_CODE, ["Two sum description"], "1. Two Sum\n"
+        )
         assert "Two sum description" in result
 
     def test_renames_camel_case_args(self):
@@ -154,7 +159,9 @@ class Solution:
         assert "Old docstring." not in result
 
     def test_returns_valid_python(self):
-        result = modify_class_docstring(self.SIMPLE_CODE, ["Description line"], "1. Two Sum\n")
+        result = modify_class_docstring(
+            self.SIMPLE_CODE, ["Description line"], "1. Two Sum\n"
+        )
         # Should parse without errors
         ast.parse(result)
 
