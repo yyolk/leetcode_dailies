@@ -16,9 +16,7 @@ class Solution:
                 self.next = next
     """
 
-    def modified_list(
-        self, nums: list[int], head: Optional[ListNode]
-    ) -> Optional[ListNode]:
+    def modified_list(self, nums: list[int], head: ListNode | None) -> ListNode | None:
         # Convert nums to a set for O(1) lookup time
         num_set = set(nums)
 

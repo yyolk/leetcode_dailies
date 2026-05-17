@@ -104,14 +104,14 @@ class Router:
     def get_count(self, destination: int, start_time: int, end_time: int) -> int:
         if destination not in self.packet_lists:
             return 0
-        l = self.packet_lists[destination]
+        lst = self.packet_lists[destination]
         start_idx = self.start_indices[destination]
-        if start_idx >= len(l):
+        if start_idx >= len(lst):
             return 0
         # Find left index for >= start_time
-        idx_left = bisect_left(l, start_time)
+        idx_left = bisect_left(lst, start_time)
         # Find right index for > end_time
-        idx_right = bisect_right(l, end_time)
+        idx_right = bisect_right(lst, end_time)
         # Adjust for active suffix starting at start_idx
         count = max(0, idx_right - max(idx_left, start_idx))
         return count

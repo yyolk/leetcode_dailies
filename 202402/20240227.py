@@ -23,7 +23,7 @@ class Solution:
 
     """
 
-    def diameter_of_binary_tree(self, root: Optional[TreeNode]) -> int:
+    def diameter_of_binary_tree(self, root: TreeNode | None) -> int:
         # Initialize the variable to store the maximum diameter
         diameter = 0
 

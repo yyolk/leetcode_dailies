@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/get-biggest-three-rhombus-sums-in-a-grid
 
+
 class Solution:
     """1878. Get Biggest Three Rhombus Sums in a Grid
 
@@ -14,6 +15,7 @@ class Solution:
     Return the biggest three distinct rhombus sums in the grid in descending order.
     If there are less than three distinct values, return all of them.
     """
+
     def get_biggest_three(self, grid: list[list[int]]) -> list[int]:
         m = len(grid)
         n = len(grid[0])

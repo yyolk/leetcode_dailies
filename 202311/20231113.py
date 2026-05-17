@@ -32,7 +32,7 @@ class Solution:
             The resulting, sorted string.
         """
         vowels = set("aeiouAEIOU")
-        consonants = [c for c in s if c not in vowels]
+        [c for c in s if c not in vowels]
 
         sorted_vowels = sorted([v for v in s if v in vowels], reverse=True)
         result = ""

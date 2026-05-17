@@ -36,7 +36,7 @@ class Solution:
 
     """
 
-    def evaluate_tree(self, root: Optional[TreeNode]) -> bool:
+    def evaluate_tree(self, root: TreeNode | None) -> bool:
         if not root:
             return False
 

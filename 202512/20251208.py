@@ -10,6 +10,7 @@ class Solution:
     Given an integer n, return the number of square triples such that
     1 <= a, b, c <= n.
     """
+
     def count_triples(self, n: int) -> int:
         # Precompute set of perfect squares from 1^2 to n^2 for O(1) lookups
         squares = {i * i for i in range(1, n + 1)}

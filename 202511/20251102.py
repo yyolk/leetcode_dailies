@@ -15,7 +15,10 @@ class Solution:
 
     Return the number of unoccupied cells that are not guarded.
     """
-    def count_unguarded(self, m: int, n: int, guards: list[list[int]], walls: list[list[int]]) -> int:
+
+    def count_unguarded(
+        self, m: int, n: int, guards: list[list[int]], walls: list[list[int]]
+    ) -> int:
         # Initialize grid with 0 for empty, will set 1 for wall, 2 for guard
         grid = [[0] * n for _ in range(m)]
         # Place walls on the grid

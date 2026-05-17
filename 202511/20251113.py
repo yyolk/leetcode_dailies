@@ -18,15 +18,16 @@ class Solution:
 
     Return the maximum number of operations that you can perform.
     """
+
     def max_operations(self, s: str) -> int:
         # Extract sizes of consecutive '1' groups
         groups = []
         i = 0
         n = len(s)
         while i < n:
-            if s[i] == '1':
+            if s[i] == "1":
                 count = 0
-                while i < n and s[i] == '1':
+                while i < n and s[i] == "1":
                     count += 1
                     i += 1
                 groups.append(count)
@@ -36,7 +37,7 @@ class Solution:
         if m == 0:
             return 0
         # Determine if there are trailing '0's after the last '1' group
-        trailing = 1 if s and s[-1] == '0' else 0
+        trailing = 1 if s and s[-1] == "0" else 0
         # Calculate the maximum operations
         ans = 0
         for idx in range(m):

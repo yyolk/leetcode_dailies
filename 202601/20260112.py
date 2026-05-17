@@ -17,20 +17,21 @@ class Solution:
     You must visit the points in the given order. Passing through later points is
     allowed but does not count as a visit.
     """
+
     def min_time_to_visit_all_points(self, points: list[list[int]]) -> int:
         # Total time starts at 0 (we begin at the first point)
         total_time = 0
-        
+
         # Pair consecutive points efficiently
         for prev, curr in zip(points[:-1], points[1:]):
             # Absolute differences in coordinates
             dx = abs(curr[0] - prev[0])
             dy = abs(curr[1] - prev[1])
-            
+
             # Chebyshev distance: max(dx, dy) seconds needed
             # Diagonal moves reduce both dx and dy by 1 per second
             total_time += max(dx, dy)
-        
+
         return total_time
-    
+
     minTimeToVisitAllPoints = min_time_to_visit_all_points

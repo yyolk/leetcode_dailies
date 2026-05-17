@@ -12,6 +12,7 @@ class Solution:
 
     Note: n may not fit in a 64-bit signed integer.
     """
+
     def smallest_repunit_div_by_k(self, k: int) -> int:
         # Early exit: repunits are never divisible by 2 or 5
         if k % 2 == 0 or k % 5 == 0:

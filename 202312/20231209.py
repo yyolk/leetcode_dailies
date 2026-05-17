@@ -16,7 +16,7 @@ class Solution:
                 self.right = right
     """
 
-    def inorder_traversal(self, root: Optional[TreeNode]) -> list[int]:
+    def inorder_traversal(self, root: TreeNode | None) -> list[int]:
         """Get the inorder traversal of an input binary tree.
 
         Args:
@@ -27,7 +27,7 @@ class Solution:
         """
         result: list[int] = []
 
-        def inorder_recursive(node: Optional[TreeNode]):
+        def inorder_recursive(node: TreeNode | None):
             """Helper inner recursive function for traversal."""
             nonlocal result
             if node:

@@ -16,7 +16,7 @@ class Solution:
 
     """
 
-    def change(self, amount: int, coins: List[int]) -> int:
+    def change(self, amount: int, coins: list[int]) -> int:
         # Initialize a list to store the number of combinations for each amount from 0 to the target amount
         dp = [0] * (amount + 1)
 

@@ -20,7 +20,7 @@ class Solution:
 
     """
 
-    def search(self, nums: List[int], target: int) -> bool:
+    def search(self, nums: list[int], target: int) -> bool:
         # Initialize low and high pointers
         low, high = 0, len(nums) - 1
 

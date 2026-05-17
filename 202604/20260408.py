@@ -1,8 +1,9 @@
 # https://leetcode.com/problems/xor-after-range-multiplication-queries-i
 
+
 class Solution:
     """3653. XOR After Range Multiplication Queries I
-    
+
     You are given an integer array nums of length n and a 2D integer array
     queries of size q, where queries[i] = [li, ri, ki, vi]. For each query,
     you must apply the following operations in order: Set idx = li. While idx
@@ -10,6 +11,7 @@ class Solution:
     Return the bitwise XOR of all elements in nums after processing all
     queries.
     """
+
     def xor_after_queries(self, nums: list[int], queries: list[list[int]]) -> int:
         MOD = 10**9 + 7
         for li, ri, ki, vi in queries:

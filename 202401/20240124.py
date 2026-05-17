@@ -19,7 +19,7 @@ class Solution:
                 self.right = right
     """
 
-    def pseudo_palindromic_paths(self, root: Optional[TreeNode]) -> int:
+    def pseudo_palindromic_paths(self, root: TreeNode | None) -> int:
         def is_pseudo_palindrome(path_count):
             """Helper function to check if a list of counts represents a pseudo-palindrome."""
             odd_count = 0

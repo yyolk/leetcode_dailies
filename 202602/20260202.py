@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/divide-an-array-into-subarrays-with-minimum-cost-ii
 
+
 class Solution:
     def minimum_cost(self, nums: list[int], k: int, dist: int) -> int:
         n = len(nums)

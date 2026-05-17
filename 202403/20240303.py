@@ -1,5 +1,4 @@
 # https://leetcode.com/problems/remove-nth-node-from-end-of-list/
-from typing import Optional
 
 
 class Solution:
@@ -10,9 +9,7 @@ class Solution:
 
     """
 
-    def remove_nth_from_end(
-        self, head: Optional[ListNode], n: int
-    ) -> Optional[ListNode]:
+    def remove_nth_from_end(self, head: ListNode | None, n: int) -> ListNode | None:
         # Create a dummy node to simplify edge cases
         dummy = ListNode(0)
         dummy.next = head

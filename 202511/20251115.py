@@ -11,11 +11,12 @@ class Solution:
     A string has dominant ones if the number of ones in the string is greater
     than or equal to the square of the number of zeros in the string.
     """
+
     def number_of_substrings(self, s: str) -> int:
         # Length of the string
         n = len(s)
         # List of positions where '0' appears
-        pos = [i for i in range(n) if s[i] == '0']
+        pos = [i for i in range(n) if s[i] == "0"]
         # Number of '0's
         k = len(pos)
         # Add sentinels for boundary handling
@@ -30,6 +31,7 @@ class Solution:
             ans += L * (L + 1) // 2
         # Compute max possible z where z*(z+1) <= n
         import math
+
         max_z = int((-1 + math.sqrt(1 + 4 * n)) / 2)
         # For each possible z from 1 to max_z
         for z in range(1, max_z + 1):

@@ -17,7 +17,7 @@ class Solution:
                 self.right = right
     """
 
-    def range_sum_b_s_t(self, root: Optional[TreeNode], low: int, high: int) -> int:
+    def range_sum_b_s_t(self, root: TreeNode | None, low: int, high: int) -> int:
         # Initialize the result to store the sum
         result = 0
 

@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/the-k-th-lexicographical-string-of-all-happy-strings-of-length-n
 
+
 class Solution:
     """1415. The k-th Lexicographical String of All Happy Strings of Length n
 
@@ -13,6 +14,7 @@ class Solution:
     sorted in lexicographical order. Return the kth string of this list or
     return an empty string if there are less than k happy strings of length n.
     """
+
     def get_happy_string(self, n: int, k: int) -> str:
         # Total happy strings = 3 * 2^(n-1)
         total = 3 * (1 << (n - 1))

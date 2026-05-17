@@ -16,6 +16,7 @@ class Solution:
     Return the number of operations required to make either num1 = 0 or
     num2 = 0.
     """
+
     def count_operations(self, num1: int, num2: int) -> int:
         # Initialize the operation counter
         count = 0

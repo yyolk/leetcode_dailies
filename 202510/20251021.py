@@ -19,7 +19,6 @@ class Solution:
     the **operations**."""
 
     def max_frequency(self, nums: list[int], k: int, num_operations: int) -> int:
-
         # Handle empty array case
         if not nums:
             return 0
@@ -63,9 +62,9 @@ class Solution:
                 seg_end = next_pos - 1
                 if seg_start <= seg_end:
                     # Find number of forbidden values in the segment
-                    l = bisect.bisect_left(forbidden, seg_start)
+                    lo = bisect.bisect_left(forbidden, seg_start)
                     r = bisect.bisect_right(forbidden, seg_end)
-                    num_forbidden = r - l
+                    num_forbidden = r - lo
                     # Calculate total integers in the segment
                     num_ints = seg_end - seg_start + 1
                     # If there is at least one t with freq=0 in segment

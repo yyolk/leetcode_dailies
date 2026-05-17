@@ -14,17 +14,18 @@ class Solution:
 
     Return the number of covered buildings.
     """
+
     def count_covered_buildings(self, n: int, buildings: list[list[int]]) -> int:
         # Handle empty case
         if not buildings:
             return 0
 
         # Track min/max x per row (y) for left/right checks
-        row_min_x = defaultdict(lambda: float('inf'))
-        row_max_x = defaultdict(lambda: -float('inf'))
+        row_min_x = defaultdict(lambda: float("inf"))
+        row_max_x = defaultdict(lambda: -float("inf"))
         # Track min/max y per column (x) for above/below checks
-        col_min_y = defaultdict(lambda: float('inf'))
-        col_max_y = defaultdict(lambda: -float('inf'))
+        col_min_y = defaultdict(lambda: float("inf"))
+        col_max_y = defaultdict(lambda: -float("inf"))
 
         # Populate min/max values
         for x, y in buildings:
@@ -37,8 +38,7 @@ class Solution:
         count = 0
         for x, y in buildings:
             # Check left/right (row) and above/below (column)
-            if (row_min_x[y] < x < row_max_x[y] and
-                col_min_y[x] < y < col_max_y[x]):
+            if row_min_x[y] < x < row_max_x[y] and col_min_y[x] < y < col_max_y[x]:
                 count += 1
 
         return count

@@ -1,8 +1,9 @@
 # https://leetcode.com/problems/decode-the-slanted-ciphertext
 
+
 class Solution:
     """2075. Decode the Slanted Ciphertext
-    
+
     A string originalText is encoded using a slanted transposition cipher to a
     string encodedText with the help of a matrix having a fixed number of rows
     rows. originalText is placed first in a top-left to bottom-right manner.
@@ -14,6 +15,7 @@ class Solution:
     have any trailing spaces ' '. The test cases are generated such that there
     is only one possible originalText.
     """
+
     def decode_ciphertext(self, encoded_text: str, rows: int) -> str:
         # Calculate number of columns from encoded length
         cols = len(encoded_text) // rows

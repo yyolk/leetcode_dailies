@@ -1,8 +1,9 @@
 # https://leetcode.com/problems/minimum-absolute-distance-between-mirror-pairs
 
+
 class Solution:
     """3761. Minimum Absolute Distance Between Mirror Pairs
-    
+
     You are given an integer array nums. A mirror pair is a pair of indices (i, j)
     such that 0 <= i < j < nums.length, and reverse(nums[i]) == nums[j], where
     reverse(x) denotes the integer formed by reversing the digits of x. Leading
@@ -11,6 +12,7 @@ class Solution:
     distance between indices i and j is abs(i - j). If no mirror pair exists,
     return -1.
     """
+
     def min_mirror_pair_distance(self, nums: list[int]) -> int:
         # map: reversed_value -> most recent index i where reverse(nums[i]) equals it
         last_i = {}

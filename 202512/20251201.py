@@ -21,6 +21,7 @@ class Solution:
     Return the maximum number of minutes you can run all the n computers
     simultaneously.
     """
+
     def max_run_time(self, n: int, batteries: list[int]) -> int:
         # Compute total battery capacity for upper bound on binary search
         total = sum(batteries)

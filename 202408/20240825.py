@@ -15,12 +15,12 @@ class Solution:
                 self.right = right
     """
 
-    def postorder_traversal(self, root: Optional[TreeNode]) -> list[int]:
+    def postorder_traversal(self, root: TreeNode | None) -> list[int]:
         # Initialize an empty list to store the result of the traversal.
         result = []
 
         # Define a helper function to perform the recursive postorder traversal.
-        def traverse(node: Optional[TreeNode]):
+        def traverse(node: TreeNode | None):
             if node:
                 # First, recursively traverse the left subtree.
                 traverse(node.left)

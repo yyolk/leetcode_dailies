@@ -32,7 +32,7 @@ class Solution:
         # Compute gcd for rotation steps
         g_rot = math.gcd(b, n)
         # Compute gcd for addition cycles
-        g_add = math.gcd(a, 10)
+        math.gcd(a, 10)
         # Collect possible addition values mod 10
         poss_d = set((k * a) % 10 for k in range(10))
         # Initialize min_str to a large string for comparison

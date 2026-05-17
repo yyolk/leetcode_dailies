@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/find-all-people-with-secret/
+from collections import defaultdict
 from collections import deque
 
 

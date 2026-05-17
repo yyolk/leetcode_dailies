@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/maximum-number-of-events-that-can-be-attended-ii/
+import bisect
 
 
 class Solution:

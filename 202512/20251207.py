@@ -7,6 +7,7 @@ class Solution:
     Given two non-negative integers low and high. Return the
     count of odd numbers between low and high (inclusive).
     """
+
     def count_odds(self, low: int, high: int) -> int:
         # Count of odds from 0 to high inclusive: (high + 1) // 2
         # Count of odds from 0 to low-1 inclusive: low // 2

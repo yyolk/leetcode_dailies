@@ -10,6 +10,7 @@ class Solution:
 
     Given n (number of rows), return the number of ways modulo 10^9 + 7.
     """
+
     def num_of_ways(self, n: int) -> int:
         # ABA: rows with col1 == col3 != col2 (6 such valid colorings)
         # ABC: rows with all columns different colors (6 such valid colorings)

@@ -32,7 +32,7 @@ class Solution:
     """
 
     def get_directions(
-        self, root: Optional[TreeNode], start_value: int, dest_value: int
+        self, root: TreeNode | None, start_value: int, dest_value: int
     ) -> str:
         def find_lca(node: TreeNode, p: int, q: int) -> TreeNode:
             if not node or node.val == p or node.val == q:
@@ -43,7 +43,7 @@ class Solution:
                 return node
             return left if left else right
 
-        def find_path(node: TreeNode, target: int, path: List[str]) -> bool:
+        def find_path(node: TreeNode, target: int, path: list[str]) -> bool:
             if not node:
                 return False
             if node.val == target:

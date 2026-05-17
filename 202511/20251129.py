@@ -11,6 +11,7 @@ class Solution:
     Return the minimum number of operations required to make the sum of the array
     divisible by k.
     """
+
     def min_operations(self, nums: list[int], k: int) -> int:
         # Compute the total sum of the array
         total_sum = sum(nums)

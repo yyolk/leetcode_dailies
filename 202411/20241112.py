@@ -36,10 +36,9 @@ class Solution:
             (
                 0
                 if q < price[0]
-                else
                 # Use binary search to find where q would go in price list,
                 # then take the beauty of the item just before this position
-                beauty[bisect_right(price, q) - 1]
+                else beauty[bisect_right(price, q) - 1]
             )
             for q in queries
         ]

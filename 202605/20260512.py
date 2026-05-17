@@ -1,8 +1,9 @@
 # https://leetcode.com/problems/minimum-initial-energy-to-finish-tasks/
 
+
 class Solution:
     """1665. Minimum Initial Energy to Finish Tasks
-    
+
     You are given an array tasks where tasks[i] = [actuali, minimumi]:
     actuali is the actual amount of energy you spend to finish the ith task.
     minimumi is the minimum amount of energy you require to begin the ith task.
@@ -13,6 +14,7 @@ class Solution:
     Return the minimum initial amount of energy you will need to finish all
     the tasks.
     """
+
     def minimum_effort(self, tasks: list[list[int]]) -> int:
         ans = 0
         cur = 0

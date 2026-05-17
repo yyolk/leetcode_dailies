@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/minimum-distance-between-three-equal-elements-ii
 
+
 class Solution:
     """3741. Minimum Distance Between Three Equal Elements II
 
@@ -9,6 +10,7 @@ class Solution:
     of x. Return an integer denoting the minimum possible distance of a good tuple.
     If no good tuples exist, return -1.
     """
+
     def minimum_distance(self, nums: list[int]) -> int:
         # Group indices by value using dict of lists
         pos = {}
@@ -16,7 +18,7 @@ class Solution:
             if num not in pos:
                 pos[num] = []
             pos[num].append(i)
-        
+
         min_span = float("inf")
         for positions in pos.values():
             m = len(positions)
@@ -28,7 +30,7 @@ class Solution:
                 span = positions[j + 2] - positions[j]
                 if span < min_span:
                     min_span = span
-        
+
         if min_span == float("inf"):
             return -1
         # For sorted i < j < k the tuple distance simplifies to 2 * (k - i)

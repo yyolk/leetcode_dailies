@@ -18,7 +18,11 @@ class Solution:
         if root is None:
             return 0
         sum = root.val + self.postOrder(root.left) + self.postOrder(root.right)
-        self.max = self.max if self.max > (self.totalSum - sum) * sum else (self.totalSum - sum) * sum
+        self.max = (
+            self.max
+            if self.max > (self.totalSum - sum) * sum
+            else (self.totalSum - sum) * sum
+        )
         return sum
 
     def maxProduct(self, root):

@@ -20,15 +20,17 @@ class Solution:
     Return an integer array answer of length n - k + 1 where answer[i] is the x-sum
     of the subarray nums[i..i + k - 1].
     """
+
     def find_x_sum(self, nums: list[int], k: int, x: int) -> list[int]:
         # Initialize result list
         res = []
         # Iterate over each possible starting index for subarrays of length k
         for i in range(len(nums) - k + 1):
             # Extract the current subarray
-            sub = nums[i:i + k]
+            sub = nums[i : i + k]
             # Count frequency of each element in the subarray
             from collections import Counter
+
             cnt = Counter(sub)
             # Get list of (value, frequency) pairs
             items = list(cnt.items())
@@ -41,5 +43,5 @@ class Solution:
             # Append to result
             res.append(s)
         return res
-    
+
     findXSum = find_x_sum

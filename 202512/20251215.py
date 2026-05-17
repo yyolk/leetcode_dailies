@@ -14,6 +14,7 @@ class Solution:
 
     Return the number of smooth descent periods.
     """
+
     def get_descent_periods(self, prices: list[int]) -> int:
         n = len(prices)
         ans = 0

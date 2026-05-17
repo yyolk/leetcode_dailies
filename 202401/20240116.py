@@ -25,6 +25,7 @@ Your RandomizedSet object will be instantiated and called as such:
     param_2 = obj.remove(val)
     param_3 = obj.getRandom()
 """
+
 import random
 
 

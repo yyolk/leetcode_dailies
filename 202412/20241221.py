@@ -23,7 +23,6 @@ class Solution:
     def max_k_divisible_components(
         self, n: int, edges: list[list[int]], values: list[int], k: int
     ) -> int:
-
         # Build the adjacency list for the tree
         tree = defaultdict(list)
         for a, b in edges:

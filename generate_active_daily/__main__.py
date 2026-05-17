@@ -174,7 +174,7 @@ def modify_class_docstring(code, new_docstring, first_line):
 
                 # Set up a docstring, and reference our indentation for the class
                 # Solution(...).
-                docstring = ast.Expr(value=ast.Constant(s=""))
+                docstring = ast.Expr(value=ast.Constant(value=""))
                 indentation = node.body[0].col_offset
                 # Rewrite new_docstring, wrapping it.
                 # We know our indentation for keeping TEXT_WIDTH aligned.
@@ -185,7 +185,7 @@ def modify_class_docstring(code, new_docstring, first_line):
                     + textwrap.indent(new_docstring, " " * indentation)
                 )
 
-                docstring.value.s = indented_docstring
+                docstring.value.value = indented_docstring
                 node.body.insert(0, docstring)
 
             # Create a new function assignment to assign the camelCase function to our
@@ -278,8 +278,7 @@ initial_python_code = next(
 )["defaultCode"] + (
     # add an elipsis into the default solution method so AST can parse, the 8th column is a guess!
     # TODO: upon encountering a challenge like 20208/20230828.py, this will have to be refactored
-    " " * 8
-    + "..."
+    " " * 8 + "..."
 )
 
 # our docstring is pretty simple, everything before the examples, the number and the title

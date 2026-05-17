@@ -7,6 +7,7 @@ class Solution:
     Given a rows x cols binary matrix filled with 0's and 1's, find the largest
     rectangle containing only 1's and return its area.
     """
+
     def maximal_rectangle(self, matrix: list[list[str]]) -> int:
         if not matrix or not matrix[0]:
             return 0
@@ -19,7 +20,7 @@ class Solution:
         for i in range(rows):
             # Update consecutive 1's heights for current row
             for j in range(cols):
-                heights[j] = heights[j] + 1 if matrix[i][j] == '1' else 0
+                heights[j] = heights[j] + 1 if matrix[i][j] == "1" else 0
 
             # Monotonic stack to compute largest rectangle in histogram
             stack = [-1]  # Sentinel for left boundary
@@ -29,8 +30,8 @@ class Solution:
 
                 # Pop taller bars
                 while stack[-1] != -1 and heights[stack[-1]] >= h:
-                    height = heights[stack.pop()]          # Height of popped bar
-                    width = j - stack[-1] - 1              # Width bounded by left and right
+                    height = heights[stack.pop()]  # Height of popped bar
+                    width = j - stack[-1] - 1  # Width bounded by left and right
                     max_area = max(max_area, height * width)
 
                 if j < cols:

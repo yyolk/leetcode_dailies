@@ -1,6 +1,5 @@
 # https://leetcode.com/problems/smallest-string-starting-from-leaf/
 from collections import deque
-from typing import Optional
 
 
 class Solution:
@@ -32,7 +31,7 @@ class Solution:
         # Converts a number to its corresponding character (in the range 'a' to 'z')
         return chr(ord("a") + number)
 
-    def smallest_from_leaf(self, root: Optional[TreeNode]) -> str:
+    def smallest_from_leaf(self, root: TreeNode | None) -> str:
         # Initialize a queue and add the root node with its path (just the root's value)
         queue = deque()
         queue.append((root, self.num_to_char(root.val)))

@@ -12,6 +12,7 @@ class Solution:
     is set to 1 and the (i-2)th through 0th bits are set to 0.
     Return the minimum number of operations to transform n into 0.
     """
+
     def minimum_one_bit_operations(self, n: int) -> int:
         # Initialize result with n, which will accumulate the binary value.
         res = n

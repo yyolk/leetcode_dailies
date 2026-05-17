@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/find-the-string-with-lcp
 
+
 class Solution:
     """2573. Find the String with LCP
 
@@ -14,6 +15,7 @@ class Solution:
     example, "aabd" is lexicographically smaller than "aaca" because the first
     position they differ is at the third letter, and 'b' comes before 'c'.
     """
+
     def find_the_string(self, lcp: list[list[int]]) -> str:
         n = len(lcp)
         # sentinel marks positions not yet assigned a letter

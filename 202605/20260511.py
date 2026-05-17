@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/separate-the-digits-in-an-array/
 
+
 class Solution:
     """2553. Separate the Digits in an Array
 
@@ -11,6 +12,7 @@ class Solution:
     For example, for the integer 10921, the separation of its digits is
     [1,0,9,2,1].
     """
+
     def separate_digits(self, nums: list[int]) -> list[int]:
         # flatten all digits from each num (left-to-right order) into one list
         return [int(digit) for num in nums for digit in str(num)]

@@ -7,6 +7,7 @@ class Solution:
     Given an binary array nums and an integer k, return true if all 1's are
     at least k places away from each other, otherwise return false.
     """
+
     def k_length_apart(self, nums: list[int], k: int) -> bool:
         # Initialize previous 1's position to -1 (none seen yet)
         prev = -1

@@ -9,6 +9,7 @@ class Solution:
     Return the maximum sum of a subarray of nums, such that the size of the
     subarray is divisible by k.
     """
+
     def max_subarray_sum(self, nums: list[int], k: int) -> int:
         # Use a large number for initialization to avoid float issues
         INF = 10**18 + 1

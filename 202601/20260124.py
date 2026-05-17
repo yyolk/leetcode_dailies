@@ -19,6 +19,7 @@ class Solution:
     Return the minimized maximum pair sum after optimally pairing up
     the elements.
     """
+
     def min_pair_sum(self, nums: list[int]) -> int:
         # Sort the array to enable pairing smallest with largest
         nums.sort()

@@ -17,11 +17,11 @@ class Solution:
         # Collect all x-coordinates for compression
         xs_set = set()
         events = []
-        for x, y, l in squares:
+        for x, y, side in squares:
             xs_set.add(x)
-            xs_set.add(x + l)
-            events.append((y, 1, x, x + l))      # start event
-            events.append((y + l, -1, x, x + l))  # end event
+            xs_set.add(x + side)
+            events.append((y, 1, x, x + side))  # start event
+            events.append((y + side, -1, x, x + side))  # end event
 
         xs = sorted(xs_set)
         x_to_idx = {v: i for i, v in enumerate(xs)}
@@ -30,8 +30,8 @@ class Solution:
         class SegmentTree:
             def __init__(self, xs):
                 self.n = len(xs) - 1
-                self.tree = [0] * (4 * (self.n + 1))      # cover count
-                self.covered = [0] * (4 * (self.n + 1))   # union length
+                self.tree = [0] * (4 * (self.n + 1))  # cover count
+                self.covered = [0] * (4 * (self.n + 1))  # union length
                 self.total_len = [0] * (4 * (self.n + 1))  # full length
                 if self.n > 0:
                     self._build(1, 0, self.n - 1, xs)
@@ -43,8 +43,9 @@ class Solution:
                 mid = (start + end) // 2
                 self._build(2 * node, start, mid, xs)
                 self._build(2 * node + 1, mid + 1, end, xs)
-                self.total_len[node] = (self.total_len[2 * node] +
-                                        self.total_len[2 * node + 1])
+                self.total_len[node] = (
+                    self.total_len[2 * node] + self.total_len[2 * node + 1]
+                )
 
             def _recalc(self, node, start, end):
                 if self.tree[node] > 0:
@@ -53,19 +54,20 @@ class Solution:
                     if start == end:
                         self.covered[node] = 0
                     else:
-                        self.covered[node] = (self.covered[2 * node] +
-                                              self.covered[2 * node + 1])
+                        self.covered[node] = (
+                            self.covered[2 * node] + self.covered[2 * node + 1]
+                        )
 
-            def update(self, node, start, end, l, r, val):
-                if l > end or r < start:
+            def update(self, node, start, end, lo, r, val):
+                if lo > end or r < start:
                     return
-                if l <= start and end <= r:
+                if lo <= start and end <= r:
                     self.tree[node] += val
                     self._recalc(node, start, end)
                     return
                 mid = (start + end) // 2
-                self.update(2 * node, start, mid, l, r, val)
-                self.update(2 * node + 1, mid + 1, end, l, r, val)
+                self.update(2 * node, start, mid, lo, r, val)
+                self.update(2 * node + 1, mid + 1, end, lo, r, val)
                 self._recalc(node, start, end)
 
         # Sort events: y asc, starts before ends

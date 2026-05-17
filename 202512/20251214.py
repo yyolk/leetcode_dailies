@@ -21,33 +21,34 @@ class Solution:
     Return the number of ways to divide the corridor. Since the answer may be very
     large, return it modulo 10**9 + 7. If there is no way, return 0.
     """
+
     def number_of_ways(self, corridor: str) -> int:
         # Define modulo constant
         MOD = 10**9 + 7
-        
+
         # Collect positions of all seats
-        pos = [i for i in range(len(corridor)) if corridor[i] == 'S']
-        
+        pos = [i for i in range(len(corridor)) if corridor[i] == "S"]
+
         # Count total seats
         k = len(pos)
-        
+
         # If no seats or odd number of seats, impossible to divide
         if k == 0 or k % 2 == 1:
             return 0
-        
+
         # Number of sections (pairs of seats)
         m = k // 2
-        
+
         # Initialize total ways to 1 (empty product)
         ways = 1
-        
+
         # For each gap between consecutive pairs
         for j in range(m - 1):
             # Gap size: positions for divider between second seat of pair j and first seat of pair j+1
             gap = pos[2 * (j + 1)] - pos[2 * j + 1]
             # Multiply choices for this gap, modulo MOD
             ways = (ways * gap) % MOD
-        
+
         # Return total number of ways
         return ways
 

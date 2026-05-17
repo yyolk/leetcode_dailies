@@ -16,14 +16,15 @@ class Solution:
     number.
     Return the final value of original.
     """
+
     def find_final_value(self, nums: list[int], original: int) -> int:
         # Convert nums to set for O(1) average-case lookups
         seen = set(nums)
-        
+
         # Keep doubling original while it exists in the set
         while original in seen:
             original *= 2
-            
+
         return original
 
     findFinalValue = find_final_value

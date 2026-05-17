@@ -1,8 +1,9 @@
 # https://leetcode.com/problems/jump-game-ix/
 
+
 class Solution:
     """3660. Jump Game IX
-    
+
     You are given an integer array nums. From any index i, you can jump to
     another index j under the following rules: Jump to index j where j > i
     is allowed only if nums[j] < nums[i]. Jump to index j where j < i is
@@ -11,6 +12,7 @@ class Solution:
     jumps starting at i. Return an array ans where ans[i] is the maximum
     value reachable starting from index i.
     """
+
     def max_value(self, nums: list[int]) -> list[int]:
         n = len(nums)
         if not n:

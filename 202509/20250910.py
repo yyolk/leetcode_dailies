@@ -28,7 +28,7 @@ class Solution:
         self, n: int, languages: list[list[int]], friendships: list[list[int]]
     ) -> int:
         # Determine number of users
-        m = len(languages)
+        len(languages)
         # Convert languages to sets for efficient intersection checks
         lang_sets = [set(langs) for langs in languages]
         # Collect users involved in friendships where no common language exists

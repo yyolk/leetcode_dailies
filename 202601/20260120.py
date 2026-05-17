@@ -15,21 +15,22 @@ class Solution:
     If it is not possible to find such a value for ans[i] that satisfies the
     condition, then set ans[i] = -1.
     """
+
     def min_bitwise_array(self, nums: list[int]) -> list[int]:
         # Initialize the result list
         ans = []
         # Process each prime in nums
         for num in nums:
             # Compute the count of trailing one bits in num's binary representation
-            l = 0
-            while (num >> l) & 1 == 1:
-                l += 1
+            trailing_ones = 0
+            while (num >> trailing_ones) & 1 == 1:
+                trailing_ones += 1
             # If no trailing ones, it's impossible (e.g., for 2)
-            if l == 0:
+            if trailing_ones == 0:
                 ans.append(-1)
             else:
-                # Calculate the minimal value as num minus 2 raised to (l-1)
-                ans.append(num - (1 << (l - 1)))
+                # Calculate the minimal value as num minus 2 raised to (trailing_ones-1)
+                ans.append(num - (1 << (trailing_ones - 1)))
         return ans
 
     minBitwiseArray = min_bitwise_array

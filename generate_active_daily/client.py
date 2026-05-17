@@ -1,4 +1,4 @@
-from typing import AsyncIterator, Dict, List
+from typing import AsyncIterator
 from urllib.parse import urljoin
 
 from gql import Client, gql
@@ -124,7 +124,7 @@ async def query_qd_challenge_question(title_slug):
         ]
 
 
-async def previous_questions(limit: int) -> AsyncIterator[List[Dict[str, str]]]:
+async def previous_questions(limit: int) -> AsyncIterator[list[dict[str, str]]]:
     if limit <= 0:
         return
 
@@ -146,7 +146,7 @@ async def previous_questions(limit: int) -> AsyncIterator[List[Dict[str, str]]]:
         previous_question = await query_previous_question(
             prev_slug, todays_env_id, todays_env_type
         )
-        if not previous_question["paidOnly"] is False:
+        if previous_question["paidOnly"] is not False:
             # Continue the loop again, until paidOnly is False
             continue
         count += 1

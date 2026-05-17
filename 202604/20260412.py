@@ -1,8 +1,9 @@
 # https://leetcode.com/problems/minimum-distance-to-type-a-word-using-two-fingers
 
+
 class Solution:
     """1320. Minimum Distance to Type a Word Using Two Fingers
-    
+
     You have a keyboard layout as shown above in the X-Y plane, where each
     English uppercase letter is located at some coordinate. For example, the
     letter "A" is located at coordinate (0, 0), the letter "B" is located at
@@ -14,6 +15,7 @@ class Solution:
     free so do not count towards your total distance, also your two fingers do
     not have to start at the first letter or the first two letters.
     """
+
     def minimum_distance(self, word: str) -> int:
         # precompute (row, col) for letters A-Z (0-25)
         pos = [(i // 6, i % 6) for i in range(26)]
@@ -30,12 +32,18 @@ class Solution:
                     if prev[a][b] == INF:
                         continue
                     # move finger1 to current letter (0 cost if unused)
-                    cost = (0 if a == 26 else
-                            abs(pos[a][0] - pos[let][0]) + abs(pos[a][1] - pos[let][1]))
+                    cost = (
+                        0
+                        if a == 26
+                        else abs(pos[a][0] - pos[let][0]) + abs(pos[a][1] - pos[let][1])
+                    )
                     curr[let][b] = min(curr[let][b], prev[a][b] + cost)
                     # move finger2 to current letter (0 cost if unused)
-                    cost = (0 if b == 26 else
-                            abs(pos[b][0] - pos[let][0]) + abs(pos[b][1] - pos[let][1]))
+                    cost = (
+                        0
+                        if b == 26
+                        else abs(pos[b][0] - pos[let][0]) + abs(pos[b][1] - pos[let][1])
+                    )
                     curr[a][let] = min(curr[a][let], prev[a][b] + cost)
             prev = curr
         # minimum cost over all final finger positions

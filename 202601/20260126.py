@@ -14,6 +14,7 @@ class Solution:
     a < b
     b - a equals to the minimum absolute difference of any two elements in arr
     """
+
     def minimum_abs_difference(self, arr: list[int]) -> list[list[int]]:
         if len(arr) < 2:
             return []
@@ -24,15 +25,15 @@ class Solution:
         # Find minimum difference in one pass
         min_diff = float("inf")
         for i in range(1, len(arr)):
-            diff = arr[i] - arr[i-1]
+            diff = arr[i] - arr[i - 1]
             if diff < min_diff:
                 min_diff = diff
 
         # Collect all pairs with exactly that difference
         result = []
         for i in range(1, len(arr)):
-            if arr[i] - arr[i-1] == min_diff:
-                result.append([arr[i-1], arr[i]])
+            if arr[i] - arr[i - 1] == min_diff:
+                result.append([arr[i - 1], arr[i]])
 
         return result
 

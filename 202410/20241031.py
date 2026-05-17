@@ -50,8 +50,9 @@ class Solution:
         robot_positions.sort()
         factory_positions_and_limits.sort()
 
-        total_robots, total_factories = len(robot_positions), len(
-            factory_positions_and_limits
+        total_robots, total_factories = (
+            len(robot_positions),
+            len(factory_positions_and_limits),
         )
 
         # Initialize dynamic programming table where dp[i][j] represents the minimum distance for i robots to be assigned to j factories

@@ -16,8 +16,8 @@ class Solution:
                 self.next = next
     """
 
-    def double_it(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        def get_carry(node: Optional[ListNode]) -> Optional[ListNode]:
+    def double_it(self, head: ListNode | None) -> ListNode | None:
+        def get_carry(node: ListNode | None) -> ListNode | None:
             """A helper function to calculate carry and update node values."""
             # Base case: node is None, return 0
             if node is None:

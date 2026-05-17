@@ -1,27 +1,31 @@
 # https://leetcode.com/problems/robot-collisions
 
+
 class Solution:
     """2751. Robot Collisions
-    
+
     There are n 1-indexed robots, each having a position on a line, health,
     and movement direction. You are given 0-indexed integer arrays positions,
     healths, and a string directions (directions[i] is either 'L' for left or
     'R' for right). All integers in positions are unique.
-    
+
     All robots start moving on the line simultaneously at the same speed in
     their given directions. If two robots ever share the same position while
     moving, they will collide.
-    
+
     If two robots collide, the robot with lower health is removed from the
     line, and the health of the other robot decreases by one. The surviving
     robot continues in the same direction it was going. If both robots have
     the same health, they are both removed from the line.
-    
+
     Return an array containing the health of the remaining robots (in the
     order they were given in the input), after no further collisions can
     occur. Note: The positions may be unsorted.
     """
-    def survived_robots_healths(self, positions: list[int], healths: list[int], directions: str) -> list[int]:
+
+    def survived_robots_healths(
+        self, positions: list[int], healths: list[int], directions: str
+    ) -> list[int]:
         n = len(positions)
         # sort indices by position (left to right processing order)
         indices = list(range(n))

@@ -1,14 +1,14 @@
 # https://leetcode.com/problems/minimum-absolute-difference-in-sliding-submatrix
 
-from typing import List
 
 class Solution:
     """3567. Minimum Absolute Difference in Sliding Submatrix
-    
+
     For each k×k submatrix, return the min |a - b| for any two distinct values
     in that submatrix. If all values are equal, return 0.
     """
-    def min_abs_diff(self, grid: List[List[int]], k: int) -> List[List[int]]:
+
+    def min_abs_diff(self, grid: list[list[int]], k: int) -> list[list[int]]:
         if k == 1:
             # Single cell → no two distinct values → difference is 0
             return [[0] * len(grid[0]) for _ in range(len(grid))]

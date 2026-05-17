@@ -1,5 +1,7 @@
 # https://leetcode.com/problems/find-bottom-left-tree-value/
 
+from collections import deque
+
 
 class Solution:
     """513. Find Bottom Left Tree Value
@@ -15,7 +17,7 @@ class Solution:
                 self.right = right
     """
 
-    def find_bottom_left_value(self, root: Optional[TreeNode]) -> int:
+    def find_bottom_left_value(self, root: TreeNode | None) -> int:
         if not root:
             return None
 

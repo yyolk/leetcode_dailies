@@ -51,7 +51,6 @@ You should not implement it, or speculate about its implementation:
 
 """
 
-
 # Reflecting methods on NestedInteger for snake_case maximalism.
 NestedInteger.is_integer = NestedInteger.isInteger
 NestedInteger.get_integer = NestedInteger.getInteger

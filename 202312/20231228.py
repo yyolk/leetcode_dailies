@@ -33,8 +33,8 @@ class Solution:
                 cnt, del_ = 0, 0
 
                 # Iterate over previous characters to calculate counts and deletions
-                for l in range(i, 0, -1):
-                    if s[l - 1] == s[i - 1]:
+                for lo in range(i, 0, -1):
+                    if s[lo - 1] == s[i - 1]:
                         cnt += 1
                     else:
                         del_ += 1
@@ -43,12 +43,16 @@ class Solution:
                     if j - del_ >= 0:
                         dp[i][j] = min(
                             dp[i][j],
-                            dp[l - 1][j - del_]
+                            dp[lo - 1][j - del_]
                             + 1
                             + (
                                 3
                                 if cnt >= 100
-                                else 2 if cnt >= 10 else 1 if cnt >= 2 else 0
+                                else 2
+                                if cnt >= 10
+                                else 1
+                                if cnt >= 2
+                                else 0
                             ),
                         )
 

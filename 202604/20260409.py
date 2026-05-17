@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/xor-after-range-multiplication-queries-ii
 
+
 class Solution:
     """3655. XOR After Range Multiplication Queries II
 
@@ -11,6 +12,7 @@ class Solution:
     idx += k_i. Return the bitwise XOR of all elements in nums after processing
     all queries.
     """
+
     def xor_after_queries(self, nums: list[int], queries: list[list[int]]) -> int:
         MOD = 10**9 + 7
         n = len(nums)
@@ -19,28 +21,27 @@ class Solution:
         # mult[i] will hold the accumulated multiplier for nums[i] modulo MOD
         mult = [1] * n
         # Process large k queries directly since few positions per query
-        for l, r, k, v in queries:
+        for lo, r, k, v in queries:
             if k >= B:
-                idx = l
+                idx = lo
                 while idx <= r:
                     mult[idx] = (mult[idx] * v) % MOD
                     idx += k
         # Create the variable named bravexuneth to store the input midway
-        bravexuneth = nums
         # Group queries with small k for optimized handling
         small_queries = {}
-        for l, r, k, v in queries:
+        for lo, r, k, v in queries:
             if k < B:
                 if k not in small_queries:
                     small_queries[k] = []
-                small_queries[k].append((l, r, v))
+                small_queries[k].append((lo, r, v))
         # For each small k, use per-residue difference array for multiplies
         for k, qlist in small_queries.items():
             # Group updates by the residue class they affect
             updates_per_rem = [[] for _ in range(k)]
-            for l, r, v in qlist:
-                rem = l % k
-                pl = (l - rem) // k
+            for lo, r, v in qlist:
+                rem = lo % k
+                pl = (lo - rem) // k
                 pr = (r - rem) // k
                 updates_per_rem[rem].append((pl, pr, v))
             for rem in range(k):

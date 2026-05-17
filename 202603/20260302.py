@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/minimum-swaps-to-arrange-a-binary-grid
 
+
 class Solution:
     """1536. Minimum Swaps to Arrange a Binary Grid
 
@@ -12,6 +13,7 @@ class Solution:
     The main diagonal of a grid is the diagonal that starts at cell (1, 1) and
     ends at cell (n, n).
     """
+
     def min_swaps(self, grid: list[list[int]]) -> int:
         n = len(grid)
         # Compute rightmost 1 (0-based) for each row; row can go to pos i if <= i

@@ -13,6 +13,7 @@ class Solution:
     number p, you may instantly jump to any index j != i such that nums[j] % p
     == 0. Return the minimum number of jumps required to reach index n - 1.
     """
+
     def min_jumps(self, nums: list[int]) -> int:
         n = len(nums)
         if n == 1:
@@ -21,7 +22,7 @@ class Solution:
         # Precompute smallest prime factor (SPF) sieve up to max value in nums
         max_val = max(nums)
         spf = list(range(max_val + 1))
-        for i in range(2, int(max_val ** 0.5) + 1):
+        for i in range(2, int(max_val**0.5) + 1):
             if spf[i] == i:
                 for j in range(i * i, max_val + 1, i):
                     if spf[j] == j:

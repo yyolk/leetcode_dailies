@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/longest-balanced-subarray-ii
 
+
 class SegmentTree:
     def __init__(self, N: int):
         # Next power of 2 covering 0 to N-1 (N = len(nums) + 1)
@@ -59,12 +60,13 @@ class SegmentTree:
 
 class Solution:
     """3721. Longest Balanced Subarray II
-    
+
     You are given an integer array nums.
     A subarray is called balanced if the number of distinct even numbers
     in the subarray is equal to the number of distinct odd numbers.
     Return the length of the longest balanced subarray.
     """
+
     def longest_balanced(self, nums: list[int]) -> int:
         n = len(nums)
         # Virtual position 0 has balance 0

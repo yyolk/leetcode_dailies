@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/maximum-number-of-jumps-to-reach-the-last-index
 
+
 class Solution:
     """2770. Maximum Number of Jumps to Reach the Last Index
 
@@ -9,6 +10,7 @@ class Solution:
     nums[i] <= target. Return the maximum number of jumps you can make to reach
     index n - 1. If there is no way to reach index n - 1, return -1.
     """
+
     def maximum_jumps(self, nums: list[int], target: int) -> int:
         n = len(nums)
         # dp[i]: max jumps to reach i from 0, -1 if unreachable
