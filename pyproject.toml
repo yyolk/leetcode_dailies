@@ -18,4 +18,4 @@ disable = ["unspecified-encoding"]
 [tool.ruff.lint]
 # F821: LeetCode solution files use runtime-provided classes (TreeNode, ListNode, etc.)
 # that are not imported in the file but are available in the LeetCode execution environment.
-ignore = ["F821"]
+ignore = ["F821", "E741"]
