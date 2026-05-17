@@ -309,7 +309,7 @@ final_boilerplate = black.format_str(
 )
 
 now = datetime.utcnow()
-current_month_answer_folder = f"{now:%Y%m}"
+current_month_answer_folder = f"solutions/{now:%Y}/{now:%Y%m}"
 current_active_daily_problem_file = f"{now:%Y%m%d}.py"
 
 # Sanity check, see if our date matches
