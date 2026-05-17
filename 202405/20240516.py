@@ -1,6 +1,7 @@
 # https://leetcode.com/problems/evaluate-boolean-binary-tree/
 
 
+from typing import Optional
 class Solution:
     """2331. Evaluate Boolean Binary Tree
 

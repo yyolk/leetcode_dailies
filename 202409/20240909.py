@@ -1,6 +1,7 @@
 # https://leetcode.com/problems/spiral-matrix-iv/
 
 
+from typing import Optional
 class Solution:
     """2326. Spiral Matrix IV
 

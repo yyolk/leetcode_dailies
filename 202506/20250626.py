@@ -30,17 +30,17 @@ class Solution:
         # Process each character in the string
         for i in range(n):
             # Update dp array from right to left
-            for l in range(n, -1, -1):
-                if dp[l] <= k:
+            for length in range(n, -1, -1):
+                if dp[length] <= k:
                     # Calculate new value if current character is included
-                    new_value = 2 * dp[l] + int(s[i])
-                    if new_value < dp[l + 1]:
-                        dp[l + 1] = new_value
+                    new_value = 2 * dp[length] + int(s[i])
+                    if new_value < dp[length + 1]:
+                        dp[length + 1] = new_value
 
-        # Find the largest length l where dp[l] <= k
-        for l in range(n, -1, -1):
-            if dp[l] <= k:
-                return l
+        # Find the largest length length where dp[length] <= k
+        for length in range(n, -1, -1):
+            if dp[length] <= k:
+                return length
         # Fallback, though dp[0] should always be 0 <= k
         return 0
 

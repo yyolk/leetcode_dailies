@@ -1,6 +1,7 @@
 # https://leetcode.com/problems/merge-nodes-in-between-zeros/
 
 
+from typing import Optional
 class Solution:
     """2181. Merge Nodes in Between Zeros
 

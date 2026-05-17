@@ -18,11 +18,11 @@ class Solution:
         max_diag_sq = 0
         max_area = 0
         for rect in dimensions:
-            l, w = rect
+            length, w = rect
             # Compute diagonal squared to avoid floating point
-            diag_sq = l * l + w * w
+            diag_sq = length * length + w * w
             # Compute area
-            area = l * w
+            area = length * w
             if diag_sq > max_diag_sq:
                 # Update for longer diagonal
                 max_diag_sq = diag_sq

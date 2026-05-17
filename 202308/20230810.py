@@ -1,6 +1,7 @@
 # https://leetcode.com/problems/search-in-rotated-sorted-array-ii/
 
 
+from typing import List
 class Solution:
     """81. Search in Rotated Sorted Array II
 

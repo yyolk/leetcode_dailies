@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/amount-of-time-for-binary-tree-to-be-infected/
+from typing import Optional
 from collections import defaultdict, deque
 
 

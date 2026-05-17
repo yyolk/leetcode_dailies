@@ -1,5 +1,5 @@
 # https://leetcode.com/problems/cousins-in-binary-tree-ii/
-from collections import deque, defaultdict
+from collections import defaultdict
 from typing import Optional
 
 

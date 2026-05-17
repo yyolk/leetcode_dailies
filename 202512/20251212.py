@@ -101,11 +101,11 @@ class Solution:
                     curr_end = s + 60
             intervals.append((curr_start, curr_end))
             
-            # For each merged offline interval [l, r), sum h for HERE t in [l, r)
+            # For each merged offline interval [lo, r), sum h for HERE t in [lo, r)
             missed = 0
-            for l, r in intervals:
-                # Binary search for first t >= l
-                left_idx = bisect_left(times, l)
+            for lo, r in intervals:
+                # Binary search for first t >= lo
+                left_idx = bisect_left(times, lo)
                 # Binary search for first t >= r
                 right_idx = bisect_left(times, r)
                 missed += prefix[right_idx] - prefix[left_idx]

@@ -1,6 +1,7 @@
 # https://leetcode.com/problems/delete-nodes-from-linked-list-present-in-array/
 
 
+from typing import Optional
 class Solution:
     """3217. Delete Nodes From Linked List Present in Array
 

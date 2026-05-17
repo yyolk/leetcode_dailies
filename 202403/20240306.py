@@ -1,6 +1,7 @@
 # https://leetcode.com/problems/linked-list-cycle/
 
 
+from typing import Optional
 class Solution:
     """141. Linked List Cycle
 

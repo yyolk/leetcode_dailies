@@ -1,6 +1,7 @@
 # https://leetcode.com/problems/distribute-coins-in-binary-tree/
 
 
+from typing import Optional
 class Solution:
     """979. Distribute Coins in Binary Tree
 

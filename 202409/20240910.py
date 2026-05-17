@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/insert-greatest-common-divisors-in-linked-list/
+from typing import Optional
 from math import gcd
 
 

@@ -9,7 +9,7 @@ class Solution:
     """
     def find_different_binary_string(self, nums: list[str]) -> str:
         # Create a set for O(1) lookups (though n ≤ 16 so even list would work)
-        seen = set(nums)
+        set(nums)
         
         n = len(nums)
         

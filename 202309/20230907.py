@@ -1,6 +1,7 @@
 # https://leetcode.com/problems/reverse-linked-list-ii/
 
 
+from typing import Optional
 class Solution:
     """92. Reverse Linked List II
 

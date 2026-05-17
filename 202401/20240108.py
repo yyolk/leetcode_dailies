@@ -1,6 +1,7 @@
 # https://leetcode.com/problems/range-sum-of-bst/
 
 
+from typing import Optional
 class Solution:
     """938. Range Sum of BST
 

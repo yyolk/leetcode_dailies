@@ -1,6 +1,8 @@
 # https://leetcode.com/problems/the-earliest-and-latest-rounds-where-players-compete/
 
 
+import functools
+import math
 class Solution:
     """1900. The Earliest and Latest Rounds Where Players Compete
 
@@ -40,18 +42,18 @@ class Solution:
         self, n: int, first_player: int, second_player: int
     ) -> list[int]:
         @functools.lru_cache(None)
-        def dp(l: int, r: int, k: int) -> list[int]:
-            if l == r:
+        def dp(lo: int, r: int, k: int) -> list[int]:
+            if lo == r:
                 return [1, 1]
-            if l > r:
-                return dp(r, l, k)
+            if lo > r:
+                return dp(r, lo, k)
 
             a = math.inf
             b = -math.inf
 
-            for i in range(1, l + 1):
-                for j in range(l - i + 1, r - i + 1):
-                    if not l + r - k // 2 <= i + j <= (k + 1) // 2:
+            for i in range(1, lo + 1):
+                for j in range(lo - i + 1, r - i + 1):
+                    if not lo + r - k // 2 <= i + j <= (k + 1) // 2:
                         continue
                     x, y = dp(i, j, (k + 1) // 2)
                     a = min(a, x + 1)

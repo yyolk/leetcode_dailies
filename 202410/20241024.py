@@ -1,6 +1,7 @@
 # https://leetcode.com/problems/flip-equivalent-binary-trees/
 
 
+from typing import Optional
 class Solution:
     """951. Flip Equivalent Binary Trees
 

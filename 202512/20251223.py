@@ -18,7 +18,6 @@ class Solution:
     event must start at or after t + 1.
     """
     def max_two_events(self, events: list[list[int]]) -> int:
-        from typing import List
         
         n = len(events)
         if n == 0:

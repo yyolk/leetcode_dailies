@@ -1,6 +1,7 @@
 # https://leetcode.com/problems/find-the-minimum-area-to-cover-all-ones-ii/
 
 
+import math
 class Solution:
     """3197. Find the Minimum Area to Cover All Ones II
 
@@ -13,7 +14,6 @@ class Solution:
     **Note** that the rectangles are allowed to touch."""
 
     def minimum_sum(self, grid: list[list[int]]) -> int:
-        import math
 
         m = len(grid)
         n = len(grid[0])

@@ -146,7 +146,7 @@ async def previous_questions(limit: int) -> AsyncIterator[List[Dict[str, str]]]:
         previous_question = await query_previous_question(
             prev_slug, todays_env_id, todays_env_type
         )
-        if not previous_question["paidOnly"] is False:
+        if previous_question["paidOnly"] is not False:
             # Continue the loop again, until paidOnly is False
             continue
         count += 1

@@ -1,6 +1,7 @@
 # https://leetcode.com/problems/diameter-of-binary-tree/
 
 
+from typing import Optional
 class Solution:
     """543. Diameter of Binary Tree
 

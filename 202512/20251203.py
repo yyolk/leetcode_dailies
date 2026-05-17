@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/count-number-of-trapezoids-ii/
+from typing import List
 from collections import defaultdict
 from math import gcd
 

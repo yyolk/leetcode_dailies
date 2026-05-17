@@ -15,5 +15,7 @@ dependencies = [
 [tool.pylint."messages control"]
 disable = ["unspecified-encoding"]
 
-[tool.black]
-line-length = 88
+[tool.ruff.lint]
+# F821: LeetCode solution files use runtime-provided classes (TreeNode, ListNode, etc.)
+# that are not imported in the file but are available in the LeetCode execution environment.
+ignore = ["F821"]

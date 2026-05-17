@@ -1,6 +1,7 @@
 # https://leetcode.com/problems/leaf-similar-trees/
 
 
+from typing import Optional
 class Solution:
     """872. Leaf-Similar Trees
 

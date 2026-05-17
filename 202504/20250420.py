@@ -1,6 +1,7 @@
 # https://leetcode.com/problems/rabbits-in-forest/
 
 
+import collections
 class Solution:
     """781. Rabbits in Forest
 

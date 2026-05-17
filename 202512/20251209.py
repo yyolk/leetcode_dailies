@@ -1,6 +1,7 @@
 # https://leetcode.com/problems/count-special-triplets
 
 
+from collections import Counter
 class Solution:
     """3583. Count Special Triplets
 

@@ -1,6 +1,8 @@
 # https://leetcode.com/problems/making-a-large-island/
 
 
+from collections import defaultdict
+from typing import List
 class Solution:
     """827. Making A Large Island
 

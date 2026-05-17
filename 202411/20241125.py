@@ -1,6 +1,7 @@
 # https://leetcode.com/problems/sliding-puzzle/
 
 
+from collections import deque
 class Solution:
     """773. Sliding Puzzle
 

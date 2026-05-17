@@ -86,11 +86,11 @@ class Solution:
                 # Calculate the minimum position on the left
                 min_pos_l = start_pos - max_a
                 # Find the left index for this min_pos_l
-                l = bisect.bisect_left(pos, min_pos_l)
+                lo = bisect.bisect_left(pos, min_pos_l)
                 # If there are fruits to the left
-                if l < j:
-                    # Calculate the sum from l to r
-                    cur_sum = prefix[r + 1] - prefix[l]
+                if lo < j:
+                    # Calculate the sum from lo to r
+                    cur_sum = prefix[r + 1] - prefix[lo]
                     # Update ans if this sum is larger
                     ans = max(ans, cur_sum)
         # Return the maximum fruits harvested

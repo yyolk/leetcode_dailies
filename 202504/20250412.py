@@ -1,6 +1,7 @@
 # https://leetcode.com/problems/find-the-count-of-good-integers/
 
 
+from typing import List
 class Solution:
     """3272. Find the Count of Good Integers
 

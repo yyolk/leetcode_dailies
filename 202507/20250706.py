@@ -1,6 +1,8 @@
 # https://leetcode.com/problems/finding-pairs-with-a-certain-sum/
 
 
+from collections import Counter
+from typing import List
 class FindSumPairs:
     """1995. Finding Pairs With a Certain Sum
 

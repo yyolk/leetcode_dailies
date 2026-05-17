@@ -1,6 +1,7 @@
 # https://leetcode.com/problems/longest-subarray-with-maximum-bitwise-and/
 
 
+from itertools import groupby
 class Solution:
     """2419. Longest Subarray With Maximum Bitwise AND
 

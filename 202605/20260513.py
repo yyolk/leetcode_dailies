@@ -27,9 +27,9 @@ class Solution:
             minv = min(a, b)
             maxv = max(a, b)
             # S in [minv+1, maxv+limit] allows cost <=1
-            l = minv + 1
+            lo = minv + 1
             r = maxv + limit
-            diff[l] += 1
+            diff[lo] += 1
             diff[r + 1] -= 1
             # cost 0 at exact sum
             s = a + b

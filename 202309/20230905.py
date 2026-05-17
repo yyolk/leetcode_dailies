@@ -2,6 +2,7 @@
 # import copy  # Possible to solve just using copy.deepcopy
 
 
+from typing import Optional
 class Solution:
     """138. Copy List with Random Pointer
 

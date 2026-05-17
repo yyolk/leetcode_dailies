@@ -1,6 +1,7 @@
 # https://leetcode.com/problems/split-linked-list-in-parts/
 
 
+from typing import Optional
 class Solution:
     """725. Split Linked List in Parts
 

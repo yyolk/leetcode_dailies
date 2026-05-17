@@ -39,13 +39,13 @@ class Solution:
     """
 
     def check_arithmetic_subarrays(
-        self, nums: list[int], l: list[int], r: list[int]
+        self, nums: list[int], left: list[int], r: list[int]
     ) -> list[bool]:
         """Check for arithmetic subarrays.
 
         Args:
             nums: A list of integers.
-            l: First list of integers for queries.
+            left: First list of integers for queries.
             r: Second list of integers for queries.
 
         Returns:
@@ -64,9 +64,9 @@ class Solution:
             return True
 
         result = []
-        for i in range(len(l)):
+        for i in range(len(left)):
             # Extract the subarray based on the current query.
-            subarray = nums[l[i] : r[i] + 1]
+            subarray = nums[left[i] : r[i] + 1]
             # Check if the subarray can be rearranged to form an arithmetic sequence.
             result.append(is_arithmetic(subarray))
 

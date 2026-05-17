@@ -1,6 +1,7 @@
 # https://leetcode.com/problems/adding-spaces-to-a-string/
 
 
+from itertools import chain, pairwise
 class Solution:
     """2109. Adding Spaces to a String
 

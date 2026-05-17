@@ -32,7 +32,7 @@ class Solution:
         """Alternative solution."""
         students_deque = deque(students)
         sandwiches_deque = deque(sandwiches)
-        count, limit = 0, len(students_deque)
+        count, _limit = 0, len(students_deque)
 
         # Loop through students and sandwiches
         while students_deque:
@@ -50,7 +50,7 @@ class Solution:
             # If the current student prefers the current sandwich, remove the sandwich
             if current_student == current_sandwich:
                 sandwiches_deque.popleft()
-                count, limit = 0, n
+                count, _limit = 0, n
             # If the student does not prefer the sandwich, move them to the end of the queue
             else:
                 students_deque.append(current_student)

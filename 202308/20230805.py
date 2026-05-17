@@ -1,6 +1,7 @@
 # https://leetcode.com/problems/unique-binary-search-trees-ii/
 
 
+from typing import Optional
 class Solution:
     """95. Unique Binary Search Trees II
 

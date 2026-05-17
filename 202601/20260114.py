@@ -17,11 +17,11 @@ class Solution:
         # Collect all x-coordinates for compression
         xs_set = set()
         events = []
-        for x, y, l in squares:
+        for x, y, side in squares:
             xs_set.add(x)
-            xs_set.add(x + l)
-            events.append((y, 1, x, x + l))      # start event
-            events.append((y + l, -1, x, x + l))  # end event
+            xs_set.add(x + side)
+            events.append((y, 1, x, x + side))      # start event
+            events.append((y + side, -1, x, x + side))  # end event
 
         xs = sorted(xs_set)
         x_to_idx = {v: i for i, v in enumerate(xs)}
@@ -56,16 +56,16 @@ class Solution:
                         self.covered[node] = (self.covered[2 * node] +
                                               self.covered[2 * node + 1])
 
-            def update(self, node, start, end, l, r, val):
-                if l > end or r < start:
+            def update(self, node, start, end, lo, r, val):
+                if lo > end or r < start:
                     return
-                if l <= start and end <= r:
+                if lo <= start and end <= r:
                     self.tree[node] += val
                     self._recalc(node, start, end)
                     return
                 mid = (start + end) // 2
-                self.update(2 * node, start, mid, l, r, val)
-                self.update(2 * node + 1, mid + 1, end, l, r, val)
+                self.update(2 * node, start, mid, lo, r, val)
+                self.update(2 * node + 1, mid + 1, end, lo, r, val)
                 self._recalc(node, start, end)
 
         # Sort events: y asc, starts before ends

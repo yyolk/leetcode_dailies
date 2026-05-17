@@ -1,6 +1,7 @@
 # https://leetcode.com/problems/minimum-deletions-to-make-string-k-special/
 
 
+from collections import Counter
 class Solution:
     """3085. Minimum Deletions to Make String K-Special
 

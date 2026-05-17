@@ -1,6 +1,7 @@
 # https://leetcode.com/problems/binary-tree-inorder-traversal/
 
 
+from typing import Optional
 class Solution:
     """94. Binary Tree Inorder Traversal
 

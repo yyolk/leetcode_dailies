@@ -1,6 +1,7 @@
 # https://leetcode.com/problems/binary-tree-postorder-traversal/
 
 
+from typing import Optional
 class Solution:
     """145. Binary Tree Postorder Traversal
 

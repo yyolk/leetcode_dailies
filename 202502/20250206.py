@@ -1,6 +1,8 @@
 # https://leetcode.com/problems/tuple-with-same-product/
 
 
+from itertools import combinations
+from math import comb
 class Solution:
     """1726. Tuple with Same Product
 

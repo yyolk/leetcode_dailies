@@ -13,11 +13,11 @@ class Solution:
     def rotate_grid(self, grid: list[list[int]], k: int) -> list[list[int]]:
         m = len(grid)
         n = len(grid[0])
-        for l in range(min(m, n) // 2):
-            top = l
-            left = l
-            bottom = m - 1 - l
-            right = n - 1 - l
+        for layer in range(min(m, n) // 2):
+            top = layer
+            left = layer
+            bottom = m - 1 - layer
+            right = n - 1 - layer
             # Collect layer elements in clockwise traversal order
             layer = []
             for c in range(left, right + 1):

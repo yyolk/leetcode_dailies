@@ -1,6 +1,7 @@
 # https://leetcode.com/problems/same-tree/
 
 
+from typing import Optional
 class Solution:
     """100. Same Tree
 
