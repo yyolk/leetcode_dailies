@@ -133,6 +133,7 @@ for year in sorted(solved_months_by_year):
     year_readme = year_dir / "README.md"
     year_html = build_year_calendar_html(
         year=year,
+        months=sorted(solved_months_by_year[year]),
         href_func=lambda idx, year=year: f"{idx:%Y%m}/{idx:%Y%m%d}.py",
         solved_dates=solved_files_by_date,
     )
