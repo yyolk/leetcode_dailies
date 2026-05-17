@@ -98,6 +98,8 @@ def modify_class_docstring(code, new_docstring, first_line):
     for node in ast.walk(parsed_tree):
         # Work on the boilerplate method that's tied to the Solution(...)
         if isinstance(node, ast.FunctionDef):
+            if node.name.startswith("__") and node.name.endswith("__"):
+                continue
             # Leetcode follows snake_case conventions elsewhere,
             # but doesn't for python for some reason.
             # Save for later
@@ -134,15 +136,16 @@ def modify_class_docstring(code, new_docstring, first_line):
             # Dumb way to enforce PEP-585 with the boilerplate code leetcode generates,
             # but since we are already here we might as well do it.
             # This section works on the function return type annotation.
-            for r_arg in ast.walk(node.returns):
-                if isinstance(r_arg, ast.Subscript):
-                    for r_arg_node in ast.walk(r_arg):
-                        if (
-                            isinstance(r_arg_node, ast.Name)
-                            and isinstance(r_arg_node.id, str)
-                            and r_arg_node.id in generic_types_pep_585
-                        ):
-                            r_arg_node.id = r_arg_node.id.lower()
+            if node.returns is not None:
+                for r_arg in ast.walk(node.returns):
+                    if isinstance(r_arg, ast.Subscript):
+                        for r_arg_node in ast.walk(r_arg):
+                            if (
+                                isinstance(r_arg_node, ast.Name)
+                                and isinstance(r_arg_node.id, str)
+                                and r_arg_node.id in generic_types_pep_585
+                            ):
+                                r_arg_node.id = r_arg_node.id.lower()
 
     # We go back in after walking the entire thing so we can append into the class
     # Probably could make this one loop but can revisit since the above needs refactoring too
