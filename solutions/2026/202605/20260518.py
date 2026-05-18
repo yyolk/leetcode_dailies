@@ -14,6 +14,7 @@ class Solution:
     Return the minimum number of steps to reach the last index of the array.
     Notice that you can not jump outside of the array at any time.
     """
+
     def min_jumps(self, arr: list[int]) -> int:
         n = len(arr)
         if n <= 1:
