@@ -51,7 +51,7 @@ jobs:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         DAILY_DATE=$(date +'%Y%m%d')
-        BRANCH="daily/${DAILY_DATE}"
+        BRANCH="solution/${DAILY_DATE}"
         DAILY_URL=$(python -m generate_active_daily --url)
         git config user.name 'github-actions[bot]'
         git config user.email 'github-actions[bot]@users.noreply.github.com'
