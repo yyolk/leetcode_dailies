@@ -1,10 +1,7 @@
 {
   "name": "leetcode_dailies",
   "image": "mcr.microsoft.com/devcontainers/python:3.14-bookworm",
-  "features": {
-    "ghcr.io/astral-sh/uv:0": {}
-  },
-  "postCreateCommand": "uv sync",
+  "postCreateCommand": "curl -LsSf https://astral.sh/uv/install.sh | sh && ~/.local/bin/uv sync",
   "customizations": {
     "vscode": {
       "extensions": [
