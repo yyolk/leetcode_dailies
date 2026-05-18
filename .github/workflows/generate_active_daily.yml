@@ -37,15 +37,16 @@ jobs:
         echo "Missing pyproject.toml"
         exit 1
         fi
+        pip install pre-commit
     - name: Generate Active Daily
       run: |
         python -m generate_active_daily
     - name: Generate Solution TOCs
       run: |
         python -m generate_calendar_toc
-    - name: Format all .py files with ruff
+    - name: Run pre-commit on all files
       run: |
-        ruff format .
+        pre-commit run --all-files
     - name: Commit new files and open draft PR
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
