@@ -1,6 +1,6 @@
 {
   "name": "leetcode_dailies",
-  "image": "mcr.microsoft.com/devcontainers/python:1-3.14-bullseye",
+  "image": "mcr.microsoft.com/devcontainers/python:1-3.14-bookworm",
   "features": {
     "ghcr.io/astral-sh/uv:0": {}
   },
