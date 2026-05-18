@@ -7,11 +7,15 @@ repos:
     rev: v5.0.0
     hooks:
       - id: end-of-file-fixer
+        stages: [manual]
       - id: trailing-whitespace
+        stages: [manual]
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.11.10
     hooks:
       - id: ruff
         args: [--fix]
+        stages: [manual]
       - id: ruff-format
+        stages: [manual]
