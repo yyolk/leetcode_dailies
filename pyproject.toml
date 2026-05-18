@@ -11,6 +11,7 @@ dependencies = [
     "BeautifulSoup4",
     "gql[aiohttp]",
     "requests",
+    "pre-commit>=4.6.0",
 ]
 
 [tool.pylint."messages control"]
