@@ -12,6 +12,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 jobs:
   daily-upkeep:
@@ -45,16 +46,32 @@ jobs:
     - name: Format all .py files with ruff
       run: |
         ruff format .
-    - name: Commit new files
+    - name: Commit new files and open draft PR
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
+        DAILY_DATE=$(date +'%Y%m%d')
+        BRANCH="daily/${DAILY_DATE}"
+        DAILY_URL=$(python -m generate_active_daily --url)
         git config user.name 'github-actions[bot]'
         git config user.email 'github-actions[bot]@users.noreply.github.com'
+        if git ls-remote --exit-code --heads origin "${BRANCH}"; then
+          echo "Branch ${BRANCH} already exists, skipping PR creation."
+          exit 0
+        fi
+        git checkout -b "${BRANCH}"
         git add .
-        git commit --author "Joseph Chiocchi <joe@yolk.cc>" -m "Boilerplate for $(date +'%Y%m%d')
+        git commit --author "Joseph Chiocchi <joe@yolk.cc>" -m "Boilerplate for ${DAILY_DATE}
 
-        $(python -m generate_active_daily --url)
+        ${DAILY_URL}
         "
-        git push
+        git push origin "${BRANCH}"
+        gh pr create \
+          --draft \
+          --title "Boilerplate for ${DAILY_DATE}" \
+          --body "${DAILY_URL}" \
+          --base main \
+          --head "${BRANCH}"
     - name: Notify of boilerplate ready
       if: always()
       env:
