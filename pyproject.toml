@@ -14,6 +14,16 @@ dependencies = [
     "pre-commit>=4.6.0",
 ]
 
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-asyncio",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+
 [tool.pylint."messages control"]
 disable = ["unspecified-encoding"]
 
