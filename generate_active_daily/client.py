@@ -18,13 +18,14 @@ async def execute_query_with_retry(session, query, *, variable_values=None):
     for attempt in range(MAX_REQUEST_ATTEMPTS):
         try:
             return await session.execute(query, variable_values=variable_values)
-        except TimeoutError:
+        except TimeoutError as err:
+            last_error = err
+        except TransportConnectionFailed as err:
+            last_error = err
+
+        if last_error:
             if attempt == MAX_REQUEST_ATTEMPTS - 1:
-                raise
-            await asyncio.sleep(attempt + 1)
-        except TransportConnectionFailed:
-            if attempt == MAX_REQUEST_ATTEMPTS - 1:
-                raise
+                raise last_error
             await asyncio.sleep(attempt + 1)
 
 
