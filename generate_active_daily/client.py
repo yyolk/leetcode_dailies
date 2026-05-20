@@ -12,9 +12,11 @@ from .constants import LEETCODE_BASE_URL
 
 REQUEST_TIMEOUT_SECONDS = 30
 MAX_REQUEST_ATTEMPTS = 3
+MAX_RETRY_DELAY_SECONDS = 4
 
 
 async def execute_query_with_retry(session, query, *, variable_values=None):
+    last_error = None
     for attempt in range(MAX_REQUEST_ATTEMPTS):
         try:
             return await session.execute(query, variable_values=variable_values)
@@ -25,7 +27,7 @@ async def execute_query_with_retry(session, query, *, variable_values=None):
 
         if attempt == MAX_REQUEST_ATTEMPTS - 1:
             raise last_error
-        await asyncio.sleep(2**attempt)
+        await asyncio.sleep(min(2**attempt, MAX_RETRY_DELAY_SECONDS))
 
 
 async def query_question_of_today():
