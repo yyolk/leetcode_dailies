@@ -23,10 +23,9 @@ async def execute_query_with_retry(session, query, *, variable_values=None):
         except TransportConnectionFailed as err:
             last_error = err
 
-        if last_error:
-            if attempt == MAX_REQUEST_ATTEMPTS - 1:
-                raise last_error
-            await asyncio.sleep(attempt + 1)
+        if attempt == MAX_REQUEST_ATTEMPTS - 1:
+            raise last_error
+        await asyncio.sleep(2**attempt)
 
 
 async def query_question_of_today():
