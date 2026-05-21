@@ -63,7 +63,7 @@ jobs:
         git push origin "${BRANCH}"
         gh pr create \
           --draft \
-          --title "Boilerplate for ${DAILY_DATE}" \
+          --title "${DAILY_DATE}" \
           --body "${DAILY_URL}" \
           --base main \
           --head "${BRANCH}"
