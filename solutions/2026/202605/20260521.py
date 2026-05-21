@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/find-the-length-of-the-longest-common-prefix/
 
+
 class Solution:
     """3043. Find the Length of the Longest Common Prefix
 
@@ -15,6 +16,7 @@ class Solution:
     Return the length of the longest common prefix among all pairs. If no
     common prefix exists among them, return 0.
     """
+
     def longest_common_prefix(self, arr1: list[int], arr2: list[int]) -> int:
         # Insert shorter list into trie to optimize memory usage
         if len(arr1) > len(arr2):
