@@ -7039,13 +7039,19 @@ python -m generate_calendar_toc
       </a>
      </td>
      <td class="tue">
-      19
+      <a href="solutions/2026/202605/20260519.py">
+       19
+      </a>
      </td>
      <td class="wed">
-      20
+      <a href="solutions/2026/202605/20260520.py">
+       20
+      </a>
      </td>
      <td class="thu">
-      21
+      <a href="solutions/2026/202605/20260521.py">
+       21
+      </a>
      </td>
      <td class="fri">
       22
