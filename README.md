@@ -7054,7 +7054,9 @@ python -m generate_calendar_toc
       </a>
      </td>
      <td class="fri">
-      22
+      <a href="solutions/2026/202605/20260522.py">
+       22
+      </a>
      </td>
      <td class="sat">
       23
