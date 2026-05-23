@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/check-if-array-is-sorted-and-rotated/
 
+
 class Solution:
     """1752. Check if Array Is Sorted and Rotated
 
@@ -9,6 +10,7 @@ class Solution:
     Note: An array A rotated by x positions results in an array B of the same
     length such that B[i] == A[(i+x) % A.length] for every valid index i.
     """
+
     def check(self, nums: list[int]) -> bool:
         n = len(nums)
         drops = 0
