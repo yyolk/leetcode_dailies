@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/jump-game-v/
 
+
 class Solution:
     """1340. Jump Game V
 
@@ -10,6 +11,7 @@ class Solution:
     from any index and return the maximum number of indices you can visit. You
     cannot jump outside the array at any time.
     """
+
     def max_jumps(self, arr: list[int], d: int) -> int:
         n = len(arr)
         # dp[i] will hold the max number of indices visitable starting from i
