@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/jump-game-vii/
 
+
 class Solution:
     """1871. Jump Game VII
 
@@ -10,6 +11,7 @@ class Solution:
     s[j] == '0'. Return true if you can reach index s.length - 1 in s, or false
     otherwise.
     """
+
     def can_reach(self, s: str, min_jump: int, max_jump: int) -> bool:
         n = len(s)
         # dp marks reachable positions; start at 0 always true
