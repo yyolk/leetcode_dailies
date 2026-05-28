@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/longest-common-suffix-queries/
 
+
 class Solution:
     """3093. Longest Common Suffix Queries
 
@@ -13,6 +14,7 @@ class Solution:
     Return an array of integers `ans`, where `ans[i]` is the index of the string
     in `words_container` that has the longest common suffix with `words_query[i]`.
     """
+
     def string_indices(
         self, words_container: list[str], words_query: list[str]
     ) -> list[int]:
@@ -30,18 +32,22 @@ class Solution:
         for i, word in enumerate(words_container):
             node = root
             # root represents suffix length 0 (all words qualify)
-            if (node.best == -1 or
-                lengths[i] < lengths[node.best] or
-                (lengths[i] == lengths[node.best] and i < node.best)):
+            if (
+                node.best == -1
+                or lengths[i] < lengths[node.best]
+                or (lengths[i] == lengths[node.best] and i < node.best)
+            ):
                 node.best = i
             for char in reversed(word):
                 if char not in node.children:
                     node.children[char] = TrieNode()
                 node = node.children[char]
                 # deeper node = longer common suffix
-                if (node.best == -1 or
-                    lengths[i] < lengths[node.best] or
-                    (lengths[i] == lengths[node.best] and i < node.best)):
+                if (
+                    node.best == -1
+                    or lengths[i] < lengths[node.best]
+                    or (lengths[i] == lengths[node.best] and i < node.best)
+                ):
                     node.best = i
 
         # answer each query
