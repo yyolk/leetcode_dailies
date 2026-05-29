@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/minimum-element-after-replacement-with-digit-sum/
 
+
 class Solution:
     """3300. Minimum Element After Replacement With Digit Sum
 
@@ -7,6 +8,7 @@ class Solution:
     the sum of its digits. Return the minimum element in nums after all
     replacements.
     """
+
     def min_element(self, nums: list[int]) -> int:
         # Track the smallest digit sum encountered
         min_sum = float("inf")
