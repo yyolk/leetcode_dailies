@@ -7096,7 +7096,9 @@ python -m generate_calendar_toc
       </a>
      </td>
      <td class="sat">
-      30
+      <a href="solutions/2026/202605/20260530.py">
+       30
+      </a>
      </td>
     </tr>
     <tr>
