@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/block-placement-queries/
 
+
 class Solution:
     """3161. Block Placement Queries
 
@@ -16,6 +17,7 @@ class Solution:
     results, where results[i] is true if you can place the block specified in
     the ith query of type 2, and false otherwise.
     """
+
     def get_results(self, queries: list[list[int]]) -> list[bool]:
         # compute max position needed for segment tree size
         max_pos = 0
@@ -29,7 +31,9 @@ class Solution:
         # -1 means no obstacle in this range
         tree = [(0, -1, -1) for _ in range(4 * (max_pos + 2))]
 
-        def merge(a: tuple[int, int, int], b: tuple[int, int, int]) -> tuple[int, int, int]:
+        def merge(
+            a: tuple[int, int, int], b: tuple[int, int, int]
+        ) -> tuple[int, int, int]:
             # merge left and right child ranges
             maxa, lma, rma = a
             maxb, lmb, rmb = b
@@ -54,7 +58,9 @@ class Solution:
                 update(2 * node + 1, mid + 1, end, pos)
             tree[node] = merge(tree[2 * node], tree[2 * node + 1])
 
-        def get_query(node: int, start: int, end: int, ql: int, qr: int) -> tuple[int, int, int]:
+        def get_query(
+            node: int, start: int, end: int, ql: int, qr: int
+        ) -> tuple[int, int, int]:
             # query combined info over [ql, qr]
             if ql > end or qr < start:
                 return (0, -1, -1)
