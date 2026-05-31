@@ -7103,7 +7103,9 @@ python -m generate_calendar_toc
     </tr>
     <tr>
      <td class="sun">
-      31
+      <a href="solutions/2026/202605/20260531.py">
+       31
+      </a>
      </td>
      <td class="noday">
      </td>
