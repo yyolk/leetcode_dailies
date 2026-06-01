@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/minimum-cost-of-buying-candies-with-discount/
 
+
 class Solution:
     """2144. Minimum Cost of Buying Candies With Discount
 
@@ -15,6 +16,7 @@ class Solution:
     Given a 0-indexed integer array cost, where cost[i] denotes the cost of the ith
     candy, return the minimum cost of buying all the candies.
     """
+
     def minimum_cost(self, cost: list[int]) -> int:
         # Sort costs descending: ensures every 3rd candy qualifies as free
         # (it is <= min of the two higher-cost candies paid immediately before)
