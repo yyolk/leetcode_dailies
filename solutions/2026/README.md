@@ -1061,7 +1061,9 @@
       </a>
      </td>
      <td class="tue">
-      2
+      <a href="202606/20260602.py">
+       2
+      </a>
      </td>
      <td class="wed">
       3
