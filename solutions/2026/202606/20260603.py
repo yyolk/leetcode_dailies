@@ -1,8 +1,9 @@
 # https://leetcode.com/problems/earliest-finish-time-for-land-and-water-rides-ii/
 
+
 class Solution:
     """3635. Earliest Finish Time for Land and Water Rides II
-    
+
     You are given two categories of theme park attractions: land rides and water
     rides.
     * Land rides
@@ -21,6 +22,7 @@ class Solution:
       is already open) or wait until it opens.
     Return the earliest possible time at which the tourist can finish both
     rides."""
+
     def earliest_finish_time(
         self,
         land_start_time: list[int],
@@ -30,13 +32,9 @@ class Solution:
     ) -> int:
         # earliest finish if any land ride done first (optimal first ride for
         # this order)
-        min_land_finish = min(
-            s + d for s, d in zip(land_start_time, land_duration)
-        )
+        min_land_finish = min(s + d for s, d in zip(land_start_time, land_duration))
         # earliest finish if any water ride done first
-        min_water_finish = min(
-            s + d for s, d in zip(water_start_time, water_duration)
-        )
+        min_water_finish = min(s + d for s, d in zip(water_start_time, water_duration))
         # land-first: pair best land with every water ride
         land_first = min(
             max(min_land_finish, ws) + wd
