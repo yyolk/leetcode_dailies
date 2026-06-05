@@ -2,6 +2,7 @@
 
 from functools import lru_cache
 
+
 class Solution:
     """3753. Total Waviness of Numbers in Range II
 
@@ -17,6 +18,7 @@ class Solution:
     * Any number with fewer than 3 digits has a waviness of 0.
     Return the total sum of waviness for all numbers in the range [num1, num2].
     """
+
     def total_waviness(self, num1: int, num2: int) -> int:
         def sum_up_to(num: int) -> int:
             # compute total waviness for all numbers from 0 to num (inclusive)
@@ -26,7 +28,9 @@ class Solution:
             L = len(digits)
 
             @lru_cache(None)
-            def dp(pos: int, tight: int, pprev: int, prev: int, started: int) -> tuple[int, int]:
+            def dp(
+                pos: int, tight: int, pprev: int, prev: int, started: int
+            ) -> tuple[int, int]:
                 # dp returns (number_count, waviness_sum) from this state
                 if pos == L:
                     # end of digits: valid number built, waviness already accounted
