@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/left-and-right-sum-differences/
 
+
 class Solution:
     """2574. Left and Right Sum Differences
 
@@ -11,6 +12,7 @@ class Solution:
     nums. If there is no such element, rightSum[i] = 0.
     Return an integer array answer of size n where answer[i] = |leftSum[i] -
     rightSum[i]|."""
+
     def left_right_difference(self, nums: list[int]) -> list[int]:
         # precompute total sum to allow O(1) right sum calculation
         total = sum(nums)
