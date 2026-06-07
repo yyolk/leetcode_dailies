@@ -55,7 +55,9 @@ def update_docstrings_in_source(content):
     replacements = []
 
     for docstring_node in _iter_docstring_nodes(parsed_tree):
-        updated_docstring = remove_redundant_google_docstring_types(docstring_node.value)
+        updated_docstring = remove_redundant_google_docstring_types(
+            docstring_node.value
+        )
         if updated_docstring == docstring_node.value:
             continue
         if not all(
@@ -63,8 +65,12 @@ def update_docstrings_in_source(content):
             for field in ("lineno", "col_offset", "end_lineno", "end_col_offset")
         ):
             continue
-        start = _to_offset(line_offsets, docstring_node.lineno, docstring_node.col_offset)
-        end = _to_offset(line_offsets, docstring_node.end_lineno, docstring_node.end_col_offset)
+        start = _to_offset(
+            line_offsets, docstring_node.lineno, docstring_node.col_offset
+        )
+        end = _to_offset(
+            line_offsets, docstring_node.end_lineno, docstring_node.end_col_offset
+        )
         replacements.append((start, end, _as_triple_quoted(updated_docstring)))
 
     if not replacements:

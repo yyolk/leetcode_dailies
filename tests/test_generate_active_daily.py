@@ -242,13 +242,16 @@ class TestRemoveRedundantGoogleDocstringTypes:
 Returns:
     bool: Whether a pair exists.
 """
-        assert remove_redundant_google_docstring_types(docstring) == """Args:
+        assert (
+            remove_redundant_google_docstring_types(docstring)
+            == """Args:
     arr: Input.
     target: Desired value.
 
 Returns:
     Whether a pair exists.
 """
+        )
 
     def test_keeps_already_untyped_sections_unchanged(self):
         docstring = """Args:
@@ -288,10 +291,7 @@ class Solution:
         assert "nums: class-level docs." in result
         assert "nums: Input nums." in result
         assert "Output values." in result
-        assert (
-            'data = "Args:\\n    nums (list[int]): should stay unchanged"'
-            in result
-        )
+        assert 'data = "Args:\\n    nums (list[int]): should stay unchanged"' in result
 
 
 class TestWriteFile:
