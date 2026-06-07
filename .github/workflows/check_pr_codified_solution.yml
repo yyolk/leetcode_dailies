@@ -36,9 +36,16 @@ jobs:
             per_page: 100
           });
 
-          const subjectPattern = /^solution \d{8}\.[^\s]+(?: 💯)?$/u;
-          const timePattern = /^- \d+(?:\.\d+)?ms(?: \(\d+(?:\.\d+)?%\))?(?: 💯)?$/u;
-          const memoryPattern = /^- \d+(?:\.\d+)?mb(?: \(\d+(?:\.\d+)?%\))?(?: 💯)?$/iu;
+          const optionalHundred = "(?: 💯)?";
+          const subjectPattern = new RegExp(`^solution \\d{8}\\.[^\\s]+${optionalHundred}$`, "u");
+          const timePattern = new RegExp(
+            `^- \\d+(?:\\.\\d+)?ms(?: \\(\\d+(?:\\.\\d+)?%\\))?${optionalHundred}$`,
+            "u"
+          );
+          const memoryPattern = new RegExp(
+            `^- \\d+(?:\\.\\d+)?mb(?: \\(\\d+(?:\\.\\d+)?%\\))?${optionalHundred}$`,
+            "u"
+          );
 
           const hasCodifiedSolutionCommit = commits.some((commit) => {
             const message = commit.commit.message.replaceAll("\r\n", "\n");
@@ -54,6 +61,6 @@ jobs:
 
           if (!hasCodifiedSolutionCommit) {
             core.setFailed(
-              "Expected a commit message like `solution YYYYMMDD.ext` followed by time/memory lines."
+              "Expected a commit like: `solution YYYYMMDD.ext`, `- 12.3ms (50%)`, `- 45.6mb (50%)`."
             );
           }
