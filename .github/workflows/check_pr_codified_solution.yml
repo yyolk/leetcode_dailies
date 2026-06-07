@@ -11,7 +11,7 @@ on:
 
 permissions:
   contents: read
-  pull-requests: read
+  pull-requests: write
 
 jobs:
   codified-solution-check:
@@ -21,11 +21,10 @@ jobs:
       with:
         script: |
           const pr = context.payload.pull_request;
-          const isDailyTitle = /^\d{8}$/.test(pr.title);
           const hasDailyLabel = pr.labels.some((label) => label.name === "daily-boilerplate");
 
-          if (!isDailyTitle && !hasDailyLabel) {
-            core.info("Skipping check for non-daily PR.");
+          if (!hasDailyLabel) {
+            core.info("Skipping check for non-daily-boilerplate PR.");
             return;
           }
 
@@ -63,4 +62,33 @@ jobs:
             core.setFailed(
               "Expected a commit like: `solution YYYYMMDD.ext`, `- 12.3ms (50%)`, `- 45.6mb (50%)`."
             );
+            return;
+          }
+
+          if (pr.draft) {
+            await github.graphql(
+              `mutation($pullRequestId: ID!) {
+                markPullRequestReadyForReview(input: {pullRequestId: $pullRequestId}) {
+                  pullRequest {
+                    id
+                  }
+                }
+              }`,
+              {pullRequestId: pr.node_id}
+            );
+            core.info("Marked daily PR as ready for review.");
+          }
+
+          if (!pr.auto_merge) {
+            await github.graphql(
+              `mutation($pullRequestId: ID!) {
+                enablePullRequestAutoMerge(input: {pullRequestId: $pullRequestId, mergeMethod: SQUASH}) {
+                  pullRequest {
+                    id
+                  }
+                }
+              }`,
+              {pullRequestId: pr.node_id}
+            );
+            core.info("Enabled squash auto-merge for daily PR.");
           }
