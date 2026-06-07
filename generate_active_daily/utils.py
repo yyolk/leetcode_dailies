@@ -8,6 +8,27 @@ from pathlib import Path
 
 from .constants import TEXT_WIDTH
 
+_DOCSTRING_SECTION_HEADING_RE = re.compile(r"^\s*([A-Za-z][A-Za-z ]+):\s*$")
+_DOCSTRING_ARG_WITH_TYPE_RE = re.compile(
+    r"^(\s*)(\*{0,2}[A-Za-z_][A-Za-z0-9_]*)\s*\([^)]*\):(?:\s*(.*))?$"
+)
+_DOCSTRING_RET_WITH_TYPE_RE = re.compile(r"^(\s*)([^:]+):(?:\s*(.*))?$")
+_SIMPLE_RETURN_TYPES = {
+    "none",
+    "any",
+    "bool",
+    "int",
+    "float",
+    "str",
+    "bytes",
+    "dict",
+    "list",
+    "tuple",
+    "set",
+    "frozenset",
+    "object",
+}
+
 
 def camel_to_snake(camel_string):
     """Converts a camelCase name into a snake_case name."""
@@ -34,6 +55,62 @@ def wrap_docstring(lines, indentation=0):
         )
     )
     return new_docstring
+
+
+def remove_redundant_google_docstring_types(docstring):
+    """Removes redundant type annotations from Google-style Args/Returns sections."""
+    lines = docstring.splitlines()
+    updated_lines = []
+    active_section = None
+    active_section_indent = 0
+
+    for line in lines:
+        stripped = line.strip()
+        indentation = len(line) - len(line.lstrip(" "))
+
+        if active_section and stripped and indentation <= active_section_indent:
+            active_section = None
+
+        heading_match = _DOCSTRING_SECTION_HEADING_RE.match(line)
+        if heading_match:
+            heading = heading_match.group(1).lower()
+            if heading in {"args", "arguments", "returns"}:
+                active_section = heading
+                active_section_indent = indentation
+            else:
+                active_section = None
+            updated_lines.append(line)
+            continue
+
+        if active_section in {"args", "arguments"}:
+            arg_match = _DOCSTRING_ARG_WITH_TYPE_RE.match(line)
+            if arg_match:
+                arg_indent, arg_name, arg_desc = arg_match.groups()
+                line = f"{arg_indent}{arg_name}:"
+                if arg_desc:
+                    line = f"{line} {arg_desc}"
+                updated_lines.append(line)
+                continue
+
+        if active_section == "returns":
+            return_match = _DOCSTRING_RET_WITH_TYPE_RE.match(line)
+            if return_match:
+                return_indent, return_type, return_desc = return_match.groups()
+                normalized_return_type = return_type.strip().lower()
+                looks_like_complex_type = any(
+                    char in return_type for char in "[]|,.\"'()"
+                )
+                if (
+                    normalized_return_type in _SIMPLE_RETURN_TYPES
+                    or looks_like_complex_type
+                    or return_type.strip().startswith(tuple("ABCDEFGHIJKLMNOPQRSTUVWXYZ"))
+                ) and return_desc:
+                    updated_lines.append(f"{return_indent}{return_desc}")
+                    continue
+
+        updated_lines.append(line)
+
+    return "\n".join(updated_lines)
 
 
 def modify_class_docstring(code, new_docstring, first_line):
@@ -113,6 +190,16 @@ def modify_class_docstring(code, new_docstring, first_line):
                                 and r_arg_node.id in generic_types_pep_585
                             ):
                                 r_arg_node.id = r_arg_node.id.lower()
+
+            if (
+                node.body
+                and isinstance(node.body[0], ast.Expr)
+                and isinstance(node.body[0].value, ast.Constant)
+                and isinstance(node.body[0].value.value, str)
+            ):
+                node.body[0].value.value = remove_redundant_google_docstring_types(
+                    node.body[0].value.value
+                )
 
     # We go back in after walking the entire thing so we can append into the class
     # Probably could make this one loop but can revisit since the above needs refactoring too
