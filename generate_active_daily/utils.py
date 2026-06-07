@@ -120,7 +120,7 @@ def modify_class_docstring(code, new_docstring, first_line):
                 if isinstance(item, ast.Expr) and isinstance(item.value, ast.Constant):
                     # Modify the docstring...
                     # we're using just the raw lines in place here if its already found
-                    item.value.s = new_docstring
+                    item.value.value = new_docstring
                     found_docstring = True
 
             # If no existing docstring is found, add a new docstring
