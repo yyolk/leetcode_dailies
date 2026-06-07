@@ -15,10 +15,9 @@ TODO:
 import argparse
 import ast
 import asyncio
-import textwrap
-import json
 import re
 import sys
+import textwrap
 import unicodedata
 
 from datetime import datetime
@@ -32,6 +31,11 @@ from markdownify import markdownify
 
 from .constants import LEETCODE_BASE_URL, TEXT_WIDTH
 from .client import query_question_of_today
+from .leetcode_boilerplate import (
+    extract_external_docstring_lines,
+    select_python3_starter_code,
+    strip_external_block_from_starter_code,
+)
 
 parser = argparse.ArgumentParser(
     description="Generates the current daily active challenge boilerplate file."
@@ -261,20 +265,10 @@ CONTENT_BEFORE_EXAMPLE = (
 )
 
 
-initial_python_code = next(
-    # this is a JSONString returned from the gql endpoint, we can't filter it there
-    # so filter it here, grabbing only the python3 starter code provided in the editor
-    # this is what we use to add our description docstring to
-    # it's also concrete in that we shouldn't change what leetcode calls to test your
-    # solution - which is annoying because for python
-    # since they always use camelCase instead of snake_case, blegh
-    filter(
-        lambda x: x["value"] == "python3",
-        json.loads(
-            results["activeDailyCodingChallengeQuestion"]["question"]["codeDefinition"]
-        ),
-    )
-)["defaultCode"] + (
+question_data = results["activeDailyCodingChallengeQuestion"]["question"]
+python3_starter_code = select_python3_starter_code(question_data)
+external_docstring_lines = extract_external_docstring_lines(python3_starter_code)
+initial_python_code = strip_external_block_from_starter_code(python3_starter_code) + (
     # add an elipsis into the default solution method so AST can parse, the 8th column is a guess!
     # TODO: upon encountering a challenge like 20208/20230828.py, this will have to be refactored
     " " * 8 + "..."
@@ -291,6 +285,15 @@ lines_ = filter(lambda x: x, docstring_.splitlines())
 # which is also our `unwrapped_docstring`
 # We also end up using this more than once over all items so list(...) here.
 unwrapped_docstring = list(lines_)
+
+if external_docstring_lines:
+    existing_docstring_content = "\n".join(unwrapped_docstring)
+    if not all(
+        line.strip() in existing_docstring_content
+        for line in external_docstring_lines
+        if line.strip()
+    ):
+        unwrapped_docstring.extend(external_docstring_lines)
 
 # The first line in the docstring is always: '#No. Title of Challenge'
 first_line_ = f"{challenge_question_id}. {challenge_title}\n"
