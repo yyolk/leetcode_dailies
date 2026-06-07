@@ -13,6 +13,7 @@ _DOCSTRING_ARG_WITH_TYPE_RE = re.compile(
     r"^(\s*)(\*{0,2}[A-Za-z_][A-Za-z0-9_]*)\s*\([^)]*\):(?:\s*(.*))?$"
 )
 _DOCSTRING_RET_WITH_TYPE_RE = re.compile(r"^(\s*)([^:]+):(?:\s*(.*))?$")
+_COMPLEX_TYPE_INDICATORS = "[]|,.\"'()"
 _SIMPLE_RETURN_TYPES = {
     "none",
     "any",
@@ -59,6 +60,7 @@ def wrap_docstring(lines, indentation=0):
 
 def remove_redundant_google_docstring_types(docstring):
     """Removes redundant type annotations from Google-style Args/Returns sections."""
+    had_trailing_newline = docstring.endswith("\n")
     lines = docstring.splitlines()
     updated_lines = []
     active_section = None
@@ -96,21 +98,25 @@ def remove_redundant_google_docstring_types(docstring):
             return_match = _DOCSTRING_RET_WITH_TYPE_RE.match(line)
             if return_match:
                 return_indent, return_type, return_desc = return_match.groups()
-                normalized_return_type = return_type.strip().lower()
+                stripped_return_type = return_type.strip()
+                normalized_return_type = stripped_return_type.lower()
                 looks_like_complex_type = any(
-                    char in return_type for char in "[]|,.\"'()"
+                    char in return_type for char in _COMPLEX_TYPE_INDICATORS
                 )
                 if (
                     normalized_return_type in _SIMPLE_RETURN_TYPES
                     or looks_like_complex_type
-                    or return_type.strip().startswith(tuple("ABCDEFGHIJKLMNOPQRSTUVWXYZ"))
+                    or (stripped_return_type and stripped_return_type[0].isupper())
                 ) and return_desc:
                     updated_lines.append(f"{return_indent}{return_desc}")
                     continue
 
         updated_lines.append(line)
 
-    return "\n".join(updated_lines)
+    result = "\n".join(updated_lines)
+    if had_trailing_newline:
+        result += "\n"
+    return result
 
 
 def modify_class_docstring(code, new_docstring, first_line):
