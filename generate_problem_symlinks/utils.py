@@ -10,6 +10,7 @@ YEAR_DIR_PATTERN = re.compile(r"^\d{4}$")
 MONTH_DIR_PATTERN = re.compile(r"^\d{6}$")
 SOLUTION_FILE_PATTERN = re.compile(r"^\d{8}\.[^.]+$")
 PROBLEM_NUMBER_PATTERN = re.compile(r'^\s*(?:[rRuUfFbB]{0,2}["\']{3}|#)\s*(\d+)\.', re.M)
+# Matches `"""123.` (optionally prefixed like r"""...`) or `# 123.` lines.
 
 
 def extract_problem_number(solution_file: Path) -> str | None:
@@ -41,4 +42,3 @@ def clear_symlink_dir(by_problem_dir: Path):
     for child in by_problem_dir.iterdir():
         if child.is_symlink() or child.is_file():
             child.unlink()
-
