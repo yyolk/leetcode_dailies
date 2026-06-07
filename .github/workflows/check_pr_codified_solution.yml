@@ -1,0 +1,94 @@
+name: Check PR Codified Solution
+
+on:
+  pull_request:
+    types:
+    - opened
+    - synchronize
+    - reopened
+    - edited
+    - ready_for_review
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  codified-solution-check:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/github-script@v8
+      with:
+        script: |
+          const pr = context.payload.pull_request;
+          const hasDailyLabel = pr.labels.some((label) => label.name === "daily-boilerplate");
+
+          if (!hasDailyLabel) {
+            core.info("Skipping check for non-daily-boilerplate PR.");
+            return;
+          }
+
+          const commits = await github.paginate(github.rest.pulls.listCommits, {
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            pull_number: pr.number,
+            per_page: 100
+          });
+
+          const optionalHundred = "(?: 💯)?";
+          const subjectPattern = new RegExp(`^solution \\d{8}\\.[^\\s]+${optionalHundred}$`, "u");
+          const timePattern = new RegExp(
+            `^- \\d+(?:\\.\\d+)?ms(?: \\(\\d+(?:\\.\\d+)?%\\))?${optionalHundred}$`,
+            "u"
+          );
+          const memoryPattern = new RegExp(
+            `^- \\d+(?:\\.\\d+)?mb(?: \\(\\d+(?:\\.\\d+)?%\\))?${optionalHundred}$`,
+            "u"
+          );
+
+          const hasCodifiedSolutionCommit = commits.some((commit) => {
+            const message = commit.commit.message.replaceAll("\r\n", "\n");
+            const [subject, ...bodyLines] = message.split("\n");
+            const lines = bodyLines.map((line) => line.trim()).filter(Boolean);
+            return (
+              subjectPattern.test(subject.trim()) &&
+              lines.length >= 2 &&
+              timePattern.test(lines[0]) &&
+              memoryPattern.test(lines[1])
+            );
+          });
+
+          if (!hasCodifiedSolutionCommit) {
+            core.setFailed(
+              "Expected a commit like: `solution YYYYMMDD.ext`, `- 12.3ms (50%)`, `- 45.6mb (50%)`."
+            );
+            return;
+          }
+
+          if (pr.draft) {
+            await github.graphql(
+              `mutation($pullRequestId: ID!) {
+                markPullRequestReadyForReview(input: {pullRequestId: $pullRequestId}) {
+                  pullRequest {
+                    id
+                  }
+                }
+              }`,
+              {pullRequestId: pr.node_id}
+            );
+            core.info("Marked daily PR as ready for review.");
+          }
+
+          if (!pr.auto_merge) {
+            await github.graphql(
+              `mutation($pullRequestId: ID!) {
+                enablePullRequestAutoMerge(input: {pullRequestId: $pullRequestId, mergeMethod: SQUASH}) {
+                  pullRequest {
+                    id
+                  }
+                }
+              }`,
+              {pullRequestId: pr.node_id}
+            );
+            core.info("Enabled squash auto-merge for daily PR.");
+          }

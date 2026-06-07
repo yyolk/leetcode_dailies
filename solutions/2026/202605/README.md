@@ -130,50 +130,78 @@
    </a>
   </td>
   <td class="mon">
-   18
+   <a href="20260518.py">
+    18
+   </a>
   </td>
   <td class="tue">
-   19
+   <a href="20260519.py">
+    19
+   </a>
   </td>
   <td class="wed">
-   20
+   <a href="20260520.py">
+    20
+   </a>
   </td>
   <td class="thu">
-   21
+   <a href="20260521.py">
+    21
+   </a>
   </td>
   <td class="fri">
-   22
+   <a href="20260522.py">
+    22
+   </a>
   </td>
   <td class="sat">
-   23
+   <a href="20260523.py">
+    23
+   </a>
   </td>
  </tr>
  <tr>
   <td class="sun">
-   24
+   <a href="20260524.py">
+    24
+   </a>
   </td>
   <td class="mon">
-   25
+   <a href="20260525.py">
+    25
+   </a>
   </td>
   <td class="tue">
-   26
+   <a href="20260526.py">
+    26
+   </a>
   </td>
   <td class="wed">
-   27
+   <a href="20260527.py">
+    27
+   </a>
   </td>
   <td class="thu">
-   28
+   <a href="20260528.py">
+    28
+   </a>
   </td>
   <td class="fri">
-   29
+   <a href="20260529.py">
+    29
+   </a>
   </td>
   <td class="sat">
-   30
+   <a href="20260530.py">
+    30
+   </a>
   </td>
  </tr>
  <tr>
   <td class="sun">
-   31
+   <a href="20260531.py">
+    31
+   </a>
   </td>
   <td class="noday">
   </td>

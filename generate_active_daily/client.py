@@ -1,17 +1,44 @@
+import asyncio
+
 from typing import AsyncIterator
 from urllib.parse import urljoin
 
 from gql import Client, gql
 from gql.transport.aiohttp import AIOHTTPTransport
+from gql.transport.exceptions import TransportConnectionFailed
 
 from .constants import LEETCODE_BASE_URL
+
+
+REQUEST_TIMEOUT_SECONDS = 30
+MAX_REQUEST_ATTEMPTS = 3
+MAX_RETRY_DELAY_SECONDS = 4
+
+
+async def execute_query_with_retry(session, query, *, variable_values=None):
+    last_error = None
+    for attempt in range(MAX_REQUEST_ATTEMPTS):
+        try:
+            return await session.execute(query, variable_values=variable_values)
+        except Exception as err:
+            if not isinstance(err, (TimeoutError, TransportConnectionFailed)):
+                raise
+            last_error = err
+
+        if attempt == MAX_REQUEST_ATTEMPTS - 1:
+            if last_error is None:
+                raise RuntimeError("Retry loop exhausted without a captured error.")
+            raise last_error
+        await asyncio.sleep(min(2**attempt, MAX_RETRY_DELAY_SECONDS))
 
 
 async def query_question_of_today():
     transport = AIOHTTPTransport(url=f"{LEETCODE_BASE_URL}/graphql/")
 
     async with Client(
-        transport=transport, fetch_schema_from_transport=False
+        transport=transport,
+        fetch_schema_from_transport=False,
+        execute_timeout=REQUEST_TIMEOUT_SECONDS,
     ) as session:
         query = gql("""
             query questionOfToday {
@@ -43,7 +70,7 @@ async def query_question_of_today():
             }
             """)
 
-        result = await session.execute(query)
+        result = await execute_query_with_retry(session, query)
         return result
 
 
@@ -52,6 +79,7 @@ async def query_previous_question(current_question_slug, env_id, env_type):
     async with Client(
         transport=transport,
         fetch_schema_from_transport=False,
+        execute_timeout=REQUEST_TIMEOUT_SECONDS,
     ) as session:
         query = gql("""
             query learningContext($currentQuestionSlug: String!, $categorySlug: String, $envId: String, $envType: String, $filters: QuestionListFilterInput) {
@@ -79,7 +107,7 @@ async def query_previous_question(current_question_slug, env_id, env_type):
             "envId": env_id,
             "envType": env_type,
         }
-        result = await session.execute(query, variable_values=params)
+        result = await execute_query_with_retry(session, query, variable_values=params)
         return result["learningContextV2"]["previousQuestion"]
 
 
@@ -88,6 +116,7 @@ async def query_qd_challenge_question(title_slug):
     async with Client(
         transport=transport,
         fetch_schema_from_transport=False,
+        execute_timeout=REQUEST_TIMEOUT_SECONDS,
     ) as session:
         # query = gql("""
         #   query qdChallengeQuestion($titleSlug: String!) {
@@ -113,9 +142,9 @@ async def query_qd_challenge_question(title_slug):
             }
             """)
         params = {"titleSlug": title_slug}
-        return (await session.execute(query, variable_values=params))["question"][
-            "challengeQuestion"
-        ]
+        return (await execute_query_with_retry(session, query, variable_values=params))[
+            "question"
+        ]["challengeQuestion"]
 
 
 async def previous_questions(limit: int) -> AsyncIterator[list[dict[str, str]]]:
