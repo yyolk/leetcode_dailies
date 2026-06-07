@@ -3,7 +3,11 @@
 from pathlib import Path
 
 from generate_problem_symlinks import __main__ as symlink_main
-from generate_problem_symlinks.utils import clear_symlink_dir, extract_problem_number, iter_solution_files
+from generate_problem_symlinks.utils import (
+    clear_symlink_dir,
+    extract_problem_number,
+    iter_solution_files,
+)
 
 
 class TestExtractProblemNumber:
@@ -39,7 +43,9 @@ class TestMain:
         solutions_dir = tmp_path / "solutions"
         source_dir = solutions_dir / "2024" / "202401"
         source_dir.mkdir(parents=True)
-        (source_dir / "20240115.py").write_text('class Solution:\n    """77. Combinations"""\n')
+        (source_dir / "20240115.py").write_text(
+            'class Solution:\n    """77. Combinations"""\n'
+        )
         (source_dir / "20240116.py").write_text("class Solution:\n    pass\n")
 
         by_problem_dir = solutions_dir / "zz_by_problem_number"

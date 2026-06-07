@@ -9,7 +9,9 @@ BY_PROBLEM_DIR = BASE_SOLUTIONS_DIR / "zz_by_problem_number"
 YEAR_DIR_PATTERN = re.compile(r"^\d{4}$")
 MONTH_DIR_PATTERN = re.compile(r"^\d{6}$")
 SOLUTION_FILE_PATTERN = re.compile(r"^\d{8}\.[^.]+$")
-PROBLEM_NUMBER_PATTERN = re.compile(r'^\s*(?:[rRuUfFbB]{0,2}["\']{3}|#)\s*(\d+)\.', re.M)
+PROBLEM_NUMBER_PATTERN = re.compile(
+    r'^\s*(?:[rRuUfFbB]{0,2}["\']{3}|#)\s*(\d+)\.', re.M
+)
 # Matches `"""123.` (optionally prefixed like r"""...`) or `# 123.` lines.
 
 
