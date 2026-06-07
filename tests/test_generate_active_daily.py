@@ -171,6 +171,41 @@ class Solution:
         # Should parse without errors
         ast.parse(result)
 
+    def test_skips_dunder_and_handles_missing_return_annotation(self):
+        code = """\
+class Solution:
+    def __init__(self, values):
+        self.values = values
+
+    def twoSum(self, nums, target):
+        ...
+"""
+        result = modify_class_docstring(code, ["Description"], "1. Two Sum\n")
+        assert "def __init__(self, values):" in result
+        assert "def two_sum(self, nums, target):" in result
+        assert "twoSum = two_sum" in result
+        ast.parse(result)
+
+    def test_no_alias_added_when_only_dunder_methods_exist(self):
+        code = """\
+class Solution:
+    def __init__(self, value):
+        self.value = value
+"""
+        result = modify_class_docstring(code, ["Description"], "1. Title\n")
+        assert "def __init__(self, value):" in result
+        tree = ast.parse(result)
+        solution_node = next(
+            node
+            for node in ast.walk(tree)
+            if isinstance(node, ast.ClassDef) and node.name == "Solution"
+        )
+        assert not any(
+            isinstance(node, ast.Assign)
+            and any(isinstance(target, ast.Name) for target in node.targets)
+            for node in solution_node.body
+        )
+
 
 class TestWriteFile:
     def test_creates_file(self, tmp_path):
