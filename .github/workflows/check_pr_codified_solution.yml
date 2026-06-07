@@ -1,0 +1,59 @@
+name: Check PR Codified Solution
+
+on:
+  pull_request:
+    types:
+    - opened
+    - synchronize
+    - reopened
+    - edited
+    - ready_for_review
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  codified-solution-check:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/github-script@v8
+      with:
+        script: |
+          const pr = context.payload.pull_request;
+          const isDailyTitle = /^\d{8}$/.test(pr.title);
+          const hasDailyLabel = pr.labels.some((label) => label.name === "daily-boilerplate");
+
+          if (!isDailyTitle && !hasDailyLabel) {
+            core.info("Skipping check for non-daily PR.");
+            return;
+          }
+
+          const commits = await github.paginate(github.rest.pulls.listCommits, {
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            pull_number: pr.number,
+            per_page: 100
+          });
+
+          const subjectPattern = /^solution \d{8}\.[^\s]+(?: 💯)?$/u;
+          const timePattern = /^- \d+(?:\.\d+)?ms(?: \(\d+(?:\.\d+)?%\))?(?: 💯)?$/u;
+          const memoryPattern = /^- \d+(?:\.\d+)?mb(?: \(\d+(?:\.\d+)?%\))?(?: 💯)?$/iu;
+
+          const hasCodifiedSolutionCommit = commits.some((commit) => {
+            const message = commit.commit.message.replaceAll("\r\n", "\n");
+            const [subject, ...bodyLines] = message.split("\n");
+            const lines = bodyLines.map((line) => line.trim()).filter(Boolean);
+            return (
+              subjectPattern.test(subject.trim()) &&
+              lines.length >= 2 &&
+              timePattern.test(lines[0]) &&
+              memoryPattern.test(lines[1])
+            );
+          });
+
+          if (!hasCodifiedSolutionCommit) {
+            core.setFailed(
+              "Expected a commit message like `solution YYYYMMDD.ext` followed by time/memory lines."
+            );
+          }

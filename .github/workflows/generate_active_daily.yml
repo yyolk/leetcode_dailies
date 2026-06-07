@@ -46,6 +46,7 @@ jobs:
       run: |
         DAILY_DATE=$(date +'%Y%m%d')
         BRANCH="daily/${DAILY_DATE}"
+        DAILY_LABEL="daily-boilerplate"
         DAILY_URL=$(uv run --no-sync python -m generate_active_daily --url)
         git config user.name 'github-actions[bot]'
         git config user.email 'github-actions[bot]@users.noreply.github.com'
@@ -60,10 +61,12 @@ jobs:
         ${DAILY_URL}
         "
         git push origin "${BRANCH}"
+        gh label create "${DAILY_LABEL}" --description "Automated daily draft PRs" --color "1f6feb" || true
         gh pr create \
           --draft \
           --title "${DAILY_DATE}" \
           --body "${DAILY_URL}" \
+          --label "${DAILY_LABEL}" \
           --base main \
           --head "${BRANCH}"
     - name: Notify of boilerplate ready
