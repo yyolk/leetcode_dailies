@@ -58,6 +58,10 @@ async def query_question_of_today():
                     titleSlug
                     #   hasVideoSolution
                     #   hasSolution
+                    codeSnippets {
+                        langSlug
+                        code
+                    }
                     codeDefinition
                     content
                     # topicTags {
