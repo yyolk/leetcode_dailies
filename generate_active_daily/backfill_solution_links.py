@@ -54,10 +54,10 @@ async def main():
 
     matched_directories = []
     # root, dirs, files
-    for _, dirs, _ in os.walk("."):
+    for root, dirs, _ in os.walk("."):
         for dir_ in dirs:
             if DIR_PATTERN.match(dir_):
-                matched_directories.append(dir_)
+                matched_directories.append(os.path.join(root, dir_))
 
     for dir_ in matched_directories:
         # root, dirs, files

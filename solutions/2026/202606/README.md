@@ -1,7 +1,7 @@
 <table align="center" border="0" cellpadding="0" cellspacing="0" class="month">
  <tr>
   <th class="month" colspan="7">
-   May 2026
+   June 2026
   </th>
  </tr>
  <tr>
@@ -30,154 +30,117 @@
  <tr>
   <td class="noday">
   </td>
-  <td class="noday">
-  </td>
-  <td class="noday">
-  </td>
-  <td class="noday">
-  </td>
-  <td class="noday">
-  </td>
-  <td class="fri">
-   <a href="20260501.py">
+  <td class="mon">
+   <a href="20260601.py">
     1
    </a>
   </td>
-  <td class="sat">
-   <a href="20260502.py">
+  <td class="tue">
+   <a href="20260602.py">
     2
    </a>
   </td>
- </tr>
- <tr>
-  <td class="sun">
-   <a href="20260503.py">
+  <td class="wed">
+   <a href="20260603.py">
     3
    </a>
   </td>
-  <td class="mon">
-   <a href="20260504.py">
+  <td class="thu">
+   <a href="20260604.py">
     4
    </a>
   </td>
-  <td class="tue">
-   <a href="20260505.py">
+  <td class="fri">
+   <a href="20260605.py">
     5
    </a>
   </td>
-  <td class="wed">
-   <a href="20260506.py">
+  <td class="sat">
+   <a href="20260606.py">
     6
    </a>
   </td>
-  <td class="thu">
-   <a href="20260507.py">
+ </tr>
+ <tr>
+  <td class="sun">
+   <a href="20260607.py">
     7
    </a>
   </td>
-  <td class="fri">
-   <a href="20260508.py">
-    8
-   </a>
-  </td>
-  <td class="sat">
-   <a href="20260509.py">
-    9
-   </a>
-  </td>
- </tr>
- <tr>
-  <td class="sun">
-   <a href="20260510.py">
-    10
-   </a>
-  </td>
   <td class="mon">
-   <a href="20260511.py">
-    11
-   </a>
+   8
   </td>
   <td class="tue">
-   <a href="20260512.py">
-    12
-   </a>
+   9
   </td>
   <td class="wed">
-   <a href="20260513.py">
-    13
-   </a>
+   10
   </td>
   <td class="thu">
-   <a href="20260514.py">
-    14
-   </a>
+   11
   </td>
   <td class="fri">
-   <a href="20260515.py">
-    15
-   </a>
+   12
   </td>
   <td class="sat">
-   <a href="20260516.py">
-    16
-   </a>
+   13
   </td>
  </tr>
  <tr>
   <td class="sun">
-   <a href="20260517.py">
-    17
-   </a>
+   14
   </td>
   <td class="mon">
+   15
+  </td>
+  <td class="tue">
+   16
+  </td>
+  <td class="wed">
+   17
+  </td>
+  <td class="thu">
    18
   </td>
-  <td class="tue">
+  <td class="fri">
    19
   </td>
-  <td class="wed">
+  <td class="sat">
    20
   </td>
-  <td class="thu">
+ </tr>
+ <tr>
+  <td class="sun">
    21
   </td>
-  <td class="fri">
+  <td class="mon">
    22
   </td>
-  <td class="sat">
+  <td class="tue">
    23
   </td>
- </tr>
- <tr>
-  <td class="sun">
+  <td class="wed">
    24
   </td>
-  <td class="mon">
+  <td class="thu">
    25
   </td>
-  <td class="tue">
+  <td class="fri">
    26
   </td>
-  <td class="wed">
-   27
-  </td>
-  <td class="thu">
-   28
-  </td>
-  <td class="fri">
-   29
-  </td>
   <td class="sat">
-   30
+   27
   </td>
  </tr>
  <tr>
   <td class="sun">
-   31
+   28
   </td>
-  <td class="noday">
+  <td class="mon">
+   29
   </td>
-  <td class="noday">
+  <td class="tue">
+   30
   </td>
   <td class="noday">
   </td>

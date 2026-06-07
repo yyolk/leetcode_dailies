@@ -1,6 +1,12 @@
 # Generate Calendar Table of Contents
 
-Generates a per-solution directory TOC like this:
+Generates calendar TOCs for:
+
+- `solutions/YYYY/YYYYMM/README.md` (single-month view with linked solved days)
+- `solutions/YYYY/README.md` (full-year view with links into `YYYYMM/YYYYMMDD.py`)
+- root `README.md` (all years, with links into `solutions/YYYY/YYYYMM/YYYYMMDD.py`)
+
+Example month output:
 
 <table align="center" border="0" cellpadding="0" cellspacing="0" class="month">
 <tr><th class="month" colspan="7">September 2023</th></tr>

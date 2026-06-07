@@ -3,7 +3,7 @@ name = "leetcode-dailies"
 version = "0.0.1"
 description = "yyolk's daily leetcode.com solutions"
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.14"
 dependencies = [
     "markdownify",
     "black",
@@ -11,7 +11,18 @@ dependencies = [
     "BeautifulSoup4",
     "gql[aiohttp]",
     "requests",
+    "pre-commit>=4.6.0",
 ]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-asyncio",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
 
 [tool.pylint."messages control"]
 disable = ["unspecified-encoding"]
