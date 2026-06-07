@@ -2,6 +2,9 @@ import json
 import re
 
 
+EXTERNAL_CODEBLOCK_INDENT = " " * 4
+
+
 def _split_external_block_from_solution(starter_code):
     """Splits python starter code into an external block and Solution class block."""
     solution_match = re.search(r"(?m)^class Solution\b", starter_code)
@@ -50,12 +53,16 @@ def select_python3_starter_code(question):
             return code_snippet["code"]
 
     code_definition = json.loads(question["codeDefinition"])
-    return next(
+    python3_definition = next(
         filter(
             lambda language_data: language_data["value"] == "python3",
             code_definition,
-        )
-    )["defaultCode"]
+        ),
+        None,
+    )
+    if python3_definition is None:
+        raise ValueError("LeetCode response did not include python3 starter code.")
+    return python3_definition["defaultCode"]
 
 
 def extract_external_docstring_lines(starter_code):
@@ -68,8 +75,11 @@ def extract_external_docstring_lines(starter_code):
     heading_line = external_lines[0]
     code_lines = external_lines[1:]
     if not code_lines:
-        return []
-    return [heading_line, *(f"    {line}" for line in code_lines)]
+        return [heading_line]
+    return [
+        heading_line,
+        *(f"{EXTERNAL_CODEBLOCK_INDENT}{line}" for line in code_lines),
+    ]
 
 
 def strip_external_block_from_starter_code(starter_code):

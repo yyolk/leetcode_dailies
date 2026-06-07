@@ -287,12 +287,16 @@ lines_ = filter(lambda x: x, docstring_.splitlines())
 unwrapped_docstring = list(lines_)
 
 if external_docstring_lines:
-    existing_docstring_content = "\n".join(unwrapped_docstring)
-    if not all(
-        line.strip() in existing_docstring_content
-        for line in external_docstring_lines
-        if line.strip()
-    ):
+    existing_docstring_lines = [
+        line.strip() for line in unwrapped_docstring if line.strip()
+    ]
+    candidate_external_lines = [
+        line.strip() for line in external_docstring_lines if line.strip()
+    ]
+    existing_docstring_content = "\n" + "\n".join(existing_docstring_lines) + "\n"
+    candidate_external_content = "\n" + "\n".join(candidate_external_lines) + "\n"
+    has_external_block = candidate_external_content in existing_docstring_content
+    if not has_external_block:
         unwrapped_docstring.extend(external_docstring_lines)
 
 # The first line in the docstring is always: '#No. Title of Challenge'
