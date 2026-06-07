@@ -28,6 +28,14 @@ Each solution dir has a README.md with a table of contents that is a calendar wi
 python -m generate_calendar_toc
 ```
 
+## Generate problem-number symlinks
+
+Generate symlinks for quick lookup by problem number:
+
+```
+python -m generate_problem_symlinks
+```
+
 
 [^1]: See [#3](https://github.com/yyolk/leetcode_dailies/pull/3)
   and [#6](https://github.com/yyolk/leetcode_dailies/issues/6)
