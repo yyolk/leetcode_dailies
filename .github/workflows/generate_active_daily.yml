@@ -40,7 +40,7 @@ jobs:
     - name: Format all .py files with ruff
       run: |
         uv run --no-sync ruff format .
-    - name: Commit new files and open draft PR
+    - name: Commit new files and open PR
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
@@ -61,14 +61,14 @@ jobs:
         ${DAILY_URL}
         "
         git push origin "${BRANCH}"
-        gh label create "${DAILY_LABEL}" --description "Automated daily draft PRs" --color "1f6feb" || true
+        gh label create "${DAILY_LABEL}" --description "Automated daily PRs" --color "1f6feb" || true
         gh pr create \
-          --draft \
           --title "${DAILY_DATE}" \
           --body "${DAILY_URL}" \
           --label "${DAILY_LABEL}" \
           --base main \
           --head "${BRANCH}"
+        gh pr merge "${BRANCH}" --auto --squash
     - name: Notify of boilerplate ready
       if: always()
       env:
