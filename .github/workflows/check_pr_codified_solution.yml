@@ -37,12 +37,13 @@ jobs:
 
           const optionalHundred = "(?: 💯)?";
           const subjectPattern = new RegExp(`^solution \\d{8}\\.[^\\s]+${optionalHundred}$`, "u");
+          const optionalPercentile = "(?: \\((?:beats )?\\d+(?:\\.\\d+)?%\\))?";
           const timePattern = new RegExp(
-            `^- \\d+(?:\\.\\d+)?ms(?: \\(\\d+(?:\\.\\d+)?%\\))?${optionalHundred}$`,
+            `^- \\d+(?:\\.\\d+)?ms${optionalPercentile}${optionalHundred}$`,
             "u"
           );
           const memoryPattern = new RegExp(
-            `^- \\d+(?:\\.\\d+)?mb(?: \\(\\d+(?:\\.\\d+)?%\\))?${optionalHundred}$`,
+            `^- \\d+(?:\\.\\d+)?mb${optionalPercentile}${optionalHundred}$`,
             "u"
           );
 
