@@ -37,12 +37,13 @@ jobs:
 
           const optionalHundred = "(?: 💯)?";
           const subjectPattern = new RegExp(`^solution \\d{8}\\.[^\\s]+${optionalHundred}$`, "u");
+          const optionalPercentile = "(?: \\((?:beats )?\\d+(?:\\.\\d+)?%\\))?";
           const timePattern = new RegExp(
-            `^- \\d+(?:\\.\\d+)?ms(?: \\(\\d+(?:\\.\\d+)?%\\))?${optionalHundred}$`,
+            `^- \\d+(?:\\.\\d+)?ms${optionalPercentile}${optionalHundred}$`,
             "u"
           );
           const memoryPattern = new RegExp(
-            `^- \\d+(?:\\.\\d+)?mb(?: \\(\\d+(?:\\.\\d+)?%\\))?${optionalHundred}$`,
+            `^- \\d+(?:\\.\\d+)?mb${optionalPercentile}${optionalHundred}$`,
             "u"
           );
 
@@ -65,30 +66,47 @@ jobs:
             return;
           }
 
+          const isPermissionError = (error) =>
+            String(error?.message ?? "").includes("Resource not accessible by integration");
+
           if (pr.draft) {
-            await github.graphql(
-              `mutation($pullRequestId: ID!) {
-                markPullRequestReadyForReview(input: {pullRequestId: $pullRequestId}) {
-                  pullRequest {
-                    id
+            try {
+              await github.graphql(
+                `mutation($pullRequestId: ID!) {
+                  markPullRequestReadyForReview(input: {pullRequestId: $pullRequestId}) {
+                    pullRequest {
+                      id
+                    }
                   }
-                }
-              }`,
-              {pullRequestId: pr.node_id}
-            );
-            core.info("Marked daily PR as ready for review.");
+                }`,
+                {pullRequestId: pr.node_id}
+              );
+              core.info("Marked daily PR as ready for review.");
+            } catch (error) {
+              if (!isPermissionError(error)) {
+                throw error;
+              }
+              core.warning("Skipping ready-for-review update due to token permissions.");
+            }
           }
 
           if (!pr.auto_merge) {
-            await github.graphql(
-              `mutation($pullRequestId: ID!) {
-                enablePullRequestAutoMerge(input: {pullRequestId: $pullRequestId, mergeMethod: SQUASH}) {
-                  pullRequest {
-                    id
+            try {
+              await github.graphql(
+                `mutation($pullRequestId: ID!) {
+                  enablePullRequestAutoMerge(input: {pullRequestId: $pullRequestId, mergeMethod: SQUASH}) {
+                    pullRequest {
+                      id
+                    }
                   }
-                }
-              }`,
-              {pullRequestId: pr.node_id}
-            );
-            core.info("Enabled squash auto-merge for daily PR.");
+                }`,
+                {pullRequestId: pr.node_id}
+              );
+              core.info("Enabled squash auto-merge for daily PR.");
+            } catch (error) {
+              if (!isPermissionError(error)) {
+                throw error;
+              }
+              core.warning("Skipping auto-merge enablement due to token permissions.");
+            }
           }
