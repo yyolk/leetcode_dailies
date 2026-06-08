@@ -1,8 +1,9 @@
 # https://leetcode.com/problems/partition-array-according-to-given-pivot/
 
+
 class Solution:
     """2161. Partition Array According to Given Pivot
-    
+
     You are given a 0-indexed integer array nums and an integer pivot. Rearrange
     nums such that the following conditions are satisfied:
     * Every element less than pivot appears before every element greater than
@@ -16,12 +17,13 @@ class Solution:
         both elements are smaller (or larger) than pivot, then pi < pj.
     Return nums after the rearrangement.
     """
+
     def pivot_array(self, nums: list[int], pivot: int) -> list[int]:
         # Three lists preserve relative order while partitioning
-        less = []      # elements < pivot
-        equal = []     # elements == pivot
-        greater = []   # elements > pivot
-        
+        less = []  # elements < pivot
+        equal = []  # elements == pivot
+        greater = []  # elements > pivot
+
         for num in nums:
             if num < pivot:
                 less.append(num)
@@ -29,7 +31,7 @@ class Solution:
                 equal.append(num)
             else:
                 greater.append(num)
-        
+
         # Concatenate to form the final array (O(n) time/space)
         return less + equal + greater
 
