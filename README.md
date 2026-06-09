@@ -20,6 +20,14 @@ This is an abnormal operation, it could be run during the daily upkeep, but all 
 python -m generate_active_daily.backfill_solution_links --no-debug --overwrite
 ```
 
+### Backfill redundant docstring annotations in solutions
+
+Removes redundant type annotations from Google-style `Args` and `Returns` sections.
+
+```
+python -m generate_active_daily.backfill_remove_docstring_type_annotations
+```
+
 ## Generate the Solution Directories TOC
 
 Each solution dir has a README.md with a table of contents that is a calendar with the days completed, hyperlinked to that solution file.

@@ -10,9 +10,13 @@ from generate_active_daily.leetcode_boilerplate import (
     select_python3_starter_code,
     strip_external_block_from_starter_code,
 )
+from generate_active_daily.backfill_remove_docstring_type_annotations import (
+    update_docstrings_in_source,
+)
 from generate_active_daily.utils import (
     camel_to_snake,
     modify_class_docstring,
+    remove_redundant_google_docstring_types,
     wrap_docstring,
     write_file,
 )
@@ -205,6 +209,89 @@ class Solution:
             and any(isinstance(target, ast.Name) for target in node.targets)
             for node in solution_node.body
         )
+
+    def test_strips_redundant_types_from_method_docstring(self):
+        code = '''\
+class Solution:
+    def twoSum(self, nums: list[int], target: int) -> list[int]:
+        """
+        Args:
+            nums (list[int]): Input nums.
+            target (int): Target value.
+
+        Returns:
+            list[int]: A pair of indexes.
+        """
+        ...
+'''
+        result = modify_class_docstring(code, ["Description"], "1. Title\n")
+        assert "nums (list[int]):" not in result
+        assert "target (int):" not in result
+        assert "list[int]: A pair of indexes." not in result
+        assert "nums: Input nums." in result
+        assert "target: Target value." in result
+        assert "A pair of indexes." in result
+
+
+class TestRemoveRedundantGoogleDocstringTypes:
+    def test_strips_arg_and_return_types(self):
+        docstring = """Args:
+    arr (list[int]): Input.
+    target (int): Desired value.
+
+Returns:
+    bool: Whether a pair exists.
+"""
+        assert (
+            remove_redundant_google_docstring_types(docstring)
+            == """Args:
+    arr: Input.
+    target: Desired value.
+
+Returns:
+    Whether a pair exists.
+"""
+        )
+
+    def test_keeps_already_untyped_sections_unchanged(self):
+        docstring = """Args:
+    arr: Input.
+
+Returns:
+    Whether a pair exists.
+"""
+        assert remove_redundant_google_docstring_types(docstring) == docstring
+
+    def test_does_not_modify_non_target_sections(self):
+        docstring = """Raises:
+    ValueError: On bad input.
+"""
+        assert remove_redundant_google_docstring_types(docstring) == docstring
+
+
+class TestBackfillRemoveDocstringTypeAnnotations:
+    def test_updates_only_docstring_sections(self):
+        source = '''\
+class Solution:
+    """Args:
+    nums (list[int]): class-level docs.
+    """
+
+    def solve(self):
+        """
+        Args:
+            nums (list[int]): Input nums.
+        Returns:
+            list[int]: Output values.
+        """
+        data = "Args:\\n    nums (list[int]): should stay unchanged"
+        return data
+'''
+        result = update_docstrings_in_source(source)
+        assert "nums: class-level docs." in result
+        assert "nums: Input nums." in result
+        assert "Output values." in result
+        assert 'data = "Args:\\n    nums (list[int]): should stay unchanged"' in result
 
 
 class TestWriteFile:
