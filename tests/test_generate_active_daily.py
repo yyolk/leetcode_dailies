@@ -360,8 +360,8 @@ class TestLeetcodeBoilerplate:
             "[^1]: term: Same meaning"
         ]
 
-    def test_extract_definition_footnote_lines_without_definitions(self):
-        problem_html = "<p>Plain text without clickable definitions</p>"
+    @pytest.mark.parametrize("problem_html", [None, "", "<p>Plain text without definitions</p>"])
+    def test_extract_definition_footnote_lines_without_definitions(self, problem_html):
         assert extract_definition_footnote_lines(problem_html) == []
 
     def test_select_python3_from_code_snippets(self):
