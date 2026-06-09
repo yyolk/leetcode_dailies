@@ -28,6 +28,7 @@ from markdownify import markdownify
 from .constants import LEETCODE_BASE_URL, TEXT_WIDTH
 from .client import query_question_of_today
 from .leetcode_boilerplate import (
+    extract_definition_footnote_lines,
     extract_external_docstring_lines,
     select_python3_starter_code,
     strip_external_block_from_starter_code,
@@ -82,6 +83,7 @@ CONTENT_BEFORE_EXAMPLE = (
 question_data = results["activeDailyCodingChallengeQuestion"]["question"]
 python3_starter_code = select_python3_starter_code(question_data)
 external_docstring_lines = extract_external_docstring_lines(python3_starter_code)
+definition_footnote_lines = extract_definition_footnote_lines(html_summary)
 initial_python_code = strip_external_block_from_starter_code(python3_starter_code) + (
     # add an elipsis into the default solution method so AST can parse, the 8th column is a guess!
     # TODO: upon encountering a challenge like 20208/20230828.py, this will have to be refactored
@@ -99,6 +101,9 @@ lines_ = filter(lambda x: x, docstring_.splitlines())
 # which is also our `unwrapped_docstring`
 # We also end up using this more than once over all items so list(...) here.
 unwrapped_docstring = list(lines_)
+
+if definition_footnote_lines:
+    unwrapped_docstring.extend(definition_footnote_lines)
 
 if external_docstring_lines:
     existing_docstring_lines = [
