@@ -109,7 +109,13 @@ def extract_definition_footnote_lines(problem_html):
     )
     footnote_pairs = []
     seen_pairs = set()
-    for element in soup.find_all(True):
+    def _has_candidate_definition(tag):
+        return any(
+            isinstance(tag.get(attr), str) and tag.get(attr).strip()
+            for attr in candidate_definition_attrs
+        )
+
+    for element in soup.find_all(_has_candidate_definition):
         term = _normalize_whitespace(element.get_text(" ", strip=True))
         if not term:
             continue
