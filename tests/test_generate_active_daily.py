@@ -360,7 +360,9 @@ class TestLeetcodeBoilerplate:
             "[^1]: term: Same meaning"
         ]
 
-    @pytest.mark.parametrize("problem_html", [None, "", "<p>Plain text without definitions</p>"])
+    @pytest.mark.parametrize(
+        "problem_html", [None, "", "<p>Plain text without definitions</p>"]
+    )
     def test_extract_definition_footnote_lines_without_definitions(self, problem_html):
         assert extract_definition_footnote_lines(problem_html) == []
 
