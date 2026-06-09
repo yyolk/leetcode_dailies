@@ -1,8 +1,15 @@
 import json
 import re
 
+from bs4 import BeautifulSoup
+
 
 EXTERNAL_CODEBLOCK_INDENT = " " * 4
+DEFINITION_FOOTNOTE_PREFIX = "[^"
+
+
+def _normalize_whitespace(text):
+    return " ".join(text.split())
 
 
 def _split_external_block_from_solution(starter_code):
@@ -86,3 +93,53 @@ def strip_external_block_from_starter_code(starter_code):
     """Drops external starter-code metadata and keeps only the Solution template."""
     _, solution_block = _split_external_block_from_solution(starter_code)
     return solution_block
+
+
+def extract_definition_footnote_lines(problem_html):
+    """Extracts clickable-term definitions from problem HTML as footnote lines."""
+    if not problem_html:
+        return []
+
+    soup = BeautifulSoup(problem_html, "html.parser")
+    candidate_definition_attrs = (
+        "data-definition",
+        "data-tooltip",
+        "data-original-title",
+        "title",
+    )
+    footnote_pairs = []
+    seen_pairs = set()
+
+    def _has_candidate_definition(tag):
+        return any(
+            isinstance(tag.get(attr), str) and tag.get(attr).strip()
+            for attr in candidate_definition_attrs
+        )
+
+    for element in soup.find_all(_has_candidate_definition):
+        term = _normalize_whitespace(element.get_text(" ", strip=True))
+        if not term:
+            continue
+
+        definition = None
+        for attr in candidate_definition_attrs:
+            raw_definition = element.get(attr)
+            if isinstance(raw_definition, str) and raw_definition.strip():
+                definition = _normalize_whitespace(raw_definition)
+                break
+        if not definition:
+            continue
+
+        pair = (term, definition)
+        if pair in seen_pairs:
+            continue
+        seen_pairs.add(pair)
+        footnote_pairs.append(pair)
+
+    if not footnote_pairs:
+        return []
+
+    return [
+        f"{DEFINITION_FOOTNOTE_PREFIX}{idx}]: {term}: {definition}"
+        for idx, (term, definition) in enumerate(footnote_pairs, start=1)
+    ]

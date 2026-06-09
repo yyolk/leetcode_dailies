@@ -6,6 +6,7 @@ import pytest
 
 
 from generate_active_daily.leetcode_boilerplate import (
+    extract_definition_footnote_lines,
     extract_external_docstring_lines,
     select_python3_starter_code,
     strip_external_block_from_starter_code,
@@ -350,6 +351,45 @@ class TestWriteFile:
 
 
 class TestLeetcodeBoilerplate:
+    def test_extract_definition_footnote_lines(self):
+        problem_html = textwrap.dedent(
+            """\
+            <p>
+                Make sure your result is
+                <a title="Dictionary order by character sequence">
+                    the smallest in lexicographical order
+                </a>
+                among all possible results.
+            </p>
+            <p>
+                Two strings are
+                <span data-tooltip="A contiguous section of a string">substrings</span>
+                if one can be obtained from the other.
+            </p>
+            """
+        )
+        assert extract_definition_footnote_lines(problem_html) == [
+            "[^1]: the smallest in lexicographical order: Dictionary order by character sequence",
+            "[^2]: substrings: A contiguous section of a string",
+        ]
+
+    def test_extract_definition_footnote_lines_deduplicates(self):
+        problem_html = textwrap.dedent(
+            """\
+            <p><a title="Same meaning">term</a></p>
+            <p><a title="Same meaning">term</a></p>
+            """
+        )
+        assert extract_definition_footnote_lines(problem_html) == [
+            "[^1]: term: Same meaning"
+        ]
+
+    @pytest.mark.parametrize(
+        "problem_html", [None, "", "<p>Plain text without definitions</p>"]
+    )
+    def test_extract_definition_footnote_lines_without_definitions(self, problem_html):
+        assert extract_definition_footnote_lines(problem_html) == []
+
     def test_select_python3_from_code_snippets(self):
         question = {
             "codeSnippets": [
