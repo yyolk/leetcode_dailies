@@ -109,6 +109,7 @@ def extract_definition_footnote_lines(problem_html):
     )
     footnote_pairs = []
     seen_pairs = set()
+
     def _has_candidate_definition(tag):
         return any(
             isinstance(tag.get(attr), str) and tag.get(attr).strip()
