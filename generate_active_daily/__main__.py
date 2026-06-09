@@ -102,8 +102,12 @@ unwrapped_docstring = list(lines_)
 constraints_lines = extract_constraints_lines(html_summary)
 
 if constraints_lines:
-    existing_docstring_lines = [line.strip() for line in unwrapped_docstring if line.strip()]
-    candidate_constraint_lines = [line.strip() for line in constraints_lines if line.strip()]
+    existing_docstring_lines = [
+        line.strip() for line in unwrapped_docstring if line.strip()
+    ]
+    candidate_constraint_lines = [
+        line.strip() for line in constraints_lines if line.strip()
+    ]
     existing_docstring_content = "\n" + "\n".join(existing_docstring_lines) + "\n"
     candidate_constraint_content = "\n" + "\n".join(candidate_constraint_lines) + "\n"
     has_constraints_block = candidate_constraint_content in existing_docstring_content

@@ -44,7 +44,9 @@ def extract_constraints_lines(html_content):
     if constraints_heading is None:
         return []
 
-    constraints_container = constraints_heading.find_parent("p") or constraints_heading.parent
+    constraints_container = (
+        constraints_heading.find_parent("p") or constraints_heading.parent
+    )
     constraints_html = str(constraints_container)
     constraints_list = constraints_container.find_next_sibling("ul")
     if constraints_list is not None:
