@@ -3,8 +3,12 @@
 import ast
 import re
 import textwrap
+import unicodedata
 
 from pathlib import Path
+
+from bs4 import BeautifulSoup
+from markdownify import markdownify
 
 from .constants import TEXT_WIDTH
 
@@ -29,6 +33,30 @@ _SIMPLE_RETURN_TYPES = {
     "frozenset",
     "object",
 }
+
+
+def extract_constraints_lines(html_content):
+    """Extracts the Constraints section from a LeetCode question HTML payload."""
+    soup = BeautifulSoup(html_content, "html.parser")
+    constraints_heading = soup.find(
+        "strong", string=lambda text: text and text.strip() == "Constraints:"
+    )
+    if constraints_heading is None:
+        return []
+
+    constraints_container = (
+        constraints_heading.find_parent("p") or constraints_heading.parent
+    )
+    constraints_html = str(constraints_container)
+    constraints_list = constraints_container.find_next_sibling("ul")
+    if constraints_list is not None:
+        constraints_html += str(constraints_list)
+
+    constraints_docstring = unicodedata.normalize("NFKC", markdownify(constraints_html))
+    constraints_lines = [line for line in constraints_docstring.splitlines() if line]
+    if constraints_lines and constraints_lines[0] == "**Constraints:**":
+        constraints_lines[0] = "Constraints:"
+    return constraints_lines
 
 
 def camel_to_snake(camel_string):
