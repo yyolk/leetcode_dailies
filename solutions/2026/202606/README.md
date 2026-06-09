@@ -68,10 +68,14 @@
    </a>
   </td>
   <td class="mon">
-   8
+   <a href="20260608.py">
+    8
+   </a>
   </td>
   <td class="tue">
-   9
+   <a href="20260609.py">
+    9
+   </a>
   </td>
   <td class="wed">
    10
