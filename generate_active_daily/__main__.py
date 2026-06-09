@@ -32,7 +32,7 @@ from .leetcode_boilerplate import (
     select_python3_starter_code,
     strip_external_block_from_starter_code,
 )
-from .utils import modify_class_docstring, write_file
+from .utils import extract_constraints_lines, modify_class_docstring, write_file
 
 parser = argparse.ArgumentParser(
     description="Generates the current daily active challenge boilerplate file."
@@ -99,6 +99,16 @@ lines_ = filter(lambda x: x, docstring_.splitlines())
 # which is also our `unwrapped_docstring`
 # We also end up using this more than once over all items so list(...) here.
 unwrapped_docstring = list(lines_)
+constraints_lines = extract_constraints_lines(html_summary)
+
+if constraints_lines:
+    existing_docstring_lines = [line.strip() for line in unwrapped_docstring if line.strip()]
+    candidate_constraint_lines = [line.strip() for line in constraints_lines if line.strip()]
+    existing_docstring_content = "\n" + "\n".join(existing_docstring_lines) + "\n"
+    candidate_constraint_content = "\n" + "\n".join(candidate_constraint_lines) + "\n"
+    has_constraints_block = candidate_constraint_content in existing_docstring_content
+    if not has_constraints_block:
+        unwrapped_docstring.extend(constraints_lines)
 
 if external_docstring_lines:
     existing_docstring_lines = [

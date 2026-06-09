@@ -15,6 +15,7 @@ from generate_active_daily.backfill_remove_docstring_type_annotations import (
 )
 from generate_active_daily.utils import (
     camel_to_snake,
+    extract_constraints_lines,
     modify_class_docstring,
     remove_redundant_google_docstring_types,
     wrap_docstring,
@@ -54,6 +55,29 @@ class TestCamelToSnake:
 
     def test_three_part_name(self):
         assert camel_to_snake("findMedianSortedArrays") == "find_median_sorted_arrays"
+
+
+class TestExtractConstraintsLines:
+    def test_extracts_constraints_heading_and_bullets(self):
+        html = """\
+<div>
+    <p>Description text.</p>
+    <p><strong>Constraints:</strong></p>
+    <ul>
+        <li>1 &lt;= nums.length &lt;= 1000</li>
+        <li>-10^4 &lt;= nums[i] &lt;= 10^4</li>
+    </ul>
+</div>
+"""
+        assert extract_constraints_lines(html) == [
+            "Constraints:",
+            "* 1 <= nums.length <= 1000",
+            "* -10^4 <= nums[i] <= 10^4",
+        ]
+
+    def test_returns_empty_when_constraints_absent(self):
+        html = "<div><p>No constraints section here.</p></div>"
+        assert extract_constraints_lines(html) == []
 
 
 class TestWrapDocstring:
