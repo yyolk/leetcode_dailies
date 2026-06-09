@@ -147,6 +147,57 @@ def remove_redundant_google_docstring_types(docstring):
     return result
 
 
+def _annotation_to_google_style(annotation):
+    if annotation is None:
+        return None
+    if isinstance(annotation, ast.Name):
+        return annotation.id
+    if isinstance(annotation, ast.Constant):
+        return str(annotation.value)
+    if isinstance(annotation, ast.Attribute):
+        return annotation.attr
+    if isinstance(annotation, ast.Subscript):
+        base = _annotation_to_google_style(annotation.value)
+        if isinstance(annotation.slice, ast.Tuple):
+            parts = [
+                _annotation_to_google_style(item) or "value"
+                for item in annotation.slice.elts
+            ]
+            inner = " and ".join(parts)
+        else:
+            inner = _annotation_to_google_style(annotation.slice) or "value"
+        return f"{base} of {inner}" if base else inner
+    if isinstance(annotation, ast.BinOp) and isinstance(annotation.op, ast.BitOr):
+        left = _annotation_to_google_style(annotation.left) or "value"
+        right = _annotation_to_google_style(annotation.right) or "value"
+        return f"{left} or {right}"
+    if isinstance(annotation, ast.Tuple):
+        parts = [_annotation_to_google_style(item) or "value" for item in annotation.elts]
+        return " and ".join(parts)
+    try:
+        return ast.unparse(annotation)
+    except Exception:  # pragma: no cover
+        return "value"
+
+
+def _build_method_docstring(function_node):
+    docstring_lines = ["...", "", "Proposed solution ..."]
+    args = [arg for arg in function_node.args.args if arg.arg != "self"]
+    if args:
+        docstring_lines.extend(["", "Args:"])
+        for arg in args:
+            arg_type = _annotation_to_google_style(arg.annotation)
+            if arg_type:
+                docstring_lines.append(f"    {arg.arg} ({arg_type}): ...")
+            else:
+                docstring_lines.append(f"    {arg.arg}: ...")
+
+    return_type = _annotation_to_google_style(function_node.returns)
+    if return_type:
+        docstring_lines.extend(["", "Returns:", f"    {return_type}: ..."])
+    return "\n".join(docstring_lines)
+
+
 def modify_class_docstring(code, new_docstring, first_line):
     """This is a rough ast parse and modify"""
     # The types we'll want to enforce to lowercase while walking the AST
@@ -233,6 +284,10 @@ def modify_class_docstring(code, new_docstring, first_line):
             ):
                 node.body[0].value.value = remove_redundant_google_docstring_types(
                     node.body[0].value.value
+                )
+            else:
+                node.body.insert(
+                    0, ast.Expr(value=ast.Constant(value=_build_method_docstring(node)))
                 )
 
     # We go back in after walking the entire thing so we can append into the class
