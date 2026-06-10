@@ -21,9 +21,13 @@ class SparseTableRMQ:
         for j in range(1, self.max_log):
             for i in range(self.n - (1 << j) + 1):
                 # build sparse for max
-                self.f_max[i][j] = max(self.f_max[i][j - 1], self.f_max[i + (1 << (j - 1))][j - 1])
+                self.f_max[i][j] = max(
+                    self.f_max[i][j - 1], self.f_max[i + (1 << (j - 1))][j - 1]
+                )
                 # build sparse for min
-                self.f_min[i][j] = min(self.f_min[i][j - 1], self.f_min[i + (1 << (j - 1))][j - 1])
+                self.f_min[i][j] = min(
+                    self.f_min[i][j - 1], self.f_min[i + (1 << (j - 1))][j - 1]
+                )
 
     def query_max(self, l: int, r: int) -> int:
         k = self.lg[r - l + 1]
@@ -46,6 +50,7 @@ class Solution:
     Constraints: 1 <= n == nums.length <= 5*10^4, 0 <= nums[i] <= 10^9, 1 <= k
     <= min(10^5, n*(n+1)/2)
     """
+
     def max_total_value(self, nums: list[int], k: int) -> int:
         n = len(nums)
         # sparse table for O(1) range max/min queries
