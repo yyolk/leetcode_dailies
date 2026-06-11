@@ -5,7 +5,7 @@ from collections import deque
 
 class Solution:
     """3558. Number of Ways to Assign Edge Weights I
-    
+
     There is an undirected tree with n nodes labeled from 1 to n, rooted at node 1.
     The tree is represented by a 2D integer array edges of length n-1, where
     edges[i] = [ui, vi] indicates that there is an edge between nodes ui and vi.
@@ -25,6 +25,7 @@ class Solution:
     * 1 <= ui, vi <= n
     * edges represents a valid tree.
     """
+
     def assign_edge_weights(self, edges: list[list[int]]) -> int:
         n = len(edges) + 1
         # Build undirected adjacency list
@@ -32,7 +33,7 @@ class Solution:
         for u, v in edges:
             adj[u].append(v)
             adj[v].append(u)
-        
+
         # BFS from root 1 to compute max depth (edge count)
         q = deque([(1, 0)])
         visited = [False] * (n + 1)
@@ -45,7 +46,7 @@ class Solution:
                 if not visited[nei]:
                     visited[nei] = True
                     q.append((nei, d + 1))
-        
+
         # Path to x at max depth has max_d edges.
         # Sum odd iff odd number of 1-weights (2 is even).
         # Exactly half of 2**max_d assignments yield odd sum.
