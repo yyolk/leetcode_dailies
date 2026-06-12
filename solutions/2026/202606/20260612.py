@@ -2,9 +2,10 @@
 
 from collections import deque
 
+
 class Solution:
     """3559. Number of Ways to Assign Edge Weights II
-    
+
     There is an undirected tree with n nodes labeled from 1 to n, rooted at node 1.
     The tree is represented by a 2D integer array edges of length n-1, where
     edges[i]=[ui,vi] indicates edge between ui and vi. Initially all edges have
@@ -13,6 +14,7 @@ class Solution:
     the number of ways to assign weights to edges in the path such that the path
     cost is odd (mod 10^9+7). Disregard edges not in the path.
     """
+
     def assign_edge_weights(
         self, edges: list[list[int]], queries: list[list[int]]
     ) -> list[int]:
@@ -44,6 +46,7 @@ class Solution:
         for i in range(1, LOG):
             for j in range(1, n + 1):
                 par[i][j] = par[i - 1][par[i - 1][j]]
+
         # LCA helper using binary lifting
         def get_lca(u: int, v: int) -> int:
             if depth[u] > depth[v]:
@@ -61,6 +64,7 @@ class Solution:
                     u = par[i][u]
                     v = par[i][v]
             return par[0][u]
+
         # process each query
         answer = []
         for u, v in queries:
