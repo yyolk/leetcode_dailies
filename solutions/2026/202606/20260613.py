@@ -1,8 +1,9 @@
 # https://leetcode.com/problems/weighted-word-mapping/
 
+
 class Solution:
     """3838. Weighted Word Mapping
-    
+
     You are given an array of strings words, where each string represents a word
     containing lowercase English letters. You are also given an integer array
     weights of length 26, where weights[i] represents the weight of the ith
@@ -17,6 +18,7 @@ class Solution:
     * weights.length == 26
     * 1 <= weights[i] <= 100
     * words[i] consists of lowercase English letters."""
+
     def map_word_weights(self, words: list[str], weights: list[int]) -> str:
         res = []
         for word in words:
