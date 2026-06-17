@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/delete-the-middle-node-of-a-linked-list/
 
+
 class Solution:
     """2095. Delete the Middle Node of a Linked List
 
@@ -9,6 +10,7 @@ class Solution:
     where ⌊x⌋ denotes the largest integer less than or equal to x. For n=1,2,3,
     4, and 5 the middle nodes are 0,1,1,2, and 2 respectively.
     """
+
     def delete_middle(self, head: ListNode | None) -> ListNode | None:
         # n<=1: delete the only node (middle is index 0)
         if not head or not head.next:
