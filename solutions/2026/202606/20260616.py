@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/process-string-with-special-operations-i/
 
+
 class Solution:
     """3612. Process String with Special Operations I
 
@@ -16,6 +17,7 @@ class Solution:
     * s consists of only lowercase English letters and special characters *, #,
     and %.
     """
+
     def process_str(self, s: str) -> str:
         # list for O(1) append/pop/reverse/extend, optimal for n<=20
         result = []
