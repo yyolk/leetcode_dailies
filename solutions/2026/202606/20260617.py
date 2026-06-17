@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/process-string-with-special-operations-ii/
 
+
 class Solution:
     """3614. Process String with Special Operations II
 
@@ -13,6 +14,7 @@ class Solution:
     Return the kth character of the final string result. If k is out of the bounds of
     result, return '.'.
     """
+
     def process_str(self, s: str, k: int) -> str:
         # Forward pass: record length after each operation (handles up to 1e15)
         n = len(s)
