@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/angle-between-hands-of-a-clock/
 
+
 class Solution:
     """1344. Angle Between Hands of a Clock
 
@@ -10,6 +11,7 @@ class Solution:
     Constraints:
     * 1 <= hour <= 12
     * 0 <= minutes <= 59"""
+
     def angle_clock(self, hour: int, minutes: int) -> float:
         # Minute hand: 360/60 = 6.0 deg per minute
         min_pos = minutes * 6.0
