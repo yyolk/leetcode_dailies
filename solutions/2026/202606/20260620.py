@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/maximum-building-height/
 
+
 class Solution:
     """1840. Maximum Building Height
 
@@ -8,6 +9,7 @@ class Solution:
     adjacent differ by <=1. Given restrictions[i]=[idi, maxHeighti] (building idi <=
     maxHeighti). Return max possible height of tallest building.
     """
+
     def max_building(self, n: int, restrictions: list[list[int]]) -> int:
         # Sorted list reusing original sublists (no copy, saves alloc/time)
         points = sorted(restrictions + [[1, 0]])
