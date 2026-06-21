@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/maximum-ice-cream-bars/
 
+
 class Solution:
     """1833. Maximum Ice Cream Bars
 
@@ -14,6 +15,7 @@ class Solution:
     Return the maximum number of ice cream bars the boy can buy with coins coins.
     You must solve the problem by counting sort.
     """
+
     def max_ice_cream(self, costs: list[int], coins: int) -> int:
         # Count freq of each possible cost (1 <= costs[i] <= 10^5)
         MAX = 100000
