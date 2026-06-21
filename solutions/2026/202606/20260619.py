@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/find-the-highest-altitude/
 
+
 class Solution:
     """1732. Find the Highest Altitude
 
@@ -13,6 +14,7 @@ class Solution:
     * n == gain.length
     * 1 <= n <= 100
     * -100 <= gain[i] <= 100"""
+
     def largest_altitude(self, gain: list[int]) -> int:
         # current altitude starts at point 0 (altitude 0)
         curr_alt = 0
