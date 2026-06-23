@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/number-of-zigzag-arrays-i/
 
+
 class Solution:
     """3699. Number of ZigZag Arrays I
 
@@ -7,6 +8,7 @@ class Solution:
     has each element in [l,r], no adjacent equal, and no three consecutive
     strictly increasing or decreasing. Return the count mod 10^9+7.
     """
+
     def zig_zag_arrays(self, n: int, l: int, r: int) -> int:
         MOD = 10**9 + 7
         m = r - l + 1
