@@ -1,14 +1,16 @@
 # https://leetcode.com/problems/number-of-zigzag-arrays-ii/
 
+
 class Solution:
     """3700. Number of ZigZag Arrays II
-    
+
     You are given three integers n, l, and r. A ZigZag array of length n is
     defined as follows: each element in [l, r], no two adjacent equal, no three
     consecutive elements form a strictly increasing or strictly decreasing
     sequence. Return total valid ZigZag arrays modulo 10^9+7. Strictly
     increasing: each > previous. Strictly decreasing: each < previous.
     Constraints: 3<=n<=10^9, 1<=l<r<=75"""
+
     def zig_zag_arrays(self, n: int, l: int, r: int) -> int:
         MOD = 10**9 + 7
         m = r - l + 1
@@ -29,6 +31,7 @@ class Solution:
         for j in range(m):
             V[j * 2] = j
             V[j * 2 + 1] = m - 1 - j
+
         def mat_mul(a, b, mod):
             # matrix multiply with early skip for speed
             ra = len(a)
@@ -43,6 +46,7 @@ class Solution:
                     for j in range(cb):
                         res[i][j] = (res[i][j] + aik * b[k][j]) % mod
             return res
+
         def mat_pow(mat, exp, mod):
             # fast exponentiation for transition matrix
             sz = len(mat)
@@ -53,6 +57,7 @@ class Solution:
                 mat = mat_mul(mat, mat, mod)
                 exp >>= 1
             return res
+
         if n == 2:
             return sum(V) % MOD
         # M^(n-2) advances from length 2 to length n
