@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/count-subarrays-with-majority-element-ii/
 
+
 class Solution:
     """3739. Count Subarrays With Majority Element II
 
@@ -13,6 +14,7 @@ class Solution:
     * 1 <= nums[i] <= 10**9
     * 1 <= target <= 10**9
     """
+
     def count_majority_subarrays(self, nums: list[int], target: int) -> int:
         n = len(nums)
         # +1 if == target else -1; prefix sum s = 2*target_count - length
@@ -25,11 +27,13 @@ class Solution:
         rank = {v: i + 1 for i, v in enumerate(vals)}
         m = len(vals)
         ft = [0] * (m + 2)
+
         def update(x):
             # add freq at rank x
             while x <= m:
                 ft[x] += 1
                 x += x & -x
+
         def query(x):
             # count of all ranks 1..x i.e. values <= current
             res = 0
@@ -37,6 +41,7 @@ class Solution:
                 res += ft[x]
                 x -= x & -x
             return res
+
         ans = 0
         # seed prefix[0] = 0
         update(rank[prefix[0]])
