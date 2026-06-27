@@ -2,15 +2,17 @@
 
 from collections import Counter
 
+
 class Solution:
     """3020. Find the Maximum Number of Elements in Subset
-    
+
     You are given an array of positive integers nums. You need to select a
     subset of nums which satisfies: place selected elements in array following
     [x, x^2, x^4, ..., x^{k/2}, x^k, x^{k/2}, ..., x^4, x^2, x] where k is
     any non-negative power of 2. E.g. [2,4,16,4,2] and [3,9,3] valid;
     [2,4,8,4,2] invalid. Return the maximum number of elements in such subset.
     """
+
     def maximum_length(self, nums: list[int]) -> int:
         count = Counter(nums)
         # 1 squares to itself so any odd-length sequence of 1s is valid
