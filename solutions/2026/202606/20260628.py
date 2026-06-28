@@ -1,8 +1,9 @@
 # https://leetcode.com/problems/maximum-element-after-decreasing-and-rearranging/
 
+
 class Solution:
     """1846. Maximum Element After Decreasing and Rearranging
-    
+
     You are given an array of positive integers arr. Perform some operations
     (possibly none) on arr so that it satisfies these conditions: The value of
     the first element in arr must be 1. The absolute difference between any 2
@@ -16,9 +17,8 @@ class Solution:
     Constraints:
     * 1 <= arr.length <= 10^5
     * 1 <= arr[i] <= 10^9"""
-    def maximum_element_after_decrementing_and_rearranging(
-        self, arr: list[int]
-    ) -> int:
+
+    def maximum_element_after_decrementing_and_rearranging(self, arr: list[int]) -> int:
         # sort ascending: smallest upper bounds first for early low values
         arr.sort()
         # track max reachable in chain from 1 (starts at 0, first min forces 1)
