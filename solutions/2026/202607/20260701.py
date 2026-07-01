@@ -1,41 +1,59 @@
 # https://leetcode.com/problems/find-the-safest-path-in-a-grid/
 
+from collections import deque
 
 class Solution:
     """2812. Find the Safest Path in a Grid
 
-    You are given a **0-indexed** 2D matrix `grid` of size `n x n`, where `(r, c)`
-    represents:
-
-    * A cell containing a thief if `grid[r][c] = 1`
-
-    * An empty cell if `grid[r][c] = 0`
-
-    You are initially positioned at cell `(0, 0)`. In one move, you can move to any
-    adjacent cell in the grid, including cells containing thieves.
-
-    The **safeness factor** of a path on the grid is defined as the **minimum**
-    manhattan distance from any cell in the path to any thief in the grid.
-
-    Return *the **maximum safeness factor** of all paths leading to cell* `(n - 1, n -
-    1)`*.*
-
-    An **adjacent** cell of cell `(r, c)`, is one of the cells `(r, c + 1)`, `(r, c -
-    1)`, `(r + 1, c)` and `(r - 1, c)` if it exists.
-
-    The **Manhattan distance** between two cells `(a, b)` and `(x, y)` is equal to `|a -
-    x| + |b - y|`, where `|val|` denotes the absolute value of val.
-
-    Constraints:
-
-    * `1 <= grid.length == n <= 400`
-
-    * `grid[i].length == n`
-
-    * `grid[i][j]` is either `0` or `1`.
-
-    * There is at least one thief in the `grid`."""
-
-    def maximum_safeness_factor(self, grid: list[list[int]]) -> int: ...
+    You are given a 0-indexed 2D matrix grid of size n x n, where (r, c)
+    represents a cell with thief if grid[r][c]=1 or empty if 0. Start at (0,0),
+    reach (n-1,n-1) via adjacent moves. Path safeness is min over path cells of
+    (min Manhattan to any thief). Return max such safeness over paths to end.
+    """
+    def maximum_safeness_factor(self, grid: list[list[int]]) -> int:
+        n = len(grid)
+        # Precompute min dist to nearest thief via multi-source BFS (equals Manh.)
+        dist = [[10**9] * n for _ in range(n)]
+        q = deque()
+        for i in range(n):
+            for j in range(n):
+                if grid[i][j] == 1:  # enqueue all thieves (sources with dist 0)
+                    dist[i][j] = 0
+                    q.append((i, j))
+        dirs = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+        while q:
+            x, y = q.popleft()
+            for dx, dy in dirs:
+                nx, ny = x + dx, y + dy
+                if 0 <= nx < n and 0 <= ny < n and dist[nx][ny] == 10**9:
+                    dist[nx][ny] = dist[x][y] + 1  # first visit = shortest
+                    q.append((nx, ny))
+        # Binary search for max k where path exists using only cells with dist >=k
+        def can_reach(k: int) -> bool:
+            if dist[0][0] < k or dist[n-1][n-1] < k:  # start/end must qualify
+                return False
+            visited = [[False] * n for _ in range(n)]
+            q = deque([(0, 0)])
+            visited[0][0] = True
+            while q:
+                x, y = q.popleft()
+                if x == n - 1 and y == n - 1:
+                    return True
+                for dx, dy in dirs:
+                    nx = x + dx
+                    ny = y + dy
+                    if (0 <= nx < n and 0 <= ny < n and not visited[nx][ny]
+                            and dist[nx][ny] >= k):
+                        visited[nx][ny] = True
+                        q.append((nx, ny))
+            return False
+        low, high = 0, min(dist[0][0], dist[n - 1][n - 1])
+        while low <= high:
+            mid = (low + high) // 2
+            if can_reach(mid):
+                low = mid + 1  # try higher
+            else:
+                high = mid - 1
+        return high
 
     maximumSafenessFactor = maximum_safeness_factor
