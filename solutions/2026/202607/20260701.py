@@ -2,6 +2,7 @@
 
 from collections import deque
 
+
 class Solution:
     """2812. Find the Safest Path in a Grid
 
@@ -10,6 +11,7 @@ class Solution:
     reach (n-1,n-1) via adjacent moves. Path safeness is min over path cells of
     (min Manhattan to any thief). Return max such safeness over paths to end.
     """
+
     def maximum_safeness_factor(self, grid: list[list[int]]) -> int:
         n = len(grid)
         # Precompute min dist to nearest thief via multi-source BFS (equals Manh.)
@@ -28,9 +30,10 @@ class Solution:
                 if 0 <= nx < n and 0 <= ny < n and dist[nx][ny] == 10**9:
                     dist[nx][ny] = dist[x][y] + 1  # first visit = shortest
                     q.append((nx, ny))
+
         # Binary search for max k where path exists using only cells with dist >=k
         def can_reach(k: int) -> bool:
-            if dist[0][0] < k or dist[n-1][n-1] < k:  # start/end must qualify
+            if dist[0][0] < k or dist[n - 1][n - 1] < k:  # start/end must qualify
                 return False
             visited = [[False] * n for _ in range(n)]
             q = deque([(0, 0)])
@@ -42,11 +45,16 @@ class Solution:
                 for dx, dy in dirs:
                     nx = x + dx
                     ny = y + dy
-                    if (0 <= nx < n and 0 <= ny < n and not visited[nx][ny]
-                            and dist[nx][ny] >= k):
+                    if (
+                        0 <= nx < n
+                        and 0 <= ny < n
+                        and not visited[nx][ny]
+                        and dist[nx][ny] >= k
+                    ):
                         visited[nx][ny] = True
                         q.append((nx, ny))
             return False
+
         low, high = 0, min(dist[0][0], dist[n - 1][n - 1])
         while low <= high:
             mid = (low + high) // 2
