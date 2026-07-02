@@ -2,6 +2,7 @@
 
 from collections import deque
 
+
 class Solution:
     """3286. Find a Safe Walk Through a Grid
 
@@ -12,6 +13,7 @@ class Solution:
     = 1 are unsafe and reduce your health by 1. Return true if you can reach
     the final cell with health >= 1, else false.
     """
+
     def find_safe_walk(self, grid: list[list[int]], health: int) -> bool:
         m, n = len(grid), len(grid[0])
         dirs = [(-1, 0), (1, 0), (0, -1), (0, 1)]
