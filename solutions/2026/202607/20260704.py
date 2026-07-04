@@ -1,48 +1,39 @@
 # https://leetcode.com/problems/minimum-score-of-a-path-between-two-cities/
 
+from collections import deque
 
 class Solution:
     """2492. Minimum Score of a Path Between Two Cities
+    
+    You are given a positive integer n representing n cities numbered from 1 to
+    n. Also given 2D roads where roads[i]=[ai,bi,distancei] for bidirectional
+    road ai-bi with distance distancei. Graph not necessarily connected. Score
+    of path = min road distance on it. Return min possible score for any path
+    1 to n (repeats of roads/cities allowed). Guaranteed at least one path.
+    """
+    def min_score(self, n: int, roads: list[list[int]]) -> int:
+        # adj list: each node -> list of (neighbor, weight)
+        adj = [[] for _ in range(n + 1)]
+        for a, b, d in roads:
+            adj[a].append((b, d))
+            adj[b].append((a, d))
 
-    You are given a positive integer `n` representing `n` cities numbered from `1` to
-    `n`. You are also given a **2D** array `roads` where `roads[i] = [ai, bi,
-    distancei]` indicates that there is a **bidirectional** road between cities `ai` and
-    `bi` with a distance equal to `distancei`. The cities graph is not necessarily
-    connected.
+        # BFS explores entire component of 1 (includes n)
+        visited = [False] * (n + 1)
+        q = deque([1])
+        visited[1] = True
+        ans = float("inf")
 
-    The **score** of a path between two cities is defined as the **minimum** distance of
-    a road in this path.
+        while q:
+            u = q.popleft()
+            for v, d in adj[u]:
+                # all edges incident to reachable nodes are in component
+                # (undirected => no external edges possible)
+                ans = min(ans, d)
+                if not visited[v]:
+                    visited[v] = True
+                    q.append(v)
 
-    Return *the **minimum** possible score of a path between cities* `1` *and* `n`.
-
-    **Note**:
-
-    * A path is a sequence of roads between two cities.
-
-    * It is allowed for a path to contain the same road **multiple** times, and you can
-    visit cities `1` and `n` multiple times along the path.
-
-    * The test cases are generated such that there is **at least** one path between `1`
-    and `n`.
-
-    Constraints:
-
-    * `2 <= n <= 105`
-
-    * `1 <= roads.length <= 105`
-
-    * `roads[i].length == 3`
-
-    * `1 <= ai, bi <= n`
-
-    * `ai != bi`
-
-    * `1 <= distancei <= 104`
-
-    * There are no repeated edges.
-
-    * There is at least one path between `1` and `n`."""
-
-    def min_score(self, n: int, roads: list[list[int]]) -> int: ...
+        return ans
 
     minScore = min_score
