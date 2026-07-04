@@ -2,15 +2,17 @@
 
 from collections import deque
 
+
 class Solution:
     """2492. Minimum Score of a Path Between Two Cities
-    
+
     You are given a positive integer n representing n cities numbered from 1 to
     n. Also given 2D roads where roads[i]=[ai,bi,distancei] for bidirectional
     road ai-bi with distance distancei. Graph not necessarily connected. Score
     of path = min road distance on it. Return min possible score for any path
     1 to n (repeats of roads/cities allowed). Guaranteed at least one path.
     """
+
     def min_score(self, n: int, roads: list[list[int]]) -> int:
         # adj list: each node -> list of (neighbor, weight)
         adj = [[] for _ in range(n + 1)]
