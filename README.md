@@ -7407,7 +7407,9 @@ python -m generate_problem_symlinks
       </a>
      </td>
      <td class="mon">
-      6
+      <a href="solutions/2026/202607/20260706.py">
+       6
+      </a>
      </td>
      <td class="tue">
       7
