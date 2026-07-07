@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/concatenate-non-zero-digits-and-multiply-by-sum-i/
 
+
 class Solution:
     """3754. Concatenate Non-Zero Digits and Multiply by Sum I
 
@@ -8,6 +9,7 @@ class Solution:
     digits, x = 0. Let sum be the sum of digits in x. Return an integer
     representing the value of x * sum.
     Constraints: 0 <= n <= 10**9"""
+
     def sum_and_multiply(self, n: int) -> int:
         x = 0
         digit_sum = 0
