@@ -2,12 +2,14 @@
 
 import bisect
 
+
 class Solution:
     """3756. Concatenate Non-Zero Digits and Multiply by Sum II
-    
+
     Given string s of digits length m and queries[i]=[li,ri], for each extract
     s[li..ri], form x by concat non-zero digits (x=0 if none), compute
     (x * sum_of_digits_of_x) % (10**9+7). Return list of answers."""
+
     def sum_and_multiply(self, s: str, queries: list[list[int]]) -> list[int]:
         MOD = 10**9 + 7
         # collect positions and non-zero digits for O(1) range mapping later
