@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/path-existence-queries-in-a-graph-i/
 
+
 class Solution:
     """3532. Path Existence Queries in a Graph I
 
@@ -13,6 +14,7 @@ class Solution:
     Constraints: 1<=n==nums.length<=1e5, nums sorted non-dec, 0<=max_diff<=1e5,
     1<=queries.length<=1e5, 0<=ui,vi<n.
     """
+
     def path_existence_queries(
         self, n: int, nums: list[int], max_diff: int, queries: list[list[int]]
     ) -> list[bool]:
