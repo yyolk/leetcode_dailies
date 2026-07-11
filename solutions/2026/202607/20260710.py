@@ -1,8 +1,9 @@
 # https://leetcode.com/problems/path-existence-queries-in-a-graph-ii/
 
+
 class Solution:
     """3534. Path Existence Queries in a Graph II
-    
+
     You are given an integer n representing the number of nodes in a graph,
     labeled from 0 to n-1. You are also given an integer array nums of length n
     and an integer max_diff. An undirected edge exists between nodes i and j if
@@ -11,7 +12,7 @@ class Solution:
     array queries. For each queries[i] = [ui, vi], find the minimum distance
     between nodes ui and vi. If no path exists between the two nodes, return -1
     for that query. Note: The edges between the nodes are unweighted.
-    
+
     Constraints:
     * 1 <= n == nums.length <= 105
     * 0 <= nums[i] <= 105
@@ -20,6 +21,7 @@ class Solution:
     * queries[i] == [ui, vi]
     * 0 <= ui, vi < n
     """
+
     def path_existence_queries(
         self, n: int, nums: list[int], max_diff: int, queries: list[list[int]]
     ) -> list[int]:
@@ -38,7 +40,10 @@ class Solution:
         while i < n:
             start = i
             # Extend component while consecutive values differ by <= max_diff
-            while i < n and (i == start or nums[sorted_nodes[i]] - nums[sorted_nodes[i - 1]] <= max_diff):
+            while i < n and (
+                i == start
+                or nums[sorted_nodes[i]] - nums[sorted_nodes[i - 1]] <= max_diff
+            ):
                 i += 1
             comp_nodes = sorted_nodes[start:i]
             m = len(comp_nodes)
@@ -87,7 +92,7 @@ class Solution:
             for k in range(LOG - 1, -1, -1):
                 if jump[k][curr] < p2:
                     curr = jump[k][curr]
-                    dist += (1 << k)
+                    dist += 1 << k
             # One final single jump if still short of target
             if curr < p2:
                 dist += 1
