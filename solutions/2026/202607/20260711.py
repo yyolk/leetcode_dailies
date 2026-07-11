@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/count-the-number-of-complete-components/
 
+
 class Solution:
     """2685. Count the Number of Complete Components
 
@@ -25,6 +26,7 @@ class Solution:
     * ai != bi
     * There are no repeated edges.
     """
+
     def count_complete_components(self, n: int, edges: list[list[int]]) -> int:
         # Build adjacency list for undirected graph
         adj = [[] for _ in range(n)]
