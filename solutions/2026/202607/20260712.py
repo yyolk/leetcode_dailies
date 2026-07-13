@@ -1,8 +1,9 @@
 # https://leetcode.com/problems/rank-transform-of-an-array/
 
+
 class Solution:
     """1331. Rank Transform of an Array
-    
+
     Given an array of integers arr, replace each element with its rank. The rank
     represents how large the element is. The rank has the following rules:
     * Rank is an integer starting from 1.
@@ -12,6 +13,7 @@ class Solution:
     Constraints:
     * 0 <= arr.length <= 10^5
     * -10^9 <= arr[i] <= 10^9"""
+
     def array_rank_transform(self, arr: list[int]) -> list[int]:
         # Sort unique values to determine ranks efficiently
         sorted_unique = sorted(set(arr))
