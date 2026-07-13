@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/sequential-digits/
 
+
 class Solution:
     """1291. Sequential Digits
 
@@ -9,6 +10,7 @@ class Solution:
 
     Constraints:
     * 10 <= low <= high <= 10^9"""
+
     def sequential_digits(self, low: int, high: int) -> list[int]:
         result = []
         # Generate all sequential numbers by each possible start digit 1-9
