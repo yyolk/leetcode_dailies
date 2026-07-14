@@ -19,6 +19,7 @@ class Solution:
     * `1 <= nums.length <= 200`
     * `1 <= nums[i] <= 200`
     """
+
     def subsequence_pair_count(self, nums: list[int]) -> int:
         mod = 10**9 + 7
         max_num = max(nums)
