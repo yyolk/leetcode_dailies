@@ -2,9 +2,10 @@
 
 from math import gcd
 
+
 class Solution:
     """3867. Sum of GCD of Formed Pairs
-    
+
     You are given an integer array nums of length n. Construct an array
     prefixGcd where for each index i: Let mxi = max(nums[0], nums[1], ...,
     nums[i]). prefixGcd[i] = gcd(nums[i], mxi). After constructing prefixGcd:
@@ -16,6 +17,7 @@ class Solution:
     the sum of the GCD values of all formed pairs. The term gcd(a, b)
     denotes the greatest common divisor of a and b.
     """
+
     def gcd_sum(self, nums: list[int]) -> int:
         n = len(nums)
         if n == 0:
