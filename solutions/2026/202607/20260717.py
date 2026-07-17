@@ -2,9 +2,10 @@
 
 import bisect
 
+
 class Solution:
     """3312. Sorted GCD Pair Queries
-    
+
     You are given an integer array nums of length n and an integer array
     queries. Let gcdPairs denote an array obtained by calculating the GCD of
     all possible pairs (nums[i], nums[j]), where 0 <= i < j < n, and then
@@ -18,6 +19,7 @@ class Solution:
     * 1 <= nums[i] <= 5 * 10^4
     * 1 <= queries.length <= 10^5
     * 0 <= queries[i] < n * (n - 1) / 2"""
+
     def gcd_values(self, nums: list[int], queries: list[int]) -> list[int]:
         # max value bounds all possible GCDs
         max_num = max(nums)
