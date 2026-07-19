@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/smallest-subsequence-of-distinct-characters/
 
+
 class Solution:
     """1081. Smallest Subsequence of Distinct Characters
 
@@ -10,6 +11,7 @@ class Solution:
     * 1 <= s.length <= 1000
     * s consists of lowercase English letters.
     """
+
     def smallest_subsequence(self, s: str) -> str:
         # Record the last occurrence index of each character
         last = {c: i for i, c in enumerate(s)}
