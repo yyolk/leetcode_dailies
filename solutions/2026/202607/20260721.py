@@ -1,7 +1,7 @@
 # https://leetcode.com/problems/maximize-active-section-with-trade-i/
 class Solution:
     """3499. Maximize Active Section with Trade I
-    
+
     You are given a binary string `s` of length `n`, where:
     * `'1'` represents an **active** section.
     * `'0'` represents an **inactive** section.
@@ -20,6 +20,7 @@ class Solution:
     * `1 <= n == s.length <= 105`
     * `s[i]` is either `'0'` or `'1'`
     """
+
     def max_active_sections_after_trade(self, s: str) -> int:
         # original count of active sections + max zeros gained by trade
         n = len(s)
