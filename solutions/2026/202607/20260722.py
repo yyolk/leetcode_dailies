@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/maximize-active-section-with-trade-ii/
 
+
 class Solution:
     """3501. Maximize Active Section with Trade II
 
@@ -31,6 +32,7 @@ class Solution:
     * `queries[i] = [li, ri]`
     * `0 <= li <= ri < n`
     """
+
     def max_active_sections_after_trade(
         self, s: str, queries: list[list[int]]
     ) -> list[int]:
@@ -63,11 +65,7 @@ class Solution:
 
             # range of fully-covered zero groups inside [l, r]
             start_g = zero_group_index[l] + 1
-            end_g = (
-                zero_group_index[r]
-                if s[r] == "1"
-                else zero_group_index[r] - 1
-            )
+            end_g = zero_group_index[r] if s[r] == "1" else zero_group_index[r] - 1
             # corresponding indices into the merge_lengths array
             start_m, end_m = start_g, end_g - 1
 
@@ -85,32 +83,22 @@ class Solution:
                 active = max(active, ones + st.query(start_m, end_m))
 
             # left partial + the next full zero-group
-            end_check = (
-                zero_group_index[r]
-                if s[r] == "1"
-                else zero_group_index[r] - 1
-            )
+            end_check = zero_group_index[r] if s[r] == "1" else zero_group_index[r] - 1
             if s[l] == "0" and zero_group_index[l] + 1 <= end_check:
                 active = max(
                     active,
-                    ones
-                    + left
-                    + zero_groups[zero_group_index[l] + 1][1],
+                    ones + left + zero_groups[zero_group_index[l] + 1][1],
                 )
             # previous full zero-group + right partial
             if s[r] == "0" and zero_group_index[l] < zero_group_index[r] - 1:
                 active = max(
                     active,
-                    ones
-                    + right
-                    + zero_groups[zero_group_index[r] - 1][1],
+                    ones + right + zero_groups[zero_group_index[r] - 1][1],
                 )
             ans.append(active)
         return ans
 
-    def _get_zero_groups(
-        self, s: str
-    ) -> tuple[list[list[int]], list[int]]:
+    def _get_zero_groups(self, s: str) -> tuple[list[list[int]], list[int]]:
         zero_groups: list[list[int]] = []
         zero_group_index: list[int] = []
         for i, c in enumerate(s):
@@ -125,9 +113,7 @@ class Solution:
                 zero_group_index.append(len(zero_groups) - 1)
         return zero_groups, zero_group_index
 
-    def _get_zero_merge_lengths(
-        self, zero_groups: list[list[int]]
-    ) -> list[int]:
+    def _get_zero_merge_lengths(self, zero_groups: list[list[int]]) -> list[int]:
         return [
             zero_groups[i][1] + zero_groups[i + 1][1]
             for i in range(len(zero_groups) - 1)
@@ -145,16 +131,12 @@ class Solution:
             for i in range(1, bits + 1):
                 step = 1 << (i - 1)
                 for j in range(self.n - (1 << i) + 1):
-                    self.st[i][j] = max(
-                        self.st[i - 1][j], self.st[i - 1][j + step]
-                    )
+                    self.st[i][j] = max(self.st[i - 1][j], self.st[i - 1][j + step])
 
         def query(self, l: int, r: int) -> int:
             if l > r or self.n == 0:
                 return 0
             i = (r - l + 1).bit_length() - 1
-            return max(
-                self.st[i][l], self.st[i][r - (1 << i) + 1]
-            )
+            return max(self.st[i][l], self.st[i][r - (1 << i) + 1])
 
     maxActiveSectionsAfterTrade = max_active_sections_after_trade
