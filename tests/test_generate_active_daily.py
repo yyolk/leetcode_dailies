@@ -257,6 +257,18 @@ class Solution:
         assert "target: Target value." in result
         assert "A pair of indexes." in result
 
+    def test_generates_method_docstring_with_args_and_returns(self):
+        result = modify_class_docstring(
+            self.SIMPLE_CODE, ["Two sum description"], "1. Two Sum\n"
+        )
+        assert '"""...' in result
+        assert "Proposed solution ..." in result
+        assert "Args:" in result
+        assert "nums (list of int): ..." in result
+        assert "target (int): ..." in result
+        assert "Returns:" in result
+        assert "list of int: ..." in result
+
 
 class TestRemoveRedundantGoogleDocstringTypes:
     def test_strips_arg_and_return_types(self):
