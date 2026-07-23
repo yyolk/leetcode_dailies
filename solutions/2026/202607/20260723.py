@@ -23,13 +23,9 @@ class Solution:
 
     def unique_xor_triplets(self, nums: list[int]) -> int:
         n = len(nums)
-        # i <= j <= k allows repeated indices, so for n <= 2:
-        # n = 1 -> {1}, n = 2 -> {1, 2}.
         if n <= 2:
             return n
         max_value = n  # nums is a permutation of [1..n]
-        # For any n >= 3 (nums is a permutation of [1..n]), reachable XOR values
-        # cover all numbers in [0, 2^bit_length(n) - 1].
         return 1 << max_value.bit_length()
 
     uniqueXorTriplets = unique_xor_triplets
