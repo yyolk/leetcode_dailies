@@ -21,6 +21,11 @@ class Solution:
 
     * `nums` is a permutation of integers from `1` to `n`."""
 
-    def unique_xor_triplets(self, nums: list[int]) -> int: ...
+    def unique_xor_triplets(self, nums: list[int]) -> int:
+        n = len(nums)
+        if n <= 2:
+            return n
+        max_value = n  # nums is a permutation of [1..n]
+        return 1 << max_value.bit_length()
 
     uniqueXorTriplets = unique_xor_triplets
