@@ -4,7 +4,6 @@ import ast
 import re
 import textwrap
 import unicodedata
-
 from pathlib import Path
 
 from bs4 import BeautifulSoup

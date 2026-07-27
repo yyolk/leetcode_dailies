@@ -22,8 +22,9 @@ class Solution:
                 last_lower[idx] = i  # update last lowercase position
             elif "A" <= c <= "Z":
                 idx = ord(c) - ord("A")
-                if i < first_upper[idx]:
-                    first_upper[idx] = i  # update first uppercase position
+                first_upper[idx] = min(
+                    first_upper[idx], i
+                )  # update first uppercase position
 
         count = 0
         for i in range(26):

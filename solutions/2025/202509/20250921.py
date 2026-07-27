@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/design-movie-rental-system/
 from collections import defaultdict
+
 from sortedcontainers import SortedList
 
 

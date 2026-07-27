@@ -1,6 +1,6 @@
 # https://leetcode.com/problems/minimize-hamming-distance-after-swap-operations/
 
-from collections import defaultdict, Counter
+from collections import Counter, defaultdict
 
 
 class Solution:

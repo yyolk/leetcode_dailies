@@ -46,8 +46,7 @@ class Solution:
                     continue
                 for v, c in adj[u]:
                     if c >= T:
-                        if dist[u] + c < dist[v]:
-                            dist[v] = dist[u] + c
+                        dist[v] = min(dist[v], dist[u] + c)
             return dist[n - 1] <= k
 
         # binary max T where min-sum path <=k exists

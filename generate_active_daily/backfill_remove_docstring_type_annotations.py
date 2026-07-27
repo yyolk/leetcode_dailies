@@ -2,7 +2,6 @@
 
 import argparse
 import ast
-
 from pathlib import Path
 
 from .utils import remove_redundant_google_docstring_types

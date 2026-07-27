@@ -52,8 +52,7 @@ class Solution:
                     # Construct rotated string
                     curr = "".join(str(modified[(start + j) % n]) for j in range(n))
                     # Update if smaller
-                    if curr < min_str:
-                        min_str = curr
+                    min_str = min(min_str, curr)
         else:
             # For odd b, can increment both parity groups independently
             for d_even in poss_d:
@@ -68,8 +67,7 @@ class Solution:
                         # Construct rotated string
                         curr = "".join(str(modified[(start + j) % n]) for j in range(n))
                         # Update if smaller
-                        if curr < min_str:
-                            min_str = curr
+                        min_str = min(min_str, curr)
         return min_str
 
     findLexSmallestString = find_lex_smallest_string

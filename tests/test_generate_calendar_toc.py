@@ -1,7 +1,6 @@
 """Tests for generate_calendar_toc.utils module."""
 
 import calendar
-
 from datetime import datetime
 from pathlib import Path
 from unittest.mock import patch

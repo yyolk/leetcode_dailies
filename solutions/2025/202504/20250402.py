@@ -35,8 +35,9 @@ class Solution:
             )  # (max(nums[0] to nums[j-1]) - nums[j])
 
             # Update max_diff if the current difference is larger
-            if current_diff > max_diff:
-                max_diff = current_diff  # Keep the largest difference seen so far
+            max_diff = max(
+                max_diff, current_diff
+            )  # Keep the largest difference seen so far
 
             # Calculate the triplet value using max_diff and nums[k]
             value = (
@@ -44,8 +45,9 @@ class Solution:
             )  # (nums[i] - nums[j]) * nums[k] for the best i, j < k
 
             # Update max_value if the computed value is greater
-            if value > max_value:
-                max_value = value  # Update the maximum triplet value if this is larger
+            max_value = max(
+                max_value, value
+            )  # Update the maximum triplet value if this is larger
 
             # Update running_max to include nums[k-1] for the next iteration
             running_max = max(

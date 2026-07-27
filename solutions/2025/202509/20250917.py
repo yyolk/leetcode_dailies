@@ -1,6 +1,6 @@
 # https://leetcode.com/problems/design-a-food-rating-system/
-from collections import defaultdict
 import heapq
+from collections import defaultdict
 
 
 class FoodRatings:

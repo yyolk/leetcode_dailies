@@ -10,9 +10,7 @@ import argparse
 import asyncio
 import os
 import re
-
 from datetime import datetime
-
 
 from generate_active_daily.client import (
     make_leetcode_url_from_slug,

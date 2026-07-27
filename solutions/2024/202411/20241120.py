@@ -1,6 +1,5 @@
 # https://leetcode.com/problems/take-k-of-each-character-from-left-and-right/
-from collections import defaultdict
-from collections import Counter
+from collections import Counter, defaultdict
 
 
 class Solution:

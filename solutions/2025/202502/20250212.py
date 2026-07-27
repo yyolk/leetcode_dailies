@@ -34,8 +34,7 @@ class Solution:
                 # Sort the list in descending order and take the top two elements
                 sorted_nums = sorted(digit_sum_map[key], reverse=True)
                 current_sum = sorted_nums[0] + sorted_nums[1]
-                if current_sum > max_sum:
-                    max_sum = current_sum
+                max_sum = max(max_sum, current_sum)
 
         return max_sum
 

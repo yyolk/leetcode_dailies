@@ -72,9 +72,7 @@ class Solution:
             total_ways = 0
 
             # Try assigning 0 to all instances of current_digit to odd positions
-            for odd_position_count in range(
-                0, digit_frequency_counter[current_digit] + 1
-            ):
+            for odd_position_count in range(digit_frequency_counter[current_digit] + 1):
                 # Calculate remaining digits to assign to even positions
                 even_position_count = (
                     digit_frequency_counter[current_digit] - odd_position_count

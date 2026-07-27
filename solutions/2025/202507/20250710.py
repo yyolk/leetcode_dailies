@@ -134,11 +134,7 @@ class Solution:
             # Check if there is another gap large enough to fit the meeting
             if maximum_other_gap >= meeting_durations[meeting_index]:
                 # If yes, take the maximum of the merged gap and the other gap
-                free_time_for_this_reschedule = (
-                    merged_gap_size
-                    if merged_gap_size > maximum_other_gap
-                    else maximum_other_gap
-                )
+                free_time_for_this_reschedule = max(maximum_other_gap, merged_gap_size)
             else:
                 # If no, the free time is the merged gap minus the meeting duration
                 free_time_for_this_reschedule = (
@@ -146,8 +142,7 @@ class Solution:
                 )
 
             # Update the maximum free time if this rescheduling yields a better result
-            if free_time_for_this_reschedule > maximum_free_time:
-                maximum_free_time = free_time_for_this_reschedule
+            maximum_free_time = max(maximum_free_time, free_time_for_this_reschedule)
 
         # Return the maximum free time achievable after considering all reschedulings
         return maximum_free_time

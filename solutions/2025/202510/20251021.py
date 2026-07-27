@@ -1,6 +1,6 @@
 # https://leetcode.com/problems/maximum-frequency-of-an-element-after-performing-operations-i/
-from collections import Counter, defaultdict
 import bisect
+from collections import Counter, defaultdict
 
 
 class Solution:

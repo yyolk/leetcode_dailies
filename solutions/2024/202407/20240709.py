@@ -28,8 +28,7 @@ class Solution:
 
         for arrival, time in customers:
             # If the chef is idle, start the order when the customer arrives
-            if current_time < arrival:
-                current_time = arrival
+            current_time = max(current_time, arrival)
 
             # Calculate the waiting time for the current customer
             waiting_time = current_time - arrival + time

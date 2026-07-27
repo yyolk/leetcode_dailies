@@ -1,6 +1,6 @@
 # https://leetcode.com/problems/implement-router/
-from collections import deque, defaultdict
 from bisect import bisect_left, bisect_right
+from collections import defaultdict, deque
 
 
 class Router:

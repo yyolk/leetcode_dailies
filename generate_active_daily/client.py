@@ -1,6 +1,5 @@
 import asyncio
-
-from typing import AsyncIterator
+from collections.abc import AsyncIterator
 from urllib.parse import urljoin
 
 from gql import Client, gql
@@ -8,7 +7,6 @@ from gql.transport.aiohttp import AIOHTTPTransport
 from gql.transport.exceptions import TransportConnectionFailed
 
 from .constants import LEETCODE_BASE_URL
-
 
 REQUEST_TIMEOUT_SECONDS = 30
 MAX_REQUEST_ATTEMPTS = 3

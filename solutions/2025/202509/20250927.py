@@ -22,8 +22,7 @@ class Solution:
                     # Compute area using the shoelace formula: (1/2) * |x1(y2 - y3) + x2(y3 - y1) + x3(y1 - y2)|
                     area = 0.5 * abs(x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2))
                     # Update max_area if current area is larger
-                    if area > max_area:
-                        max_area = area
+                    max_area = max(max_area, area)
         return max_area
 
     largestTriangleArea = largest_triangle_area

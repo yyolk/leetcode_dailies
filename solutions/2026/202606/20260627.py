@@ -31,8 +31,7 @@ class Solution:
                 x = x * x
             # use final x as center (+1) or fallback: demote last level to center (-1)
             length += 1 if count.get(x, 0) >= 1 else -1
-            if length > ans:
-                ans = length
+            ans = max(ans, length)
         return ans
 
     maximumLength = maximum_length
