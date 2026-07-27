@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/maximum-product-of-two-elements-in-an-array/
 
+
 class Solution:
     """1464. Maximum Product of Two Elements in an Array
 
@@ -10,6 +11,7 @@ class Solution:
     * `2 <= nums.length <= 500`
     * `1 <= nums[i] <= 10^3`
     """
+
     def max_product(self, nums: list[int]) -> int:
         # Initialize trackers for the two largest values
         max1 = max2 = 0
