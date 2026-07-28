@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/smallest-palindromic-rearrangement-i/
 
+
 class Solution:
     """3517. Smallest Palindromic Rearrangement I
 
@@ -12,6 +13,7 @@ class Solution:
     * `s` consists of lowercase English letters.
     * `s` is guaranteed to be palindromic.
     """
+
     def smallest_palindrome(self, s: str) -> str:
         # Count frequency of each lowercase letter
         freq = [0] * 26
