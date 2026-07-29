@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/smallest-palindromic-rearrangement-ii/
 
+
 class Solution:
     """3518. Smallest Palindromic Rearrangement II
 
@@ -17,6 +18,7 @@ class Solution:
     * s is guaranteed to be a palindrome.
     * 1 <= k <= 10^6
     """
+
     def smallest_palindrome(self, s: str, k: int) -> str:
         # Count character frequencies
         freq = [0] * 26
@@ -45,8 +47,8 @@ class Solution:
                 # C(rem, cnt) via smaller side to keep intermediates <= final
                 c = min(cnt, rem - cnt)
                 for i in range(c):
-                    res *= (rem - i)
-                    res //= (i + 1)
+                    res *= rem - i
+                    res //= i + 1
                     if res > limit:
                         return limit + 1
                 rem -= cnt
