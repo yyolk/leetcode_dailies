@@ -35,8 +35,7 @@ class Solution:
                 # Calculate the current subarray length
                 current_length = j - i + 1
                 # Update max_len if current_length is greater
-                if current_length > max_len:
-                    max_len = current_length
+                max_len = max(max_len, current_length)
         # Return the maximum length found
         return max_len
 

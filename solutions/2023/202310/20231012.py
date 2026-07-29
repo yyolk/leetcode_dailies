@@ -40,7 +40,7 @@ class Solution:
 
     """
 
-    def findInMountainArray(self, target: int, mountain_arr: "MountainArray") -> int:
+    def findInMountainArray(self, target: int, mountain_arr: MountainArray) -> int:
         """Find the target in the MountainArray using its interface.
 
         Proposed solution

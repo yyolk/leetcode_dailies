@@ -33,8 +33,7 @@ class Solution:
                 abs_val = abs(val)
                 total_abs += abs_val
                 # Update min abs only if smaller
-                if abs_val < min_abs_val:
-                    min_abs_val = abs_val
+                min_abs_val = min(min_abs_val, abs_val)
                 if val < 0:
                     negative_count += 1
 

@@ -1,6 +1,5 @@
 # https://leetcode.com/problems/path-with-maximum-probability/
 import heapq
-
 from collections import defaultdict
 
 

@@ -1,5 +1,5 @@
 # https://leetcode.com/problems/divide-intervals-into-minimum-number-of-groups/
-from heapq import heappush, heappop
+from heapq import heappop, heappush
 
 
 class Solution:

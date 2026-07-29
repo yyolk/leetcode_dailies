@@ -2,17 +2,17 @@
 
 import ast
 import textwrap
+
 import pytest
 
-
+from generate_active_daily.backfill_remove_docstring_type_annotations import (
+    update_docstrings_in_source,
+)
 from generate_active_daily.leetcode_boilerplate import (
     extract_definition_footnote_lines,
     extract_external_docstring_lines,
     select_python3_starter_code,
     strip_external_block_from_starter_code,
-)
-from generate_active_daily.backfill_remove_docstring_type_annotations import (
-    update_docstrings_in_source,
 )
 from generate_active_daily.utils import (
     camel_to_snake,

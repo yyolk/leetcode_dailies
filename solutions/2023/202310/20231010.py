@@ -1,6 +1,5 @@
 # https://leetcode.com/problems/minimum-number-of-operations-to-make-array-continuous/
 import sys
-
 from bisect import bisect_right
 
 

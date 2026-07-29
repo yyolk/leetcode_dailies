@@ -32,8 +32,7 @@ class Solution:
             # Calculate current pair sum: nums[i] + nums[-1-i]
             current = nums[i] + nums[len(nums) - 1 - i]
             # Update max_sum if current is larger
-            if current > max_sum:
-                max_sum = current
+            max_sum = max(max_sum, current)
         # Return the minimized maximum pair sum
         return max_sum
 

@@ -23,8 +23,7 @@ class Solution:
         max_pos = 0
         for q in queries:
             for v in q[1:]:
-                if v > max_pos:
-                    max_pos = v
+                max_pos = max(max_pos, v)
         if max_pos == 0:
             return []
         # tree stores (max_internal_gap, leftmost_obst, rightmost_obst)

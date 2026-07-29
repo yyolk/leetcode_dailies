@@ -23,7 +23,7 @@ for dir_ in ["202308", "202309", "202310", "202311"]:
                             (?:             # set our negative look behind choices to non-capture
                                 (?<!\\# )   # negative look behid for line comments like '# Type'
                                 |
-                                (?<!\)\:)   # negative look behind for '):' in the case of redundant google-style docstrings
+                                (?<!\\)\\:)   # negative look behind for '):' in the case of redundant google-style docstrings
                             )               # end our negative look behind choices
                             ({word})        # our only capture group
                             (?:             # set our positive lookahead choices

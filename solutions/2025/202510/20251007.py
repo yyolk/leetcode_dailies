@@ -1,6 +1,5 @@
 # https://leetcode.com/problems/avoid-flood-in-the-city/
 import heapq
-
 from collections import defaultdict
 
 

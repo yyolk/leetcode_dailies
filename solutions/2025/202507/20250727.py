@@ -30,9 +30,7 @@ class Solution:
                 left = nums[i - 1]
                 val = nums[i]
                 right = nums[j]
-                if left < val and val > right:
-                    count += 1
-                elif left > val and val < right:
+                if left < val and val > right or left > val and val < right:
                     count += 1
             i = j
         return count

@@ -27,8 +27,7 @@ class Solution:
                 for j in range(len(pos) - 2):
                     # Current triple's span: from pos[j] to pos[j + 2]
                     span = pos[j + 2] - pos[j]
-                    if span < min_span:
-                        min_span = span
+                    min_span = min(min_span, span)
 
         return -1 if min_span == float("inf") else 2 * min_span
 
