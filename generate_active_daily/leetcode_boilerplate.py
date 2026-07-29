@@ -3,7 +3,6 @@ import re
 
 from bs4 import BeautifulSoup
 
-
 EXTERNAL_CODEBLOCK_INDENT = " " * 4
 DEFINITION_FOOTNOTE_PREFIX = "[^"
 

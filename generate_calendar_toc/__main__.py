@@ -1,7 +1,6 @@
 """Generate calendar TOCs for month dirs, year dirs, and the root README."""
 
 import calendar
-
 from collections import defaultdict
 from datetime import datetime
 
@@ -15,7 +14,6 @@ from .utils import (
     replace_or_append_root_calendar_section,
     wrap_solved_days_with_links,
 )
-
 
 month_directories = []
 solved_files_by_date = {}

@@ -17,7 +17,7 @@ class Solution:
                 self.children = children
     """
 
-    def postorder(self, root: "Node") -> list[int]:
+    def postorder(self, root: Node) -> list[int]:
         def traverse(node):
             # If the current node is None, return an empty list
             if not node:

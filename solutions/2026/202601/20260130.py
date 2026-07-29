@@ -3,7 +3,7 @@
 
 class TrieNode:
     def __init__(self):
-        self.children: dict[str, "TrieNode"] = {}
+        self.children: dict[str, TrieNode] = {}
         self.is_end: bool = False
         self.pat_id: int = -1
 

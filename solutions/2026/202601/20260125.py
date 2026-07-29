@@ -23,8 +23,7 @@ class Solution:
             # Compute difference for current window
             diff = nums[i + k - 1] - nums[i]
             # Update minimum if smaller
-            if diff < min_diff:
-                min_diff = diff
+            min_diff = min(min_diff, diff)
         return min_diff
 
     minimumDifference = minimum_difference

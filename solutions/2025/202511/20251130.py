@@ -37,8 +37,7 @@ class Solution:
                 # Length of candidate subarray ending at i
                 length = i - seen[target]
                 # Update min if shorter than current min
-                if length < min_len:
-                    min_len = length
+                min_len = min(min_len, length)
             # Update last seen index for current prefix modulo
             seen[curr] = i
         # If only full array works, impossible (can't remove whole)

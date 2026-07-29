@@ -1,6 +1,6 @@
 # https://leetcode.com/problems/hand-of-straights/
-from collections import Counter
 import heapq
+from collections import Counter
 
 
 class Solution:

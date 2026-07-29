@@ -16,17 +16,15 @@ import argparse
 import asyncio
 import sys
 import unicodedata
-
 from datetime import datetime
 from urllib.parse import urljoin
 
 import black
-
 from bs4 import BeautifulSoup
 from markdownify import markdownify
 
-from .constants import LEETCODE_BASE_URL, TEXT_WIDTH
 from .client import query_question_of_today
+from .constants import LEETCODE_BASE_URL, TEXT_WIDTH
 from .leetcode_boilerplate import (
     extract_definition_footnote_lines,
     extract_external_docstring_lines,

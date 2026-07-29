@@ -1,5 +1,5 @@
 # https://leetcode.com/problems/minimum-difficulty-of-a-job-schedule/
-from functools import lru_cache
+from functools import cache
 from sys import maxsize
 
 
@@ -27,7 +27,7 @@ class Solution:
         if n < d:
             return -1
 
-        @lru_cache(maxsize=None)
+        @cache
         def dp(i: int, k: int) -> int:
             # Base case: if we have only one day left, the difficulty is the maximum
             # difficulty of the remaining jobs.

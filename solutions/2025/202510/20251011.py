@@ -1,6 +1,6 @@
 # https://leetcode.com/problems/maximum-total-damage-with-spell-casting/
-from collections import Counter
 import bisect
+from collections import Counter
 
 
 class Solution:

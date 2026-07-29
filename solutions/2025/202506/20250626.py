@@ -34,8 +34,7 @@ class Solution:
                 if dp[length] <= k:
                     # Calculate new value if current character is included
                     new_value = 2 * dp[length] + int(s[i])
-                    if new_value < dp[length + 1]:
-                        dp[length + 1] = new_value
+                    dp[length + 1] = min(dp[length + 1], new_value)
 
         # Find the largest length length where dp[length] <= k
         for length in range(n, -1, -1):

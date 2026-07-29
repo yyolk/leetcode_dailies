@@ -1,6 +1,6 @@
 # https://leetcode.com/problems/find-the-safest-path-in-a-grid/
-from collections import deque
 import heapq
+from collections import deque
 
 
 class Solution:
