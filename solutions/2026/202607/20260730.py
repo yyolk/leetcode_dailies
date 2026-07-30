@@ -32,6 +32,7 @@ class Solution:
 
     * All letters in `word` are distinct."""
 
-    def minimum_pushes(self, word: str) -> int: ...
+    def minimum_pushes(self, word: str) -> int:
+        return sum((i // 8) + 1 for i in range(len(word)))
 
     minimumPushes = minimum_pushes
