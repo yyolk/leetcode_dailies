@@ -36,4 +36,3 @@ class Solution:
         return sum((i // 8) + 1 for i in range(len(word)))
 
     minimumPushes = minimum_pushes
-
