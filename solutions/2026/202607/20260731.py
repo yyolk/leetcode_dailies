@@ -25,6 +25,7 @@ class Solution:
     * `1 <= word.length <= 105`
     * `word` consists of lowercase English letters.
     """
+
     def minimum_pushes(self, word: str) -> int:
         # Count frequencies and keep only the counts (descending)
         freqs = sorted(Counter(word).values(), reverse=True)
