@@ -1,0 +1,40 @@
+name: Request Copilot Daily Solution
+
+on:
+  pull_request:
+    types:
+    - opened
+
+permissions:
+  pull-requests: write
+
+jobs:
+  request-copilot:
+    if: ${{ github.event.pull_request.draft }}
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/github-script@v9
+      with:
+        script: |
+          const pr = context.payload.pull_request;
+          const hasDailyLabel = pr.labels.some((label) => label.name === "daily-boilerplate");
+
+          if (!hasDailyLabel) {
+            core.info("Skipping Copilot request for non-daily-boilerplate PR.");
+            return;
+          }
+
+          const prompt = [
+            "@copilot Implement the newest daily solution file in this PR branch.",
+            "Please complete the latest YYYYMMDD.py boilerplate with a correct solution and tests if needed.",
+            "After coding, push commits directly to this PR branch."
+          ].join("\n");
+
+          await github.rest.issues.createComment({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            issue_number: pr.number,
+            body: prompt
+          });
+
+          core.info("Posted Copilot implementation request comment.");
