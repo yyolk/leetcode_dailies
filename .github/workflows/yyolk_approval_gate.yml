@@ -1,0 +1,54 @@
+name: Require @yyolk Approval
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
+  pull_request_review:
+    types:
+      - submitted
+      - edited
+      - dismissed
+
+permissions:
+  pull-requests: read
+
+jobs:
+  yyolk-approval:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v9
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const pull_number =
+              context.payload.pull_request?.number ??
+              context.payload.review?.pull_request_url?.split('/').pop();
+
+            if (!pull_number) {
+              core.setFailed('Unable to determine pull request number.');
+              return;
+            }
+
+            const reviews = await github.paginate(github.rest.pulls.listReviews, {
+              owner,
+              repo,
+              pull_number: Number(pull_number),
+              per_page: 100
+            });
+
+            const yyolkReviews = reviews.filter(
+              (review) => review.user?.login?.toLowerCase() === 'yyolk'
+            );
+            const latestYyolkReview = yyolkReviews.at(-1);
+
+            if (latestYyolkReview?.state === 'APPROVED') {
+              core.info('@yyolk has an active approval on this PR.');
+              return;
+            }
+
+            core.setFailed('This check requires an approval review from @yyolk.');
