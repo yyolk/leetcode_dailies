@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   commit-approval-message:
-    if: ${{ github.event.review.state == 'approved' }}
+    if: ${{ github.event.review.state == 'approved' && github.event.review.user.login == 'yyolk' }}
     runs-on: ubuntu-latest
     steps:
     - name: Check daily boilerplate label
