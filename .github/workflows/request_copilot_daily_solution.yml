@@ -4,9 +4,11 @@ on:
   pull_request:
     types:
     - opened
+    - synchronize
 
 permissions:
   pull-requests: write
+  issues: write
 
 jobs:
   request-copilot:
@@ -26,7 +28,7 @@ jobs:
             return;
           }
 
-          const prompt = "@copilot please implement the newest daily solution file in this PR branch. Please complete the latest YYYYMMDD.py boilerplate with a correct solution and tests if needed, then push commits directly to this PR branch.";
+          const prompt = "@copilot please write a comprehensive unit test suite covering the new changes introduced in this PR.";
 
           await github.rest.issues.createComment({
             owner: context.repo.owner,
