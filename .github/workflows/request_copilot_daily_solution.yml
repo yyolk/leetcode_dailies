@@ -13,8 +13,10 @@ jobs:
     if: ${{ github.event.pull_request.draft }}
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/github-script@v9
+    - name: Post Comment to Summon @copilot
+      uses: actions/github-script@v9
       with:
+        github-token: ${{ secrets.YYOLK_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
         script: |
           const pr = context.payload.pull_request;
           const hasDailyLabel = pr.labels.some((label) => label.name === "daily-boilerplate");
@@ -24,11 +26,7 @@ jobs:
             return;
           }
 
-          const prompt = [
-            "@copilot Implement the newest daily solution file in this PR branch.",
-            "Please complete the latest YYYYMMDD.py boilerplate with a correct solution and tests if needed.",
-            "After coding, push commits directly to this PR branch."
-          ].join("\n");
+          const prompt = "@copilot please implement the newest daily solution file in this PR branch. Please complete the latest YYYYMMDD.py boilerplate with a correct solution and tests if needed, then push commits directly to this PR branch.";
 
           await github.rest.issues.createComment({
             owner: context.repo.owner,
