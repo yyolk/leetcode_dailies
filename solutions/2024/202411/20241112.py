@@ -1,6 +1,6 @@
 # https://leetcode.com/problems/most-beautiful-item-for-each-query/
-from itertools import accumulate
 from bisect import bisect_right
+from itertools import accumulate
 
 
 class Solution:

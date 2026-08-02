@@ -40,8 +40,7 @@ class Solution:
             next_val = nums[list_index][value_index + 1]
             heapq.heappush(pq, (next_val, list_index, value_index + 1))
             # Update max_val if necessary
-            if next_val > max_val:
-                max_val = next_val
+            max_val = max(max_val, next_val)
 
         # This line should not be reached if there's a valid solution
         return result

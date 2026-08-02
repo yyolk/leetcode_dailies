@@ -41,8 +41,7 @@ class Solution:
             # Check if the substring occurs at least three times
             if count >= 3:
                 # Update maximum_length_found if this substring's length is greater
-                if len(substring) > maximum_length_found:
-                    maximum_length_found = len(substring)
+                maximum_length_found = max(maximum_length_found, len(substring))
 
         # If no special substring occurs at least thrice
         if maximum_length_found == 0:

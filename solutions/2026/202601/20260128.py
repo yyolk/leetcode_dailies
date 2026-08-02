@@ -71,8 +71,7 @@ class Solution:
                         if ni < m and nj < n:
                             # Cost adds the destination cell value
                             alt = dp[i][j] + grid[ni][nj]
-                            if alt < dp[ni][nj]:
-                                dp[ni][nj] = alt
+                            dp[ni][nj] = min(dp[ni][nj], alt)
 
         return dp[m - 1][n - 1]
 

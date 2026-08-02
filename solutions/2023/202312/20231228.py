@@ -29,7 +29,7 @@ class Solution:
 
         # Loop through the string and consider all possible deletions
         for i in range(1, n + 1):
-            for j in range(0, k + 1):
+            for j in range(k + 1):
                 cnt, del_ = 0, 0
 
                 # Iterate over previous characters to calculate counts and deletions

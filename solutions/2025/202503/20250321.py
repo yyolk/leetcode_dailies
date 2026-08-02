@@ -1,5 +1,5 @@
 # https://leetcode.com/problems/find-all-possible-recipes-from-given-supplies/
-from collections import deque, defaultdict
+from collections import defaultdict, deque
 
 
 class Solution:

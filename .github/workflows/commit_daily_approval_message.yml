@@ -1,0 +1,48 @@
+name: Commit Daily Approval Message
+
+on:
+  pull_request_review:
+    types:
+    - submitted
+
+permissions:
+  contents: write
+  pull-requests: read
+
+jobs:
+  commit-approval-message:
+    if: ${{ github.event.review.state == 'approved' && github.event.review.user.login == 'yyolk' }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check daily boilerplate label
+      id: daily-check
+      run: |
+        if jq -e '.pull_request.labels[]? | select(.name == "daily-boilerplate")' "$GITHUB_EVENT_PATH" >/dev/null; then
+          echo "is_daily=true" >> "$GITHUB_OUTPUT"
+        else
+          echo "is_daily=false" >> "$GITHUB_OUTPUT"
+        fi
+    - uses: actions/checkout@v7
+      if: ${{ steps.daily-check.outputs.is_daily == 'true' }}
+      with:
+        ref: ${{ github.event.pull_request.head.ref }}
+        fetch-depth: 0
+    - name: Create empty commit from approval message
+      if: ${{ steps.daily-check.outputs.is_daily == 'true' }}
+      env:
+        BRANCH_NAME: ${{ github.event.pull_request.head.ref }}
+      run: |
+        REVIEW_BODY=$(jq -r '.review.body // ""' "$GITHUB_EVENT_PATH")
+
+        if [ -z "${REVIEW_BODY//[[:space:]]/}" ]; then
+          echo "Approval review has no message; skipping empty commit."
+          exit 0
+        fi
+
+        git config user.name 'github-actions[bot]'
+        git config user.email 'github-actions[bot]@users.noreply.github.com'
+
+        MESSAGE_FILE=$(mktemp)
+        printf '%s\n' "$REVIEW_BODY" > "$MESSAGE_FILE"
+        git commit --allow-empty -F "$MESSAGE_FILE"
+        git push origin "HEAD:${BRANCH_NAME}"

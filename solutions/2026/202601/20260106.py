@@ -28,11 +28,7 @@ class Solution:
                 if node.right is not None:
                     queue.append(node.right)
 
-            if max_val is None:
-                max_val = total
-                max_level = level
-
-            elif total > max_val:
+            if max_val is None or total > max_val:
                 max_val = total
                 max_level = level
 

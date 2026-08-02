@@ -23,17 +23,14 @@ class Solution:
         for k in range(2, n):
             # Compute triplet value with current max_diff and nums[k]
             triplet_value = max_diff * nums[k]
-            if triplet_value > max_triplet:
-                max_triplet = triplet_value  # Update if greater
+            max_triplet = max(max_triplet, triplet_value)  # Update if greater
 
             # Update current_max with nums[k-1] (previous element)
-            if nums[k - 1] > current_max:
-                current_max = nums[k - 1]
+            current_max = max(current_max, nums[k - 1])
 
             # Update max_diff with new difference using current_max and nums[k]
             diff = current_max - nums[k]
-            if diff > max_diff:
-                max_diff = diff
+            max_diff = max(max_diff, diff)
 
         return max_triplet
 

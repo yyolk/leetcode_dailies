@@ -28,8 +28,7 @@ class Solution:
             # three consecutive positions in the sorted list
             for j in range(m - 2):
                 span = positions[j + 2] - positions[j]
-                if span < min_span:
-                    min_span = span
+                min_span = min(min_span, span)
 
         if min_span == float("inf"):
             return -1

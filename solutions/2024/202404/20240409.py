@@ -26,9 +26,9 @@ class Solution:
         for i, x in enumerate(tickets):
             # Calculate time for each person in the line
             if i <= k:
-                total += min(tickets[i], tickets[k])
+                total += min(x, tickets[k])
             else:
-                total += min(tickets[i], tickets[k] - 1)
+                total += min(x, tickets[k] - 1)
 
         return total
 

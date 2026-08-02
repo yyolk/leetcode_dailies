@@ -25,7 +25,7 @@ class Solution:
                     # Perform the swap
                     num_list[i], num_list[last_occurrence[j]] = (
                         num_list[last_occurrence[j]],
-                        num_list[i],
+                        d,
                     )
                     # Convert back to integer and return since we can only swap once
                     return int("".join(num_list))

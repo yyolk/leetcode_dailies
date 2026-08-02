@@ -42,6 +42,6 @@ class Solution:
                             )
 
         # Find the maximum number of moves in the last column
-        return max(max(row) for row in dp) if max(max(row) for row in dp) > 0 else 0
+        return max(0, max(max(row) for row in dp))
 
     maxMoves = max_moves

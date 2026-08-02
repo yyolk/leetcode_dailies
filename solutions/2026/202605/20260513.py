@@ -46,8 +46,7 @@ class Solution:
         max_good = 0
         for s in range(2, max_s + 1):
             good = cover[s] + exact[s]
-            if good > max_good:
-                max_good = good
+            max_good = max(max_good, good)
         # total moves: n - max_good (base cost 2 per pair)
         return n - max_good
 

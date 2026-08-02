@@ -1,6 +1,5 @@
 # https://leetcode.com/problems/maximal-score-after-applying-k-operations/
 import heapq
-
 from math import ceil
 
 

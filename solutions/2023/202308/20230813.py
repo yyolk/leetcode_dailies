@@ -55,10 +55,7 @@ class Solution:
                             return True
                     elif (
                         size == 3 and nums[index] == nums[index + 1] == nums[index + 2]
-                    ):
-                        if is_valid_partition(index + size):
-                            return True
-                    elif (
+                    ) or (
                         size == 3
                         and nums[index] == nums[index + 1] - 1
                         and nums[index + 1] == nums[index + 2] - 1

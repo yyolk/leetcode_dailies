@@ -1,8 +1,7 @@
 # https://leetcode.com/problems/second-minimum-time-to-reach-destination/
 
 
-from collections import defaultdict
-from collections import deque
+from collections import defaultdict, deque
 
 
 class Solution:
