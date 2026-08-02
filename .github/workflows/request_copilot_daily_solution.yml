@@ -28,7 +28,11 @@ jobs:
             return;
           }
 
-          const prompt = "@copilot please write a comprehensive unit test suite covering the new changes introduced in this PR.";
+          const prompt = [
+            "@copilot Implement the newest daily solution file in this PR branch.",
+            "Please complete the latest YYYYMMDD.py boilerplate with a correct solution and tests if needed.",
+            "After coding, push commits directly to this PR branch."
+          ].join("\n");
 
           await github.rest.issues.createComment({
             owner: context.repo.owner,
