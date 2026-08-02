@@ -14,10 +14,10 @@ jobs:
     if: ${{ github.event.review.state == 'approved' && github.event.review.user.login == 'yyolk' }}
     runs-on: ubuntu-latest
     steps:
-    - name: Check daily boilerplate label
+    - name: Check daily boilerplate PR title
       id: daily-check
       run: |
-        if jq -e '.pull_request.labels[]? | select(.name == "daily-boilerplate")' "$GITHUB_EVENT_PATH" >/dev/null; then
+        if jq -e '.pull_request.title | test("^[0-9]{8}$")' "$GITHUB_EVENT_PATH" >/dev/null; then
           echo "is_daily=true" >> "$GITHUB_OUTPUT"
         else
           echo "is_daily=false" >> "$GITHUB_OUTPUT"
