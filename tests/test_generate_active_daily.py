@@ -270,16 +270,18 @@ class Solution:
         assert "list of int: ..." in result
 
     def test_does_not_generate_docstring_for_nested_helper_function(self):
-        code = """\
-class Solution:
-    def findItinerary(self, tickets: list[list[str]]) -> list[str]:
-        def dfs(node):
-            ...
-        ...
-"""
-        result = modify_class_docstring(code, ["Description"], "332. Reconstruct Itinerary\n")
-        assert result.count("Proposed solution ...") == 1
-        assert 'def dfs(node):\n            """' not in result
+       code = textwrap.dedent(
+           """\
+           class Solution:
+               def findItinerary(self, tickets: list[list[str]]) -> list[str]:
+                   def dfs(node):
+                       ...
+                   ...
+           """
+       )
+       result = modify_class_docstring(code, ["Description"], "332. Reconstruct Itinerary\n")
+       assert result.count("Proposed solution ...") == 1
+       assert 'def dfs(node):\n            """' not in result
 
 
 class TestRemoveRedundantGoogleDocstringTypes:
