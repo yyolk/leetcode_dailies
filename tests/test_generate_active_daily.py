@@ -60,16 +60,18 @@ class TestCamelToSnake:
 
 class TestExtractConstraintsLines:
     def test_extracts_constraints_heading_and_bullets(self):
-        html = """\
-<div>
-    <p>Description text.</p>
-    <p><strong>Constraints:</strong></p>
-    <ul>
-        <li>1 &lt;= nums.length &lt;= 1000</li>
-        <li>-10^4 &lt;= nums[i] &lt;= 10^4</li>
-    </ul>
-</div>
-"""
+        html = textwrap.dedent(
+            """\
+            <div>
+                <p>Description text.</p>
+                <p><strong>Constraints:</strong></p>
+                <ul>
+                    <li>1 &lt;= nums.length &lt;= 1000</li>
+                    <li>-10^4 &lt;= nums[i] &lt;= 10^4</li>
+                </ul>
+            </div>
+            """
+        )
         assert extract_constraints_lines(html) == [
             "Constraints:",
             "* 1 <= nums.length <= 1000",
@@ -121,11 +123,13 @@ class TestWrapDocstring:
 class TestModifyClassDocstring:
     """Tests for the AST-based class docstring modifier."""
 
-    SIMPLE_CODE = """\
-class Solution:
-    def twoSum(self, nums: list[int], target: int) -> list[int]:
-        ...
-"""
+    SIMPLE_CODE = textwrap.dedent(
+        """\
+        class Solution:
+            def twoSum(self, nums: list[int], target: int) -> list[int]:
+                ...
+        """
+    )
 
     def test_renames_method_to_snake_case(self):
         result = modify_class_docstring(
@@ -149,11 +153,13 @@ class Solution:
         assert "Two sum description" in result
 
     def test_renames_camel_case_args(self):
-        code = """\
-class Solution:
-    def maxProfit(self, pricesList: list[int]) -> int:
-        ...
-"""
+        code = textwrap.dedent(
+            """\
+            class Solution:
+                def maxProfit(self, pricesList: list[int]) -> int:
+                    ...
+            """
+        )
         result = modify_class_docstring(code, ["Max profit"], "122. Best Time to Buy\n")
         tree = ast.parse(result)
         for node in ast.walk(tree):
@@ -163,32 +169,38 @@ class Solution:
                         assert arg.arg == "prices_list"
 
     def test_lowercases_list_annotation(self):
-        code = """\
-class Solution:
-    def twoSum(self, nums: List[int], target: int) -> List[int]:
-        ...
-"""
+        code = textwrap.dedent(
+            """\
+            class Solution:
+                def twoSum(self, nums: List[int], target: int) -> List[int]:
+                    ...
+            """
+        )
         result = modify_class_docstring(code, ["description"], "1. Title\n")
         # List should be lowercased to list
         assert "List[" not in result
 
     def test_lowercases_dict_annotation(self):
-        code = """\
-class Solution:
-    def groupAnagrams(self, strs: List[str]) -> Dict[str, List[str]]:
-        ...
-"""
+        code = textwrap.dedent(
+            """\
+            class Solution:
+                def groupAnagrams(self, strs: List[str]) -> Dict[str, List[str]]:
+                    ...
+            """
+        )
         result = modify_class_docstring(code, ["description"], "49. Group Anagrams\n")
         assert "Dict[" not in result
         assert "List[" not in result
 
     def test_existing_docstring_replaced(self):
-        code = '''\
-class Solution:
-    """Old docstring."""
-    def solve(self, x: int) -> int:
-        ...
-'''
+        code = textwrap.dedent(
+            '''\
+            class Solution:
+                """Old docstring."""
+                def solve(self, x: int) -> int:
+                    ...
+            '''
+        )
         result = modify_class_docstring(code, ["New docstring content"], "1. Title\n")
         # Old docstring should be replaced
         assert "Old docstring." not in result
@@ -201,14 +213,16 @@ class Solution:
         ast.parse(result)
 
     def test_skips_dunder_and_handles_missing_return_annotation(self):
-        code = """\
-class Solution:
-    def __init__(self, values):
-        self.values = values
+        code = textwrap.dedent(
+            """\
+            class Solution:
+                def __init__(self, values):
+                    self.values = values
 
-    def twoSum(self, nums, target):
-        ...
-"""
+                def twoSum(self, nums, target):
+                    ...
+            """
+        )
         result = modify_class_docstring(code, ["Description"], "1. Two Sum\n")
         assert "def __init__(self, values):" in result
         assert "def two_sum(self, nums, target):" in result
@@ -216,11 +230,13 @@ class Solution:
         ast.parse(result)
 
     def test_no_alias_added_when_only_dunder_methods_exist(self):
-        code = """\
-class Solution:
-    def __init__(self, value):
-        self.value = value
-"""
+        code = textwrap.dedent(
+            """\
+            class Solution:
+                def __init__(self, value):
+                    self.value = value
+            """
+        )
         result = modify_class_docstring(code, ["Description"], "1. Title\n")
         assert "def __init__(self, value):" in result
         tree = ast.parse(result)
@@ -236,19 +252,21 @@ class Solution:
         )
 
     def test_strips_redundant_types_from_method_docstring(self):
-        code = '''\
-class Solution:
-    def twoSum(self, nums: list[int], target: int) -> list[int]:
-        """
-        Args:
-            nums (list[int]): Input nums.
-            target (int): Target value.
+        code = textwrap.dedent(
+            '''\
+            class Solution:
+                def twoSum(self, nums: list[int], target: int) -> list[int]:
+                    """
+                    Args:
+                        nums (list[int]): Input nums.
+                        target (int): Target value.
 
-        Returns:
-            list[int]: A pair of indexes.
-        """
-        ...
-'''
+                    Returns:
+                        list[int]: A pair of indexes.
+                    """
+                    ...
+            '''
+        )
         result = modify_class_docstring(code, ["Description"], "1. Title\n")
         assert "nums (list[int]):" not in result
         assert "target (int):" not in result
@@ -270,18 +288,18 @@ class Solution:
         assert "list of int: ..." in result
 
     def test_does_not_generate_docstring_for_nested_helper_function(self):
-       code = textwrap.dedent(
-           """\
-           class Solution:
-               def findItinerary(self, tickets: list[list[str]]) -> list[str]:
-                   def dfs(node):
-                       ...
-                   ...
-           """
-       )
-       result = modify_class_docstring(code, ["Description"], "332. Reconstruct Itinerary\n")
-       assert result.count("Proposed solution ...") == 1
-       assert 'def dfs(node):\n            """' not in result
+        code = textwrap.dedent(
+            """\
+            class Solution:
+                def findItinerary(self, tickets: list[list[str]]) -> list[str]:
+                    def dfs(node):
+                        ...
+                    ...
+            """
+        )
+        result = modify_class_docstring(code, ["Description"], "332. Reconstruct Itinerary\n")
+        assert result.count("Proposed solution ...") == 1
+        assert 'def dfs(node):\n            """' not in result
 
 
 class TestRemoveRedundantGoogleDocstringTypes:
@@ -322,22 +340,24 @@ Returns:
 
 class TestBackfillRemoveDocstringTypeAnnotations:
     def test_updates_only_docstring_sections(self):
-        source = '''\
-class Solution:
-    """Args:
-    nums (list[int]): class-level docs.
-    """
+        source = textwrap.dedent(
+            '''\
+            class Solution:
+                """Args:
+                nums (list[int]): class-level docs.
+                """
 
-    def solve(self):
-        """
-        Args:
-            nums (list[int]): Input nums.
-        Returns:
-            list[int]: Output values.
-        """
-        data = "Args:\\n    nums (list[int]): should stay unchanged"
-        return data
-'''
+                def solve(self):
+                    """
+                    Args:
+                        nums (list[int]): Input nums.
+                    Returns:
+                        list[int]: Output values.
+                    """
+                    data = "Args:\\n    nums (list[int]): should stay unchanged"
+                    return data
+            '''
+        )
         result = update_docstrings_in_source(source)
         assert "nums: class-level docs." in result
         assert "nums: Input nums." in result
