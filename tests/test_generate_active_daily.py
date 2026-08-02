@@ -2,17 +2,17 @@
 
 import ast
 import textwrap
+
 import pytest
 
-
+from generate_active_daily.backfill_remove_docstring_type_annotations import (
+    update_docstrings_in_source,
+)
 from generate_active_daily.leetcode_boilerplate import (
     extract_definition_footnote_lines,
     extract_external_docstring_lines,
     select_python3_starter_code,
     strip_external_block_from_starter_code,
-)
-from generate_active_daily.backfill_remove_docstring_type_annotations import (
-    update_docstrings_in_source,
 )
 from generate_active_daily.utils import (
     camel_to_snake,
@@ -268,6 +268,18 @@ class Solution:
         assert "target (int): ..." in result
         assert "Returns:" in result
         assert "list of int: ..." in result
+
+    def test_does_not_generate_docstring_for_nested_helper_function(self):
+        code = """\
+class Solution:
+    def findItinerary(self, tickets: list[list[str]]) -> list[str]:
+        def dfs(node):
+            ...
+        ...
+"""
+        result = modify_class_docstring(code, ["Description"], "332. Reconstruct Itinerary\n")
+        assert result.count("Proposed solution ...") == 1
+        assert 'def dfs(node):\n            """' not in result
 
 
 class TestRemoveRedundantGoogleDocstringTypes:

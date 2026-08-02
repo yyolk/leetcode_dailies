@@ -4,7 +4,6 @@ import ast
 import re
 import textwrap
 import unicodedata
-
 from pathlib import Path
 
 from bs4 import BeautifulSoup
@@ -148,6 +147,7 @@ def remove_redundant_google_docstring_types(docstring):
 
 
 def _annotation_to_google_style(annotation):
+    """Converts an AST annotation node into readable Google-style type text."""
     if annotation is None:
         return None
     if isinstance(annotation, ast.Name):
@@ -159,11 +159,11 @@ def _annotation_to_google_style(annotation):
     if isinstance(annotation, ast.Subscript):
         base = _annotation_to_google_style(annotation.value)
         if isinstance(annotation.slice, ast.Tuple):
-            parts = [
+            inner_types = [
                 _annotation_to_google_style(item) or "value"
                 for item in annotation.slice.elts
             ]
-            inner = " and ".join(parts)
+            inner = " and ".join(inner_types)
         else:
             inner = _annotation_to_google_style(annotation.slice) or "value"
         return f"{base} of {inner}" if base else inner
@@ -172,30 +172,29 @@ def _annotation_to_google_style(annotation):
         right = _annotation_to_google_style(annotation.right) or "value"
         return f"{left} or {right}"
     if isinstance(annotation, ast.Tuple):
-        parts = [_annotation_to_google_style(item) or "value" for item in annotation.elts]
-        return " and ".join(parts)
-    try:
-        return ast.unparse(annotation)
-    except Exception:  # pragma: no cover
-        return "value"
+        tuple_types = [_annotation_to_google_style(item) or "value" for item in annotation.elts]
+        return " and ".join(tuple_types)
+    return ast.unparse(annotation)
 
 
 def _build_method_docstring(function_node):
-    docstring_lines = ["...", "", "Proposed solution ..."]
+    """Builds a boilerplate method docstring from a function signature."""
+    lines = ["...", "", "Proposed solution ..."]
     args = [arg for arg in function_node.args.args if arg.arg != "self"]
     if args:
-        docstring_lines.extend(["", "Args:"])
+        lines.extend(["", "Args:"])
         for arg in args:
-            arg_type = _annotation_to_google_style(arg.annotation)
-            if arg_type:
-                docstring_lines.append(f"    {arg.arg} ({arg_type}): ...")
+            annotation_text = _annotation_to_google_style(arg.annotation)
+            if annotation_text:
+                lines.append(f"    {arg.arg} ({annotation_text}): ...")
             else:
-                docstring_lines.append(f"    {arg.arg}: ...")
+                lines.append(f"    {arg.arg}: ...")
 
-    return_type = _annotation_to_google_style(function_node.returns)
-    if return_type:
-        docstring_lines.extend(["", "Returns:", f"    {return_type}: ..."])
-    return "\n".join(docstring_lines)
+    return_annotation = _annotation_to_google_style(function_node.returns)
+    if return_annotation:
+        lines.extend(["", "Returns:", f"    {return_annotation}: ..."])
+
+    return "\n".join(lines)
 
 
 def modify_class_docstring(code, new_docstring, first_line):
@@ -222,6 +221,20 @@ def modify_class_docstring(code, new_docstring, first_line):
     # We'll want to keep track of the old arg names for renaming those references in
     # the problem description.
     args_list = []
+    answer_method_node = None
+
+    for node in ast.walk(parsed_tree):
+        if isinstance(node, ast.ClassDef) and node.name == "Solution":
+            answer_method_node = next(
+                (
+                    item
+                    for item in node.body
+                    if isinstance(item, ast.FunctionDef)
+                    and not (item.name.startswith("__") and item.name.endswith("__"))
+                ),
+                None,
+            )
+            break
 
     # Iterate through the nodes in the parsed AST
     for node in ast.walk(parsed_tree):
@@ -285,7 +298,7 @@ def modify_class_docstring(code, new_docstring, first_line):
                 node.body[0].value.value = remove_redundant_google_docstring_types(
                     node.body[0].value.value
                 )
-            else:
+            elif node is answer_method_node:
                 node.body.insert(
                     0, ast.Expr(value=ast.Constant(value=_build_method_docstring(node)))
                 )
