@@ -29,6 +29,7 @@ class Solution:
 
     * `sum(piles[i])` is **odd**."""
 
-    def stone_game(self, piles: list[int]) -> bool: ...
+    def stone_game(self, piles: list[int]) -> bool:
+        return True
 
     stoneGame = stone_game
