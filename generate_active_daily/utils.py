@@ -172,7 +172,9 @@ def _annotation_to_google_style(annotation):
         right = _annotation_to_google_style(annotation.right) or "value"
         return f"{left} or {right}"
     if isinstance(annotation, ast.Tuple):
-        tuple_types = [_annotation_to_google_style(item) or "value" for item in annotation.elts]
+        tuple_types = [
+            _annotation_to_google_style(item) or "value" for item in annotation.elts
+        ]
         return " and ".join(tuple_types)
     return ast.unparse(annotation)
 

@@ -297,7 +297,9 @@ class TestModifyClassDocstring:
                     ...
             """
         )
-        result = modify_class_docstring(code, ["Description"], "332. Reconstruct Itinerary\n")
+        result = modify_class_docstring(
+            code, ["Description"], "332. Reconstruct Itinerary\n"
+        )
         assert result.count("Proposed solution ...") == 1
         assert 'def dfs(node):\n            """' not in result
 
