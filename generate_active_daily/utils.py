@@ -146,6 +146,59 @@ def remove_redundant_google_docstring_types(docstring):
     return result
 
 
+def _annotation_to_google_style(annotation):
+    """Converts an AST annotation node into readable Google-style type text."""
+    if annotation is None:
+        return None
+    if isinstance(annotation, ast.Name):
+        return annotation.id
+    if isinstance(annotation, ast.Constant):
+        return str(annotation.value)
+    if isinstance(annotation, ast.Attribute):
+        return annotation.attr
+    if isinstance(annotation, ast.Subscript):
+        base = _annotation_to_google_style(annotation.value)
+        if isinstance(annotation.slice, ast.Tuple):
+            inner_types = [
+                _annotation_to_google_style(item) or "value"
+                for item in annotation.slice.elts
+            ]
+            inner = " and ".join(inner_types)
+        else:
+            inner = _annotation_to_google_style(annotation.slice) or "value"
+        return f"{base} of {inner}" if base else inner
+    if isinstance(annotation, ast.BinOp) and isinstance(annotation.op, ast.BitOr):
+        left = _annotation_to_google_style(annotation.left) or "value"
+        right = _annotation_to_google_style(annotation.right) or "value"
+        return f"{left} or {right}"
+    if isinstance(annotation, ast.Tuple):
+        tuple_types = [
+            _annotation_to_google_style(item) or "value" for item in annotation.elts
+        ]
+        return " and ".join(tuple_types)
+    return ast.unparse(annotation)
+
+
+def _build_method_docstring(function_node):
+    """Builds a boilerplate method docstring from a function signature."""
+    lines = ["...", "", "Proposed solution ..."]
+    args = [arg for arg in function_node.args.args if arg.arg != "self"]
+    if args:
+        lines.extend(["", "Args:"])
+        for arg in args:
+            annotation_text = _annotation_to_google_style(arg.annotation)
+            if annotation_text:
+                lines.append(f"    {arg.arg} ({annotation_text}): ...")
+            else:
+                lines.append(f"    {arg.arg}: ...")
+
+    return_annotation = _annotation_to_google_style(function_node.returns)
+    if return_annotation:
+        lines.extend(["", "Returns:", f"    {return_annotation}: ..."])
+
+    return "\n".join(lines)
+
+
 def modify_class_docstring(code, new_docstring, first_line):
     """This is a rough ast parse and modify"""
     # The types we'll want to enforce to lowercase while walking the AST
@@ -170,6 +223,20 @@ def modify_class_docstring(code, new_docstring, first_line):
     # We'll want to keep track of the old arg names for renaming those references in
     # the problem description.
     args_list = []
+    answer_method_node = None
+
+    for node in ast.walk(parsed_tree):
+        if isinstance(node, ast.ClassDef) and node.name == "Solution":
+            answer_method_node = next(
+                (
+                    item
+                    for item in node.body
+                    if isinstance(item, ast.FunctionDef)
+                    and not (item.name.startswith("__") and item.name.endswith("__"))
+                ),
+                None,
+            )
+            break
 
     # Iterate through the nodes in the parsed AST
     for node in ast.walk(parsed_tree):
@@ -232,6 +299,10 @@ def modify_class_docstring(code, new_docstring, first_line):
             ):
                 node.body[0].value.value = remove_redundant_google_docstring_types(
                     node.body[0].value.value
+                )
+            elif node is answer_method_node:
+                node.body.insert(
+                    0, ast.Expr(value=ast.Constant(value=_build_method_docstring(node)))
                 )
 
     # We go back in after walking the entire thing so we can append into the class
