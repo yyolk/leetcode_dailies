@@ -40,6 +40,21 @@ class Solution:
 
         Returns:
             str: ..."""
-        ...
+        n = len(stone_value)
+        # dp[i] = best score difference current player can achieve from index i.
+        dp = [0] * (n + 1)
+        for i in range(n - 1, -1, -1):
+            take = 0
+            best = -10**9
+            for j in range(i, min(i + 3, n)):
+                take += stone_value[j]
+                best = max(best, take - dp[j + 1])
+            dp[i] = best
+
+        if dp[0] > 0:
+            return "Alice"
+        if dp[0] < 0:
+            return "Bob"
+        return "Tie"
 
     stoneGameIII = stone_game_i_i_i
