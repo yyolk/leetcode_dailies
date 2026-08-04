@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/find-missing-elements/
 
+
 class Solution:
     """3731. Find Missing Elements
 
@@ -14,6 +15,7 @@ class Solution:
     * `2 <= nums.length <= 100`
     * `1 <= nums[i] <= 100`
     """
+
     def find_missing_elements(self, nums: list[int]) -> list[int]:
         # Determine the bounds of the original continuous range
         min_val, max_val = min(nums), max(nums)
