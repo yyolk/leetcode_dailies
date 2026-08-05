@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/remove-methods-from-project/
 
+
 class Solution:
     """3310. Remove Methods From Project
 
@@ -18,6 +19,7 @@ class Solution:
     suspicious methods. You may return the answer in any order. If it is not
     possible to remove all the suspicious methods, none should be removed.
     """
+
     def remaining_methods(
         self, n: int, k: int, invocations: list[list[int]]
     ) -> list[int]:
