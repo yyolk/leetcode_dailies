@@ -50,6 +50,26 @@ class Solution:
 
         Returns:
             list of int: ..."""
-        ...
+        suspicious = [False] * n
+        graph = [[] for _ in range(n)]
+
+        for a, b in invocations:
+            graph[a].append(b)
+
+        stack = [k]
+        suspicious[k] = True
+
+        while stack:
+            node = stack.pop()
+            for nxt in graph[node]:
+                if not suspicious[nxt]:
+                    suspicious[nxt] = True
+                    stack.append(nxt)
+
+        for a, b in invocations:
+            if not suspicious[a] and suspicious[b]:
+                return list(range(n))
+
+        return [i for i in range(n) if not suspicious[i]]
 
     remainingMethods = remaining_methods
