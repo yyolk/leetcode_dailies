@@ -73,7 +73,9 @@ class Solution:
         def min_digits(r2: int, r3: int, r5: int, r7: int) -> int:
             return r5 + r7 + dp23[r2][r3]
 
-        def build_smallest_suffix(length: int, r2: int, r3: int, r5: int, r7: int) -> str:
+        def build_smallest_suffix(
+            length: int, r2: int, r3: int, r5: int, r7: int
+        ) -> str:
             out = []
             for pos in range(length):
                 slots_left = length - pos - 1
