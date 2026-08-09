@@ -26,15 +26,26 @@ class Solution:
     * `1 <= piles[i] <= 104`"""
 
     def stone_game_i_i(self, piles: list[int]) -> int:
-        """...
+        """Return the maximum stones Alice can collect with optimal play."""
+        from functools import lru_cache
 
-        Proposed solution ...
+        n = len(piles)
+        suffix = [0] * (n + 1)
+        for i in range(n - 1, -1, -1):
+            suffix[i] = suffix[i + 1] + piles[i]
 
-        Args:
-            piles (list of int): ...
+        @lru_cache(maxsize=None)
+        def best(start: int, m: int) -> int:
+            if start + 2 * m >= n:
+                return suffix[start]
 
-        Returns:
-            int: ..."""
-        ...
+            opponent_best = suffix[start]
+            limit = min(n - start, 2 * m)
+            for x in range(1, limit + 1):
+                opponent_best = min(opponent_best, best(start + x, max(m, x)))
+
+            return suffix[start] - opponent_best
+
+        return best(0, 1)
 
     stoneGameII = stone_game_i_i
