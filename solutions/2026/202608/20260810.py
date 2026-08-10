@@ -20,15 +20,22 @@ class Solution:
     * `1 <= n <= 105`"""
 
     def winner_square_game(self, n: int) -> bool:
-        """...
+        """Return whether Alice can force a win with optimal play."""
+        can_win = [False] * (n + 1)
+        squares = []
+        i = 1
+        while i * i <= n:
+            squares.append(i * i)
+            i += 1
 
-        Proposed solution ...
+        for stones in range(1, n + 1):
+            for square in squares:
+                if square > stones:
+                    break
+                if not can_win[stones - square]:
+                    can_win[stones] = True
+                    break
 
-        Args:
-            n (int): ...
-
-        Returns:
-            bool: ..."""
-        ...
+        return can_win[n]
 
     winnerSquareGame = winner_square_game
