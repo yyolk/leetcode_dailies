@@ -19,15 +19,16 @@ class Solution:
     * `1 <= nums[i] <= 50`"""
 
     def missing_integer(self, nums: list[int]) -> int:
-        """...
+        """Return the smallest missing integer >= sum of longest sequential prefix."""
+        prefix_sum = nums[0]
+        i = 1
+        while i < len(nums) and nums[i] == nums[i - 1] + 1:
+            prefix_sum += nums[i]
+            i += 1
 
-        Proposed solution ...
-
-        Args:
-            nums (list of int): ...
-
-        Returns:
-            int: ..."""
-        ...
+        present = set(nums)
+        while prefix_sum in present:
+            prefix_sum += 1
+        return prefix_sum
 
     missingInteger = missing_integer
