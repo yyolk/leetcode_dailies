@@ -7650,7 +7650,9 @@ python -m generate_problem_symlinks
       </a>
      </td>
      <td class="wed">
-      12
+      <a href="solutions/2026/202608/20260812.py">
+       12
+      </a>
      </td>
      <td class="thu">
       13
