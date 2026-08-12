@@ -24,16 +24,21 @@ class Solution:
     * `1 <= k <= nums.length`"""
 
     def max_subarray_length(self, nums: list[int], k: int) -> int:
-        """...
+        """Return the longest subarray where every value appears at most k times."""
+        counts: dict[int, int] = {}
+        left = 0
+        best = 0
 
-        Proposed solution ...
+        for right, value in enumerate(nums):
+            counts[value] = counts.get(value, 0) + 1
 
-        Args:
-            nums (list of int): ...
-            k (int): ...
+            while counts[value] > k:
+                left_value = nums[left]
+                counts[left_value] -= 1
+                left += 1
 
-        Returns:
-            int: ..."""
-        ...
+            best = max(best, right - left + 1)
+
+        return best
 
     maxSubarrayLength = max_subarray_length
