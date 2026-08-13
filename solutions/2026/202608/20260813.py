@@ -121,9 +121,7 @@ class Solution:
                         left_char[left_idx] if left_len > 0 else left_char[right_idx]
                     )
                     right_char[idx] = (
-                        right_char[right_idx]
-                        if right_len > 0
-                        else right_char[left_idx]
+                        right_char[right_idx] if right_len > 0 else right_char[left_idx]
                     )
 
                     pref_val = pref[left_idx]
