@@ -32,17 +32,122 @@ class Solution:
     def longest_repeating(
         self, s: str, query_characters: str, query_indices: list[int]
     ) -> list[int]:
-        """...
+        """Return longest equal-char substring length after each point update."""
+        n = len(s)
+        arr = list(s)
+        size = 1
+        while size < n:
+            size <<= 1
 
-        Proposed solution ...
+        left_char = [""] * (2 * size)
+        right_char = [""] * (2 * size)
+        pref = [0] * (2 * size)
+        suff = [0] * (2 * size)
+        best = [0] * (2 * size)
+        seg_len = [0] * (2 * size)
 
-        Args:
-            s (str): ...
-            query_characters (str): ...
-            query_indices (list of int): ...
+        for i in range(n):
+            idx = size + i
+            char = arr[i]
+            left_char[idx] = char
+            right_char[idx] = char
+            pref[idx] = 1
+            suff[idx] = 1
+            best[idx] = 1
+            seg_len[idx] = 1
 
-        Returns:
-            list of int: ..."""
-        ...
+        for idx in range(size - 1, 0, -1):
+            left_idx = idx * 2
+            right_idx = left_idx + 1
+
+            left_len = seg_len[left_idx]
+            right_len = seg_len[right_idx]
+            total_len = left_len + right_len
+            seg_len[idx] = total_len
+            if total_len == 0:
+                continue
+
+            left_char[idx] = (
+                left_char[left_idx] if left_len > 0 else left_char[right_idx]
+            )
+            right_char[idx] = (
+                right_char[right_idx] if right_len > 0 else right_char[left_idx]
+            )
+
+            pref_val = pref[left_idx]
+            if left_len > 0 and pref[left_idx] == left_len and right_len > 0:
+                if right_char[left_idx] == left_char[right_idx]:
+                    pref_val = left_len + pref[right_idx]
+
+            suff_val = suff[right_idx]
+            if right_len > 0 and suff[right_idx] == right_len and left_len > 0:
+                if right_char[left_idx] == left_char[right_idx]:
+                    suff_val = right_len + suff[left_idx]
+
+            cross = 0
+            if left_len > 0 and right_len > 0:
+                if right_char[left_idx] == left_char[right_idx]:
+                    cross = suff[left_idx] + pref[right_idx]
+
+            pref[idx] = pref_val
+            suff[idx] = suff_val
+            best[idx] = max(best[left_idx], best[right_idx], cross)
+
+        answer: list[int] = []
+        for char, pos in zip(query_characters, query_indices, strict=True):
+            if arr[pos] != char:
+                arr[pos] = char
+                idx = size + pos
+                left_char[idx] = char
+                right_char[idx] = char
+                pref[idx] = 1
+                suff[idx] = 1
+                best[idx] = 1
+                idx //= 2
+
+                while idx >= 1:
+                    left_idx = idx * 2
+                    right_idx = left_idx + 1
+
+                    left_len = seg_len[left_idx]
+                    right_len = seg_len[right_idx]
+                    total_len = left_len + right_len
+                    seg_len[idx] = total_len
+                    if total_len == 0:
+                        idx //= 2
+                        continue
+
+                    left_char[idx] = (
+                        left_char[left_idx] if left_len > 0 else left_char[right_idx]
+                    )
+                    right_char[idx] = (
+                        right_char[right_idx]
+                        if right_len > 0
+                        else right_char[left_idx]
+                    )
+
+                    pref_val = pref[left_idx]
+                    if left_len > 0 and pref[left_idx] == left_len and right_len > 0:
+                        if right_char[left_idx] == left_char[right_idx]:
+                            pref_val = left_len + pref[right_idx]
+
+                    suff_val = suff[right_idx]
+                    if right_len > 0 and suff[right_idx] == right_len and left_len > 0:
+                        if right_char[left_idx] == left_char[right_idx]:
+                            suff_val = right_len + suff[left_idx]
+
+                    cross = 0
+                    if left_len > 0 and right_len > 0:
+                        if right_char[left_idx] == left_char[right_idx]:
+                            cross = suff[left_idx] + pref[right_idx]
+
+                    pref[idx] = pref_val
+                    suff[idx] = suff_val
+                    best[idx] = max(best[left_idx], best[right_idx], cross)
+                    idx //= 2
+
+            answer.append(best[1])
+
+        return answer
 
     longestRepeating = longest_repeating
