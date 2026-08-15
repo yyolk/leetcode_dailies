@@ -16,15 +16,20 @@ class Solution:
     * `0 <= nums[i] <= 109`"""
 
     def longest_subsequence(self, nums: list[int]) -> int:
-        """...
+        """Return the maximum subsequence length with non-zero XOR."""
+        xor_all = 0
+        has_non_zero = False
+        for value in nums:
+            xor_all ^= value
+            if value != 0:
+                has_non_zero = True
 
-        Proposed solution ...
+        if xor_all != 0:
+            return len(nums)
 
-        Args:
-            nums (list of int): ...
+        if has_non_zero:
+            return len(nums) - 1
 
-        Returns:
-            int: ..."""
-        ...
+        return 0
 
     longestSubsequence = longest_subsequence
