@@ -23,15 +23,16 @@ class Solution:
     * `1 <= stones[i] <= 104`"""
 
     def stone_game_i_x(self, stones: list[int]) -> bool:
-        """...
+        """Return True when Alice can force a win."""
+        counts = [0, 0, 0]
+        for stone in stones:
+            counts[stone % 3] += 1
 
-        Proposed solution ...
+        zeros, ones, twos = counts
 
-        Args:
-            stones (list of int): ...
+        if zeros % 2 == 0:
+            return ones > 0 and twos > 0
 
-        Returns:
-            bool: ..."""
-        ...
+        return abs(ones - twos) > 2
 
     stoneGameIX = stone_game_i_x
