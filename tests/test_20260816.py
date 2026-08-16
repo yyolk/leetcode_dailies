@@ -42,7 +42,13 @@ def brute_stone_game_ix(stones: list[int]) -> bool:
             next_counts = [c0, c1, c2]
             next_counts[residue] -= 1
             outcomes.append(
-                dfs(next_counts[0], next_counts[1], next_counts[2], next_mod, not alice_turn)
+                dfs(
+                    next_counts[0],
+                    next_counts[1],
+                    next_counts[2],
+                    next_mod,
+                    not alice_turn,
+                )
             )
 
         if alice_turn:
