@@ -5,7 +5,7 @@ from pathlib import Path
 
 
 def load_solution():
-    root = Path(__file__).resolve().parents[1]
+    root = Path(__file__).resolve().parents[3]
     path = root / "solutions" / "2026" / "202608" / "20260808.py"
     spec = importlib.util.spec_from_file_location("daily_20260808", path)
     module = importlib.util.module_from_spec(spec)
