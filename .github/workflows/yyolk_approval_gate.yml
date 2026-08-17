@@ -1,6 +1,9 @@
 name: Require @yyolk Approval
 
 on:
+  pull_request:
+    types:
+      - synchronize
   pull_request_review:
     types:
       - submitted
@@ -26,6 +29,20 @@ jobs:
             if (!pull_number) {
               core.setFailed('Unable to determine pull request number.');
               return;
+            }
+
+            if (context.eventName === 'pull_request') {
+              const labels = context.payload.pull_request?.labels ?? [];
+              const hasDailyLabel = labels.some(
+                (label) => label.name === 'daily-boilerplate'
+              );
+
+              if (!hasDailyLabel) {
+                core.info(
+                  "Skipping synchronize gate for non-daily-boilerplate PR."
+                );
+                return;
+              }
             }
 
             const reviews = await github.paginate(github.rest.pulls.listReviews, {
