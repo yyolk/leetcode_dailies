@@ -3,7 +3,6 @@ import random
 from itertools import combinations
 from pathlib import Path
 
-
 def load_solution():
     root = Path(__file__).resolve().parents[3]
     path = root / "solutions" / "2026" / "202608" / "20260808.py"
@@ -12,7 +11,6 @@ def load_solution():
     assert spec is not None and spec.loader is not None
     spec.loader.exec_module(module)
     return module.Solution()
-
 
 def brute_valid_sequence(word1: str, word2: str) -> list[int]:
     n = len(word1)
@@ -27,16 +25,12 @@ def brute_valid_sequence(word1: str, word2: str) -> list[int]:
                 best = candidate
     return best if best is not None else []
 
-
-def test_find_lexicographically_smallest_valid_sequence_examples():
-    solution = load_solution()
+def test_find_lexicographically_smallest_valid_sequence_examples(solution):
     assert solution.validSequence("vbcca", "abc") == [0, 1, 2]
     assert solution.validSequence("bacdc", "abc") == [1, 2, 4]
     assert solution.validSequence("aaaaaa", "aaabc") == []
 
-
-def test_find_lexicographically_smallest_valid_sequence_matches_bruteforce_small():
-    solution = load_solution()
+def test_find_lexicographically_smallest_valid_sequence_matches_bruteforce_small(solution):
     alphabet = "abc"
     rng = random.Random(0)
     for n in range(2, 9):

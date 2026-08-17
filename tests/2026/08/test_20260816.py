@@ -3,7 +3,6 @@ from functools import lru_cache
 from itertools import product
 from pathlib import Path
 
-
 def load_solution():
     root = Path(__file__).resolve().parents[3]
     path = root / "solutions" / "2026" / "202608" / "20260816.py"
@@ -12,7 +11,6 @@ def load_solution():
     assert spec is not None and spec.loader is not None
     spec.loader.exec_module(module)
     return module.Solution()
-
 
 def brute_stone_game_ix(stones: list[int]) -> bool:
     counts = [0, 0, 0]
@@ -58,16 +56,12 @@ def brute_stone_game_ix(stones: list[int]) -> bool:
 
     return dfs(counts[0], counts[1], counts[2], 0, True)
 
-
-def test_stone_game_ix_examples():
-    solution = load_solution()
+def test_stone_game_ix_examples(solution):
     assert solution.stoneGameIX([2, 1]) is True
     assert solution.stoneGameIX([2]) is False
     assert solution.stoneGameIX([5, 1, 2, 4, 3]) is False
 
-
-def test_stone_game_ix_matches_bruteforce():
-    solution = load_solution()
+def test_stone_game_ix_matches_bruteforce(solution):
     for n in range(1, 8):
         for stones_tuple in product((1, 2, 3, 4), repeat=n):
             stones = list(stones_tuple)

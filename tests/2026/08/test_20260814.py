@@ -2,7 +2,6 @@ import importlib.util
 from itertools import product
 from pathlib import Path
 
-
 def load_solution():
     root = Path(__file__).resolve().parents[3]
     path = root / "solutions" / "2026" / "202608" / "20260814.py"
@@ -11,7 +10,6 @@ def load_solution():
     assert spec is not None and spec.loader is not None
     spec.loader.exec_module(module)
     return module.Solution()
-
 
 def brute_maximum_length_substring(s: str) -> int:
     best = 0
@@ -25,15 +23,11 @@ def brute_maximum_length_substring(s: str) -> int:
             best = max(best, right - left + 1)
     return best
 
-
-def test_maximum_length_substring_with_two_occurrences_examples():
-    solution = load_solution()
+def test_maximum_length_substring_with_two_occurrences_examples(solution):
     assert solution.maximumLengthSubstring("bcbbbcba") == 4
     assert solution.maximumLengthSubstring("aaaa") == 2
 
-
-def test_maximum_length_substring_with_two_occurrences_matches_bruteforce():
-    solution = load_solution()
+def test_maximum_length_substring_with_two_occurrences_matches_bruteforce(solution):
     for n in range(2, 8):
         for s_tuple in product(("a", "b", "c"), repeat=n):
             s = "".join(s_tuple)
