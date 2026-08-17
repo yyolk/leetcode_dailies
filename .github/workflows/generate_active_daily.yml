@@ -21,6 +21,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v7
+      with:
+        token: ${{ secrets.YYOLK_GITHUB_TOKEN }}
     - name: Set up Python
       uses: actions/setup-python@v7
       with:
@@ -43,7 +45,7 @@ jobs:
         uv run --no-sync ruff format .
     - name: Commit new files and open draft PR
       env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GH_TOKEN: ${{ secrets.YYOLK_GITHUB_TOKEN }}
       run: |
         DAILY_DATE=$(date +'%Y%m%d')
         BRANCH="daily/${DAILY_DATE}"

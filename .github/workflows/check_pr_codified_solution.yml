@@ -28,7 +28,7 @@ jobs:
             return;
           }
 
-          const commits = await github.paginate(github.rest.pulls.listCommits, {
+          const reviews = await github.paginate(github.rest.pulls.listReviews, {
             owner: context.repo.owner,
             repo: context.repo.repo,
             pull_number: pr.number,
@@ -36,7 +36,6 @@ jobs:
           });
 
           const optionalHundred = "(?: 💯)?";
-          const subjectPattern = new RegExp(`^solution \\d{8}\\.[^\\s]+${optionalHundred}$`, "u");
           const optionalPercentile = "(?: \\((?:beats )?\\d+(?:\\.\\d+)?%\\))?";
           const timePattern = new RegExp(
             `^- \\d+(?:\\.\\d+)?ms${optionalPercentile}${optionalHundred}$`,
@@ -47,21 +46,29 @@ jobs:
             "u"
           );
 
-          const hasCodifiedSolutionCommit = commits.some((commit) => {
-            const message = commit.commit.message.replaceAll("\r\n", "\n");
-            const [subject, ...bodyLines] = message.split("\n");
-            const lines = bodyLines.map((line) => line.trim()).filter(Boolean);
-            return (
-              subjectPattern.test(subject.trim()) &&
-              lines.length >= 2 &&
-              timePattern.test(lines[0]) &&
-              memoryPattern.test(lines[1])
+          const hasPerformanceReviewApproval = reviews.some((review) => {
+            if (review.state !== "APPROVED") {
+              return false;
+            }
+
+            if ((review.user?.login ?? "").toLowerCase() !== "yyolk") {
+              return false;
+            }
+
+            const body = String(review.body ?? "").replaceAll("\r\n", "\n");
+            const lines = body.split("\n").map((line) => line.trim()).filter(Boolean);
+
+            return lines.some(
+              (line, index) =>
+                timePattern.test(line) &&
+                index + 1 < lines.length &&
+                memoryPattern.test(lines[index + 1])
             );
           });
 
-          if (!hasCodifiedSolutionCommit) {
+          if (!hasPerformanceReviewApproval) {
             core.setFailed(
-              "Expected a commit like: `solution YYYYMMDD.ext`, `- 12.3ms (50%)`, `- 45.6mb (50%)`."
+              "Expected an APPROVED review from @yyolk containing performance lines like: `- 12.3ms (50%)` and `- 45.6mb (50%)`."
             );
             return;
           }
