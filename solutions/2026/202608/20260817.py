@@ -48,10 +48,7 @@ class Solution:
             for right in range(left + 1, n):
                 total = prefix[right + 1] - prefix[left]
 
-                while (
-                    mid < right
-                    and (prefix[mid + 1] - prefix[left]) * 2 < total
-                ):
+                while mid < right and (prefix[mid + 1] - prefix[left]) * 2 < total:
                     mid += 1
 
                 best = 0
