@@ -1,16 +1,4 @@
-import importlib.util
 from itertools import product
-from pathlib import Path
-
-
-def load_solution():
-    root = Path(__file__).resolve().parents[3]
-    path = root / "solutions" / "2026" / "202608" / "20260815.py"
-    spec = importlib.util.spec_from_file_location("daily_20260815", path)
-    module = importlib.util.module_from_spec(spec)
-    assert spec is not None and spec.loader is not None
-    spec.loader.exec_module(module)
-    return module.Solution()
 
 
 def brute_longest_subsequence(nums: list[int]) -> int:
@@ -28,15 +16,13 @@ def brute_longest_subsequence(nums: list[int]) -> int:
     return best
 
 
-def test_longest_subsequence_with_non_zero_bitwise_xor_examples():
-    solution = load_solution()
+def test_longest_subsequence_with_non_zero_bitwise_xor_examples(solution):
     assert solution.longestSubsequence([1, 2, 3]) == 2
     assert solution.longestSubsequence([3, 5, 2]) == 3
     assert solution.longestSubsequence([0, 0]) == 0
 
 
-def test_longest_subsequence_with_non_zero_bitwise_xor_matches_bruteforce():
-    solution = load_solution()
+def test_longest_subsequence_with_non_zero_bitwise_xor_matches_bruteforce(solution):
     for n in range(1, 8):
         for nums_tuple in product((0, 1, 2, 3), repeat=n):
             nums = list(nums_tuple)

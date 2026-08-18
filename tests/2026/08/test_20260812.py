@@ -1,16 +1,4 @@
-import importlib.util
 from itertools import product
-from pathlib import Path
-
-
-def load_solution():
-    root = Path(__file__).resolve().parents[3]
-    path = root / "solutions" / "2026" / "202608" / "20260812.py"
-    spec = importlib.util.spec_from_file_location("daily_20260812", path)
-    module = importlib.util.module_from_spec(spec)
-    assert spec is not None and spec.loader is not None
-    spec.loader.exec_module(module)
-    return module.Solution()
 
 
 def brute_max_subarray_length(nums: list[int], k: int) -> int:
@@ -26,15 +14,15 @@ def brute_max_subarray_length(nums: list[int], k: int) -> int:
     return best
 
 
-def test_length_of_longest_subarray_with_at_most_k_frequency_examples():
-    solution = load_solution()
+def test_length_of_longest_subarray_with_at_most_k_frequency_examples(solution):
     assert solution.maxSubarrayLength([1, 2, 3, 1, 2, 3, 1, 2], 2) == 6
     assert solution.maxSubarrayLength([1, 2, 1, 2, 1, 2, 1, 2], 1) == 2
     assert solution.maxSubarrayLength([5, 5, 5, 5, 5, 5, 5], 4) == 4
 
 
-def test_length_of_longest_subarray_with_at_most_k_frequency_matches_bruteforce():
-    solution = load_solution()
+def test_length_of_longest_subarray_with_at_most_k_frequency_matches_bruteforce(
+    solution,
+):
     for n in range(1, 8):
         for nums_tuple in product((1, 2, 3), repeat=n):
             nums = list(nums_tuple)
