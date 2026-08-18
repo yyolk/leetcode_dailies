@@ -81,4 +81,6 @@ def test_backfill_missing_2026_solution_module(date_code):
             has_public_callable_class = True
             break
 
-    assert has_public_callable_class, f"No public callable class API found in {date_code}"
+    assert has_public_callable_class, (
+        f"No public callable class API found in {date_code}"
+    )
