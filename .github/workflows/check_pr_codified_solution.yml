@@ -7,6 +7,11 @@ on:
     - reopened
     - edited
     - ready_for_review
+  pull_request_review:
+    types:
+    - submitted
+    - edited
+    - dismissed
 
 permissions:
   contents: read
@@ -14,6 +19,7 @@ permissions:
 
 jobs:
   codified-solution-check:
+    if: ${{ github.event_name == 'pull_request' }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/github-script@v9
@@ -173,3 +179,79 @@ jobs:
           }
 
           core.info(`Sent pushover notification for daily PR #${prNumber}.`);
+  yyolk-performance-approval-check:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/github-script@v9
+      with:
+        script: |
+          const owner = context.repo.owner;
+          const repo = context.repo.repo;
+          const pullNumber =
+            context.payload.pull_request?.number ??
+            context.payload.review?.pull_request_url?.split("/").pop();
+
+          if (!pullNumber) {
+            core.setFailed("Unable to determine pull request number.");
+            return;
+          }
+
+          const prResponse = await github.rest.pulls.get({
+            owner,
+            repo,
+            pull_number: Number(pullNumber)
+          });
+
+          const hasDailyLabel = prResponse.data.labels.some(
+            (label) => label.name === "daily-boilerplate"
+          );
+
+          if (!hasDailyLabel) {
+            core.info("Skipping check for non-daily-boilerplate PR.");
+            return;
+          }
+
+          const reviews = await github.paginate(github.rest.pulls.listReviews, {
+            owner,
+            repo,
+            pull_number: Number(pullNumber),
+            per_page: 100
+          });
+
+          const optionalHundred = "(?: 💯)?";
+          const optionalPercentile = "(?: \\((?:beats )?\\d+(?:\\.\\d+)?%\\))?";
+          const timePattern = new RegExp(
+            `^- \\d+(?:\\.\\d+)?ms${optionalPercentile}${optionalHundred}$`,
+            "u"
+          );
+          const memoryPattern = new RegExp(
+            `^- \\d+(?:\\.\\d+)?mb${optionalPercentile}${optionalHundred}$`,
+            "u"
+          );
+
+          const hasPerformanceReviewApproval = reviews.some((review) => {
+            if (review.state !== "APPROVED") {
+              return false;
+            }
+
+            if ((review.user?.login ?? "").toLowerCase() !== "yyolk") {
+              return false;
+            }
+
+            const body = String(review.body ?? "").replaceAll("\r\n", "\n");
+            const lines = body.split("\n").map((line) => line.trim()).filter(Boolean);
+
+            return lines.some(
+              (line, index) =>
+                timePattern.test(line) &&
+                index + 1 < lines.length &&
+                memoryPattern.test(lines[index + 1])
+            );
+          });
+
+          if (!hasPerformanceReviewApproval) {
+            core.setFailed(
+              "Expected an APPROVED review from @yyolk containing performance lines like: `- 12.3ms (50%)` and `- 45.6mb (50%)`."
+            );
+            return;
+          }
