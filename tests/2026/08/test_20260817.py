@@ -1,17 +1,5 @@
-import importlib.util
 from functools import lru_cache
 from itertools import product
-from pathlib import Path
-
-def load_solution():
-    root = Path(__file__).resolve().parents[3]
-    path = root / "solutions" / "2026" / "202608" / "20260817.py"
-    spec = importlib.util.spec_from_file_location("daily_20260817", path)
-    module = importlib.util.module_from_spec(spec)
-    assert spec is not None and spec.loader is not None
-    spec.loader.exec_module(module)
-    return module.Solution()
-
 def brute_stone_game_v(stone_value: list[int]) -> int:
     prefix = [0]
     for value in stone_value:

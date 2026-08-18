@@ -1,16 +1,4 @@
-import importlib.util
 from itertools import product
-from pathlib import Path
-
-def load_solution():
-    root = Path(__file__).resolve().parents[3]
-    path = root / "solutions" / "2026" / "202608" / "20260813.py"
-    spec = importlib.util.spec_from_file_location("daily_20260813", path)
-    module = importlib.util.module_from_spec(spec)
-    assert spec is not None and spec.loader is not None
-    spec.loader.exec_module(module)
-    return module.Solution()
-
 def brute_longest_repeating(
     s: str, query_characters: str, query_indices: list[int]
 ) -> list[int]:

@@ -1,17 +1,5 @@
-import importlib.util
 import random
 from itertools import combinations
-from pathlib import Path
-
-def load_solution():
-    root = Path(__file__).resolve().parents[3]
-    path = root / "solutions" / "2026" / "202608" / "20260808.py"
-    spec = importlib.util.spec_from_file_location("daily_20260808", path)
-    module = importlib.util.module_from_spec(spec)
-    assert spec is not None and spec.loader is not None
-    spec.loader.exec_module(module)
-    return module.Solution()
-
 def brute_valid_sequence(word1: str, word2: str) -> list[int]:
     n = len(word1)
     m = len(word2)
