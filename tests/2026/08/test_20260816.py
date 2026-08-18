@@ -1,6 +1,7 @@
 from functools import lru_cache
 from itertools import product
 
+
 def brute_stone_game_ix(stones: list[int]) -> bool:
     counts = [0, 0, 0]
     for stone in stones:
@@ -45,10 +46,12 @@ def brute_stone_game_ix(stones: list[int]) -> bool:
 
     return dfs(counts[0], counts[1], counts[2], 0, True)
 
+
 def test_stone_game_ix_examples(solution):
     assert solution.stoneGameIX([2, 1]) is True
     assert solution.stoneGameIX([2]) is False
     assert solution.stoneGameIX([5, 1, 2, 4, 3]) is False
+
 
 def test_stone_game_ix_matches_bruteforce(solution):
     for n in range(1, 8):

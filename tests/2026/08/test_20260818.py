@@ -1,5 +1,6 @@
 from itertools import product
 
+
 def brute_largest_integer(nums: list[int], k: int) -> int:
     counts: dict[int, int] = {}
     for start in range(len(nums) - k + 1):
@@ -12,10 +13,12 @@ def brute_largest_integer(nums: list[int], k: int) -> int:
             best = max(best, value)
     return best
 
+
 def test_largest_integer_examples(solution):
     assert solution.largestInteger([3, 9, 2, 1, 7], 3) == 7
     assert solution.largestInteger([3, 9, 7, 2, 1, 7], 4) == 3
     assert solution.largestInteger([0, 0], 1) == -1
+
 
 def test_largest_integer_matches_bruteforce(solution):
     for n in range(1, 8):

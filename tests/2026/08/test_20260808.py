@@ -1,6 +1,7 @@
 import random
 from itertools import combinations
 
+
 def brute_valid_sequence(word1: str, word2: str) -> list[int]:
     n = len(word1)
     m = len(word2)
@@ -14,12 +15,16 @@ def brute_valid_sequence(word1: str, word2: str) -> list[int]:
                 best = candidate
     return best if best is not None else []
 
+
 def test_find_lexicographically_smallest_valid_sequence_examples(solution):
     assert solution.validSequence("vbcca", "abc") == [0, 1, 2]
     assert solution.validSequence("bacdc", "abc") == [1, 2, 4]
     assert solution.validSequence("aaaaaa", "aaabc") == []
 
-def test_find_lexicographically_smallest_valid_sequence_matches_bruteforce_small(solution):
+
+def test_find_lexicographically_smallest_valid_sequence_matches_bruteforce_small(
+    solution,
+):
     alphabet = "abc"
     rng = random.Random(0)
     for n in range(2, 9):

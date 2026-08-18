@@ -1,5 +1,6 @@
 import random
 
+
 def brute_stone_game_ii(piles: list[int]) -> int:
     from functools import lru_cache
 
@@ -21,9 +22,11 @@ def brute_stone_game_ii(piles: list[int]) -> int:
 
     return solve(0, 1)
 
+
 def test_stone_game_ii_examples(solution):
     assert solution.stoneGameII([2, 7, 9, 4, 4]) == 10
     assert solution.stoneGameII([1, 2, 3, 4, 5, 100]) == 104
+
 
 def test_stone_game_ii_matches_bruteforce_small_random_inputs(solution):
     rng = random.Random(0)

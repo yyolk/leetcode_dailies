@@ -10,15 +10,18 @@ def expected_missing_integer(nums: list[int]) -> int:
         prefix_sum += 1
     return prefix_sum
 
+
 def test_smallest_missing_integer_examples(solution):
     assert solution.missingInteger([1, 2, 3, 2, 5]) == 6
     assert solution.missingInteger([3, 4, 5, 1, 12, 14, 13]) == 15
+
 
 def test_smallest_missing_integer_prefix_and_gaps(solution):
     assert solution.missingInteger([10]) == 11
     assert solution.missingInteger([1, 2, 3, 4]) == 10
     assert solution.missingInteger([2, 3, 4, 9, 10, 11]) == 12
     assert solution.missingInteger([5, 1, 2, 3]) == 6
+
 
 def test_smallest_missing_integer_matches_reference_cases(solution):
     cases = [

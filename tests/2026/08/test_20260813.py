@@ -1,5 +1,6 @@
 from itertools import product
 
+
 def brute_longest_repeating(
     s: str, query_characters: str, query_indices: list[int]
 ) -> list[int]:
@@ -20,9 +21,11 @@ def brute_longest_repeating(
 
     return answer
 
+
 def test_longest_substring_of_one_repeating_character_examples(solution):
     assert solution.longestRepeating("babacc", "bcb", [1, 3, 3]) == [3, 3, 4]
     assert solution.longestRepeating("abyzz", "aa", [2, 1]) == [2, 3]
+
 
 def test_longest_substring_of_one_repeating_character_matches_bruteforce(solution):
     alphabet = ("a", "b")

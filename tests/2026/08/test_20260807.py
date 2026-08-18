@@ -13,12 +13,14 @@ def brute(num: str, t: int, limit: int = 300000) -> str:
             return s
     return "-1"
 
+
 def test_smallest_divisible_digit_product_ii_known_cases(solution):
     assert solution.smallestNumber("1234", 256) == "1488"
     assert solution.smallestNumber("12355", 50) == "12355"
     assert solution.smallestNumber("11111", 26) == "-1"
     assert solution.smallestNumber("109", 2) == "112"
     assert solution.smallestNumber("99", 2) == "112"
+
 
 def test_smallest_divisible_digit_product_ii_matches_bruteforce_small_inputs(solution):
     for number in range(11, 160):

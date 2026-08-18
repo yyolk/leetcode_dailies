@@ -1,5 +1,6 @@
 from functools import lru_cache
 
+
 def brute_winner_square_game(n: int) -> bool:
     @lru_cache(maxsize=None)
     def can_win(stones: int) -> bool:
@@ -12,10 +13,12 @@ def brute_winner_square_game(n: int) -> bool:
 
     return can_win(n)
 
+
 def test_stone_game_iv_examples(solution):
     assert solution.winnerSquareGame(1) is True
     assert solution.winnerSquareGame(2) is False
     assert solution.winnerSquareGame(4) is True
+
 
 def test_stone_game_iv_matches_bruteforce_small_inputs(solution):
     for n in range(1, 201):

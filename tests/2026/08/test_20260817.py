@@ -1,6 +1,7 @@
 from functools import lru_cache
 from itertools import product
 
+
 def brute_stone_game_v(stone_value: list[int]) -> int:
     prefix = [0]
     for value in stone_value:
@@ -32,10 +33,12 @@ def brute_stone_game_v(stone_value: list[int]) -> int:
 
     return dfs(0, len(stone_value) - 1)
 
+
 def test_stone_game_v_examples(solution):
     assert solution.stoneGameV([6, 2, 3, 4, 5, 5]) == 18
     assert solution.stoneGameV([7, 7, 7, 7, 7, 7, 7]) == 28
     assert solution.stoneGameV([4]) == 0
+
 
 def test_stone_game_v_matches_bruteforce(solution):
     for n in range(1, 8):

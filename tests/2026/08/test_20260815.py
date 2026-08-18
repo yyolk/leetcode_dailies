@@ -1,5 +1,6 @@
 from itertools import product
 
+
 def brute_longest_subsequence(nums: list[int]) -> int:
     n = len(nums)
     best = 0
@@ -14,10 +15,12 @@ def brute_longest_subsequence(nums: list[int]) -> int:
             best = max(best, length)
     return best
 
+
 def test_longest_subsequence_with_non_zero_bitwise_xor_examples(solution):
     assert solution.longestSubsequence([1, 2, 3]) == 2
     assert solution.longestSubsequence([3, 5, 2]) == 3
     assert solution.longestSubsequence([0, 0]) == 0
+
 
 def test_longest_subsequence_with_non_zero_bitwise_xor_matches_bruteforce(solution):
     for n in range(1, 8):
