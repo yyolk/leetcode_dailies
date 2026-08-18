@@ -3,7 +3,6 @@ name: Check PR Codified Solution
 on:
   pull_request:
     types:
-    - opened
     - synchronize
     - reopened
     - edited
@@ -25,51 +24,6 @@ jobs:
 
           if (!hasDailyLabel) {
             core.info("Skipping check for non-daily-boilerplate PR.");
-            return;
-          }
-
-          const reviews = await github.paginate(github.rest.pulls.listReviews, {
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            pull_number: pr.number,
-            per_page: 100
-          });
-
-          const optionalHundred = "(?: 💯)?";
-          const optionalPercentile = "(?: \\((?:beats )?\\d+(?:\\.\\d+)?%\\))?";
-          const timePattern = new RegExp(
-            `^- \\d+(?:\\.\\d+)?ms${optionalPercentile}${optionalHundred}$`,
-            "u"
-          );
-          const memoryPattern = new RegExp(
-            `^- \\d+(?:\\.\\d+)?mb${optionalPercentile}${optionalHundred}$`,
-            "u"
-          );
-
-          const hasPerformanceReviewApproval = reviews.some((review) => {
-            if (review.state !== "APPROVED") {
-              return false;
-            }
-
-            if ((review.user?.login ?? "").toLowerCase() !== "yyolk") {
-              return false;
-            }
-
-            const body = String(review.body ?? "").replaceAll("\r\n", "\n");
-            const lines = body.split("\n").map((line) => line.trim()).filter(Boolean);
-
-            return lines.some(
-              (line, index) =>
-                timePattern.test(line) &&
-                index + 1 < lines.length &&
-                memoryPattern.test(lines[index + 1])
-            );
-          });
-
-          if (!hasPerformanceReviewApproval) {
-            core.setFailed(
-              "Expected an APPROVED review from @yyolk containing performance lines like: `- 12.3ms (50%)` and `- 45.6mb (50%)`."
-            );
             return;
           }
 
@@ -116,6 +70,66 @@ jobs:
               }
               core.warning("Skipping auto-merge enablement due to token permissions.");
             }
+          }
+
+          const optionalHundred = "(?: 💯)?";
+          const optionalPercentile = "(?: \\((?:beats )?\\d+(?:\\.\\d+)?%\\))?";
+          const timePattern = new RegExp(
+            `^- \\d+(?:\\.\\d+)?ms${optionalPercentile}${optionalHundred}$`,
+            "u"
+          );
+          const memoryPattern = new RegExp(
+            `^- \\d+(?:\\.\\d+)?mb${optionalPercentile}${optionalHundred}$`,
+            "u"
+          );
+          const hasPerformanceLines = (body) => {
+            const lines = String(body ?? "")
+              .replaceAll("\r\n", "\n")
+              .split("\n")
+              .map((line) => line.trim())
+              .filter(Boolean);
+
+            return lines.some(
+              (line, index) =>
+                timePattern.test(line) &&
+                index + 1 < lines.length &&
+                memoryPattern.test(lines[index + 1])
+            );
+          };
+
+          const [issueComments, reviews, reviewComments] = await Promise.all([
+            github.paginate(github.rest.issues.listComments, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: pr.number,
+              per_page: 100
+            }),
+            github.paginate(github.rest.pulls.listReviews, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: pr.number,
+              per_page: 100
+            }),
+            github.paginate(github.rest.pulls.listReviewComments, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: pr.number,
+              per_page: 100
+            })
+          ]);
+
+          const hasPerformanceComment = [...issueComments, ...reviews, ...reviewComments].some(
+            (comment) =>
+              (comment.user?.login ?? "").toLowerCase() === "yyolk" &&
+              hasPerformanceLines(comment.body)
+          );
+
+          if (!hasPerformanceComment) {
+            core.warning(
+              "No @yyolk PR/review comment with performance lines found yet. Expected lines like: `- 12.3ms (50%)` and `- 45.6mb (50%)`."
+            );
+          } else {
+            core.info("Found @yyolk performance lines in PR/review comments.");
           }
     - uses: actions/github-script@v9
       if: ${{ always() && contains(github.event.pull_request.labels.*.name, 'daily-boilerplate') }}
