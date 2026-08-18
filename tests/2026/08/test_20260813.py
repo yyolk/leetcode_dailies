@@ -1,17 +1,4 @@
-import importlib.util
 from itertools import product
-from pathlib import Path
-
-
-def load_solution():
-    root = Path(__file__).resolve().parents[3]
-    path = root / "solutions" / "2026" / "202608" / "20260813.py"
-    spec = importlib.util.spec_from_file_location("daily_20260813", path)
-    module = importlib.util.module_from_spec(spec)
-    assert spec is not None and spec.loader is not None
-    spec.loader.exec_module(module)
-    return module.Solution()
-
 
 def brute_longest_repeating(
     s: str, query_characters: str, query_indices: list[int]
@@ -33,15 +20,11 @@ def brute_longest_repeating(
 
     return answer
 
-
-def test_longest_substring_of_one_repeating_character_examples():
-    solution = load_solution()
+def test_longest_substring_of_one_repeating_character_examples(solution):
     assert solution.longestRepeating("babacc", "bcb", [1, 3, 3]) == [3, 3, 4]
     assert solution.longestRepeating("abyzz", "aa", [2, 1]) == [2, 3]
 
-
-def test_longest_substring_of_one_repeating_character_matches_bruteforce():
-    solution = load_solution()
+def test_longest_substring_of_one_repeating_character_matches_bruteforce(solution):
     alphabet = ("a", "b")
 
     for n in range(1, 5):

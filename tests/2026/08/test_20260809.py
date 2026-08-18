@@ -1,17 +1,4 @@
-import importlib.util
 import random
-from pathlib import Path
-
-
-def load_solution():
-    root = Path(__file__).resolve().parents[3]
-    path = root / "solutions" / "2026" / "202608" / "20260809.py"
-    spec = importlib.util.spec_from_file_location("daily_20260809", path)
-    module = importlib.util.module_from_spec(spec)
-    assert spec is not None and spec.loader is not None
-    spec.loader.exec_module(module)
-    return module.Solution()
-
 
 def brute_stone_game_ii(piles: list[int]) -> int:
     from functools import lru_cache
@@ -34,15 +21,11 @@ def brute_stone_game_ii(piles: list[int]) -> int:
 
     return solve(0, 1)
 
-
-def test_stone_game_ii_examples():
-    solution = load_solution()
+def test_stone_game_ii_examples(solution):
     assert solution.stoneGameII([2, 7, 9, 4, 4]) == 10
     assert solution.stoneGameII([1, 2, 3, 4, 5, 100]) == 104
 
-
-def test_stone_game_ii_matches_bruteforce_small_random_inputs():
-    solution = load_solution()
+def test_stone_game_ii_matches_bruteforce_small_random_inputs(solution):
     rng = random.Random(0)
     for n in range(1, 10):
         for _ in range(120):
