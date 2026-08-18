@@ -13,7 +13,7 @@ def solution(request):
     date_code = stem.removeprefix("test_")
     assert len(date_code) == 8 and date_code.isdigit()
 
-    root = test_file.parents[3]
+    root = Path(__file__).resolve().parents[1]
     path = root / "solutions" / date_code[:4] / date_code[:6] / f"{date_code}.py"
 
     spec = importlib.util.spec_from_file_location(f"daily_{date_code}", path)
