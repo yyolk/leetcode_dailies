@@ -21,8 +21,9 @@ jobs:
         script: |
           const pr = context.payload.pull_request;
           const hasDailyLabel = pr.labels.some((label) => label.name === "daily-boilerplate");
+          const isDailyTitle = /^\d{8}$/.test(pr.title || "");
 
-          if (!hasDailyLabel) {
+          if (!hasDailyLabel && !isDailyTitle) {
             core.info("Skipping Copilot request for non-daily-boilerplate PR.");
             return;
           }
