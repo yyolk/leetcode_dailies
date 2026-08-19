@@ -42,16 +42,25 @@ class Solution:
     * All `reserved_seats[i]` are distinct."""
 
     def max_number_of_families(self, n: int, reserved_seats: list[list[int]]) -> int:
-        """...
+        """Return the maximum number of four-person groups that can be seated."""
+        blocked_by_row: dict[int, int] = {}
+        for row, seat in reserved_seats:
+            if 2 <= seat <= 9:
+                blocked_by_row[row] = blocked_by_row.get(row, 0) | (1 << (seat - 2))
 
-        Proposed solution ...
+        left_block = 0b00001111  # seats 2-5
+        middle_block = 0b00111100  # seats 4-7
+        right_block = 0b11110000  # seats 6-9
 
-        Args:
-            n (int): ...
-            reserved_seats (list of list of int): ...
+        families = (n - len(blocked_by_row)) * 2
+        for blocked in blocked_by_row.values():
+            left_free = (blocked & left_block) == 0
+            right_free = (blocked & right_block) == 0
+            if left_free and right_free:
+                families += 2
+            elif left_free or right_free or (blocked & middle_block) == 0:
+                families += 1
 
-        Returns:
-            int: ..."""
-        ...
+        return families
 
     maxNumberOfFamilies = max_number_of_families
