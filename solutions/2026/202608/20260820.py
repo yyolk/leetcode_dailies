@@ -28,15 +28,16 @@ class Solution:
     * All elements in `nums` are distinct."""
 
     def result_array(self, nums: list[int]) -> list[int]:
-        """...
+        """Return the result array built by appending to arr1/arr2 by last-value rule."""
+        arr1 = [nums[0]]
+        arr2 = [nums[1]]
 
-        Proposed solution ...
+        for value in nums[2:]:
+            if arr1[-1] > arr2[-1]:
+                arr1.append(value)
+            else:
+                arr2.append(value)
 
-        Args:
-            nums (list of int): ...
-
-        Returns:
-            list of int: ..."""
-        ...
+        return arr1 + arr2
 
     resultArray = result_array
