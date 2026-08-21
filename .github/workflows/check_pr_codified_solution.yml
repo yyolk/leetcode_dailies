@@ -139,7 +139,7 @@ jobs:
             core.info("Found @yyolk performance lines in PR/review comments.");
           }
     - uses: actions/github-script@v9
-      if: ${{ always() && contains(github.event.pull_request.labels.*.name, 'daily-boilerplate') }}
+      if: ${{ always() && contains(github.event.pull_request.labels.*.name, 'daily-boilerplate') && github.event.action != 'ready_for_review' }}
       env:
         PUSHOVER_TOKEN: ${{ secrets.PUSHOVER_API_KEY }}
         PUSHOVER_USER: ${{ secrets.PUSHOVER_USER_KEY }}
