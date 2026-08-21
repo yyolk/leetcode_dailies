@@ -44,8 +44,10 @@ class Solution:
             low_bit = mask & -mask
             bit_idx = low_bit.bit_length() - 1
             prev = mask ^ low_bit
-            lcms[mask] = lcms[prev] * filtered[bit_idx] // math.gcd(
-                lcms[prev], filtered[bit_idx]
+            lcms[mask] = (
+                lcms[prev]
+                * filtered[bit_idx]
+                // math.gcd(lcms[prev], filtered[bit_idx])
             )
             signs[mask] = 1 if mask.bit_count() % 2 == 1 else -1
 
