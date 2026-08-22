@@ -132,9 +132,10 @@ jobs:
           );
 
           if (!hasPerformanceComment) {
-            core.warning(
-              "No @yyolk PR/review comment with performance lines found yet. Expected lines like: `- 12.3ms (50%)` and `- 45.6mb (50%)`."
+            core.setFailed(
+              "Expected a @yyolk PR/review comment containing performance lines like: `- 12.3ms (50%)` and `- 45.6mb (50%)`."
             );
+            return;
           } else {
             core.info("Found @yyolk performance lines in PR/review comments.");
           }
@@ -143,6 +144,7 @@ jobs:
       uses: ./.github/actions/notify-pushover
       with:
         message: "Daily PR #${{ github.event.pull_request.number }} is ready for review."
+        ttl: "93600"
       env:
         PUSHOVER_TOKEN: ${{ secrets.PUSHOVER_API_KEY }}
         PUSHOVER_USER: ${{ secrets.PUSHOVER_USER_KEY }}
@@ -151,6 +153,7 @@ jobs:
       uses: ./.github/actions/notify-pushover
       with:
         message: "Daily PR #${{ github.event.pull_request.number }} failed before ready for review. JOB_STATUS='${{ job.status }}'."
+        ttl: "93600"
       env:
         PUSHOVER_TOKEN: ${{ secrets.PUSHOVER_API_KEY }}
         PUSHOVER_USER: ${{ secrets.PUSHOVER_USER_KEY }}
