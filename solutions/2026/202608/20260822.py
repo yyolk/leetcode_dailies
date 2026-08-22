@@ -18,15 +18,16 @@ class Solution:
     * `1 <= n <= 106`"""
 
     def check_divisibility(self, n: int) -> bool:
-        """...
+        """Return whether n is divisible by digit-sum(n) + digit-product(n)."""
+        digit_sum = 0
+        digit_product = 1
+        value = n
 
-        Proposed solution ...
+        while value > 0:
+            value, digit = divmod(value, 10)
+            digit_sum += digit
+            digit_product *= digit
 
-        Args:
-            n (int): ...
-
-        Returns:
-            bool: ..."""
-        ...
+        return n % (digit_sum + digit_product) == 0
 
     checkDivisibility = check_divisibility
