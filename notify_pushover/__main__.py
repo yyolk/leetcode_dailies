@@ -7,12 +7,12 @@ import requests
 PUSHOVER_TOKEN = os.environ["PUSHOVER_TOKEN"]
 PUSHOVER_USER = os.environ["PUSHOVER_USER"]
 JOB_STATUS = os.environ["JOB_STATUS"]
-TTL = timedelta(hours=26) // timedelta(minutes=1)
+TTL_SECONDS = int(timedelta(hours=26).total_seconds())
 
 payload = dict(
     token=PUSHOVER_TOKEN,
     user=PUSHOVER_USER,
-    ttl=TTL,
+    ttl=TTL_SECONDS,
     message=f"Workflow finished. {JOB_STATUS=}",
 )
 headers = {"Content-Type": "application/x-www-form-urlencoded"}
