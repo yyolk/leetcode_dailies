@@ -15,7 +15,7 @@ jobs:
       (
         github.actor == 'Copilot' ||
         github.actor == 'github-copilot[bot]' ||
-        endsWith(github.actor, '[bot]')
+        endsWith(github.actor, '[bot]') && github.actor != 'pre-commit-ci[bot]'
       )
     runs-on: ubuntu-latest
     steps:
