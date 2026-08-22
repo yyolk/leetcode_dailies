@@ -139,20 +139,11 @@ jobs:
           } else {
             core.info("Found @yyolk performance lines in PR/review comments.");
           }
-    - name: Notify daily PR ready for review
-      if: ${{ always() && contains(github.event.pull_request.labels.*.name, 'daily-boilerplate') && github.event.action != 'ready_for_review' && job.status == 'success' }}
+    - name: Notify daily PR status
+      if: ${{ always() && contains(github.event.pull_request.labels.*.name, 'daily-boilerplate') && github.event.action != 'ready_for_review' }}
       uses: ./.github/actions/notify-pushover
       with:
-        message: "Daily PR #${{ github.event.pull_request.number }} is ready for review."
-        ttl: "93600"
-      env:
-        PUSHOVER_TOKEN: ${{ secrets.PUSHOVER_API_KEY }}
-        PUSHOVER_USER: ${{ secrets.PUSHOVER_USER_KEY }}
-    - name: Notify daily PR failed before ready
-      if: ${{ always() && contains(github.event.pull_request.labels.*.name, 'daily-boilerplate') && github.event.action != 'ready_for_review' && job.status != 'success' }}
-      uses: ./.github/actions/notify-pushover
-      with:
-        message: "Daily PR #${{ github.event.pull_request.number }} failed before ready for review. JOB_STATUS='${{ job.status }}'."
+        message: "${{ job.status == 'success' && format('Daily PR #{0} is ready for review.', github.event.pull_request.number) || format('Daily PR #{0} failed before ready for review. JOB_STATUS=''{1}''.', github.event.pull_request.number, job.status) }}"
         ttl: "93600"
       env:
         PUSHOVER_TOKEN: ${{ secrets.PUSHOVER_API_KEY }}
