@@ -77,9 +77,9 @@ jobs:
           --head "${BRANCH}"
     - name: Notify of boilerplate ready
       if: always()
+      uses: ./.github/actions/notify-pushover
+      with:
+        message: "Workflow finished. JOB_STATUS='${{ job.status }}'"
       env:
         PUSHOVER_TOKEN: ${{ secrets.PUSHOVER_API_KEY }}
         PUSHOVER_USER: ${{ secrets.PUSHOVER_USER_KEY }}
-        JOB_STATUS: ${{ job.status }}
-      run: |
-        uv run --no-sync python -m notify_pushover
