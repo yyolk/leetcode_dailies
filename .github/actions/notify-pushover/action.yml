@@ -1,0 +1,64 @@
+name: Notify Pushover
+description: Send a notification using the Pushover API.
+
+inputs:
+  message:
+    description: Notification message text.
+    required: true
+  ttl:
+    description: Message lifetime in seconds.
+    required: false
+    default: "3600"
+  token:
+    description: Optional Pushover application token (falls back to PUSHOVER_TOKEN env).
+    required: false
+    default: ""
+  user:
+    description: Optional Pushover user key (falls back to PUSHOVER_USER env).
+    required: false
+    default: ""
+
+runs:
+  using: composite
+  steps:
+  - name: Send Pushover notification
+    shell: bash
+    run: |
+      token="${{ inputs.token }}"
+      user="${{ inputs.user }}"
+
+      if [[ -z "$token" ]]; then
+        token="${PUSHOVER_TOKEN:-}"
+      fi
+
+      if [[ -z "$user" ]]; then
+        user="${PUSHOVER_USER:-}"
+      fi
+
+      if [[ -z "$token" || -z "$user" ]]; then
+        echo "PUSHOVER_TOKEN and PUSHOVER_USER must be provided via inputs or environment." >&2
+        exit 1
+      fi
+
+      response_file="${RUNNER_TEMP}/pushover-response.json"
+
+      if ! http_code="$(
+        curl --silent --show-error \
+          --output "$response_file" \
+          --write-out "%{http_code}" \
+          --request POST "https://api.pushover.net/1/messages.json" \
+          --header "Content-Type: application/x-www-form-urlencoded" \
+          --data-urlencode "token=${token}" \
+          --data-urlencode "user=${user}" \
+          --data-urlencode "message=${{ inputs.message }}" \
+          --data-urlencode "ttl=${{ inputs.ttl }}"
+      )"; then
+        echo "Failed to reach the Pushover API." >&2
+        exit 1
+      fi
+
+      if [[ "$http_code" -lt 200 || "$http_code" -ge 300 ]]; then
+        echo "Pushover API returned HTTP ${http_code}." >&2
+        cat "$response_file" >&2
+        exit 1
+      fi
