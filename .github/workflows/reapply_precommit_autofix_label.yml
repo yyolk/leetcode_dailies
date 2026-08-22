@@ -1,0 +1,50 @@
+name: Re-apply pre-commit.ci autofix label
+
+on:
+  pull_request:
+    types: [synchronize]
+
+permissions:
+  pull-requests: write
+
+jobs:
+  reapply-label:
+    if: >
+      contains(github.event.pull_request.labels.*.name, 'daily-boilerplate') &&
+      (
+        github.actor == 'Copilot' ||
+        github.actor == 'github-copilot[bot]' ||
+        endsWith(github.actor, '[bot]')
+      )
+    runs-on: ubuntu-latest
+    steps:
+      - name: Re-add pre-commit.ci autofix label
+        uses: actions/github-script@v9
+        with:
+          github-token: ${{ secrets.YYOLK_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
+          script: |
+            const label = "pre-commit.ci autofix";
+            const { owner, repo } = context.repo;
+            const issue_number = context.payload.pull_request.number;
+
+            // Ensure the label exists
+            try {
+              await github.rest.issues.createLabel({
+                owner,
+                repo,
+                name: label,
+                color: "bfd4f2",
+                description: "Allow pre-commit.ci autofixes"
+              });
+            } catch (e) {
+              // Label already exists — fine
+            }
+
+            await github.rest.issues.addLabels({
+              owner,
+              repo,
+              issue_number,
+              labels: [label]
+            });
+
+            core.info(`Re-applied "${label}" to PR #${issue_number}`);
