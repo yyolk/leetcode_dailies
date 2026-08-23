@@ -173,6 +173,9 @@ jobs:
           } else {
             core.info("Found @yyolk performance lines in PR/review comments.");
           }
+    - name: Checkout repository for local actions
+      if: ${{ github.event_name == 'pull_request' && always() && contains(github.event.pull_request.labels.*.name, 'daily-boilerplate') && github.event.action != 'ready_for_review' }}
+      uses: actions/checkout@v4
     - name: Notify daily PR status
       if: ${{ github.event_name == 'pull_request' && always() && contains(github.event.pull_request.labels.*.name, 'daily-boilerplate') && github.event.action != 'ready_for_review' }}
       uses: ./.github/actions/notify-pushover
