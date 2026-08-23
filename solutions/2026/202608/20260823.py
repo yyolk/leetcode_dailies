@@ -36,15 +36,29 @@ class Solution:
     * `num` consists of only digits and `'?'`."""
 
     def sum_game(self, num: str) -> bool:
-        """...
+        """Return whether Alice wins with optimal play."""
+        half = len(num) // 2
+        left_sum = 0
+        right_sum = 0
+        left_questions = 0
+        right_questions = 0
 
-        Proposed solution ...
+        for idx, ch in enumerate(num):
+            if ch == "?":
+                if idx < half:
+                    left_questions += 1
+                else:
+                    right_questions += 1
+            elif idx < half:
+                left_sum += int(ch)
+            else:
+                right_sum += int(ch)
 
-        Args:
-            num (str): ...
+        total_questions = left_questions + right_questions
+        if total_questions % 2 == 1:
+            return True
 
-        Returns:
-            bool: ..."""
-        ...
+        # Bob can force equality only in this exact balanced case.
+        return 2 * (left_sum - right_sum) != 9 * (right_questions - left_questions)
 
     sumGame = sum_game
