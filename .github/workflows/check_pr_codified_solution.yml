@@ -12,6 +12,9 @@ on:
     - submitted
     - edited
     - dismissed
+  issue_comment:
+    types:
+    - created
 
 permissions:
   contents: read
@@ -19,14 +22,70 @@ permissions:
 
 jobs:
   codified-solution-check:
-    if: ${{ github.event_name == 'pull_request' }}
+    if: ${{ github.event_name == 'pull_request' || github.event_name == 'issue_comment' }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/github-script@v9
       with:
         github-token: ${{ secrets.YYOLK_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
         script: |
-          const pr = context.payload.pull_request;
+          const optionalHundred = "(?: 💯)?";
+          const optionalPercentile = "(?: \\((?:beats )?\\d+(?:\\.\\d+)?%\\))?";
+          const timePattern = new RegExp(
+            `^- \\d+(?:\\.\\d+)?ms${optionalPercentile}${optionalHundred}$`,
+            "u"
+          );
+          const memoryPattern = new RegExp(
+            `^- \\d+(?:\\.\\d+)?mb${optionalPercentile}${optionalHundred}$`,
+            "u"
+          );
+          const hasPerformanceLines = (body) => {
+            const lines = String(body ?? "")
+              .replaceAll("\r\n", "\n")
+              .split("\n")
+              .map((line) => line.trim())
+              .filter(Boolean);
+
+            return lines.some(
+              (line, index) =>
+                timePattern.test(line) &&
+                index + 1 < lines.length &&
+                memoryPattern.test(lines[index + 1])
+            );
+          };
+
+          if (context.eventName === "issue_comment") {
+            if (!context.payload.issue?.pull_request) {
+              core.info("Skipping issue comment that is not on a PR.");
+              return;
+            }
+
+            if ((context.payload.comment?.user?.login ?? "").toLowerCase() !== "yyolk") {
+              core.info("Skipping issue comment not authored by @yyolk.");
+              return;
+            }
+
+            if (!hasPerformanceLines(context.payload.comment?.body)) {
+              core.info("Skipping @yyolk issue comment without performance lines.");
+              return;
+            }
+          }
+
+          let pr = context.payload.pull_request;
+          if (!pr && context.payload.issue?.pull_request) {
+            const {data} = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.payload.issue.number
+            });
+            pr = data;
+          }
+
+          if (!pr) {
+            core.info("Skipping event without pull request payload.");
+            return;
+          }
+
           const hasDailyLabel = pr.labels.some((label) => label.name === "daily-boilerplate");
 
           if (!hasDailyLabel) {
@@ -79,31 +138,6 @@ jobs:
             }
           }
 
-          const optionalHundred = "(?: 💯)?";
-          const optionalPercentile = "(?: \\((?:beats )?\\d+(?:\\.\\d+)?%\\))?";
-          const timePattern = new RegExp(
-            `^- \\d+(?:\\.\\d+)?ms${optionalPercentile}${optionalHundred}$`,
-            "u"
-          );
-          const memoryPattern = new RegExp(
-            `^- \\d+(?:\\.\\d+)?mb${optionalPercentile}${optionalHundred}$`,
-            "u"
-          );
-          const hasPerformanceLines = (body) => {
-            const lines = String(body ?? "")
-              .replaceAll("\r\n", "\n")
-              .split("\n")
-              .map((line) => line.trim())
-              .filter(Boolean);
-
-            return lines.some(
-              (line, index) =>
-                timePattern.test(line) &&
-                index + 1 < lines.length &&
-                memoryPattern.test(lines[index + 1])
-            );
-          };
-
           const [issueComments, reviews, reviewComments] = await Promise.all([
             github.paginate(github.rest.issues.listComments, {
               owner: context.repo.owner,
@@ -140,7 +174,7 @@ jobs:
             core.info("Found @yyolk performance lines in PR/review comments.");
           }
     - name: Notify daily PR status
-      if: ${{ always() && contains(github.event.pull_request.labels.*.name, 'daily-boilerplate') && github.event.action != 'ready_for_review' }}
+      if: ${{ github.event_name == 'pull_request' && always() && contains(github.event.pull_request.labels.*.name, 'daily-boilerplate') && github.event.action != 'ready_for_review' }}
       uses: ./.github/actions/notify-pushover
       with:
         message: >-
