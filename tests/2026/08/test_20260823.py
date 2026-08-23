@@ -11,7 +11,9 @@ def _bruteforce_alice_wins(state: str, alice_turn: bool) -> bool:
 
     idx = state.index("?")
     outcomes = (
-        _bruteforce_alice_wins(state[:idx] + str(digit) + state[idx + 1 :], not alice_turn)
+        _bruteforce_alice_wins(
+            state[:idx] + str(digit) + state[idx + 1 :], not alice_turn
+        )
         for digit in range(10)
     )
     return any(outcomes) if alice_turn else all(outcomes)
