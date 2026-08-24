@@ -35,15 +35,17 @@ class Solution:
     * `-104 <= stones[i] <= 104`"""
 
     def stone_game_v_i_i_i(self, stones: list[int]) -> int:
-        """...
+        """Return the optimal score difference (Alice - Bob)."""
+        prefix_sum = 0
+        prefix_sums: list[int] = []
+        for stone in stones:
+            prefix_sum += stone
+            prefix_sums.append(prefix_sum)
 
-        Proposed solution ...
+        best = prefix_sums[-1]
+        for i in range(len(stones) - 2, 0, -1):
+            best = max(best, prefix_sums[i] - best)
 
-        Args:
-            stones (list of int): ...
-
-        Returns:
-            int: ..."""
-        ...
+        return best
 
     stoneGameVIII = stone_game_v_i_i_i
