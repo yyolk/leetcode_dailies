@@ -8,7 +8,7 @@ def brute_stone_game_viii(stones: list[int]) -> int:
             return 0
 
         prefix = state[0]
-        best = -10**18
+        best = -(10**18)
         for x in range(2, len(state) + 1):
             prefix += state[x - 1]
             next_state = (prefix,) + state[x:]
