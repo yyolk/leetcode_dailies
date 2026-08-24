@@ -7,11 +7,6 @@ on:
     - reopened
     - edited
     - ready_for_review
-  pull_request_review:
-    types:
-    - submitted
-    - edited
-    - dismissed
   issue_comment:
     types:
     - created
@@ -30,28 +25,33 @@ jobs:
         github-token: ${{ secrets.YYOLK_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
         script: |
           const optionalHundred = "(?: 💯)?";
-          const optionalPercentile = "(?: \\((?:beats )?\\d+(?:\\.\\d+)?%\\))?";
+          const optionalPercentile = "(?:\\s*\\((?:beats\\s*)?\\d+(?:\\.\\d+)?\\s*%\\))?";
           const timePattern = new RegExp(
-            `^- \\d+(?:\\.\\d+)?ms${optionalPercentile}${optionalHundred}$`,
-            "u"
+            `^(?:[-*]\\s*)?\\d+(?:\\.\\d+)?\\s*ms${optionalPercentile}${optionalHundred}$`,
+            "iu"
           );
           const memoryPattern = new RegExp(
-            `^- \\d+(?:\\.\\d+)?mb${optionalPercentile}${optionalHundred}$`,
-            "u"
+            `^(?:[-*]\\s*)?\\d+(?:\\.\\d+)?\\s*mb${optionalPercentile}${optionalHundred}$`,
+            "iu"
           );
           const hasPerformanceLines = (body) => {
-            const lines = String(body ?? "")
-              .replaceAll("\r\n", "\n")
+            const normalizedBody = String(body ?? "").replaceAll("\r\n", "\n");
+            const lines = normalizedBody
               .split("\n")
               .map((line) => line.trim())
               .filter(Boolean);
 
-            return lines.some(
+            const hasConsecutivePerformanceLines = lines.some(
               (line, index) =>
                 timePattern.test(line) &&
                 index + 1 < lines.length &&
                 memoryPattern.test(lines[index + 1])
             );
+
+            const hasInlinePerformance = /\b\d+(?:\.\d+)?\s*ms\b/iu.test(normalizedBody) &&
+              /\b\d+(?:\.\d+)?\s*mb\b/iu.test(normalizedBody);
+
+            return hasConsecutivePerformanceLines || hasInlinePerformance;
           };
 
           if (context.eventName === "issue_comment") {
@@ -167,7 +167,7 @@ jobs:
 
           if (!hasPerformanceComment) {
             core.setFailed(
-              "Expected a @yyolk PR/review comment containing performance lines like: `- 12.3ms (50%)` and `- 45.6mb (50%)`."
+              "Expected a @yyolk PR/review comment containing both runtime (`ms`) and memory (`mb`) benchmark figures."
             );
             return;
           } else {
