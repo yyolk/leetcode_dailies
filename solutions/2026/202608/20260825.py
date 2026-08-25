@@ -18,16 +18,11 @@ class Solution:
     * `1 <= k <= 100`"""
 
     def missing_multiple(self, nums: list[int], k: int) -> int:
-        """...
-
-        Proposed solution ...
-
-        Args:
-            nums (list of int): ...
-            k (int): ...
-
-        Returns:
-            int: ..."""
-        ...
+        """Return the smallest missing positive multiple of ``k`` from ``nums``."""
+        present = set(nums)
+        candidate = k
+        while candidate in present:
+            candidate += k
+        return candidate
 
     missingMultiple = missing_multiple
