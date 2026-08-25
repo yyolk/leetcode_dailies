@@ -3,6 +3,7 @@ name: Check PR Codified Solution
 on:
   pull_request:
     types:
+    - opened
     - synchronize
     - reopened
     - edited
