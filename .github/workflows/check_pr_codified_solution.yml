@@ -11,6 +11,9 @@ on:
   issue_comment:
     types:
     - created
+  pull_request_review:
+    types:
+    - submitted
 
 permissions:
   contents: read
@@ -18,7 +21,7 @@ permissions:
 
 jobs:
   codified-solution-check:
-    if: ${{ github.event_name == 'pull_request' || github.event_name == 'issue_comment' }}
+    if: ${{ github.event_name == 'pull_request' || github.event_name == 'issue_comment' || github.event_name == 'pull_request_review' }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/github-script@v9
@@ -55,19 +58,32 @@ jobs:
             return hasConsecutivePerformanceLines || hasInlinePerformance;
           };
 
-          if (context.eventName === "issue_comment") {
-            if (!context.payload.issue?.pull_request) {
+          if (context.eventName === "issue_comment" || context.eventName === "pull_request_review") {
+            const isIssueComment = context.eventName === "issue_comment";
+            const authorLogin = isIssueComment
+              ? context.payload.comment?.user?.login
+              : context.payload.review?.user?.login;
+            const messageBody = isIssueComment
+              ? context.payload.comment?.body
+              : context.payload.review?.body;
+
+            if (isIssueComment && !context.payload.issue?.pull_request) {
               core.info("Skipping issue comment that is not on a PR.");
               return;
             }
 
-            if ((context.payload.comment?.user?.login ?? "").toLowerCase() !== "yyolk") {
-              core.info("Skipping issue comment not authored by @yyolk.");
+            if (!isIssueComment && !context.payload.pull_request) {
+              core.info("Skipping review that is not on a PR.");
               return;
             }
 
-            if (!hasPerformanceLines(context.payload.comment?.body)) {
-              core.info("Skipping @yyolk issue comment without performance lines.");
+            if ((authorLogin ?? "").toLowerCase() !== "yyolk") {
+              core.info("Skipping issue comment/review not authored by @yyolk.");
+              return;
+            }
+
+            if (!hasPerformanceLines(messageBody)) {
+              core.info("Skipping @yyolk issue comment/review without performance lines.");
               return;
             }
           }
