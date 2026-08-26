@@ -28,16 +28,26 @@ class Solution:
     * `1 <= k <= s.length`"""
 
     def shortest_beautiful_substring(self, s: str, k: int) -> str:
-        """...
+        """Return shortest, lexicographically smallest substring with exactly ``k`` ones."""
+        best = ""
+        best_len = len(s) + 1
 
-        Proposed solution ...
-
-        Args:
-            s (str): ...
-            k (int): ...
-
-        Returns:
-            str: ..."""
-        ...
+        for left in range(len(s)):
+            ones = 0
+            for right in range(left, len(s)):
+                if s[right] == "1":
+                    ones += 1
+                if ones > k:
+                    break
+                if ones == k:
+                    candidate = s[left : right + 1]
+                    candidate_len = right - left + 1
+                    if candidate_len < best_len or (
+                        candidate_len == best_len and candidate < best
+                    ):
+                        best = candidate
+                        best_len = candidate_len
+                    break
+        return best
 
     shortestBeautifulSubstring = shortest_beautiful_substring
