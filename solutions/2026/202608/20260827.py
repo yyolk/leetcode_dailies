@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/lexicographically-smallest-permutation-greater-than-target/
 
+
 class Solution:
     """3720. Lexicographically Smallest Permutation Greater Than Target
 
@@ -19,6 +20,7 @@ class Solution:
     * 1 <= s.length == target.length <= 300
     * s and target consist of only lowercase English letters.
     """
+
     def lex_greater_permutation(self, s: str, target: str) -> str:
         # Count remaining occurrences of each letter in s.
         freq = [0] * 26
