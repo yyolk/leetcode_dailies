@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/lexicographically-smallest-palindromic-permutation-greater-than-target/
 
+
 class Solution:
     """3734. Lexicographically Smallest Palindromic Permutation Greater
     Than Target
@@ -13,6 +14,7 @@ class Solution:
     * `1 <= n == s.length == target.length <= 300`
     * `s` and `target` consist of only lowercase English letters.
     """
+
     def lex_palindromic_permutation(self, s: str, target: str) -> str:
         n = len(s)
         freq = [0] * 26
