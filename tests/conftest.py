@@ -33,7 +33,9 @@ def pytest_terminal_summary(terminalreporter, exitstatus, config):
         return
 
     summary_file = Path(summary_path)
-    if summary_file.exists() and "## Slow tests" in summary_file.read_text(encoding="utf-8"):
+    if summary_file.exists() and "## Slow tests" in summary_file.read_text(
+        encoding="utf-8"
+    ):
         return
 
     reports: dict[str, object] = {}
