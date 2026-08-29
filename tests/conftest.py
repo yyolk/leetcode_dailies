@@ -24,12 +24,20 @@ def pytest_collection_modifyitems(items):
 
 
 def pytest_terminal_summary(terminalreporter, exitstatus, config):
+    # xdist workers each invoke this hook; only the controller should write.
+    if getattr(config, "workerinput", None) is not None:
+        return
+
     summary_path = os.environ.get("GITHUB_STEP_SUMMARY")
     if not summary_path or not _SLOW_NODEIDS:
         return
 
+    summary_file = Path(summary_path)
+    if summary_file.exists() and "## Slow tests" in summary_file.read_text(encoding="utf-8"):
+        return
+
     reports: dict[str, object] = {}
-    for status, entries in terminalreporter.stats.items():
+    for _status, entries in terminalreporter.stats.items():
         for report in entries:
             nodeid = getattr(report, "nodeid", None)
             if nodeid in _SLOW_NODEIDS and getattr(report, "when", "call") in {
@@ -63,7 +71,7 @@ def pytest_terminal_summary(terminalreporter, exitstatus, config):
         lines.append(f"| `{escaped}` | {status} | {duration} |")
     lines.append("")
 
-    with open(summary_path, "a", encoding="utf-8") as handle:
+    with summary_file.open("a", encoding="utf-8") as handle:
         handle.write("\n".join(lines))
 
 
