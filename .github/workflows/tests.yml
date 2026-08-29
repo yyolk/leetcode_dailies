@@ -27,3 +27,23 @@ jobs:
         PYTHONPATH: .
         SKIP_SLOW: "1"
       run: uv run --no-sync --with pytest-xdist python -m pytest tests/ -n auto --dist loadfile -v --durations=20
+    - name: Write slow test job summary
+      if: always()
+      env:
+        PYTHONPATH: .
+      run: |
+        if [ -f "$GITHUB_STEP_SUMMARY" ] && grep -q "## Slow tests" "$GITHUB_STEP_SUMMARY"; then
+          exit 0
+        fi
+        {
+          echo "## Slow tests"
+          echo
+          echo "| Test | Status | Duration |"
+          echo "| --- | --- | --- |"
+          uv run --no-sync python -m pytest tests/ --collect-only -q -m slow \
+            | sed -e '/^$/d' -e '/^no tests collected/d' -e '/^[0-9]/d' \
+            | while IFS= read -r nodeid; do
+                [ -z "$nodeid" ] && continue
+                echo "| \`$nodeid\` | skipped | \u2014 |"
+              done
+        } >> "$GITHUB_STEP_SUMMARY"
