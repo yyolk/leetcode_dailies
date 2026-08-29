@@ -4,8 +4,12 @@ from pathlib import Path
 
 import pytest
 
-SLOW_NAME_MARKERS = ("bruteforce", "brute_force", "exhaustive")
-_SLOW_NODEIDS: set[str] = set()
+SLOW_NAME_MARKERS = ("bruteforce", "brute_force", "exhaustive", "multi_row_samples")
+
+
+def _is_slow_nodeid(nodeid: str) -> bool:
+    lower = nodeid.lower()
+    return any(marker in lower for marker in SLOW_NAME_MARKERS)
 
 
 def pytest_collection_modifyitems(items):
@@ -18,7 +22,6 @@ def pytest_collection_modifyitems(items):
         if any(marker in name for marker in SLOW_NAME_MARKERS):
             item.add_marker(slow)
         if item.get_closest_marker("slow"):
-            _SLOW_NODEIDS.add(item.nodeid)
             if skip_requested:
                 item.add_marker(skip_slow)
 
@@ -27,31 +30,33 @@ def pytest_terminal_summary(terminalreporter, exitstatus, config):
     # xdist workers each invoke this hook; only the controller should write.
     if getattr(config, "workerinput", None) is not None:
         return
-
-    summary_path = os.environ.get("GITHUB_STEP_SUMMARY")
-    if not summary_path or not _SLOW_NODEIDS:
+    if os.environ.get("PYTEST_XDIST_WORKER"):
         return
 
-    summary_file = Path(summary_path)
-    if summary_file.exists() and "## Slow tests" in summary_file.read_text(
-        encoding="utf-8"
-    ):
+    summary_path = os.environ.get("GITHUB_STEP_SUMMARY")
+    if not summary_path:
         return
 
     reports: dict[str, object] = {}
     for _status, entries in terminalreporter.stats.items():
         for report in entries:
             nodeid = getattr(report, "nodeid", None)
-            if nodeid in _SLOW_NODEIDS and getattr(report, "when", "call") in {
-                "call",
-                "setup",
-            }:
-                existing = reports.get(nodeid)
-                if existing is None or (
-                    getattr(report, "when", "") == "call"
-                    and getattr(existing, "when", "") != "call"
-                ):
-                    reports[nodeid] = report
+            if not nodeid:
+                continue
+            keywords = getattr(report, "keywords", {}) or {}
+            if not (_is_slow_nodeid(nodeid) or "slow" in keywords):
+                continue
+            if getattr(report, "when", "call") not in {"call", "setup"}:
+                continue
+            existing = reports.get(nodeid)
+            if existing is None or (
+                getattr(report, "when", "") == "call"
+                and getattr(existing, "when", "") != "call"
+            ):
+                reports[nodeid] = report
+
+    if not reports:
+        return
 
     lines = [
         "## Slow tests",
@@ -59,22 +64,24 @@ def pytest_terminal_summary(terminalreporter, exitstatus, config):
         "| Test | Status | Duration |",
         "| --- | --- | --- |",
     ]
-    for nodeid in sorted(_SLOW_NODEIDS):
-        report = reports.get(nodeid)
-        if report is None:
-            status = "not run"
-            duration = "—"
-        else:
-            status = getattr(report, "outcome", "unknown")
-            duration = f"{getattr(report, 'duration', 0.0):.2f}s"
-            if status == "skipped":
-                duration = "—"
+    for nodeid in sorted(reports):
+        report = reports[nodeid]
+        status = getattr(report, "outcome", "unknown")
+        duration = f"{getattr(report, 'duration', 0.0):.2f}s"
+        if status == "skipped":
+            duration = "\u2014"
         escaped = nodeid.replace("|", "\\|")
         lines.append(f"| `{escaped}` | {status} | {duration} |")
     lines.append("")
+    table = "\n".join(lines)
 
-    with summary_file.open("a", encoding="utf-8") as handle:
-        handle.write("\n".join(lines))
+    summary_file = Path(summary_path)
+    existing_text = (
+        summary_file.read_text(encoding="utf-8") if summary_file.exists() else ""
+    )
+    if "## Slow tests" not in existing_text:
+        with summary_file.open("a", encoding="utf-8") as handle:
+            handle.write(table)
 
 
 @pytest.fixture
