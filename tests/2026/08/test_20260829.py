@@ -33,10 +33,11 @@ def test_lexicographically_smallest_array_edge_cases(solution):
         5,
         8,
     ]
+    # 8 cannot join {1,2,4,5} because |5-8| = 3 > limit.
     assert solution.lexicographicallySmallestArray([2, 4, 8, 5, 1], 2) == [
         1,
         2,
+        8,
         4,
         5,
-        8,
     ]
