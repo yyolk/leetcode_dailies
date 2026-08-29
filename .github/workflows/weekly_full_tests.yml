@@ -35,10 +35,16 @@ jobs:
         GH_TOKEN: ${{ secrets.YYOLK_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
       run: |
         TITLE="Weekly full test suite failed"
+        SUMMARY=""
+        if [ -f "$GITHUB_STEP_SUMMARY" ]; then
+          SUMMARY=$(cat "$GITHUB_STEP_SUMMARY")
+        fi
         BODY="The weekly full pytest run failed, including tests marked slow.
 
         Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         SHA: ${{ github.sha }}
+
+        $SUMMARY
         "
         gh label create weekly-tests --description "Weekly full test suite" --color "d93f0b" || true
         EXISTING=$(gh issue list --label weekly-tests --state open --search "$TITLE in:title" --json number --jq '.[0].number // empty')
