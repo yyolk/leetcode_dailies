@@ -134,27 +134,6 @@ jobs:
             }
           }
 
-          if (!pr.auto_merge) {
-            try {
-              await github.graphql(
-                `mutation($pullRequestId: ID!) {
-                  enablePullRequestAutoMerge(input: {pullRequestId: $pullRequestId, mergeMethod: SQUASH}) {
-                    pullRequest {
-                      id
-                    }
-                  }
-                }`,
-                {pullRequestId: pr.node_id}
-              );
-              core.info("Enabled squash auto-merge for daily PR.");
-            } catch (error) {
-              if (!isPermissionError(error)) {
-                throw error;
-              }
-              core.warning("Skipping auto-merge enablement due to token permissions.");
-            }
-          }
-
           const [issueComments, reviews, reviewComments] = await Promise.all([
             github.paginate(github.rest.issues.listComments, {
               owner: context.repo.owner,
@@ -183,12 +162,41 @@ jobs:
           );
 
           if (!hasPerformanceComment) {
+            // pull_request runs must succeed so the required job name is not stuck failed.
+            // Auto-merge is only enabled after the benchmark comment exists.
+            if (context.eventName === "pull_request") {
+              core.warning(
+                "No @yyolk performance comment yet. Leaving auto-merge disabled until one is posted."
+              );
+              return;
+            }
             core.setFailed(
               "Expected a @yyolk PR/review comment containing both runtime (`ms`) and memory (`mb`) benchmark figures."
             );
             return;
-          } else {
-            core.info("Found @yyolk performance lines in PR/review comments.");
+          }
+
+          core.info("Found @yyolk performance lines in PR/review comments.");
+
+          if (!pr.auto_merge) {
+            try {
+              await github.graphql(
+                `mutation($pullRequestId: ID!) {
+                  enablePullRequestAutoMerge(input: {pullRequestId: $pullRequestId, mergeMethod: SQUASH}) {
+                    pullRequest {
+                      id
+                    }
+                  }
+                }`,
+                {pullRequestId: pr.node_id}
+              );
+              core.info("Enabled squash auto-merge for daily PR.");
+            } catch (error) {
+              if (!isPermissionError(error)) {
+                throw error;
+              }
+              core.warning("Skipping auto-merge enablement due to token permissions.");
+            }
           }
     - name: Checkout repository for local actions
       if: ${{ github.event_name == 'pull_request' && always() && contains(github.event.pull_request.labels.*.name, 'daily-boilerplate') && github.event.action != 'ready_for_review' }}
