@@ -1,5 +1,7 @@
 from itertools import product
 
+import pytest
+
 
 def brute_max_number_of_families(n: int, reserved_seats: list[list[int]]) -> int:
     reserved_by_row: dict[int, set[int]] = {}
@@ -49,6 +51,7 @@ def test_max_number_of_families_single_row_exhaustive(solution):
         assert actual == expected, (row_mask, expected, actual)
 
 
+@pytest.mark.slow
 def test_max_number_of_families_multi_row_samples(solution):
     sample_masks = (
         0,
