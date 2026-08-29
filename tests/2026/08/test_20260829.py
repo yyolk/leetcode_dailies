@@ -26,5 +26,17 @@ def test_lexicographically_smallest_array_examples(solution):
 def test_lexicographically_smallest_array_edge_cases(solution):
     assert solution.lexicographicallySmallestArray([1], 1) == [1]
     assert solution.lexicographicallySmallestArray([5, 5, 5, 6], 3) == [5, 5, 5, 6]
-    assert solution.lexicographicallySmallestArray([1, 5, 3, 4, 8], 2) == [1, 3, 4, 5, 8]
-    assert solution.lexicographicallySmallestArray([2, 4, 8, 5, 1], 2) == [1, 2, 4, 5, 8]
+    assert solution.lexicographicallySmallestArray([1, 5, 3, 4, 8], 2) == [
+        1,
+        3,
+        4,
+        5,
+        8,
+    ]
+    assert solution.lexicographicallySmallestArray([2, 4, 8, 5, 1], 2) == [
+        1,
+        2,
+        4,
+        5,
+        8,
+    ]
