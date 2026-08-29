@@ -24,21 +24,28 @@ class Solution:
 
     * `1 <= nums[i] <= 109`
 
-    * `1 <= limit <= 109`"""
+    * `1 <= limit <= 109`
+    """
 
     def lexicographically_smallest_array(
         self, nums: list[int], limit: int
     ) -> list[int]:
-        """...
-
-        Proposed solution ...
-
-        Args:
-            nums (list of int): ...
-            limit (int): ...
-
-        Returns:
-            list of int: ..."""
-        ...
+        n = len(nums)
+        # Pair each value with its original index, then sort by value.
+        arr = sorted(zip(nums, range(n)))
+        ans = [0] * n
+        i = 0
+        while i < n:
+            j = i + 1
+            # Grow the group while consecutive sorted values differ by at most limit.
+            while j < n and arr[j][0] - arr[j - 1][0] <= limit:
+                j += 1
+            # Within a group any permutation is reachable; place sorted values
+            # into the sorted original indices for the lexicographically smallest result.
+            idx = sorted(k for _, k in arr[i:j])
+            for k, (x, _) in zip(idx, arr[i:j]):
+                ans[k] = x
+            i = j
+        return ans
 
     lexicographicallySmallestArray = lexicographically_smallest_array
