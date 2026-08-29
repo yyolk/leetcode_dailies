@@ -3,6 +3,16 @@ from pathlib import Path
 
 import pytest
 
+SLOW_NAME_MARKERS = ("bruteforce", "brute_force", "exhaustive")
+
+
+def pytest_collection_modifyitems(items):
+    slow = pytest.mark.slow
+    for item in items:
+        name = item.name.lower()
+        if any(marker in name for marker in SLOW_NAME_MARKERS):
+            item.add_marker(slow)
+
 
 @pytest.fixture
 def solution(request):
