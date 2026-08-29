@@ -1,0 +1,55 @@
+name: Weekly Full Tests
+
+on:
+  schedule:
+  - cron: "0 12 * * 0"
+  workflow_dispatch: ~
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  test-all:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v7
+    - name: Set up Python
+      uses: actions/setup-python@v7
+      with:
+        python-version-file: pyproject.toml
+    - name: Set up uv
+      uses: astral-sh/setup-uv@v7
+      with:
+        enable-cache: true
+    - name: Install dependencies
+      run: uv sync --no-install-project --extra dev
+    - name: Run all tests including slow
+      id: pytest
+      env:
+        PYTHONPATH: .
+      run: uv run --no-sync --with pytest-xdist python -m pytest tests/ -n auto --dist loadfile -v --durations=20
+    - name: Open or update issue on failure
+      if: failure() && steps.pytest.conclusion == 'failure'
+      env:
+        GH_TOKEN: ${{ secrets.YYOLK_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
+      run: |
+        TITLE="Weekly full test suite failed"
+        SUMMARY=""
+        if [ -f "$GITHUB_STEP_SUMMARY" ]; then
+          SUMMARY=$(cat "$GITHUB_STEP_SUMMARY")
+        fi
+        BODY="The weekly full pytest run failed, including tests marked slow.
+
+        Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        SHA: ${{ github.sha }}
+
+        $SUMMARY
+        "
+        gh label create weekly-tests --description "Weekly full test suite" --color "d93f0b" || true
+        EXISTING=$(gh issue list --label weekly-tests --state open --search "$TITLE in:title" --json number --jq '.[0].number // empty')
+        if [ -n "$EXISTING" ]; then
+          gh issue comment "$EXISTING" --body "$BODY"
+        else
+          gh issue create --title "$TITLE" --label weekly-tests --body "$BODY"
+        fi

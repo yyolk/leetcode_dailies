@@ -18,11 +18,15 @@ dependencies = [
 dev = [
     "pytest",
     "pytest-asyncio",
+    "pytest-xdist",
 ]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 asyncio_mode = "auto"
+markers = [
+    "slow: expensive brute-force or exhaustive cases skipped on PR CI",
+]
 
 [tool.pylint."messages control"]
 disable = ["unspecified-encoding"]
