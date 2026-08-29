@@ -12,10 +12,17 @@ jobs:
 
     steps:
     - uses: actions/checkout@v7
+    - name: Set up Python
+      uses: actions/setup-python@v7
+      with:
+        python-version-file: pyproject.toml
     - name: Set up uv
       uses: astral-sh/setup-uv@v7
       with:
         enable-cache: true
-        python-version-file: pyproject.toml
+    - name: Install dependencies
+      run: uv sync --no-install-project --extra dev
     - name: Run tests
-      run: uv run --no-project --with pytest --with pytest-asyncio --with pytest-xdist python -m pytest tests/ -n auto --dist loadfile --durations=20 -v
+      env:
+        PYTHONPATH: .
+      run: uv run --no-sync --with pytest-xdist python -m pytest tests/ -n auto --dist loadfile -v --durations=20
