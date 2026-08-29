@@ -18,4 +18,4 @@ jobs:
         enable-cache: true
         python-version-file: pyproject.toml
     - name: Run tests
-      run: uv run --no-project --with pytest --with pytest-asyncio --with pytest-xdist python -m pytest tests/ -n auto --dist loadfile -v
+      run: uv run --no-project --with pytest --with pytest-asyncio --with pytest-xdist python -m pytest tests/ -n auto --dist loadfile --durations=20 -v
