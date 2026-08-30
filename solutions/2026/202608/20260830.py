@@ -22,18 +22,22 @@ class Solution:
 
     * `-105 <= nums[i] <= 105`
 
-    * The integers in `nums` are **distinct**."""
+    * The integers in `nums` are **distinct**.
+    """
 
     def minimum_deletions(self, nums: list[int]) -> int:
-        """...
-
-        Proposed solution ...
-
-        Args:
-            nums (list of int): ...
-
-        Returns:
-            int: ..."""
-        ...
+        n = len(nums)
+        # Locate indices of the minimum and maximum values (elements are distinct).
+        mi = mx = 0
+        for i, num in enumerate(nums):
+            if num < nums[mi]:
+                mi = i
+            if num > nums[mx]:
+                mx = i
+        # Ensure mi is the leftward of the two positions.
+        if mi > mx:
+            mi, mx = mx, mi
+        # Three strategies: both from front, both from back, or one from each end.
+        return min(mx + 1, n - mi, mi + 1 + n - mx)
 
     minimumDeletions = minimum_deletions
