@@ -4,40 +4,43 @@
 class Solution:
     """2091. Removing Minimum and Maximum From Array
 
-    You are given a **0-indexed** array of **distinct** integers `nums`.
+    You are given a 0-indexed array of distinct integers nums.
 
-    There is an element in `nums` that has the **lowest** value and an element that has
-    the **highest** value. We call them the **minimum** and **maximum** respectively.
-    Your goal is to remove **both** these elements from the array.
+    There is an element in nums that has the lowest value and an element that has
+    the highest value. We call them the minimum and maximum respectively. Your
+    goal is to remove both these elements from the array.
 
-    A **deletion** is defined as either removing an element from the **front** of the
-    array or removing an element from the **back** of the array.
+    A deletion is defined as either removing an element from the front of the
+    array or removing an element from the back of the array.
 
-    Return *the **minimum** number of deletions it would take to remove **both** the
-    minimum and maximum element from the array.*
+    Return the minimum number of deletions it would take to remove both the
+    minimum and maximum element from the array.
 
     Constraints:
 
-    * `1 <= nums.length <= 105`
+    * 1 <= nums.length <= 105
 
-    * `-105 <= nums[i] <= 105`
+    * -105 <= nums[i] <= 105
 
-    * The integers in `nums` are **distinct**.
+    * The integers in nums are distinct.
     """
 
     def minimum_deletions(self, nums: list[int]) -> int:
+        """Return the fewest front/back deletions to remove min and max."""
         n = len(nums)
-        # Locate indices of the minimum and maximum values (elements are distinct).
-        mi = mx = 0
-        for i, num in enumerate(nums):
-            if num < nums[mi]:
-                mi = i
-            if num > nums[mx]:
-                mx = i
-        # Ensure mi is the leftward of the two positions.
-        if mi > mx:
-            mi, mx = mx, mi
-        # Three strategies: both from front, both from back, or one from each end.
-        return min(mx + 1, n - mi, mi + 1 + n - mx)
+        # Single element is both min and max: one deletion.
+        if n == 1:
+            return 1
+
+        min_i = nums.index(min(nums))
+        max_i = nums.index(max(nums))
+        left = min(min_i, max_i)
+        right = max(min_i, max_i)
+
+        # Both from the front, both from the back, or one from each end.
+        from_front = right + 1
+        from_back = n - left
+        from_both_ends = (left + 1) + (n - right)
+        return min(from_front, from_back, from_both_ends)
 
     minimumDeletions = minimum_deletions
