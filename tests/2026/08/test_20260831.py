@@ -1,4 +1,7 @@
-from solutions.2026.202608.20260831 import ListNode
+class ListNode:
+    def __init__(self, val: int = 0, next: "ListNode | None" = None):
+        self.val = val
+        self.next = next
 
 
 def build_list(values: list[int]) -> ListNode | None:
