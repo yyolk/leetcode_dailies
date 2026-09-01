@@ -7,6 +7,7 @@ on:
     - synchronize
     - reopened
     - edited
+    - labeled
     - ready_for_review
   issue_comment:
     types:
@@ -103,9 +104,21 @@ jobs:
             return;
           }
 
-          const hasDailyLabel = pr.labels.some((label) => label.name === "daily-boilerplate");
+          const isDailyTitle = /^\\d{8}$/.test(String(pr.title ?? "").trim());
+          let hasDailyLabel = (pr.labels ?? []).some((label) => label.name === "daily-boilerplate");
 
-          if (!hasDailyLabel) {
+          // opened can race the --label on gh pr create; refetch before giving up.
+          if (!hasDailyLabel && !isDailyTitle) {
+            const {data} = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: pr.number
+            });
+            pr = data;
+            hasDailyLabel = (pr.labels ?? []).some((label) => label.name === "daily-boilerplate");
+          }
+
+          if (!hasDailyLabel && !isDailyTitle && !/^\\d{8}$/.test(String(pr.title ?? "").trim())) {
             core.info("Skipping check for non-daily-boilerplate PR.");
             return;
           }
@@ -199,10 +212,10 @@ jobs:
             }
           }
     - name: Checkout repository for local actions
-      if: ${{ github.event_name == 'pull_request' && always() && contains(github.event.pull_request.labels.*.name, 'daily-boilerplate') && github.event.action != 'ready_for_review' }}
+      if: ${{ github.event_name == 'pull_request' && always() && (contains(github.event.pull_request.labels.*.name, 'daily-boilerplate') || github.event.action == 'labeled') && github.event.action != 'ready_for_review' }}
       uses: actions/checkout@v7
     - name: Notify daily PR status
-      if: ${{ github.event_name == 'pull_request' && always() && contains(github.event.pull_request.labels.*.name, 'daily-boilerplate') && github.event.action != 'ready_for_review' }}
+      if: ${{ github.event_name == 'pull_request' && always() && (contains(github.event.pull_request.labels.*.name, 'daily-boilerplate') || github.event.action == 'labeled') && github.event.action != 'ready_for_review' }}
       uses: ./.github/actions/notify-pushover
       with:
         message: >-
