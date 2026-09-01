@@ -19,7 +19,7 @@ class Solution:
     twoSum = two_sum
 '''
 
-IMPLEMENTED = '''# https://leetcode.com/problems/two-sum/
+IMPLEMENTED = """# https://leetcode.com/problems/two-sum/
 
 class Solution:
     def two_sum(self, nums: list[int], target: int) -> list[int]:
@@ -32,7 +32,7 @@ class Solution:
         return []
 
     twoSum = two_sum
-'''
+"""
 
 
 def test_slug_from_url_and_source():

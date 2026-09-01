@@ -16,7 +16,6 @@ import sys
 import time
 from pathlib import Path
 from typing import Any
-from urllib.parse import urlparse
 
 import requests
 
@@ -76,7 +75,9 @@ def solution_is_unimplemented(source: str) -> bool:
                 and isinstance(stmts[0].value.value, str)
             ):
                 stmts = stmts[1:]
-            if not stmts or all(_is_ellipsis_stmt(stmt) or isinstance(stmt, ast.Pass) for stmt in stmts):
+            if not stmts or all(
+                _is_ellipsis_stmt(stmt) or isinstance(stmt, ast.Pass) for stmt in stmts
+            ):
                 return True
     return False
 
@@ -108,7 +109,9 @@ def comment_already_has_benchmark(body: str, sha: str | None = None) -> bool:
             return True
     lines = [line.strip() for line in text.split("\n") if line.strip()]
     return any(
-        TIME_LINE_RE.search(line) and index + 1 < len(lines) and MEMORY_LINE_RE.search(lines[index + 1])
+        TIME_LINE_RE.search(line)
+        and index + 1 < len(lines)
+        and MEMORY_LINE_RE.search(lines[index + 1])
         for index, line in enumerate(lines)
     )
 
@@ -214,7 +217,9 @@ def poll_submission(
     )
     last: dict[str, Any] | None = None
     for _ in range(attempts):
-        response = getter() if getter.__code__.co_argcount == 0 else getter(submission_id)
+        response = (
+            getter() if getter.__code__.co_argcount == 0 else getter(submission_id)
+        )
         response.raise_for_status()
         last = parse_check_payload(response.json())
         if not last["pending"]:
@@ -241,9 +246,13 @@ def list_pr_comment_bodies(pr_number: int) -> list[str]:
         ],
         text=True,
     )
-    return [chunk for chunk in raw.split("\x1e") if chunk] if "\x1e" in raw else [
-        line for line in raw.split("\n\n") if line.strip()
-    ] if raw.strip() else []
+    return (
+        [chunk for chunk in raw.split("\x1e") if chunk]
+        if "\x1e" in raw
+        else [line for line in raw.split("\n\n") if line.strip()]
+        if raw.strip()
+        else []
+    )
 
 
 def _split_gh_bodies(raw: str) -> list[str]:
@@ -283,9 +292,10 @@ def main(argv: list[str] | None = None) -> int:
         return 1
 
     session = os.environ.get("LEETCODE_SESSION", "").strip()
-    csrf = os.environ.get("LEETCODE_CSRF_TOKEN", "").strip() or os.environ.get(
-        "LEETCODE_CSRFTOKEN", ""
-    ).strip()
+    csrf = (
+        os.environ.get("LEETCODE_CSRF_TOKEN", "").strip()
+        or os.environ.get("LEETCODE_CSRFTOKEN", "").strip()
+    )
     if not session or not csrf:
         print(
             "LEETCODE_SESSION and LEETCODE_CSRF_TOKEN are not set; "
