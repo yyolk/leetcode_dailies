@@ -7,6 +7,7 @@ on:
     - synchronize
     - ready_for_review
     - reopened
+    - labeled
   workflow_dispatch:
 
 concurrency:
@@ -19,10 +20,6 @@ permissions:
 
 jobs:
   submit:
-    if: >-
-      github.event_name == 'workflow_dispatch' ||
-      contains(github.event.pull_request.labels.*.name, 'daily-boilerplate') ||
-      (github.event.pull_request.title != '' && github.event.pull_request.title == format('{0}', github.event.pull_request.title))
     runs-on: ubuntu-latest
     steps:
     - name: Skip non-daily PRs
