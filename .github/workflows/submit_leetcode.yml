@@ -1,0 +1,85 @@
+name: Submit to LeetCode
+
+on:
+  pull_request:
+    types:
+    - opened
+    - synchronize
+    - ready_for_review
+    - reopened
+    - labeled
+  workflow_dispatch:
+
+concurrency:
+  group: leetcode-submit-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Skip non-daily PRs
+      if: ${{ github.event_name == 'pull_request' }}
+      run: |
+        title="${{ github.event.pull_request.title }}"
+        labels='${{ toJson(github.event.pull_request.labels.*.name) }}'
+        if [[ ! "$title" =~ ^[0-9]{8}$ ]] && ! grep -q 'daily-boilerplate' <<< "$labels"; then
+          echo "Not a daily boilerplate PR; skipping."
+          echo "skip=true" >> "$GITHUB_ENV"
+        fi
+    - uses: actions/checkout@v7
+      if: ${{ env.skip != 'true' }}
+    - name: Set up Python
+      if: ${{ env.skip != 'true' }}
+      uses: actions/setup-python@v7
+      with:
+        python-version-file: pyproject.toml
+    - name: Set up uv
+      if: ${{ env.skip != 'true' }}
+      uses: astral-sh/setup-uv@v7
+      with:
+        enable-cache: true
+    - name: Install dependencies
+      if: ${{ env.skip != 'true' }}
+      run: uv sync --no-install-project
+    - name: Submit solution and comment benchmark
+      if: ${{ env.skip != 'true' }}
+      id: submit
+      env:
+        PYTHONPATH: .
+        LEETCODE_SESSION: ${{ secrets.LEETCODE_SESSION }}
+        LEETCODE_CSRF_TOKEN: ${{ secrets.LEETCODE_CSRF_TOKEN }}
+        GH_TOKEN: ${{ secrets.YYOLK_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
+      run: |
+        set +e
+        uv run --no-sync python -m generate_active_daily.submit_solution \
+          --title "${{ github.event.pull_request.title }}" \
+          --body-url "${{ github.event.pull_request.body }}" \
+          --pr "${{ github.event.pull_request.number }}" \
+          --sha "${{ github.event.pull_request.head.sha }}"
+        status=$?
+        set -e
+        echo "exit=$status" >> "$GITHUB_OUTPUT"
+        if [[ "$status" -eq 2 ]]; then
+          echo "judge_failed=true" >> "$GITHUB_OUTPUT"
+          exit 0
+        fi
+        exit "$status"
+    - name: Notify if LeetCode rejected the solution
+      if: ${{ env.skip != 'true' && steps.submit.outputs.judge_failed == 'true' }}
+      uses: ./.github/actions/notify-pushover
+      with:
+        message: >-
+          LeetCode rejected daily PR #${{ github.event.pull_request.number }}.
+          No ms/mb comment was posted.
+        ttl: "93600"
+      env:
+        PUSHOVER_TOKEN: ${{ secrets.PUSHOVER_API_KEY }}
+        PUSHOVER_USER: ${{ secrets.PUSHOVER_USER_KEY }}
+    - name: Fail job after notifying
+      if: ${{ env.skip != 'true' && steps.submit.outputs.judge_failed == 'true' }}
+      run: exit 1
