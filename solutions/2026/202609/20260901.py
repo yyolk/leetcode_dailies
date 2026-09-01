@@ -64,7 +64,10 @@ class Solution:
         full_mask = (1 << litter_count) - 1
         # visited[r][c][e][mask] — True if this state has been seen.
         visited = [
-            [[[False] * (1 << litter_count) for _ in range(energy + 1)] for _ in range(n)]
+            [
+                [[False] * (1 << litter_count) for _ in range(energy + 1)]
+                for _ in range(n)
+            ]
             for _ in range(m)
         ]
         # BFS state: (row, col, remaining_energy, remaining_litter_mask)
@@ -86,7 +89,9 @@ class Solution:
                     nr, nc = r + dirs[k], c + dirs[k + 1]
                     if 0 <= nr < m and 0 <= nc < n and classroom[nr][nc] != "X":
                         # Reset energy fully when stepping on an R cell.
-                        nxt_energy = energy if classroom[nr][nc] == "R" else cur_energy - 1
+                        nxt_energy = (
+                            energy if classroom[nr][nc] == "R" else cur_energy - 1
+                        )
                         nxt_mask = mask
                         if classroom[nr][nc] == "L":
                             # Clear the bit corresponding to this litter.
