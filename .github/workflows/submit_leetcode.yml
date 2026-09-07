@@ -3,11 +3,7 @@ name: Submit to LeetCode
 on:
   pull_request:
     types:
-    - opened
     - synchronize
-    - ready_for_review
-    - reopened
-    - labeled
   workflow_dispatch:
 
 concurrency:
