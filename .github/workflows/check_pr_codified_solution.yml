@@ -18,6 +18,7 @@ on:
 
 permissions:
   contents: read
+  issues: write
   pull-requests: write
 
 jobs:
@@ -211,11 +212,88 @@ jobs:
               core.warning("Skipping auto-merge enablement due to token permissions.");
             }
           }
+    - name: Decide ready notification
+      if: ${{ github.event_name == 'pull_request' }}
+      id: ready_notify
+      uses: actions/github-script@v9
+      with:
+        github-token: ${{ secrets.YYOLK_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
+        script: |
+          const NOTIFY_LABEL = "daily-ready-notified";
+          core.setOutput("send", "false");
+
+          const pr = context.payload.pull_request;
+          if (!pr) {
+            core.info("No pull request payload; skip notify.");
+            return;
+          }
+
+          const title = String(pr.title ?? "").trim();
+          const labels = (pr.labels ?? []).map((label) => label.name);
+          const isDaily = labels.includes("daily-boilerplate") || /^\\d{8}$/.test(title);
+          if (!isDaily) {
+            core.info("Not a daily PR; skip notify.");
+            return;
+          }
+
+          if (labels.includes(NOTIFY_LABEL)) {
+            core.info("Ready notification already sent.");
+            return;
+          }
+
+          if (!/^\\d{8}$/.test(title)) {
+            core.info("Daily title missing; skip notify.");
+            return;
+          }
+
+          const path = `solutions/${title.slice(0, 4)}/${title.slice(0, 6)}/${title}.py`;
+          let source = "";
+          try {
+            const {data} = await github.rest.repos.getContent({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              path,
+              ref: pr.head.sha
+            });
+            source = Buffer.from(data.content, "base64").toString("utf8");
+          } catch (error) {
+            core.info(`No solution file at ${path}: ${error.message}`);
+            return;
+          }
+
+          // Boilerplate methods are a docstring plus a bare Ellipsis statement.
+          if (/^\\s+\\.\\.\\.\\s*$/m.test(source)) {
+            core.info("Solution is still a stub; skip ready notification.");
+            return;
+          }
+
+          try {
+            await github.rest.issues.createLabel({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              name: NOTIFY_LABEL,
+              color: "0e8a16",
+              description: "Pushover ready-for-review already sent"
+            });
+          } catch (error) {
+            const status = error.status ?? error.response?.status;
+            if (status !== 422) {
+              throw error;
+            }
+          }
+
+          await github.rest.issues.addLabels({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            issue_number: pr.number,
+            labels: [NOTIFY_LABEL]
+          });
+          core.setOutput("send", "true");
     - name: Checkout repository for local actions
-      if: ${{ github.event_name == 'pull_request' && always() && (contains(github.event.pull_request.labels.*.name, 'daily-boilerplate') || github.event.action == 'labeled') && github.event.action != 'ready_for_review' }}
+      if: ${{ github.event_name == 'pull_request' && steps.ready_notify.outputs.send == 'true' }}
       uses: actions/checkout@v7
     - name: Notify daily PR status
-      if: ${{ github.event_name == 'pull_request' && always() && (contains(github.event.pull_request.labels.*.name, 'daily-boilerplate') || github.event.action == 'labeled') && github.event.action != 'ready_for_review' }}
+      if: ${{ github.event_name == 'pull_request' && steps.ready_notify.outputs.send == 'true' }}
       uses: ./.github/actions/notify-pushover
       with:
         message: >-
