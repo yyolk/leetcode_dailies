@@ -7811,24 +7811,36 @@ python -m generate_problem_symlinks
       </a>
      </td>
      <td class="wed">
-      2
+      <a href="solutions/2026/202609/20260902.py">
+       2
+      </a>
      </td>
      <td class="thu">
-      3
+      <a href="solutions/2026/202609/20260903.py">
+       3
+      </a>
      </td>
      <td class="fri">
-      4
+      <a href="solutions/2026/202609/20260904.py">
+       4
+      </a>
      </td>
      <td class="sat">
-      5
+      <a href="solutions/2026/202609/20260905.py">
+       5
+      </a>
      </td>
     </tr>
     <tr>
      <td class="sun">
-      6
+      <a href="solutions/2026/202609/20260906.py">
+       6
+      </a>
      </td>
      <td class="mon">
-      7
+      <a href="solutions/2026/202609/20260907.py">
+       7
+      </a>
      </td>
      <td class="tue">
       8
