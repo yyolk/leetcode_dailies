@@ -66,7 +66,9 @@ def test_format_benchmark_comment_matches_gate():
     assert body.splitlines()[1] == "17.4 mb"
     assert "sha=abc" in body
     assert comment_already_has_benchmark(body, "abc")
-    assert not comment_already_has_benchmark(body, "other")
+    # Any existing ms/mb pair is enough to skip a second submit.
+    assert comment_already_has_benchmark(body, "other")
+    assert not comment_already_has_benchmark("not a benchmark")
 
 
 def test_parse_check_payload_states():
