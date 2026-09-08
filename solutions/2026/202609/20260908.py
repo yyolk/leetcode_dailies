@@ -6,8 +6,8 @@ class Solution:
 
     You are given an integer `n`.
 
-    Return the **total** number of commas used when writing all integers from `[1, n]`
-    (inclusive) in **standard** number formatting.
+    Return the **total** number of commas used when writing all integers from
+    `[1, n]` (inclusive) in **standard** number formatting.
 
     In **standard** formatting:
 
@@ -17,18 +17,11 @@ class Solution:
 
     Constraints:
 
-    * `1 <= n <= 105`"""
+    * `1 <= n <= 10^5`
+    """
 
     def count_commas(self, n: int) -> int:
-        """...
-
-        Proposed solution ...
-
-        Args:
-            n (int): ...
-
-        Returns:
-            int: ..."""
-        ...
+        # Numbers 1..999 have no commas; each from 1000 onward has exactly one.
+        return max(0, n - 999)
 
     countCommas = count_commas
