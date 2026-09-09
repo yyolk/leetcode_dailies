@@ -24,12 +24,8 @@ from .constants import LEETCODE_BASE_URL
 SLUG_RE = re.compile(r"/problems/([a-z0-9-]+)/?", re.IGNORECASE)
 DATE_TITLE_RE = re.compile(r"^\d{8}$")
 SUBMIT_MARKER_RE = re.compile(r"<!--\s*leetcode-submit\s+sha=(\S+)\s+id=(\S+)\s*-->")
-TIME_LINE_RE = re.compile(
-    r"^(?:[-*]\s*)?\d+(?:\.\d+)?\s*ms\b", re.IGNORECASE
-)
-MEMORY_LINE_RE = re.compile(
-    r"^(?:[-*]\s*)?\d+(?:\.\d+)?\s*mb\b", re.IGNORECASE
-)
+TIME_LINE_RE = re.compile(r"^(?:[-*]\s*)?\d+(?:\.\d+)?\s*ms\b", re.IGNORECASE)
+MEMORY_LINE_RE = re.compile(r"^(?:[-*]\s*)?\d+(?:\.\d+)?\s*mb\b", re.IGNORECASE)
 PENDING_STATES = {"PENDING", "STARTED", "PENDING_REJUDGE"}
 BEATS_THRESHOLD = 50
 
@@ -103,7 +99,7 @@ def _format_percentile(percentile: float | int | None) -> str | None:
         return None
     try:
         value = float(percentile)
-    except (TypeError, ValueError):
+    except TypeError, ValueError:
         return None
     if value < BEATS_THRESHOLD:
         return None
