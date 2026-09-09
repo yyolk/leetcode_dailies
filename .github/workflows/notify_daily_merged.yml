@@ -1,0 +1,41 @@
+name: Notify Daily PR Merged
+
+on:
+  pull_request:
+    types:
+    - closed
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  notify:
+    if: ${{ github.event.pull_request.merged == true }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: Decide whether to notify
+      id: decide
+      run: |
+        title="${{ github.event.pull_request.title }}"
+        labels='${{ toJson(github.event.pull_request.labels.*.name) }}'
+        if [[ "$title" =~ ^[0-9]{8}$ ]] || grep -q 'daily-boilerplate' <<< "$labels"; then
+          echo "send=true" >> "$GITHUB_OUTPUT"
+        else
+          echo "Not a daily PR; skipping merge notify."
+          echo "send=false" >> "$GITHUB_OUTPUT"
+        fi
+    - name: Checkout repository for local actions
+      if: ${{ steps.decide.outputs.send == 'true' }}
+      uses: actions/checkout@v7
+    - name: Notify daily PR merged
+      if: ${{ steps.decide.outputs.send == 'true' }}
+      uses: ./.github/actions/notify-pushover
+      with:
+        message: >-
+          Daily PR #${{ github.event.pull_request.number }}
+          (${{ github.event.pull_request.title }}) merged.
+        ttl: "93600"
+      env:
+        PUSHOVER_TOKEN: ${{ secrets.PUSHOVER_API_KEY }}
+        PUSHOVER_USER: ${{ secrets.PUSHOVER_USER_KEY }}

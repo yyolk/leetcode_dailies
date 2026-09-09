@@ -99,7 +99,7 @@ def _format_percentile(percentile: float | int | None) -> str | None:
         return None
     try:
         value = float(percentile)
-    except TypeError, ValueError:
+    except (TypeError, ValueError):
         return None
     if value < BEATS_THRESHOLD:
         return None
@@ -134,6 +134,23 @@ def format_benchmark_comment(
     if sha and submission_id is not None:
         lines.append(f"<!-- leetcode-submit sha={sha} id={submission_id} -->")
     return "\n".join(lines) + "\n"
+
+
+def comment_for_notification(body: str) -> str:
+    """Benchmark comment without the hidden submit marker."""
+    return SUBMIT_MARKER_RE.sub("", body or "").strip()
+
+
+def write_github_output(name: str, value: str) -> None:
+    path = os.environ.get("GITHUB_OUTPUT")
+    if not path:
+        return
+    delimiter = "BENCH_EOF"
+    with Path(path).open("a", encoding="utf-8") as handle:
+        if "\n" in value:
+            handle.write(f"{name}<<{delimiter}\n{value.rstrip()}\n{delimiter}\n")
+        else:
+            handle.write(f"{name}={value}\n")
 
 
 def comment_already_has_benchmark(body: str, sha: str | None = None) -> bool:
@@ -374,6 +391,8 @@ def main(argv: list[str] | None = None) -> int:
         )
     if args.pr:
         post_pr_comment(args.pr, comment)
+        write_github_output("posted", "true")
+        write_github_output("comment", comment_for_notification(comment))
         print(f"Posted benchmark comment on PR #{args.pr}")
     return 0
 
