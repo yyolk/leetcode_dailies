@@ -99,13 +99,13 @@ def _format_percentile(percentile: float | int | None) -> str | None:
         return None
     try:
         value = float(percentile)
-    except TypeError, ValueError:
+    except (TypeError, ValueError):
         return None
     if value < BEATS_THRESHOLD:
         return None
     if value == int(value):
         return str(int(value))
-    return f"{value:.1f}".rstrip("0").rstrip(".")
+    return f"{value:.2f}".rstrip("0").rstrip(".")
 
 
 def _metric_bullet(value: str, unit: str, percentile: float | int | None) -> str:
@@ -353,10 +353,13 @@ def main(argv: list[str] | None = None) -> int:
         )
         return 2
 
+    date_name = title if DATE_TITLE_RE.match(title) else None
+    if date_name is None and DATE_TITLE_RE.match(source_path.stem):
+        date_name = source_path.stem
     comment = format_benchmark_comment(
         runtime=result["runtime"],
         memory=result["memory"],
-        yyyymmdd=title if DATE_TITLE_RE.match(title) else None,
+        yyyymmdd=date_name,
         runtime_percentile=result.get("runtime_percentile"),
         memory_percentile=result.get("memory_percentile"),
         sha=args.sha,
