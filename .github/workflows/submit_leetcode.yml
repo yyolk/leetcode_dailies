@@ -76,6 +76,18 @@ jobs:
       env:
         PUSHOVER_TOKEN: ${{ secrets.PUSHOVER_API_KEY }}
         PUSHOVER_USER: ${{ secrets.PUSHOVER_USER_KEY }}
+    - name: Notify benchmark comment posted
+      if: ${{ env.skip != 'true' && steps.submit.outputs.posted == 'true' }}
+      uses: ./.github/actions/notify-pushover
+      with:
+        message: |
+          Benchmark comment posted on daily PR #${{ github.event.pull_request.number }}.
+
+          ${{ steps.submit.outputs.comment }}
+        ttl: "93600"
+      env:
+        PUSHOVER_TOKEN: ${{ secrets.PUSHOVER_API_KEY }}
+        PUSHOVER_USER: ${{ secrets.PUSHOVER_USER_KEY }}
     - name: Fail job after notifying
       if: ${{ env.skip != 'true' && steps.submit.outputs.judge_failed == 'true' }}
       run: exit 1

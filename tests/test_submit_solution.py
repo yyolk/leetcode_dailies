@@ -1,11 +1,13 @@
 from generate_active_daily.submit_solution import (
     comment_already_has_benchmark,
+    comment_for_notification,
     format_benchmark_comment,
     parse_check_payload,
     slug_from_source,
     slug_from_url,
     solution_is_unimplemented,
     solution_path_for_date,
+    write_github_output,
 )
 
 
@@ -74,6 +76,9 @@ def test_format_benchmark_comment_matches_gate():
     # Any existing ms/mb pair is enough to skip a second submit.
     assert comment_already_has_benchmark(body, "other")
     assert not comment_already_has_benchmark("not a benchmark")
+    visible = comment_for_notification(body)
+    assert visible.startswith("solution 20260908.py")
+    assert "leetcode-submit" not in visible
 
 
 def test_format_benchmark_comment_omits_beats_below_fifty():
@@ -87,6 +92,17 @@ def test_format_benchmark_comment_omits_beats_below_fifty():
     assert "- 0ms" in body
     assert "- 19.2mb (beats 50%)" in body
     assert "beats 49" not in body
+
+
+def test_write_github_output_multiline(tmp_path, monkeypatch):
+    output = tmp_path / "github_output"
+    monkeypatch.setenv("GITHUB_OUTPUT", str(output))
+    write_github_output("posted", "true")
+    write_github_output("comment", "solution 20260908.py\n\n- 0ms\n- 19.2mb")
+    text = output.read_text(encoding="utf-8")
+    assert "posted=true\n" in text
+    assert "comment<<BENCH_EOF\n" in text
+    assert "- 0ms\n- 19.2mb\nBENCH_EOF\n" in text
 
 
 def test_parse_check_payload_states():
