@@ -99,7 +99,7 @@ def _format_percentile(percentile: float | int | None) -> str | None:
         return None
     try:
         value = float(percentile)
-    except (TypeError, ValueError):
+    except TypeError, ValueError:
         return None
     if value < BEATS_THRESHOLD:
         return None
