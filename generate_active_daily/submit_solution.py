@@ -24,9 +24,10 @@ from .constants import LEETCODE_BASE_URL
 SLUG_RE = re.compile(r"/problems/([a-z0-9-]+)/?", re.IGNORECASE)
 DATE_TITLE_RE = re.compile(r"^\d{8}$")
 SUBMIT_MARKER_RE = re.compile(r"<!--\s*leetcode-submit\s+sha=(\S+)\s+id=(\S+)\s*-->")
-TIME_LINE_RE = re.compile(r"^\d+(?:\.\d+)?\s*ms\b", re.IGNORECASE)
-MEMORY_LINE_RE = re.compile(r"^\d+(?:\.\d+)?\s*mb\b", re.IGNORECASE)
+TIME_LINE_RE = re.compile(r"^(?:[-*]\s*)?\d+(?:\.\d+)?\s*ms\b", re.IGNORECASE)
+MEMORY_LINE_RE = re.compile(r"^(?:[-*]\s*)?\d+(?:\.\d+)?\s*mb\b", re.IGNORECASE)
 PENDING_STATES = {"PENDING", "STARTED", "PENDING_REJUDGE"}
+BEATS_THRESHOLD = 50
 
 
 class SubmitError(RuntimeError):
@@ -82,20 +83,54 @@ def solution_is_unimplemented(source: str) -> bool:
     return False
 
 
+def _numeric_metric(value: str, unit: str) -> str:
+    text = value.strip().lower()
+    text = text.replace("milliseconds", "ms").replace("megabytes", "mb")
+    match = re.search(r"(\d+(?:\.\d+)?)", text)
+    if match:
+        return match.group(1)
+    if text.endswith(unit):
+        return text[: -len(unit)].strip() or text
+    return text
+
+
+def _format_percentile(percentile: float | int | None) -> str | None:
+    if percentile is None:
+        return None
+    try:
+        value = float(percentile)
+    except TypeError, ValueError:
+        return None
+    if value < BEATS_THRESHOLD:
+        return None
+    if value == int(value):
+        return str(int(value))
+    return f"{value:.2f}".rstrip("0").rstrip(".")
+
+
+def _metric_bullet(value: str, unit: str, percentile: float | int | None) -> str:
+    line = f"- {_numeric_metric(value, unit)}{unit}"
+    beats = _format_percentile(percentile)
+    if beats is not None:
+        line += f" (beats {beats}%)"
+    return line
+
+
 def format_benchmark_comment(
     *,
     runtime: str,
     memory: str,
+    yyyymmdd: str | None = None,
+    runtime_percentile: float | int | None = None,
+    memory_percentile: float | int | None = None,
     sha: str | None = None,
     submission_id: str | int | None = None,
 ) -> str:
-    runtime_line = runtime.strip().lower().replace("milliseconds", "ms")
-    memory_line = memory.strip().lower().replace("megabytes", "mb")
-    if not runtime_line.endswith("ms") and re.fullmatch(r"\d+(?:\.\d+)?", runtime_line):
-        runtime_line = f"{runtime_line} ms"
-    if not memory_line.endswith("mb") and re.fullmatch(r"\d+(?:\.\d+)?", memory_line):
-        memory_line = f"{memory_line} mb"
-    lines = [runtime_line, memory_line]
+    lines: list[str] = []
+    if yyyymmdd:
+        lines.extend([f"solution {yyyymmdd}.py", ""])
+    lines.append(_metric_bullet(runtime, "ms", runtime_percentile))
+    lines.append(_metric_bullet(memory, "mb", memory_percentile))
     if sha and submission_id is not None:
         lines.append(f"<!-- leetcode-submit sha={sha} id={submission_id} -->")
     return "\n".join(lines) + "\n"
@@ -121,11 +156,15 @@ def parse_check_payload(payload: dict[str, Any]) -> dict[str, Any]:
     status = str(payload.get("status_msg") or payload.get("status") or "")
     runtime = str(payload.get("status_runtime") or payload.get("runtime") or "")
     memory = str(payload.get("status_memory") or payload.get("memory") or "")
+    runtime_percentile = payload.get("runtime_percentile")
+    memory_percentile = payload.get("memory_percentile")
     return {
         "state": state,
         "status": status,
         "runtime": runtime,
         "memory": memory,
+        "runtime_percentile": runtime_percentile,
+        "memory_percentile": memory_percentile,
         "accepted": state == "SUCCESS" and status.lower() == "accepted",
         "pending": state in PENDING_STATES or not state,
         "raw": payload,
@@ -235,31 +274,6 @@ def post_pr_comment(pr_number: int, body: str) -> None:
     )
 
 
-def list_pr_comment_bodies(pr_number: int) -> list[str]:
-    raw = subprocess.check_output(
-        [
-            "gh",
-            "api",
-            f"repos/{{owner}}/{{repo}}/issues/{pr_number}/comments",
-            "--jq",
-            ".[].body",
-        ],
-        text=True,
-    )
-    return (
-        [chunk for chunk in raw.split("\x1e") if chunk]
-        if "\x1e" in raw
-        else [line for line in raw.split("\n\n") if line.strip()]
-        if raw.strip()
-        else []
-    )
-
-
-def _split_gh_bodies(raw: str) -> list[str]:
-    # gh --jq .[].body prints each body followed by a newline; keep whole blobs.
-    return [raw] if raw.strip() else []
-
-
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source", type=Path, help="Path to YYYYMMDD.py")
@@ -339,9 +353,15 @@ def main(argv: list[str] | None = None) -> int:
         )
         return 2
 
+    date_name = title if DATE_TITLE_RE.match(title) else None
+    if date_name is None and DATE_TITLE_RE.match(source_path.stem):
+        date_name = source_path.stem
     comment = format_benchmark_comment(
         runtime=result["runtime"],
         memory=result["memory"],
+        yyyymmdd=date_name,
+        runtime_percentile=result.get("runtime_percentile"),
+        memory_percentile=result.get("memory_percentile"),
         sha=args.sha,
         submission_id=submission_id,
     )
