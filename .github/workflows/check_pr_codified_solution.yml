@@ -126,6 +126,8 @@ jobs:
 
           const isPermissionError = (error) =>
             String(error?.message ?? "").includes("Resource not accessible by integration");
+          const isAlreadyMergeableError = (error) =>
+            /clean status|already (?:fully )?mergeable/i.test(String(error?.message ?? ""));
 
           if (pr.draft) {
             try {
@@ -192,24 +194,57 @@ jobs:
 
           core.info("Found @yyolk performance lines in PR/review comments.");
 
+          const squashMergeNow = async (reason) => {
+            await github.rest.pulls.merge({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: pr.number,
+              merge_method: "squash",
+              sha: pr.head.sha
+            });
+            core.info(`Squash-merged daily PR immediately (${reason}).`);
+          };
+
           if (!pr.auto_merge) {
-            try {
-              await github.graphql(
-                `mutation($pullRequestId: ID!) {
-                  enablePullRequestAutoMerge(input: {pullRequestId: $pullRequestId, mergeMethod: SQUASH}) {
-                    pullRequest {
-                      id
-                    }
-                  }
-                }`,
-                {pullRequestId: pr.node_id}
-              );
-              core.info("Enabled squash auto-merge for daily PR.");
-            } catch (error) {
-              if (!isPermissionError(error)) {
-                throw error;
+            const state = String(pr.mergeable_state ?? "");
+            if (state === "clean" || state === "unstable") {
+              try {
+                await squashMergeNow(`mergeable_state=${state}`);
+              } catch (error) {
+                if (!isPermissionError(error)) {
+                  throw error;
+                }
+                core.warning("Skipping immediate squash merge due to token permissions.");
               }
-              core.warning("Skipping auto-merge enablement due to token permissions.");
+            } else {
+              try {
+                await github.graphql(
+                  `mutation($pullRequestId: ID!) {
+                    enablePullRequestAutoMerge(input: {pullRequestId: $pullRequestId, mergeMethod: SQUASH}) {
+                      pullRequest {
+                        id
+                      }
+                    }
+                  }`,
+                  {pullRequestId: pr.node_id}
+                );
+                core.info("Enabled squash auto-merge for daily PR.");
+              } catch (error) {
+                if (isAlreadyMergeableError(error)) {
+                  try {
+                    await squashMergeNow("enableAutoMerge rejected already-mergeable PR");
+                  } catch (mergeError) {
+                    if (!isPermissionError(mergeError)) {
+                      throw mergeError;
+                    }
+                    core.warning("Skipping immediate squash merge due to token permissions.");
+                  }
+                } else if (!isPermissionError(error)) {
+                  throw error;
+                } else {
+                  core.warning("Skipping auto-merge enablement due to token permissions.");
+                }
+              }
             }
           }
     - name: Decide ready notification
