@@ -15,18 +15,33 @@ class Solution:
 
     * `3 <= digits.length <= 10`
 
-    * `0 <= digits[i] <= 9`"""
+    * `0 <= digits[i] <= 9`
+    """
 
     def total_numbers(self, digits: list[int]) -> int:
-        """...
+        # Frequency count of each digit 0-9
+        freq = [0] * 10
+        for d in digits:
+            freq[d] += 1
 
-        Proposed solution ...
+        count = 0
+        # Hundreds place: cannot be 0
+        for h in range(1, 10):
+            if freq[h] == 0:
+                continue
+            freq[h] -= 1
+            # Tens place: any remaining digit
+            for t in range(10):
+                if freq[t] == 0:
+                    continue
+                freq[t] -= 1
+                # Units place: must be even
+                for u in (0, 2, 4, 6, 8):
+                    if freq[u] > 0:
+                        count += 1
+                freq[t] += 1
+            freq[h] += 1
 
-        Args:
-            digits (list of int): ...
-
-        Returns:
-            int: ..."""
-        ...
+        return count
 
     totalNumbers = total_numbers
