@@ -41,7 +41,9 @@ jobs:
         enable-cache: true
     - name: Install dependencies
       if: ${{ env.skip != 'true' }}
-      run: uv sync --no-install-project
+      run: |
+        uv sync --no-install-project
+        uv pip install curl_cffi
     - name: Submit solution and comment benchmark
       if: ${{ env.skip != 'true' }}
       id: submit
@@ -49,6 +51,7 @@ jobs:
         PYTHONPATH: .
         LEETCODE_SESSION: ${{ secrets.LEETCODE_SESSION }}
         LEETCODE_CSRF_TOKEN: ${{ secrets.LEETCODE_CSRF_TOKEN }}
+        LEETCODE_CF_CLEARANCE: ${{ secrets.LEETCODE_CF_CLEARANCE }}
         GH_TOKEN: ${{ secrets.YYOLK_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
       run: |
         set +e
@@ -80,13 +83,14 @@ jobs:
       env:
         PUSHOVER_TOKEN: ${{ secrets.PUSHOVER_API_KEY }}
         PUSHOVER_USER: ${{ secrets.PUSHOVER_USER_KEY }}
-    - name: Notify if LeetCode tokens need refresh
+    - name: Notify if LeetCode submit was blocked
       if: ${{ env.skip != 'true' && steps.submit.outputs.auth_failed == 'true' }}
       uses: ./.github/actions/notify-pushover
       with:
         message: >-
           LeetCode returned 401/403 submitting daily PR #${{ github.event.pull_request.number }}.
-          Refresh LEETCODE_SESSION and LEETCODE_CSRF_TOKEN, then re-run Submit to LeetCode.
+          If the log shows Just a moment, Cloudflare blocked GitHub Actions.
+          Otherwise refresh LEETCODE_SESSION and LEETCODE_CSRF_TOKEN.
         ttl: "93600"
       env:
         PUSHOVER_TOKEN: ${{ secrets.PUSHOVER_API_KEY }}
