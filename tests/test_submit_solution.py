@@ -1,8 +1,14 @@
+import requests
+
 from generate_active_daily.submit_solution import (
+    AUTH_FAILED_EXIT,
+    AuthFailedError,
     comment_already_has_benchmark,
     comment_for_notification,
     format_benchmark_comment,
+    is_auth_http_error,
     parse_check_payload,
+    raise_for_leetcode_status,
     slug_from_source,
     slug_from_url,
     solution_is_unimplemented,
@@ -35,6 +41,19 @@ class Solution:
 
     twoSum = two_sum
 """
+
+
+class _FakeResponse:
+    def __init__(self, status_code: int, text: str = "denied") -> None:
+        self.status_code = status_code
+        self.url = "https://leetcode.com/problems/rectangle-overlap/submit/"
+        self.text = text
+
+    def raise_for_status(self) -> None:
+        raise requests.HTTPError(
+            f"{self.status_code} Client Error",
+            response=self,
+        )
 
 
 def test_slug_from_url_and_source():
@@ -123,3 +142,28 @@ def test_parse_check_payload_states():
     wrong = parse_check_payload({"state": "SUCCESS", "status_msg": "Wrong Answer"})
     assert not wrong["accepted"]
     assert not wrong["pending"]
+
+
+def test_raise_for_leetcode_status_maps_403_to_auth_failed():
+    try:
+        raise_for_leetcode_status(_FakeResponse(403, "Forbidden"))
+    except AuthFailedError as exc:
+        assert "HTTP 403" in str(exc)
+        assert "LEETCODE_SESSION" in str(exc)
+        assert is_auth_http_error(exc.__cause__)
+    else:
+        raise AssertionError("expected AuthFailedError")
+
+
+def test_raise_for_leetcode_status_maps_other_http_to_submit_error():
+    try:
+        raise_for_leetcode_status(_FakeResponse(500, "boom"))
+    except AuthFailedError:
+        raise AssertionError("500 should not be auth failure")
+    except Exception as exc:
+        assert "HTTP 500" in str(exc)
+        assert not is_auth_http_error(exc.__cause__)
+    else:
+        raise AssertionError("expected SubmitError")
+
+    assert AUTH_FAILED_EXIT == 3
