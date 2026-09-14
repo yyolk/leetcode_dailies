@@ -30,6 +30,11 @@ PENDING_STATES = {"PENDING", "STARTED", "PENDING_REJUDGE"}
 BEATS_THRESHOLD = 50
 AUTH_HTTP_STATUSES = {401, 403}
 AUTH_FAILED_EXIT = 3
+BROWSER_USER_AGENT = (
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+    "AppleWebKit/537.36 (KHTML, like Gecko) "
+    "Chrome/140.0.0.0 Safari/537.36"
+)
 
 
 class SubmitError(RuntimeError):
@@ -219,7 +224,10 @@ def _session_headers(csrf: str, referer: str) -> dict[str, str]:
         "x-csrftoken": csrf,
         "referer": referer,
         "origin": LEETCODE_BASE_URL,
-        "user-agent": "leetcode-dailies-submit/0.1",
+        "user-agent": BROWSER_USER_AGENT,
+        "accept": "application/json, text/javascript, */*;q=0.01",
+        "accept-language": "en-US,en;q=0.9",
+        "x-requested-with": "XMLHttpRequest",
         "content-type": "application/json",
     }
 
