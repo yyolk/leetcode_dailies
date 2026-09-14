@@ -64,6 +64,10 @@ jobs:
           echo "judge_failed=true" >> "$GITHUB_OUTPUT"
           exit 0
         fi
+        if [[ "$status" -eq 3 ]]; then
+          echo "auth_failed=true" >> "$GITHUB_OUTPUT"
+          exit 0
+        fi
         exit "$status"
     - name: Notify if LeetCode rejected the solution
       if: ${{ env.skip != 'true' && steps.submit.outputs.judge_failed == 'true' }}
@@ -72,6 +76,17 @@ jobs:
         message: >-
           LeetCode rejected daily PR #${{ github.event.pull_request.number }}.
           No ms/mb comment was posted.
+        ttl: "93600"
+      env:
+        PUSHOVER_TOKEN: ${{ secrets.PUSHOVER_API_KEY }}
+        PUSHOVER_USER: ${{ secrets.PUSHOVER_USER_KEY }}
+    - name: Notify if LeetCode tokens need refresh
+      if: ${{ env.skip != 'true' && steps.submit.outputs.auth_failed == 'true' }}
+      uses: ./.github/actions/notify-pushover
+      with:
+        message: >-
+          LeetCode returned 401/403 submitting daily PR #${{ github.event.pull_request.number }}.
+          Refresh LEETCODE_SESSION and LEETCODE_CSRF_TOKEN, then re-run Submit to LeetCode.
         ttl: "93600"
       env:
         PUSHOVER_TOKEN: ${{ secrets.PUSHOVER_API_KEY }}
@@ -89,5 +104,5 @@ jobs:
         PUSHOVER_TOKEN: ${{ secrets.PUSHOVER_API_KEY }}
         PUSHOVER_USER: ${{ secrets.PUSHOVER_USER_KEY }}
     - name: Fail job after notifying
-      if: ${{ env.skip != 'true' && steps.submit.outputs.judge_failed == 'true' }}
+      if: ${{ env.skip != 'true' && (steps.submit.outputs.judge_failed == 'true' || steps.submit.outputs.auth_failed == 'true') }}
       run: exit 1

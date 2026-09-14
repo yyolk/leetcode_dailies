@@ -28,10 +28,16 @@ TIME_LINE_RE = re.compile(r"^(?:[-*]\s*)?\d+(?:\.\d+)?\s*ms\b", re.IGNORECASE)
 MEMORY_LINE_RE = re.compile(r"^(?:[-*]\s*)?\d+(?:\.\d+)?\s*mb\b", re.IGNORECASE)
 PENDING_STATES = {"PENDING", "STARTED", "PENDING_REJUDGE"}
 BEATS_THRESHOLD = 50
+AUTH_HTTP_STATUSES = {401, 403}
+AUTH_FAILED_EXIT = 3
 
 
 class SubmitError(RuntimeError):
     """LeetCode rejected the submission or the unofficial API failed."""
+
+
+class AuthFailedError(SubmitError):
+    """LeetCode rejected the session cookies (401/403)."""
 
 
 def slug_from_url(url: str) -> str | None:
@@ -188,6 +194,26 @@ def parse_check_payload(payload: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def is_auth_http_error(error: BaseException) -> bool:
+    response = getattr(error, "response", None)
+    return getattr(response, "status_code", None) in AUTH_HTTP_STATUSES
+
+
+def raise_for_leetcode_status(response: requests.Response) -> None:
+    try:
+        response.raise_for_status()
+    except requests.HTTPError as exc:
+        body = (getattr(response, "text", None) or "")[:500]
+        url = getattr(response, "url", "")
+        status = getattr(response, "status_code", "?")
+        message = f"LeetCode returned HTTP {status} for {url}. Body: {body}"
+        if is_auth_http_error(exc):
+            raise AuthFailedError(
+                f"{message} Refresh LEETCODE_SESSION and LEETCODE_CSRF_TOKEN."
+            ) from exc
+        raise SubmitError(message) from exc
+
+
 def _session_headers(csrf: str, referer: str) -> dict[str, str]:
     return {
         "x-csrftoken": csrf,
@@ -221,7 +247,7 @@ def fetch_question_id(slug: str, session: str, csrf: str) -> str:
         json=query,
         timeout=30,
     )
-    response.raise_for_status()
+    raise_for_leetcode_status(response)
     data = response.json()
     question_id = data.get("data", {}).get("question", {}).get("questionId")
     if not question_id:
@@ -245,7 +271,7 @@ def submit_solution(
         json={"lang": lang, "question_id": str(question_id), "typed_code": typed_code},
         timeout=30,
     )
-    response.raise_for_status()
+    raise_for_leetcode_status(response)
     payload = response.json()
     submission_id = payload.get("submission_id")
     if submission_id is None:
@@ -276,7 +302,7 @@ def poll_submission(
         response = (
             getter() if getter.__code__.co_argcount == 0 else getter(submission_id)
         )
-        response.raise_for_status()
+        raise_for_leetcode_status(response)
         last = parse_check_payload(response.json())
         if not last["pending"]:
             return last
@@ -352,16 +378,22 @@ def main(argv: list[str] | None = None) -> int:
         print(f"Dry run: would submit {source_path} as {slug}")
         return 0
 
-    question_id = args.question_id or fetch_question_id(slug, session, csrf)
-    submission_id = submit_solution(
-        slug=slug,
-        question_id=question_id,
-        typed_code=source,
-        session=session,
-        csrf=csrf,
-    )
-    print(f"Submitted {slug} as {submission_id}")
-    result = poll_submission(submission_id, session, csrf)
+    try:
+        question_id = args.question_id or fetch_question_id(slug, session, csrf)
+        submission_id = submit_solution(
+            slug=slug,
+            question_id=question_id,
+            typed_code=source,
+            session=session,
+            csrf=csrf,
+        )
+        print(f"Submitted {slug} as {submission_id}")
+        result = poll_submission(submission_id, session, csrf)
+    except AuthFailedError as exc:
+        print(exc, file=sys.stderr)
+        write_github_output("auth_failed", "true")
+        return AUTH_FAILED_EXIT
+
     if not result["accepted"]:
         print(
             f"LeetCode {result['status'] or result['state']} for {slug} "
