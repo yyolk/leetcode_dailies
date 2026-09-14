@@ -87,14 +87,14 @@ jobs:
       env:
         PUSHOVER_TOKEN: ${{ secrets.PUSHOVER_API_KEY }}
         PUSHOVER_USER: ${{ secrets.PUSHOVER_USER_KEY }}
-    - name: Notify if Cloudflare blocked submit
+    - name: Notify if Cloudflare blocked the submit
       if: ${{ env.skip != 'true' && steps.submit.outputs.cloudflare_blocked == 'true' }}
       uses: ./.github/actions/notify-pushover
       with:
         message: >-
           Cloudflare blocked LeetCode submit for daily PR #${{ github.event.pull_request.number }}.
-          Session cookies are probably still valid. Re-run Submit to LeetCode,
-          or refresh LEETCODE_CF_CLEARANCE if this keeps happening.
+          Cookies are probably still valid. Refresh LEETCODE_CF_CLEARANCE from the same
+          browser session, then re-run Submit to LeetCode.
         ttl: "93600"
       env:
         PUSHOVER_TOKEN: ${{ secrets.PUSHOVER_API_KEY }}
