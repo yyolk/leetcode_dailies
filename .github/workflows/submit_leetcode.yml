@@ -71,6 +71,10 @@ jobs:
           echo "auth_failed=true" >> "$GITHUB_OUTPUT"
           exit 0
         fi
+        if [[ "$status" -eq 4 ]]; then
+          echo "cloudflare_blocked=true" >> "$GITHUB_OUTPUT"
+          exit 0
+        fi
         exit "$status"
     - name: Notify if LeetCode rejected the solution
       if: ${{ env.skip != 'true' && steps.submit.outputs.judge_failed == 'true' }}
@@ -83,14 +87,25 @@ jobs:
       env:
         PUSHOVER_TOKEN: ${{ secrets.PUSHOVER_API_KEY }}
         PUSHOVER_USER: ${{ secrets.PUSHOVER_USER_KEY }}
-    - name: Notify if LeetCode submit was blocked
+    - name: Notify if Cloudflare blocked the submit
+      if: ${{ env.skip != 'true' && steps.submit.outputs.cloudflare_blocked == 'true' }}
+      uses: ./.github/actions/notify-pushover
+      with:
+        message: >-
+          Cloudflare blocked LeetCode submit for daily PR #${{ github.event.pull_request.number }}.
+          Cookies are probably still valid. Refresh LEETCODE_CF_CLEARANCE from the same
+          browser session, then re-run Submit to LeetCode.
+        ttl: "93600"
+      env:
+        PUSHOVER_TOKEN: ${{ secrets.PUSHOVER_API_KEY }}
+        PUSHOVER_USER: ${{ secrets.PUSHOVER_USER_KEY }}
+    - name: Notify if LeetCode tokens need refresh
       if: ${{ env.skip != 'true' && steps.submit.outputs.auth_failed == 'true' }}
       uses: ./.github/actions/notify-pushover
       with:
         message: >-
-          LeetCode returned 401/403 submitting daily PR #${{ github.event.pull_request.number }}.
-          If the log shows Just a moment, Cloudflare blocked GitHub Actions.
-          Otherwise refresh LEETCODE_SESSION and LEETCODE_CSRF_TOKEN.
+          LeetCode rejected the session cookies submitting daily PR #${{ github.event.pull_request.number }}.
+          Refresh LEETCODE_SESSION and LEETCODE_CSRF_TOKEN, then re-run Submit to LeetCode.
         ttl: "93600"
       env:
         PUSHOVER_TOKEN: ${{ secrets.PUSHOVER_API_KEY }}
@@ -108,5 +123,5 @@ jobs:
         PUSHOVER_TOKEN: ${{ secrets.PUSHOVER_API_KEY }}
         PUSHOVER_USER: ${{ secrets.PUSHOVER_USER_KEY }}
     - name: Fail job after notifying
-      if: ${{ env.skip != 'true' && (steps.submit.outputs.judge_failed == 'true' || steps.submit.outputs.auth_failed == 'true') }}
+      if: ${{ env.skip != 'true' && (steps.submit.outputs.judge_failed == 'true' || steps.submit.outputs.auth_failed == 'true' || steps.submit.outputs.cloudflare_blocked == 'true') }}
       run: exit 1
