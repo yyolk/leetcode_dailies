@@ -19,6 +19,7 @@ from typing import Any
 
 import requests
 
+from . import leetcode_http
 from .constants import LEETCODE_BASE_URL
 
 SLUG_RE = re.compile(r"/problems/([a-z0-9-]+)/?", re.IGNORECASE)
@@ -110,7 +111,7 @@ def _format_percentile(percentile: float | int | None) -> str | None:
         return None
     try:
         value = float(percentile)
-    except TypeError, ValueError:
+    except (TypeError, ValueError):
         return None
     if value < BEATS_THRESHOLD:
         return None
@@ -204,7 +205,7 @@ def is_auth_http_error(error: BaseException) -> bool:
     return getattr(response, "status_code", None) in AUTH_HTTP_STATUSES
 
 
-def raise_for_leetcode_status(response: requests.Response) -> None:
+def raise_for_leetcode_status(response: Any) -> None:
     try:
         response.raise_for_status()
     except requests.HTTPError as exc:
@@ -212,10 +213,15 @@ def raise_for_leetcode_status(response: requests.Response) -> None:
         url = getattr(response, "url", "")
         status = getattr(response, "status_code", "?")
         message = f"LeetCode returned HTTP {status} for {url}. Body: {body}"
-        if is_auth_http_error(exc):
-            raise AuthFailedError(
-                f"{message} Refresh LEETCODE_SESSION and LEETCODE_CSRF_TOKEN."
-            ) from exc
+        if leetcode_http.is_cloudflare_challenge(body):
+            message += (
+                " Cloudflare challenged this request. "
+                "curl_cffi impersonation or a cf_clearance cookie may be required."
+            )
+        elif is_auth_http_error(exc):
+            message += " Refresh LEETCODE_SESSION and LEETCODE_CSRF_TOKEN."
+        if is_auth_http_error(exc) or status in AUTH_HTTP_STATUSES:
+            raise AuthFailedError(message) from exc
         raise SubmitError(message) from exc
 
 
@@ -233,7 +239,7 @@ def _session_headers(csrf: str, referer: str) -> dict[str, str]:
 
 
 def _session_cookies(session: str, csrf: str) -> dict[str, str]:
-    return {"LEETCODE_SESSION": session, "csrftoken": csrf}
+    return leetcode_http.session_cookies(session, csrf)
 
 
 def fetch_question_id(slug: str, session: str, csrf: str) -> str:
@@ -248,7 +254,8 @@ def fetch_question_id(slug: str, session: str, csrf: str) -> str:
         """,
         "variables": {"titleSlug": slug},
     }
-    response = requests.post(
+    response = leetcode_http.request(
+        "post",
         f"{LEETCODE_BASE_URL}/graphql/",
         headers=_session_headers(csrf, f"{LEETCODE_BASE_URL}/problems/{slug}/"),
         cookies=_session_cookies(session, csrf),
@@ -272,7 +279,8 @@ def submit_solution(
     csrf: str,
     lang: str = "python3",
 ) -> str:
-    response = requests.post(
+    response = leetcode_http.request(
+        "post",
         f"{LEETCODE_BASE_URL}/problems/{slug}/submit/",
         headers=_session_headers(csrf, f"{LEETCODE_BASE_URL}/problems/{slug}/"),
         cookies=_session_cookies(session, csrf),
@@ -298,7 +306,8 @@ def poll_submission(
     getter=None,
 ) -> dict[str, Any]:
     getter = getter or (
-        lambda: requests.get(
+        lambda: leetcode_http.request(
+            "get",
             f"{LEETCODE_BASE_URL}/submissions/detail/{submission_id}/check/",
             headers=_session_headers(csrf, f"{LEETCODE_BASE_URL}/"),
             cookies=_session_cookies(session, csrf),
