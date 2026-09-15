@@ -21,19 +21,33 @@ class Solution:
 
     * `1 <= k <= s.length <= 2000`
 
-    * `s` consists of lowercase English letters."""
+    * `s` consists of lowercase English letters.
+    """
 
     def max_palindromes(self, s: str, k: int) -> int:
-        """...
+        # Any palindrome of length >= k contains a palindrome of length k or k+1.
+        n = len(s)
 
-        Proposed solution ...
+        def is_palindrome(left: int, right: int) -> bool:
+            while left < right:
+                if s[left] != s[right]:
+                    return False
+                left += 1
+                right -= 1
+            return True
 
-        Args:
-            s (str): ...
-            k (int): ...
-
-        Returns:
-            int: ..."""
-        ...
+        count = 0
+        i = 0
+        while i + k <= n:
+            # Prefer the shortest valid palindrome starting at i (length k, else k+1).
+            if is_palindrome(i, i + k - 1):
+                count += 1
+                i += k
+            elif i + k < n and is_palindrome(i, i + k):
+                count += 1
+                i += k + 1
+            else:
+                i += 1
+        return count
 
     maxPalindromes = max_palindromes
