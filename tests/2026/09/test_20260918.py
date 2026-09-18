@@ -5,9 +5,7 @@ def test_max_num_of_substrings_examples(solution):
     )
 
     # Example 2
-    assert sorted(solution.maxNumOfSubstrings("abbaccd")) == sorted(
-        ["d", "bb", "cc"]
-    )
+    assert sorted(solution.maxNumOfSubstrings("abbaccd")) == sorted(["d", "bb", "cc"])
 
 
 def test_max_num_of_substrings_single_char(solution):
