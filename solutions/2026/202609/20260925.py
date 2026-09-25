@@ -52,18 +52,46 @@ class Solution:
     * `expression[i]` consists of `'{'`, `'}'`, `','`or lowercase English letters.
 
     * The given `expression` represents a set of words based on the grammar given in the
-    description."""
+    description.
+    """
 
     def brace_expansion_i_i(self, expression: str) -> list[str]:
-        """...
+        """Parse the brace-expansion grammar and return sorted unique words."""
+        n = len(expression)
+        i = 0
 
-        Proposed solution ...
+        def union_inside_braces() -> set[str]:
+            """Parse comma-separated alternatives after consuming '{'."""
+            nonlocal i
+            words: set[str] = set()
+            words |= parse_expr()
+            while i < n and expression[i] == ",":
+                i += 1
+                words |= parse_expr()
+            # consume matching '}'
+            i += 1
+            return words
 
-        Args:
-            expression (str): ...
+        def parse_unit() -> set[str]:
+            """Parse a letter or a `{...}` group."""
+            nonlocal i
+            if expression[i] == "{":
+                i += 1
+                return union_inside_braces()
+            letter = expression[i]
+            i += 1
+            return {letter}
 
-        Returns:
-            list of str: ..."""
-        ...
+        def parse_expr() -> set[str]:
+            """Parse a concatenation of units until ',' or '}' or end."""
+            nonlocal i
+            # empty product is {""} so the first unit can stand alone
+            result = {""}
+            while i < n and expression[i] not in ",}":
+                unit = parse_unit()
+                result = {prefix + suffix for prefix in result for suffix in unit}
+            return result
+
+        return sorted(parse_expr())
 
     braceExpansionII = brace_expansion_i_i
