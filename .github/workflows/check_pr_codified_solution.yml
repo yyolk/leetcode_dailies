@@ -124,10 +124,19 @@ jobs:
             return;
           }
 
+          const errorText = (error) => {
+            const message = String(error?.message ?? "");
+            const responseMessage = String(error?.response?.data?.message ?? "");
+            return `${message}\n${responseMessage}`;
+          };
           const isPermissionError = (error) =>
-            String(error?.message ?? "").includes("Resource not accessible by integration");
+            errorText(error).includes("Resource not accessible by integration");
           const isAlreadyMergeableError = (error) =>
-            /clean status|already (?:fully )?mergeable/i.test(String(error?.message ?? ""));
+            /clean status|already (?:fully )?mergeable/i.test(errorText(error));
+          const isRulesetBlockedError = (error) =>
+            /required status check|checks are in progress|rule violations/i.test(
+              errorText(error)
+            );
 
           if (pr.draft) {
             try {
@@ -194,6 +203,27 @@ jobs:
 
           core.info("Found @yyolk performance lines in PR/review comments.");
 
+          const {data: freshPr} = await github.rest.pulls.get({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            pull_number: pr.number
+          });
+          pr = freshPr;
+
+          const enableAutoMerge = async () => {
+            await github.graphql(
+              `mutation($pullRequestId: ID!) {
+                enablePullRequestAutoMerge(input: {pullRequestId: $pullRequestId, mergeMethod: SQUASH}) {
+                  pullRequest {
+                    id
+                  }
+                }
+              }`,
+              {pullRequestId: pr.node_id}
+            );
+            core.info("Enabled squash auto-merge for daily PR.");
+          };
+
           const squashMergeNow = async (reason) => {
             await github.rest.pulls.merge({
               owner: context.repo.owner,
@@ -205,44 +235,59 @@ jobs:
             core.info(`Squash-merged daily PR immediately (${reason}).`);
           };
 
+          const tryEnableAutoMerge = async () => {
+            try {
+              await enableAutoMerge();
+              return "enabled";
+            } catch (error) {
+              if (isPermissionError(error)) {
+                core.warning("Skipping auto-merge enablement due to token permissions.");
+                return "permission";
+              }
+              if (isAlreadyMergeableError(error)) {
+                return "already-mergeable";
+              }
+              throw error;
+            }
+          };
+
+          const trySquash = async (reason) => {
+            try {
+              await squashMergeNow(reason);
+              return "merged";
+            } catch (error) {
+              if (isPermissionError(error)) {
+                core.warning("Skipping immediate squash merge due to token permissions.");
+                return "permission";
+              }
+              if (isRulesetBlockedError(error)) {
+                core.warning(`Immediate squash blocked by ruleset: ${error.message}`);
+                return "blocked";
+              }
+              throw error;
+            }
+          };
+
           if (!pr.auto_merge) {
             const state = String(pr.mergeable_state ?? "");
             if (state === "clean" || state === "unstable") {
-              try {
-                await squashMergeNow(`mergeable_state=${state}`);
-              } catch (error) {
-                if (!isPermissionError(error)) {
-                  throw error;
+              const result = await trySquash(`mergeable_state=${state}`);
+              if (result === "blocked") {
+                const enabled = await tryEnableAutoMerge();
+                if (enabled === "already-mergeable") {
+                  core.warning(
+                    "Ruleset blocked squash and auto-merge thinks the PR is already mergeable. Leaving the required check green."
+                  );
                 }
-                core.warning("Skipping immediate squash merge due to token permissions.");
               }
             } else {
-              try {
-                await github.graphql(
-                  `mutation($pullRequestId: ID!) {
-                    enablePullRequestAutoMerge(input: {pullRequestId: $pullRequestId, mergeMethod: SQUASH}) {
-                      pullRequest {
-                        id
-                      }
-                    }
-                  }`,
-                  {pullRequestId: pr.node_id}
-                );
-                core.info("Enabled squash auto-merge for daily PR.");
-              } catch (error) {
-                if (isAlreadyMergeableError(error)) {
-                  try {
-                    await squashMergeNow("enableAutoMerge rejected already-mergeable PR");
-                  } catch (mergeError) {
-                    if (!isPermissionError(mergeError)) {
-                      throw mergeError;
-                    }
-                    core.warning("Skipping immediate squash merge due to token permissions.");
-                  }
-                } else if (!isPermissionError(error)) {
-                  throw error;
-                } else {
-                  core.warning("Skipping auto-merge enablement due to token permissions.");
+              const enabled = await tryEnableAutoMerge();
+              if (enabled === "already-mergeable") {
+                const squash = await trySquash("enableAutoMerge rejected already-mergeable PR");
+                if (squash === "blocked") {
+                  core.warning(
+                    "Ruleset blocked squash after enableAutoMerge clean-status. Leaving the required check green so later checks can finish."
+                  );
                 }
               }
             }
