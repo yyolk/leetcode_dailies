@@ -33,7 +33,7 @@ class Solution:
             while stack and stack[-1] != "(":
                 segment.append(stack.pop())
             if stack:
-                stack.pop()  # discard the matching '(' 
+                stack.pop()  # discard the matching '('
             # segment is already reversed by the pops; push it back.
             stack.extend(segment)
         return "".join(stack)
