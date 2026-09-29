@@ -17,8 +17,6 @@ import time
 from pathlib import Path
 from typing import Any
 
-import requests
-
 from . import leetcode_http
 from .constants import LEETCODE_BASE_URL
 
@@ -31,6 +29,7 @@ PENDING_STATES = {"PENDING", "STARTED", "PENDING_REJUDGE"}
 BEATS_THRESHOLD = 50
 AUTH_HTTP_STATUSES = {401, 403}
 AUTH_FAILED_EXIT = 3
+CLOUDFLARE_BLOCKED_EXIT = 4
 BROWSER_USER_AGENT = (
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
     "AppleWebKit/537.36 (KHTML, like Gecko) "
@@ -44,6 +43,10 @@ class SubmitError(RuntimeError):
 
 class AuthFailedError(SubmitError):
     """LeetCode rejected the session cookies (401/403)."""
+
+
+class CloudflareBlockedError(SubmitError):
+    """Cloudflare challenged the unofficial LeetCode request."""
 
 
 def slug_from_url(url: str) -> str | None:
@@ -206,21 +209,25 @@ def is_auth_http_error(error: BaseException) -> bool:
 
 
 def raise_for_leetcode_status(response: Any) -> None:
+    """Map HTTP failures from requests or curl_cffi onto typed submit errors."""
     try:
         response.raise_for_status()
-    except requests.HTTPError as exc:
+        return
+    except Exception as exc:
+        status = getattr(response, "status_code", None)
+        if not isinstance(status, int) or status < 400:
+            raise
         body = (getattr(response, "text", None) or "")[:500]
         url = getattr(response, "url", "")
-        status = getattr(response, "status_code", "?")
         message = f"LeetCode returned HTTP {status} for {url}. Body: {body}"
         if leetcode_http.is_cloudflare_challenge(body):
             message += (
                 " Cloudflare challenged this request. "
                 "curl_cffi impersonation or a cf_clearance cookie may be required."
             )
-        elif is_auth_http_error(exc):
+            raise CloudflareBlockedError(message) from exc
+        if status in AUTH_HTTP_STATUSES:
             message += " Refresh LEETCODE_SESSION and LEETCODE_CSRF_TOKEN."
-        if is_auth_http_error(exc) or status in AUTH_HTTP_STATUSES:
             raise AuthFailedError(message) from exc
         raise SubmitError(message) from exc
 
@@ -406,6 +413,10 @@ def main(argv: list[str] | None = None) -> int:
         )
         print(f"Submitted {slug} as {submission_id}")
         result = poll_submission(submission_id, session, csrf)
+    except CloudflareBlockedError as exc:
+        print(exc, file=sys.stderr)
+        write_github_output("cloudflare_blocked", "true")
+        return CLOUDFLARE_BLOCKED_EXIT
     except AuthFailedError as exc:
         print(exc, file=sys.stderr)
         write_github_output("auth_failed", "true")
