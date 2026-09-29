@@ -2,7 +2,10 @@ import requests
 
 from generate_active_daily.submit_solution import (
     AUTH_FAILED_EXIT,
+    CLOUDFLARE_BLOCKED_EXIT,
     AuthFailedError,
+    CloudflareBlockedError,
+    SubmitError,
     comment_already_has_benchmark,
     comment_for_notification,
     format_benchmark_comment,
@@ -54,6 +57,19 @@ class _FakeResponse:
             f"{self.status_code} Client Error",
             response=self,
         )
+
+
+class _CurlCffiHTTPError(Exception):
+    """Stand-in for curl_cffi.requests.exceptions.HTTPError."""
+
+    def __init__(self, message: str, response: object) -> None:
+        super().__init__(message)
+        self.response = response
+
+
+class _CurlCffiFakeResponse(_FakeResponse):
+    def raise_for_status(self) -> None:
+        raise _CurlCffiHTTPError(f"HTTP Error {self.status_code}: ", self)
 
 
 def test_slug_from_url_and_source():
@@ -167,3 +183,40 @@ def test_raise_for_leetcode_status_maps_other_http_to_submit_error():
         raise AssertionError("expected SubmitError")
 
     assert AUTH_FAILED_EXIT == 3
+    assert CLOUDFLARE_BLOCKED_EXIT == 4
+
+
+def test_raise_for_leetcode_status_maps_curl_cffi_403_to_auth_failed():
+    try:
+        raise_for_leetcode_status(_CurlCffiFakeResponse(403, "Forbidden"))
+    except AuthFailedError as exc:
+        assert "HTTP 403" in str(exc)
+        assert "LEETCODE_SESSION" in str(exc)
+        assert is_auth_http_error(exc.__cause__)
+    else:
+        raise AssertionError("expected AuthFailedError")
+
+
+def test_raise_for_leetcode_status_maps_cloudflare_403_to_blocked():
+    body = "<title>Just a moment...</title>"
+    try:
+        raise_for_leetcode_status(_CurlCffiFakeResponse(403, body))
+    except CloudflareBlockedError as exc:
+        assert "HTTP 403" in str(exc)
+        assert "Cloudflare" in str(exc)
+        assert "LEETCODE_SESSION" not in str(exc)
+    else:
+        raise AssertionError("expected CloudflareBlockedError")
+
+
+def test_raise_for_leetcode_status_maps_curl_cffi_500_to_submit_error():
+    try:
+        raise_for_leetcode_status(_CurlCffiFakeResponse(500, "boom"))
+    except AuthFailedError:
+        raise AssertionError("500 should not be auth failure")
+    except CloudflareBlockedError:
+        raise AssertionError("500 should not be cloudflare")
+    except SubmitError as exc:
+        assert "HTTP 500" in str(exc)
+    else:
+        raise AssertionError("expected SubmitError")
