@@ -47,18 +47,22 @@ class Solution:
 
     Constraints:
 
-    * `1 <= seq.size <= 10000`"""
+    * `1 <= seq.size <= 10000`
+    """
 
     def max_depth_after_split(self, seq: str) -> list[int]:
-        """...
-
-        Proposed solution ...
-
-        Args:
-            seq (str): ...
-
-        Returns:
-            list of int: ..."""
-        ...
+        """Split seq into two VPS groups that minimize the max nesting depth."""
+        answer = [0] * len(seq)
+        depth = 0
+        for i, ch in enumerate(seq):
+            if ch == "(":
+                # Assign this open to A/B by current depth parity, then nest deeper.
+                answer[i] = depth % 2
+                depth += 1
+            else:
+                # Match the closer to the group of its corresponding open.
+                depth -= 1
+                answer[i] = depth % 2
+        return answer
 
     maxDepthAfterSplit = max_depth_after_split
