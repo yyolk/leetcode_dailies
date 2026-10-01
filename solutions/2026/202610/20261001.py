@@ -4,8 +4,8 @@
 class Solution:
     """20. Valid Parentheses
 
-    Given a string `s` containing just the characters `'('`, `')'`, `'{'`, `'}'`, `'['`
-    and `']'`, determine if the input string is valid.
+    Given a string `s` containing just the characters `'('`, `')'`, `'{'`,
+    `'}'`, `'['` and `']'`, determine if the input string is valid.
 
     An input string is valid if:
 
@@ -19,18 +19,19 @@ class Solution:
 
     * `1 <= s.length <= 104`
 
-    * `s` consists of parentheses only `'()[]{}'`."""
+    * `s` consists of parentheses only `'()[]{}'`.
+    """
 
     def is_valid(self, s: str) -> bool:
-        """...
-
-        Proposed solution ...
-
-        Args:
-            s (str): ...
-
-        Returns:
-            bool: ..."""
-        ...
+        pairs = {")": "(", "]": "[", "}": "{"}
+        stack: list[str] = []
+        for ch in s:
+            if ch in pairs:
+                # Closer must match the most recent unmatched opener.
+                if not stack or stack.pop() != pairs[ch]:
+                    return False
+            else:
+                stack.append(ch)
+        return not stack
 
     isValid = is_valid
