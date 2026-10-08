@@ -3,10 +3,7 @@ def test_remove_outer_parentheses_examples(solution):
     assert solution.removeOuterParentheses("(()())(())") == "()()()"
 
     # Example 2: "(()())" + "(())" + "(()(()))" -> "()()" + "()" + "()(())"
-    assert (
-        solution.removeOuterParentheses("(()())(())(()(()))")
-        == "()()()()(())"
-    )
+    assert solution.removeOuterParentheses("(()())(())(()(()))") == "()()()()(())"
 
     # Example 3: "()" + "()" -> "" + ""
     assert solution.removeOuterParentheses("()()") == ""
