@@ -15,18 +15,16 @@ class Solution:
 
     * `1 <= nums.length == n <= 50`
 
-    * `1 <= nums[i] <= 50`"""
+    * `1 <= nums[i] <= 50`
+    """
 
     def sum_of_squares(self, nums: list[int]) -> int:
-        """...
+        """Return the sum of squares of all special elements.
 
-        Proposed solution ...
-
-        Args:
-            nums (list of int): ...
-
-        Returns:
-            int: ..."""
-        ...
+        A 1-based index i is special when it divides n.
+        """
+        n = len(nums)
+        # Sum squares of elements whose 1-based index divides n.
+        return sum(x * x for i, x in enumerate(nums, 1) if n % i == 0)
 
     sumOfSquares = sum_of_squares
