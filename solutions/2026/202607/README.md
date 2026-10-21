@@ -1,4 +1,4 @@
-<table align="center" border="0" cellpadding="0" cellspacing="0" class="month">
+<table align="center" class="month">
  <tr>
   <th class="month" colspan="7">
    July 2026
