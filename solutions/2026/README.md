@@ -1,4 +1,4 @@
-<table align="center" class="year">
+<table align="center" border="0" cellpadding="0" cellspacing="0" class="year">
  <tr>
   <th class="year" colspan="2">
    2026
@@ -6,7 +6,7 @@
  </tr>
  <tr>
   <td>
-   <table class="month">
+   <table border="0" cellpadding="0" cellspacing="0" class="month">
     <tr>
      <th class="month" colspan="7">
       January
@@ -211,7 +211,7 @@
    </table>
   </td>
   <td>
-   <table class="month">
+   <table border="0" cellpadding="0" cellspacing="0" class="month">
     <tr>
      <th class="month" colspan="7">
       February
@@ -393,7 +393,7 @@
  </tr>
  <tr>
   <td>
-   <table class="month">
+   <table border="0" cellpadding="0" cellspacing="0" class="month">
     <tr>
      <th class="month" colspan="7">
       March
@@ -598,7 +598,7 @@
    </table>
   </td>
   <td>
-   <table class="month">
+   <table border="0" cellpadding="0" cellspacing="0" class="month">
     <tr>
      <th class="month" colspan="7">
       April
@@ -802,7 +802,7 @@
  </tr>
  <tr>
   <td>
-   <table class="month">
+   <table border="0" cellpadding="0" cellspacing="0" class="month">
     <tr>
      <th class="month" colspan="7">
       May
@@ -1023,7 +1023,7 @@
    </table>
   </td>
   <td>
-   <table class="month">
+   <table border="0" cellpadding="0" cellspacing="0" class="month">
     <tr>
      <th class="month" colspan="7">
       June
@@ -1227,7 +1227,7 @@
  </tr>
  <tr>
   <td>
-   <table class="month">
+   <table border="0" cellpadding="0" cellspacing="0" class="month">
     <tr>
      <th class="month" colspan="7">
       July
@@ -1432,7 +1432,7 @@
    </table>
   </td>
   <td>
-   <table class="month">
+   <table border="0" cellpadding="0" cellspacing="0" class="month">
     <tr>
      <th class="month" colspan="7">
       August
@@ -1655,7 +1655,7 @@
  </tr>
  <tr>
   <td>
-   <table class="month">
+   <table border="0" cellpadding="0" cellspacing="0" class="month">
     <tr>
      <th class="month" colspan="7">
       September
@@ -1857,7 +1857,7 @@
    </table>
   </td>
   <td>
-   <table class="month">
+   <table border="0" cellpadding="0" cellspacing="0" class="month">
     <tr>
      <th class="month" colspan="7">
       October
@@ -2012,7 +2012,9 @@
       </a>
      </td>
      <td class="fri">
-      23
+      <a href="202610/20261023.py">
+       23
+      </a>
      </td>
      <td class="sat">
       24
