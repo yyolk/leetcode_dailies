@@ -47,13 +47,7 @@ class Solution:
                     island_sum = 0
                     while stack:
                         x, y = stack.pop()
-                        if (
-                            x < 0
-                            or x >= rows
-                            or y < 0
-                            or y >= cols
-                            or grid[x][y] <= 0
-                        ):
+                        if x < 0 or x >= rows or y < 0 or y >= cols or grid[x][y] <= 0:
                             continue
                         island_sum += grid[x][y]
                         grid[x][y] = 0  # mark visited
