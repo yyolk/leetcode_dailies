@@ -4,11 +4,11 @@
 class Solution:
     """3963. Create Grid With Exactly One Path
 
-    You are given two integers `m` and `n`, representing the number of rows and columns
-    of a grid.
+    You are given two integers `m` and `n`, representing the number of rows
+    and columns of a grid.
 
-    Construct **any** `m x n` grid consisting only of the characters `'.'` and `'#'`,
-    where:
+    Construct **any** `m x n` grid consisting only of the characters `'.'` and
+    `'#'`, where:
 
     * `'.'` represents a free cell.
 
@@ -26,24 +26,21 @@ class Solution:
 
       + Down, from `(i, j)` to `(i + 1, j)`.
 
-    Return any grid such that there is **exactly one valid path** from the top-left cell
-    to the bottom-right cell.
+    Return any grid such that there is **exactly one valid path** from the
+    top-left cell to the bottom-right cell.
 
     Constraints:
 
     * `1 <= m, n <= 25`"""
 
     def create_grid(self, m: int, n: int) -> list[str]:
-        """...
-
-        Proposed solution ...
-
-        Args:
-            m (int): ...
-            n (int): ...
-
-        Returns:
-            list of str: ..."""
-        ...
+        # Open the full first row and only the last cell of every later row.
+        # The unique path is forced: right along row 0, then down column n-1.
+        first_row = "." * n
+        if m == 1:
+            return [first_row]
+        # Later rows contain obstacles except the final free cell.
+        other_row = "#" * (n - 1) + "."
+        return [first_row] + [other_row] * (m - 1)
 
     createGrid = create_grid
