@@ -55,7 +55,7 @@ python -m generate_problem_symlinks
 
 ### 2023
 
-<table align="center" border="0" cellpadding="0" cellspacing="0" class="year">
+<table align="center" class="year">
  <tr>
   <th class="year" colspan="2">
    2023
@@ -63,7 +63,7 @@ python -m generate_problem_symlinks
  </tr>
  <tr>
   <td>
-   <table border="0" cellpadding="0" cellspacing="0" class="month">
+   <table class="month">
     <tr>
      <th class="month" colspan="7">
       August
@@ -270,7 +270,7 @@ python -m generate_problem_symlinks
  </tr>
  <tr>
   <td>
-   <table border="0" cellpadding="0" cellspacing="0" class="month">
+   <table class="month">
     <tr>
      <th class="month" colspan="7">
       September
@@ -472,7 +472,7 @@ python -m generate_problem_symlinks
    </table>
   </td>
   <td>
-   <table border="0" cellpadding="0" cellspacing="0" class="month">
+   <table class="month">
     <tr>
      <th class="month" colspan="7">
       October
@@ -679,7 +679,7 @@ python -m generate_problem_symlinks
  </tr>
  <tr>
   <td>
-   <table border="0" cellpadding="0" cellspacing="0" class="month">
+   <table class="month">
     <tr>
      <th class="month" colspan="7">
       November
@@ -881,7 +881,7 @@ python -m generate_problem_symlinks
    </table>
   </td>
   <td>
-   <table border="0" cellpadding="0" cellspacing="0" class="month">
+   <table class="month">
     <tr>
      <th class="month" colspan="7">
       December
@@ -1107,7 +1107,7 @@ python -m generate_problem_symlinks
 
 ### 2024
 
-<table align="center" border="0" cellpadding="0" cellspacing="0" class="year">
+<table align="center" class="year">
  <tr>
   <th class="year" colspan="2">
    2024
@@ -1115,7 +1115,7 @@ python -m generate_problem_symlinks
  </tr>
  <tr>
   <td>
-   <table border="0" cellpadding="0" cellspacing="0" class="month">
+   <table class="month">
     <tr>
      <th class="month" colspan="7">
       January
@@ -1320,7 +1320,7 @@ python -m generate_problem_symlinks
    </table>
   </td>
   <td>
-   <table border="0" cellpadding="0" cellspacing="0" class="month">
+   <table class="month">
     <tr>
      <th class="month" colspan="7">
       February
@@ -1521,7 +1521,7 @@ python -m generate_problem_symlinks
  </tr>
  <tr>
   <td>
-   <table border="0" cellpadding="0" cellspacing="0" class="month">
+   <table class="month">
     <tr>
      <th class="month" colspan="7">
       March
@@ -1742,7 +1742,7 @@ python -m generate_problem_symlinks
    </table>
   </td>
   <td>
-   <table border="0" cellpadding="0" cellspacing="0" class="month">
+   <table class="month">
     <tr>
      <th class="month" colspan="7">
       April
@@ -1946,7 +1946,7 @@ python -m generate_problem_symlinks
  </tr>
  <tr>
   <td>
-   <table border="0" cellpadding="0" cellspacing="0" class="month">
+   <table class="month">
     <tr>
      <th class="month" colspan="7">
       May
@@ -2151,7 +2151,7 @@ python -m generate_problem_symlinks
    </table>
   </td>
   <td>
-   <table border="0" cellpadding="0" cellspacing="0" class="month">
+   <table class="month">
     <tr>
      <th class="month" colspan="7">
       June
@@ -2371,7 +2371,7 @@ python -m generate_problem_symlinks
  </tr>
  <tr>
   <td>
-   <table border="0" cellpadding="0" cellspacing="0" class="month">
+   <table class="month">
     <tr>
      <th class="month" colspan="7">
       July
@@ -2576,7 +2576,7 @@ python -m generate_problem_symlinks
    </table>
   </td>
   <td>
-   <table border="0" cellpadding="0" cellspacing="0" class="month">
+   <table class="month">
     <tr>
      <th class="month" colspan="7">
       August
@@ -2783,7 +2783,7 @@ python -m generate_problem_symlinks
  </tr>
  <tr>
   <td>
-   <table border="0" cellpadding="0" cellspacing="0" class="month">
+   <table class="month">
     <tr>
      <th class="month" colspan="7">
       September
@@ -2985,7 +2985,7 @@ python -m generate_problem_symlinks
    </table>
   </td>
   <td>
-   <table border="0" cellpadding="0" cellspacing="0" class="month">
+   <table class="month">
     <tr>
      <th class="month" colspan="7">
       October
@@ -3192,7 +3192,7 @@ python -m generate_problem_symlinks
  </tr>
  <tr>
   <td>
-   <table border="0" cellpadding="0" cellspacing="0" class="month">
+   <table class="month">
     <tr>
      <th class="month" colspan="7">
       November
@@ -3394,7 +3394,7 @@ python -m generate_problem_symlinks
    </table>
   </td>
   <td>
-   <table border="0" cellpadding="0" cellspacing="0" class="month">
+   <table class="month">
     <tr>
      <th class="month" colspan="7">
       December
@@ -3604,7 +3604,7 @@ python -m generate_problem_symlinks
 
 ### 2025
 
-<table align="center" border="0" cellpadding="0" cellspacing="0" class="year">
+<table align="center" class="year">
  <tr>
   <th class="year" colspan="2">
    2025
@@ -3612,7 +3612,7 @@ python -m generate_problem_symlinks
  </tr>
  <tr>
   <td>
-   <table border="0" cellpadding="0" cellspacing="0" class="month">
+   <table class="month">
     <tr>
      <th class="month" colspan="7">
       January
@@ -3817,7 +3817,7 @@ python -m generate_problem_symlinks
    </table>
   </td>
   <td>
-   <table border="0" cellpadding="0" cellspacing="0" class="month">
+   <table class="month">
     <tr>
      <th class="month" colspan="7">
       February
@@ -4015,7 +4015,7 @@ python -m generate_problem_symlinks
  </tr>
  <tr>
   <td>
-   <table border="0" cellpadding="0" cellspacing="0" class="month">
+   <table class="month">
     <tr>
      <th class="month" colspan="7">
       March
@@ -4236,7 +4236,7 @@ python -m generate_problem_symlinks
    </table>
   </td>
   <td>
-   <table border="0" cellpadding="0" cellspacing="0" class="month">
+   <table class="month">
     <tr>
      <th class="month" colspan="7">
       April
@@ -4440,7 +4440,7 @@ python -m generate_problem_symlinks
  </tr>
  <tr>
   <td>
-   <table border="0" cellpadding="0" cellspacing="0" class="month">
+   <table class="month">
     <tr>
      <th class="month" colspan="7">
       May
@@ -4645,7 +4645,7 @@ python -m generate_problem_symlinks
    </table>
   </td>
   <td>
-   <table border="0" cellpadding="0" cellspacing="0" class="month">
+   <table class="month">
     <tr>
      <th class="month" colspan="7">
       June
@@ -4849,7 +4849,7 @@ python -m generate_problem_symlinks
  </tr>
  <tr>
   <td>
-   <table border="0" cellpadding="0" cellspacing="0" class="month">
+   <table class="month">
     <tr>
      <th class="month" colspan="7">
       July
@@ -5054,7 +5054,7 @@ python -m generate_problem_symlinks
    </table>
   </td>
   <td>
-   <table border="0" cellpadding="0" cellspacing="0" class="month">
+   <table class="month">
     <tr>
      <th class="month" colspan="7">
       August
@@ -5277,7 +5277,7 @@ python -m generate_problem_symlinks
  </tr>
  <tr>
   <td>
-   <table border="0" cellpadding="0" cellspacing="0" class="month">
+   <table class="month">
     <tr>
      <th class="month" colspan="7">
       September
@@ -5479,7 +5479,7 @@ python -m generate_problem_symlinks
    </table>
   </td>
   <td>
-   <table border="0" cellpadding="0" cellspacing="0" class="month">
+   <table class="month">
     <tr>
      <th class="month" colspan="7">
       October
@@ -5686,7 +5686,7 @@ python -m generate_problem_symlinks
  </tr>
  <tr>
   <td>
-   <table border="0" cellpadding="0" cellspacing="0" class="month">
+   <table class="month">
     <tr>
      <th class="month" colspan="7">
       November
@@ -5904,7 +5904,7 @@ python -m generate_problem_symlinks
    </table>
   </td>
   <td>
-   <table border="0" cellpadding="0" cellspacing="0" class="month">
+   <table class="month">
     <tr>
      <th class="month" colspan="7">
       December
@@ -6114,7 +6114,7 @@ python -m generate_problem_symlinks
 
 ### 2026
 
-<table align="center" border="0" cellpadding="0" cellspacing="0" class="year">
+<table align="center" class="year">
  <tr>
   <th class="year" colspan="2">
    2026
@@ -6122,7 +6122,7 @@ python -m generate_problem_symlinks
  </tr>
  <tr>
   <td>
-   <table border="0" cellpadding="0" cellspacing="0" class="month">
+   <table class="month">
     <tr>
      <th class="month" colspan="7">
       January
@@ -6327,7 +6327,7 @@ python -m generate_problem_symlinks
    </table>
   </td>
   <td>
-   <table border="0" cellpadding="0" cellspacing="0" class="month">
+   <table class="month">
     <tr>
      <th class="month" colspan="7">
       February
@@ -6509,7 +6509,7 @@ python -m generate_problem_symlinks
  </tr>
  <tr>
   <td>
-   <table border="0" cellpadding="0" cellspacing="0" class="month">
+   <table class="month">
     <tr>
      <th class="month" colspan="7">
       March
@@ -6714,7 +6714,7 @@ python -m generate_problem_symlinks
    </table>
   </td>
   <td>
-   <table border="0" cellpadding="0" cellspacing="0" class="month">
+   <table class="month">
     <tr>
      <th class="month" colspan="7">
       April
@@ -6918,7 +6918,7 @@ python -m generate_problem_symlinks
  </tr>
  <tr>
   <td>
-   <table border="0" cellpadding="0" cellspacing="0" class="month">
+   <table class="month">
     <tr>
      <th class="month" colspan="7">
       May
@@ -7139,7 +7139,7 @@ python -m generate_problem_symlinks
    </table>
   </td>
   <td>
-   <table border="0" cellpadding="0" cellspacing="0" class="month">
+   <table class="month">
     <tr>
      <th class="month" colspan="7">
       June
@@ -7343,7 +7343,7 @@ python -m generate_problem_symlinks
  </tr>
  <tr>
   <td>
-   <table border="0" cellpadding="0" cellspacing="0" class="month">
+   <table class="month">
     <tr>
      <th class="month" colspan="7">
       July
@@ -7548,7 +7548,7 @@ python -m generate_problem_symlinks
    </table>
   </td>
   <td>
-   <table border="0" cellpadding="0" cellspacing="0" class="month">
+   <table class="month">
     <tr>
      <th class="month" colspan="7">
       August
@@ -7771,7 +7771,7 @@ python -m generate_problem_symlinks
  </tr>
  <tr>
   <td>
-   <table border="0" cellpadding="0" cellspacing="0" class="month">
+   <table class="month">
     <tr>
      <th class="month" colspan="7">
       September
@@ -7973,7 +7973,7 @@ python -m generate_problem_symlinks
    </table>
   </td>
   <td>
-   <table border="0" cellpadding="0" cellspacing="0" class="month">
+   <table class="month">
     <tr>
      <th class="month" colspan="7">
       October
@@ -8155,7 +8155,9 @@ python -m generate_problem_symlinks
       </a>
      </td>
      <td class="wed">
-      28
+      <a href="solutions/2026/202610/20261028.py">
+       28
+      </a>
      </td>
      <td class="thu">
       29
