@@ -1,4 +1,4 @@
-<table align="center" border="0" cellpadding="0" cellspacing="0" class="month">
+<table align="center" class="month">
  <tr>
   <th class="month" colspan="7">
    October 2026
@@ -180,7 +180,9 @@
    </a>
   </td>
   <td class="wed">
-   28
+   <a href="20261028.py">
+    28
+   </a>
   </td>
   <td class="thu">
    29
