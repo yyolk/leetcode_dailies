@@ -15,18 +15,13 @@ class Solution:
 
     * `1 <= nums.length <= 100`
 
-    * `1 <= nums[i] <= 100`"""
+    * `1 <= nums[i] <= 100`
+    """
 
     def min_moves(self, nums: list[int]) -> int:
-        """...
-
-        Proposed solution ...
-
-        Args:
-            nums (list of int): ...
-
-        Returns:
-            int: ..."""
-        ...
+        # Target must be the maximum since we can only increase values.
+        target = max(nums)
+        # Total moves is the sum of differences to the target.
+        return sum(target - x for x in nums)
 
     minMoves = min_moves
