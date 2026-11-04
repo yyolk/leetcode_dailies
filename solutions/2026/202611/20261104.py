@@ -132,8 +132,7 @@ class Solution:
                 med = sw.median()
                 # Sum of absolute deviations from the median.
                 cost[i + 1] = (
-                    med * len(sw.left) - sw.total1
-                    + sw.total2 - med * len(sw.right)
+                    med * len(sw.left) - sw.total1 + sw.total2 - med * len(sw.right)
                 )
 
         # DP: dp[j] = min cost to place the current number of windows
@@ -141,7 +140,7 @@ class Solution:
         dp = [0] * (n + 1)
         for _ in range(k):
             new_dp = [INF] * (n + 1)
-            for j in range((_+1) * x, n + 1):
+            for j in range((_ + 1) * x, n + 1):
                 # Either skip position j-1 or place a window ending at j-1.
                 new_dp[j] = min(new_dp[j - 1], dp[j - x] + cost[j])
             dp = new_dp
