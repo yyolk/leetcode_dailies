@@ -48,9 +48,7 @@ class Solution:
         communicating = 0
         for i in range(m):
             for j in range(n):
-                if grid[i][j] == 1 and (
-                    row_counts[i] > 1 or col_counts[j] > 1
-                ):
+                if grid[i][j] == 1 and (row_counts[i] > 1 or col_counts[j] > 1):
                     communicating += 1
 
         return communicating
