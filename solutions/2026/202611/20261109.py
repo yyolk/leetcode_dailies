@@ -45,9 +45,7 @@ class Solution:
     * `arrival` is **strictly increasing**.
     """
 
-    def busiest_servers(
-        self, k: int, arrival: list[int], load: list[int]
-    ) -> list[int]:
+    def busiest_servers(self, k: int, arrival: list[int], load: list[int]) -> list[int]:
         # Min-heap of busy servers ordered by end time: (end_time, server_id)
         busy: list[tuple[int, int]] = []
         # Min-heap of free servers by virtual index for circular preference
