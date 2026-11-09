@@ -1,5 +1,7 @@
 # https://leetcode.com/problems/find-servers-that-handled-most-number-of-requests/
 
+import heapq
+
 
 class Solution:
     """1606. Find Servers That Handled Most Number of Requests
@@ -40,20 +42,36 @@ class Solution:
 
     * `1 <= arrival[i], load[i] <= 109`
 
-    * `arrival` is **strictly increasing**."""
+    * `arrival` is **strictly increasing**.
+    """
 
-    def busiest_servers(self, k: int, arrival: list[int], load: list[int]) -> list[int]:
-        """...
+    def busiest_servers(
+        self, k: int, arrival: list[int], load: list[int]
+    ) -> list[int]:
+        # Min-heap of busy servers ordered by end time: (end_time, server_id)
+        busy: list[tuple[int, int]] = []
+        # Min-heap of free servers by virtual index for circular preference
+        free: list[int] = list(range(k))
+        heapq.heapify(free)
+        # Number of requests handled by each server
+        counts = [0] * k
 
-        Proposed solution ...
+        for i, (arr_time, ld) in enumerate(zip(arrival, load)):
+            # Release servers that have finished by the current arrival time
+            while busy and busy[0][0] <= arr_time:
+                _, server_id = heapq.heappop(busy)
+                # Map back into the preferred circular order starting at i % k
+                virtual = i + (server_id - i % k) % k
+                heapq.heappush(free, virtual)
+            if not free:
+                # No server available; drop this request
+                continue
+            # Select the earliest preferred free server and normalize its id
+            server_id = heapq.heappop(free) % k
+            counts[server_id] += 1
+            heapq.heappush(busy, (arr_time + ld, server_id))
 
-        Args:
-            k (int): ...
-            arrival (list of int): ...
-            load (list of int): ...
-
-        Returns:
-            list of int: ..."""
-        ...
+        max_count = max(counts)
+        return [sid for sid in range(k) if counts[sid] == max_count]
 
     busiestServers = busiest_servers
