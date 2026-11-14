@@ -1,1 +1,538 @@
-placeholder - will be replaced
+"""Submit a daily solution to LeetCode and format the ms/mb comment.
+
+Uses the same unofficial endpoints the website uses. Session cookies belong
+in GitHub Actions secrets, not in this repo.
+"""
+
+from __future__ import annotations
+
+import argparse
+import ast
+import json
+import os
+import re
+import subprocess
+import sys
+import time
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any
+
+from . import leetcode_http
+from .constants import LEETCODE_BASE_URL
+
+SLUG_RE = re.compile(r"/problems/([a-z0-9-]+)/?", re.IGNORECASE)
+DATE_TITLE_RE = re.compile(r"^\d{8}$")
+SUBMIT_MARKER_RE = re.compile(r"<!--\s*leetcode-submit\s+sha=(\S+)\s+id=(\S+)\s*-->")
+TIME_LINE_RE = re.compile(r"^(?:[-*]\s*)?\d+(?:\.\d+)?\s*ms\b", re.IGNORECASE)
+MEMORY_LINE_RE = re.compile(r"^(?:[-*]\s*)?\d+(?:\.\d+)?\s*mb\b", re.IGNORECASE)
+PENDING_STATES = {"PENDING", "STARTED", "PENDING_REJUDGE"}
+BEATS_THRESHOLD = 50
+AUTH_HTTP_STATUSES = {401, 403}
+AUTH_FAILED_EXIT = 3
+CLOUDFLARE_BLOCKED_EXIT = 4
+BROWSER_USER_AGENT = (
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+    "AppleWebKit/537.36 (KHTML, like Gecko) "
+    "Chrome/140.0.0.0 Safari/537.36"
+)
+
+TIME_TRAVEL_APPLY_MUTATION = """
+mutation ApplyTimeTravelTicketV2($challengeQuestionId: ID!, $submissionId: ID) {
+  applyTimeTravelTicketV2(
+    challengeQuestionId: $challengeQuestionId
+    submissionId: $submissionId
+  ) {
+    ok
+    streakCounter {
+      streakCount
+      daysSkipped
+      currentDayCompleted
+      hasCompletedChallenge
+    }
+    error
+  }
+}
+"""
+
+
+class SubmitError(RuntimeError):
+    """LeetCode rejected the submission or the unofficial API failed."""
+
+
+class AuthFailedError(SubmitError):
+    """LeetCode rejected the session cookies (401/403)."""
+
+
+class CloudflareBlockedError(SubmitError):
+    """Cloudflare challenged the unofficial LeetCode request."""
+
+
+def is_late_daily(yyyymmdd: str) -> bool:
+    """True when the daily date is before today (UTC) in the same year."""
+    if not DATE_TITLE_RE.match(yyyymmdd or ""):
+        return False
+    try:
+        day = datetime.strptime(yyyymmdd, "%Y%m%d").replace(tzinfo=timezone.utc)
+        today = datetime.now(timezone.utc).replace(hour=0, minute=0, second=0, microsecond=0)
+        return day < today and day.year == today.year
+    except ValueError:
+        return False
+
+
+def apply_time_travel_ticket(
+    challenge_question_id: str,
+    submission_id: str,
+    session: str,
+    csrf: str,
+) -> dict[str, Any]:
+    """Apply a Time Travel Ticket for a late daily after an accepted submission."""
+    payload = {
+        "query": TIME_TRAVEL_APPLY_MUTATION,
+        "variables": {
+            "challengeQuestionId": challenge_question_id,
+            "submissionId": submission_id,
+        },
+        "operationName": "ApplyTimeTravelTicketV2",
+    }
+    response = leetcode_http.request(
+        "post",
+        f"{LEETCODE_BASE_URL}/graphql/",
+        headers=_session_headers(csrf, f"{LEETCODE_BASE_URL}/"),
+        cookies=_session_cookies(session, csrf),
+        json=payload,
+        timeout=30,
+    )
+    raise_for_leetcode_status(response)
+    return response.json().get("data", {}).get("applyTimeTravelTicketV2", {})
+
+
+def slug_from_url(url: str) -> str | None:
+    match = SLUG_RE.search(url or "")
+    return match.group(1) if match else None
+
+
+def slug_from_source(source: str) -> str | None:
+    for line in source.splitlines():
+        stripped = line.strip()
+        if stripped.startswith("#") and "leetcode.com/problems/" in stripped:
+            return slug_from_url(stripped)
+    return None
+
+
+def solution_path_for_date(root: Path, yyyymmdd: str) -> Path:
+    return root / "solutions" / yyyymmdd[:4] / yyyymmdd[:6] / f"{yyyymmdd}.py"
+
+
+def _is_ellipsis_stmt(stmt: ast.stmt) -> bool:
+    return (
+        isinstance(stmt, ast.Expr)
+        and isinstance(stmt.value, ast.Constant)
+        and stmt.value.value is Ellipsis
+    )
+
+
+def solution_is_unimplemented(source: str) -> bool:
+    """True when a Solution method body is only a docstring plus `...`."""
+    tree = ast.parse(source)
+    for node in tree.body:
+        if not isinstance(node, ast.ClassDef) or node.name != "Solution":
+            continue
+        for item in node.body:
+            if not isinstance(item, ast.FunctionDef):
+                continue
+            stmts = list(item.body)
+            if (
+                stmts
+                and isinstance(stmts[0], ast.Expr)
+                and isinstance(stmts[0].value, ast.Constant)
+                and isinstance(stmts[0].value.value, str)
+            ):
+                stmts = stmts[1:]
+            if not stmts or all(
+                _is_ellipsis_stmt(stmt) or isinstance(stmt, ast.Pass) for stmt in stmts
+            ):
+                return True
+    return False
+
+
+def _numeric_metric(value: str, unit: str) -> str:
+    text = value.strip().lower()
+    text = text.replace("milliseconds", "ms").replace("megabytes", "mb")
+    match = re.search(r"(\d+(?:\.\d+)?)", text)
+    if match:
+        return match.group(1)
+    if text.endswith(unit):
+        return text[: -len(unit)].strip() or text
+    return text
+
+
+def _format_percentile(percentile: float | int | None) -> str | None:
+    if percentile is None:
+        return None
+    try:
+        value = float(percentile)
+    except TypeError, ValueError:
+        return None
+    if value < BEATS_THRESHOLD:
+        return None
+    if value == int(value):
+        return str(int(value))
+    return f"{value:.2f}".rstrip("0").rstrip(".")
+
+
+def _metric_bullet(value: str, unit: str, percentile: float | int | None) -> str:
+    line = f"- {_numeric_metric(value, unit)}{unit}"
+    beats = _format_percentile(percentile)
+    if beats is not None:
+        line += f" (beats {beats}%)"
+    return line
+
+
+def format_benchmark_comment(
+    *,
+    runtime: str,
+    memory: str,
+    yyyymmdd: str | None = None,
+    runtime_percentile: float | int | None = None,
+    memory_percentile: float | int | None = None,
+    sha: str | None = None,
+    submission_id: str | int | None = None,
+) -> str:
+    lines: list[str] = []
+    if yyyymmdd:
+        lines.extend([f"solution {yyyymmdd}.py", ""])
+    lines.append(_metric_bullet(runtime, "ms", runtime_percentile))
+    lines.append(_metric_bullet(memory, "mb", memory_percentile))
+    if sha and submission_id is not None:
+        lines.append(f"<!-- leetcode-submit sha={sha} id={submission_id} -->")
+    return "\n".join(lines) + "\n"
+
+
+def comment_for_notification(body: str) -> str:
+    """Benchmark comment without the hidden submit marker."""
+    return SUBMIT_MARKER_RE.sub("", body or "").strip()
+
+
+def write_github_output(name: str, value: str) -> None:
+    path = os.environ.get("GITHUB_OUTPUT")
+    if not path:
+        return
+    delimiter = "BENCH_EOF"
+    with Path(path).open("a", encoding="utf-8") as handle:
+        if "\n" in value:
+            handle.write(f"{name}<<{delimiter}\n{value.rstrip()}\n{delimiter}\n")
+        else:
+            handle.write(f"{name}={value}\n")
+
+
+def comment_already_has_benchmark(body: str, sha: str | None = None) -> bool:
+    text = (body or "").replace("\r\n", "\n")
+    if sha:
+        match = SUBMIT_MARKER_RE.search(text)
+        if match and match.group(1) == sha:
+            return True
+    lines = [line.strip() for line in text.split("\n") if line.strip()]
+    return any(
+        TIME_LINE_RE.search(line)
+        and index + 1 < len(lines)
+        and MEMORY_LINE_RE.search(lines[index + 1])
+        for index, line in enumerate(lines)
+    )
+
+
+def parse_check_payload(payload: dict[str, Any]) -> dict[str, Any]:
+    state = str(payload.get("state") or "").upper()
+    status = str(payload.get("status_msg") or payload.get("status") or "")
+    runtime = str(payload.get("status_runtime") or payload.get("runtime") or "")
+    memory = str(payload.get("status_memory") or payload.get("memory") or "")
+    runtime_percentile = payload.get("runtime_percentile")
+    memory_percentile = payload.get("memory_percentile")
+    return {
+        "state": state,
+        "status": status,
+        "runtime": runtime,
+        "memory": memory,
+        "runtime_percentile": runtime_percentile,
+        "memory_percentile": memory_percentile,
+        "accepted": state == "SUCCESS" and status.lower() == "accepted",
+        "pending": state in PENDING_STATES or not state,
+        "raw": payload,
+    }
+
+
+def is_auth_http_error(error: BaseException) -> bool:
+    response = getattr(error, "response", None)
+    return getattr(response, "status_code", None) in AUTH_HTTP_STATUSES
+
+
+def raise_for_leetcode_status(response: Any) -> None:
+    """Map HTTP failures from requests or curl_cffi onto typed submit errors."""
+    try:
+        response.raise_for_status()
+        return
+    except Exception as exc:
+        status = getattr(response, "status_code", None)
+        if not isinstance(status, int) or status < 400:
+            raise
+        body = (getattr(response, "text", None) or "")[:500]
+        url = getattr(response, "url", "")
+        message = f"LeetCode returned HTTP {status} for {url}. Body: {body}"
+        if leetcode_http.is_cloudflare_challenge(body):
+            message += (
+                " Cloudflare challenged this request. "
+                "curl_cffi impersonation or a cf_clearance cookie may be required."
+            )
+            raise CloudflareBlockedError(message) from exc
+        if status in AUTH_HTTP_STATUSES:
+            message += " Refresh LEETCODE_SESSION and LEETCODE_CSRF_TOKEN."
+            raise AuthFailedError(message) from exc
+        raise SubmitError(message) from exc
+
+
+def _session_headers(csrf: str, referer: str) -> dict[str, str]:
+    return {
+        "x-csrftoken": csrf,
+        "referer": referer,
+        "origin": LEETCODE_BASE_URL,
+        "user-agent": BROWSER_USER_AGENT,
+        "accept": "application/json, text/javascript, */*;q=0.01",
+        "accept-language": "en-US,en;q=0.9",
+        "x-requested-with": "XMLHttpRequest",
+        "content-type": "application/json",
+    }
+
+
+def _session_cookies(session: str, csrf: str) -> dict[str, str]:
+    return leetcode_http.session_cookies(session, csrf)
+
+
+def fetch_question_id(slug: str, session: str, csrf: str) -> str:
+    query = {
+        "query": """
+            query questionData($titleSlug: String!) {
+                question(titleSlug: $titleSlug) {
+                    questionId
+                    titleSlug
+                }
+            }
+        """,
+        "variables": {"titleSlug": slug},
+    }
+    response = leetcode_http.request(
+        "post",
+        f"{LEETCODE_BASE_URL}/graphql/",
+        headers=_session_headers(csrf, f"{LEETCODE_BASE_URL}/problems/{slug}/"),
+        cookies=_session_cookies(session, csrf),
+        json=query,
+        timeout=30,
+    )
+    raise_for_leetcode_status(response)
+    data = response.json()
+    question_id = data.get("data", {}).get("question", {}).get("questionId")
+    if not question_id:
+        raise SubmitError(f"Could not resolve questionId for slug {slug!r}: {data}")
+    return str(question_id)
+
+
+def submit_solution(
+    *,
+    slug: str,
+    question_id: str,
+    typed_code: str,
+    session: str,
+    csrf: str,
+    lang: str = "python3",
+) -> str:
+    response = leetcode_http.request(
+        "post",
+        f"{LEETCODE_BASE_URL}/problems/{slug}/submit/",
+        headers=_session_headers(csrf, f"{LEETCODE_BASE_URL}/problems/{slug}/"),
+        cookies=_session_cookies(session, csrf),
+        json={"lang": lang, "question_id": str(question_id), "typed_code": typed_code},
+        timeout=30,
+    )
+    raise_for_leetcode_status(response)
+    payload = response.json()
+    submission_id = payload.get("submission_id")
+    if submission_id is None:
+        raise SubmitError(f"Submit did not return submission_id: {payload}")
+    return str(submission_id)
+
+
+def poll_submission(
+    submission_id: str,
+    session: str,
+    csrf: str,
+    *,
+    attempts: int = 60,
+    delay_seconds: float = 2.0,
+    sleeper=time.sleep,
+    getter=None,
+) -> dict[str, Any]:
+    getter = getter or (
+        lambda: leetcode_http.request(
+            "get",
+            f"{LEETCODE_BASE_URL}/submissions/detail/{submission_id}/check/",
+            headers=_session_headers(csrf, f"{LEETCODE_BASE_URL}/"),
+            cookies=_session_cookies(session, csrf),
+            timeout=30,
+        )
+    )
+    last: dict[str, Any] | None = None
+    for _ in range(attempts):
+        response = (
+            getter() if getter.__code__.co_argcount == 0 else getter(submission_id)
+        )
+        raise_for_leetcode_status(response)
+        last = parse_check_payload(response.json())
+        if not last["pending"]:
+            return last
+        sleeper(delay_seconds)
+    raise SubmitError(f"Timed out waiting for submission {submission_id}: {last}")
+
+
+def post_pr_comment(pr_number: int, body: str) -> None:
+    subprocess.run(
+        ["gh", "pr", "comment", str(pr_number), "--body", body],
+        check=True,
+    )
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--source", type=Path, help="Path to YYYYMMDD.py")
+    parser.add_argument("--slug")
+    parser.add_argument("--question-id")
+    parser.add_argument("--pr", type=int)
+    parser.add_argument("--sha")
+    parser.add_argument("--title")
+    parser.add_argument("--body-url", help="PR body or problem URL")
+    parser.add_argument("--dry-run", action="store_true")
+    args = parser.parse_args(argv)
+
+    root = Path.cwd()
+    title = (args.title or "").strip()
+    source_path = args.source
+    if source_path is None and DATE_TITLE_RE.match(title):
+        source_path = solution_path_for_date(root, title)
+    if source_path is None:
+        print("No solution path (pass --source or --title YYYYMMDD).", file=sys.stderr)
+        return 1
+    source = source_path.read_text(encoding="utf-8")
+
+    if solution_is_unimplemented(source):
+        print(f"Skipping submit; {source_path} is still a stub.")
+        return 0
+
+    slug = args.slug or slug_from_url(args.body_url or "") or slug_from_source(source)
+    if not slug:
+        print("Could not determine problem slug.", file=sys.stderr)
+        return 1
+
+    session = os.environ.get("LEETCODE_SESSION", "").strip()
+    csrf = (
+        os.environ.get("LEETCODE_CSRF_TOKEN", "").strip()
+        or os.environ.get("LEETCODE_CSRFTOKEN", "").strip()
+    )
+    if not session or not csrf:
+        print(
+            "LEETCODE_SESSION and LEETCODE_CSRF_TOKEN are not set; "
+            "skipping submit until secrets exist."
+        )
+        return 0
+
+    if args.pr and not args.dry_run:
+        try:
+            comments_raw = subprocess.check_output(
+                ["gh", "api", f"repos/{{owner}}/{{repo}}/issues/{args.pr}/comments"],
+                text=True,
+            )
+            comments = json.loads(comments_raw)
+            for comment in comments:
+                if comment_already_has_benchmark(comment.get("body") or "", args.sha):
+                    print(f"PR #{args.pr} already has a benchmark comment; skipping.")
+                    return 0
+        except (subprocess.CalledProcessError, json.JSONDecodeError) as exc:
+            print(f"Could not list existing comments ({exc}); continuing.")
+
+    if args.dry_run:
+        print(f"Dry run: would submit {source_path} as {slug}")
+        return 0
+
+    try:
+        question_id = args.question_id or fetch_question_id(slug, session, csrf)
+        submission_id = submit_solution(
+            slug=slug,
+            question_id=question_id,
+            typed_code=source,
+            session=session,
+            csrf=csrf,
+        )
+        print(f"Submitted {slug} as {submission_id}")
+        result = poll_submission(submission_id, session, csrf)
+    except CloudflareBlockedError as exc:
+        print(exc, file=sys.stderr)
+        write_github_output("cloudflare_blocked", "true")
+        return CLOUDFLARE_BLOCKED_EXIT
+    except AuthFailedError as exc:
+        print(exc, file=sys.stderr)
+        write_github_output("auth_failed", "true")
+        return AUTH_FAILED_EXIT
+
+    if not result["accepted"]:
+        print(
+            f"LeetCode {result['status'] or result['state']} for {slug} "
+            f"(submission {submission_id})",
+            file=sys.stderr,
+        )
+        return 2
+
+    date_name = title if DATE_TITLE_RE.match(title) else None
+    if date_name is None and DATE_TITLE_RE.match(source_path.stem):
+        date_name = source_path.stem
+
+    # Apply Time Travel Ticket for late dailies to keep the streak
+    if date_name and is_late_daily(date_name):
+        try:
+            ticket_result = apply_time_travel_ticket(
+                question_id, submission_id, session, csrf
+            )
+            if ticket_result.get("ok"):
+                streak = ticket_result.get("streakCounter", {}).get("streakCount")
+                print(
+                    f"Applied Time Travel Ticket for {date_name}; streak now {streak}"
+                )
+            else:
+                print(
+                    f"Time Travel Ticket not applied: {ticket_result.get('error') or 'unknown'}"
+                )
+        except Exception as exc:
+            print(f"Failed to apply Time Travel Ticket: {exc}")
+
+    comment = format_benchmark_comment(
+        runtime=result["runtime"],
+        memory=result["memory"],
+        yyyymmdd=date_name,
+        runtime_percentile=result.get("runtime_percentile"),
+        memory_percentile=result.get("memory_percentile"),
+        sha=args.sha,
+        submission_id=submission_id,
+    )
+    print(comment, end="")
+    summary = os.environ.get("GITHUB_STEP_SUMMARY")
+    if summary:
+        Path(summary).write_text(
+            "## LeetCode submit\n\n" + comment,
+            encoding="utf-8",
+        )
+    if args.pr:
+        post_pr_comment(args.pr, comment)
+        write_github_output("posted", "true")
+        write_github_output("comment", comment_for_notification(comment))
+        print(f"Posted benchmark comment on PR #{args.pr}")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
