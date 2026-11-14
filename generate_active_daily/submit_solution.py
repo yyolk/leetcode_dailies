@@ -74,7 +74,9 @@ def is_late_daily(yyyymmdd: str) -> bool:
         return False
     try:
         day = datetime.strptime(yyyymmdd, "%Y%m%d").replace(tzinfo=timezone.utc)
-        today = datetime.now(timezone.utc).replace(hour=0, minute=0, second=0, microsecond=0)
+        today = datetime.now(timezone.utc).replace(
+            hour=0, minute=0, second=0, microsecond=0
+        )
         return day < today and day.year == today.year
     except ValueError:
         return False
