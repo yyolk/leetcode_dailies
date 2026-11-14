@@ -14,6 +14,7 @@ import re
 import subprocess
 import sys
 import time
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -36,6 +37,24 @@ BROWSER_USER_AGENT = (
     "Chrome/140.0.0.0 Safari/537.36"
 )
 
+TIME_TRAVEL_APPLY_MUTATION = """
+mutation ApplyTimeTravelTicketV2($challengeQuestionId: ID!, $submissionId: ID) {
+  applyTimeTravelTicketV2(
+    challengeQuestionId: $challengeQuestionId
+    submissionId: $submissionId
+  ) {
+    ok
+    streakCounter {
+      streakCount
+      daysSkipped
+      currentDayCompleted
+      hasCompletedChallenge
+    }
+    error
+  }
+}
+"""
+
 
 class SubmitError(RuntimeError):
     """LeetCode rejected the submission or the unofficial API failed."""
@@ -47,6 +66,47 @@ class AuthFailedError(SubmitError):
 
 class CloudflareBlockedError(SubmitError):
     """Cloudflare challenged the unofficial LeetCode request."""
+
+
+def is_late_daily(yyyymmdd: str) -> bool:
+    """True when the daily date is before today (UTC) in the same year."""
+    if not DATE_TITLE_RE.match(yyyymmdd or ""):
+        return False
+    try:
+        day = datetime.strptime(yyyymmdd, "%Y%m%d").replace(tzinfo=timezone.utc)
+        today = datetime.now(timezone.utc).replace(
+            hour=0, minute=0, second=0, microsecond=0
+        )
+        return day < today and day.year == today.year
+    except ValueError:
+        return False
+
+
+def apply_time_travel_ticket(
+    challenge_question_id: str,
+    submission_id: str,
+    session: str,
+    csrf: str,
+) -> dict[str, Any]:
+    """Apply a Time Travel Ticket for a late daily after an accepted submission."""
+    payload = {
+        "query": TIME_TRAVEL_APPLY_MUTATION,
+        "variables": {
+            "challengeQuestionId": challenge_question_id,
+            "submissionId": submission_id,
+        },
+        "operationName": "ApplyTimeTravelTicketV2",
+    }
+    response = leetcode_http.request(
+        "post",
+        f"{LEETCODE_BASE_URL}/graphql/",
+        headers=_session_headers(csrf, f"{LEETCODE_BASE_URL}/"),
+        cookies=_session_cookies(session, csrf),
+        json=payload,
+        timeout=30,
+    )
+    raise_for_leetcode_status(response)
+    return response.json().get("data", {}).get("applyTimeTravelTicketV2", {})
 
 
 def slug_from_url(url: str) -> str | None:
@@ -433,6 +493,25 @@ def main(argv: list[str] | None = None) -> int:
     date_name = title if DATE_TITLE_RE.match(title) else None
     if date_name is None and DATE_TITLE_RE.match(source_path.stem):
         date_name = source_path.stem
+
+    # Apply Time Travel Ticket for late dailies to keep the streak
+    if date_name and is_late_daily(date_name):
+        try:
+            ticket_result = apply_time_travel_ticket(
+                question_id, submission_id, session, csrf
+            )
+            if ticket_result.get("ok"):
+                streak = ticket_result.get("streakCounter", {}).get("streakCount")
+                print(
+                    f"Applied Time Travel Ticket for {date_name}; streak now {streak}"
+                )
+            else:
+                print(
+                    f"Time Travel Ticket not applied: {ticket_result.get('error') or 'unknown'}"
+                )
+        except Exception as exc:
+            print(f"Failed to apply Time Travel Ticket: {exc}")
+
     comment = format_benchmark_comment(
         runtime=result["runtime"],
         memory=result["memory"],
