@@ -8290,7 +8290,9 @@ python -m generate_problem_symlinks
       </a>
      </td>
      <td class="mon">
-      16
+      <a href="solutions/2026/202611/20261116.py">
+       16
+      </a>
      </td>
      <td class="tue">
       17
