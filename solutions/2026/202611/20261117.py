@@ -62,9 +62,7 @@ class Solution:
                 # Try every valid divisor d < length.
                 for d in range(1, length):
                     if length % d == 0:
-                        min_changes = min(
-                            min_changes, changes_for_d(i, j, d)
-                        )
+                        min_changes = min(min_changes, changes_for_d(i, j, d))
                 cost[i][j] = min_changes
 
         # DP: dp[parts][end] = min changes to partition first `end` chars
