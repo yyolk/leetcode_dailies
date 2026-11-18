@@ -24,18 +24,20 @@ class Solution:
 
     * `s` has an even length.
 
-    * `s[i]` is either `'0'` or `'1'`."""
+    * `s[i]` is either `'0'` or `'1'`.
+    """
 
     def min_changes(self, s: str) -> int:
-        """...
+        """Return the minimum changes to make s beautiful.
 
-        Proposed solution ...
-
-        Args:
-            s (str): ...
-
-        Returns:
-            int: ..."""
-        ...
+        Pair adjacent characters. Each mismatched pair requires exactly one
+        change to become uniform, and such pairs form a valid partition.
+        """
+        # Count pairs where the two characters differ.
+        changes = 0
+        for i in range(0, len(s), 2):
+            if s[i] != s[i + 1]:
+                changes += 1
+        return changes
 
     minChanges = min_changes
