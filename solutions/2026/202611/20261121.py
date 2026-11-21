@@ -37,19 +37,52 @@ class Solution:
 
     * `parent` represents a valid tree.
 
-    * `s` consists only of lowercase English letters."""
+    * `s` consists only of lowercase English letters.
+    """
 
     def find_subtree_sizes(self, parent: list[int], s: str) -> list[int]:
-        """...
+        n = len(parent)
+        # Build children lists from the original parent array.
+        children = [[] for _ in range(n)]
+        for i in range(1, n):
+            children[parent[i]].append(i)
 
-        Proposed solution ...
+        # Compute new parents by finding closest same-character ancestors via DFS.
+        new_parent = parent[:]
+        # Track the most recent ancestor index for each character.
+        last = [-1] * 26
 
-        Args:
-            parent (list of int): ...
-            s (str): ...
+        def dfs(node: int) -> None:
+            char_idx = ord(s[node]) - ord("a")
+            # If a closer same-char ancestor exists, reparent this node to it.
+            if last[char_idx] != -1:
+                new_parent[node] = last[char_idx]
+            # Record this node as the latest for its character, then recurse.
+            prev = last[char_idx]
+            last[char_idx] = node
+            for child in children[node]:
+                dfs(child)
+            # Restore the previous last-seen for backtracking.
+            last[char_idx] = prev
 
-        Returns:
-            list of int: ..."""
-        ...
+        dfs(0)
+
+        # Build the adjacency list for the final tree after reparenting.
+        new_children = [[] for _ in range(n)]
+        for i in range(1, n):
+            new_children[new_parent[i]].append(i)
+
+        # Compute subtree sizes bottom-up via DFS on the new tree.
+        sizes = [0] * n
+
+        def compute_size(node: int) -> int:
+            size = 1
+            for child in new_children[node]:
+                size += compute_size(child)
+            sizes[node] = size
+            return size
+
+        compute_size(0)
+        return sizes
 
     findSubtreeSizes = find_subtree_sizes
