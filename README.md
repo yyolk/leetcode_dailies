@@ -8315,7 +8315,9 @@ python -m generate_problem_symlinks
       </a>
      </td>
      <td class="sat">
-      21
+      <a href="solutions/2026/202611/20261121.py">
+       21
+      </a>
      </td>
     </tr>
     <tr>
